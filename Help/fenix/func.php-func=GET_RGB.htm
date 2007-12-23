@@ -1,0 +1,67 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=GET_RGB.htm" tppabs="http://fenix.jlceb.com/func.php?func=GET_RGB">GET_RGB</a></b> ( <B>COLOR</B>, <B>&R</B>, <B>&G</B>, <B>&B</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Devuelve las componentes de un color de 16 bits </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>COLOR</b></td><td valign="top"> : </td><td valign="top">Un color de 16 bits</td></tr>
+<tr><td nowrap valign="top">POINTER</td><td valign="top"><b>R</b></td><td valign="top"> : </td><td valign="top">Variable tipo INT que contendrá la componente roja</td></tr>
+<tr><td nowrap valign="top">POINTER</td><td valign="top"><b>G</b></td><td valign="top"> : </td><td valign="top">Variable tipo INT que contendrá la componente verde</td></tr>
+<tr><td nowrap valign="top">POINTER</td><td valign="top"><b>B</b></td><td valign="top"> : </td><td valign="top">Variable tipo INT que contendrá la componente azul</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función permite obtener las componentes de un color de 16 bits, obtenido mediante la función <a href="func.php-func=RGB.htm" tppabs="http://fenix.jlceb.com/func.php?func=RGB">RGB</a></A> o bien leído de los pixels de un gráfico mediante una función como <a href="func.php-func=MAP_GET_PIXEL.htm" tppabs="http://fenix.jlceb.com/func.php?func=MAP_GET_PIXEL">MAP_GET_PIXEL</a></A> .</P> <P> Las componentes contendrán valores entre 0 y 255. Sin embargo, debido a la diferencia de precisión entre modos gráficos y tarjetas gráficas, no es posible determinar de antemano cual es el valor exacto que se obtendrá. Por ejemplo, incluso un color blanco puro seguramente obtendrá valores como 242 o 248 en sus componentes, en lugar de 255 como sería de esperar. Hay que tener en cuenta que para almacenar los 256 valores posibles serían necesarios 8 bits de precisión. Sin embargo, en un modo de 15 ó 16 bits sólo habrán 5 ó 6 bits de precisión disponibles por cada componente.</P> <P> El mismo pixel del mismo gráfico puede devolver valores de componentes diferentes en ordenadores distintos. Es importante no comparar los valores devueltos por GET_RGB con ningún valor constante. Sin embargo, se consideran válidos los siguientes usos con los valores devueltos por GET_RGB: <UL> <LI> Comprobar que una componente está a cero (== 0). Este valor se considera seguro. Es posible comprobar que un color sea el negro puro observando si sus tres componentes valen cero. <BR></BR></LI> <LI> Comparar componentes de dos valores obtenidos mediante RGB, MAP_GET_PIXEL, u otra función que trabaje con colores de 16 bits, durante la misma ejecución del programa. <BR></BR></LI> <LI> Comparar valores de forma aproximada (por ejemplo, comparar si una componente tiene un valor mayor a 128) cuando no sea importante obtener un resultado exacto ni el mismo en todos los ordenadores.</LI></UL> . </td></tr> 
+	</table>
+		
+</body>
+</html>
+

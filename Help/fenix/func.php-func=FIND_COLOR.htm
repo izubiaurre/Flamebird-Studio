@@ -1,0 +1,74 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td> BYTE <b><a href="func.php-func=FIND_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=FIND_COLOR">FIND_COLOR</a></b> ( <B>R</B>, <B>G</B>, <B>B</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Busca un color en la paleta que se aproxime al deseado </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">BYTE</td><td valign="top"><b>R</b></td><td valign="top"> : </td><td valign="top">Valor deseado de componente rojo</td></tr>
+<tr><td nowrap valign="top">BYTE</td><td valign="top"><b>G</b></td><td valign="top"> : </td><td valign="top">Valor deseado de componente verde</td></tr>
+<tr><td nowrap valign="top">BYTE</td><td valign="top"><b>B</b></td><td valign="top"> : </td><td valign="top">Valor deseado de componente azul</td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>BYTE &nbsp; : &nbsp; Número de color de la paleta</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Realiza una búsqueda en la paleta actual de colores, en busca del color más parecido a las componentes especificadas como parámetros. No se garantiza que el color devuelto sea exactamente igual al especificado. De hecho, puede ser muy diferente si en la paleta no hay ningún color aproximado. Sin embargo, esta función busca el resultado "menos malo" de los posibles si no hay ninguno exacto.</P> <P> Dado que la búsqueda de colores aproximados es una operación habitual dentro del motor gráfico, esta función utiliza diversas tablas y técnicas para acelerar la búsqueda, por lo que habitualmente es bastante rápida. Los cambios frecuentes a la paleta de colores realizados mediante forzarán al motor a actualizar estas tablas a menudo y perjudicarán el rendimiento de cualquier programa que utilice a menudo esta función.</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt">Incluso en modo de 16 bits, esta función devuelve siempre un valor de tipo byte, representando un color dentro de la paleta (recordemos que la paleta sigue existiendo en modo de 8 bits, y es utilizada por el motor para dibujar gráficos de 8 bits si desean usarse en ese modo). Si se desea obtener la representación de pixel de un color en modo de 16 bits, debe usarse la función <A NAME="RGB" HREF="javascript:if(confirm('http://fenix.jlceb.com/PAL/RGB  \n\nThis file was not retrieved by Teleport Pro, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/PAL/RGB'" tppabs="http://fenix.jlceb.com/PAL/RGB"></A> en lugar de esta.</td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=RGB.htm" tppabs="http://fenix.jlceb.com/func.php?func=RGB">RGB</a></b></td><td>&nbsp;</td><td>Devuelve la codificación de un color</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SET_COLORS.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_COLORS">SET_COLORS</a></b></td><td>&nbsp;</td><td>Cambia inmediatamente los valores de la paleta de colores</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

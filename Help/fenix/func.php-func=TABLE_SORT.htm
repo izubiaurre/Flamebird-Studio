@@ -1,0 +1,69 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=TABLE_SORT.htm" tppabs="http://fenix.jlceb.com/func.php?func=TABLE_SORT">TABLE_SORT</a></b> ( <B>TABLA</B>, <B>"NOMBRE"</B>, <B>ASCENDENTE</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Ordena una tabla </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>TABLA</b></td><td valign="top"> : </td><td valign="top">Identificador devuelto por TABLE</td></tr>
+<tr><td nowrap valign="top">STRING</td><td valign="top"><b>NOMBRE</b></td><td valign="top"> : </td><td valign="top">Nombre de la columna</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>ASCENDENTE</b></td><td valign="top"> : </td><td valign="top">Orden de la ordenación</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Ordena una tabla a partir de la columna especificada como segundo parámetro. Se recomienda usar el nombre de la columna, aunque alternativamente es posible usar un número de índice, con 0 para la columna más a la izquierda. El tercer parámetro indica el orden de la operación, 1 para ascendente y 0 para descendente.</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=TABLE.htm" tppabs="http://fenix.jlceb.com/func.php?func=TABLE">TABLE</a></b></td><td>&nbsp;</td><td>Crea una tabla o lista</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

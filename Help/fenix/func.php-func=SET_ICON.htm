@@ -1,0 +1,70 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=SET_ICON.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_ICON">SET_ICON</a></b> ( <B>LIBRERÍA</B>, <B>GRÁFICO</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Usa un gráfico como icono para la ventana del juego </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>LIBRERÍA</b></td><td valign="top"> : </td><td valign="top">Librería que contiene el gráfico</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>GRÁFICO</b></td><td valign="top"> : </td><td valign="top">Código del gráfico</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función permite escoger el icono de la ventana del juego, cuando el juego no funciona a pantalla completa. Es necesario llamar a esta función antes que llamara a <a href="func.php-func=SET_MODE.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_MODE">SET_MODE</a></A> , ya que esa es la función que creará y visualizará dicha ventana. Recuerda que SET_MODE inicializa en un principio el juego a pantalla completa: para inicializar el modo de ventana, es preciso cambiar el valor de la variable <a href="func.php-func=FULL_SCREEN.htm" tppabs="http://fenix.jlceb.com/func.php?func=FULL_SCREEN">FULL_SCREEN</a></A> antes de llamar a <a href="func.php-func=SET_MODE.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_MODE">SET_MODE</a></A> .</P> <P> Para esta función, debes utilizar un gráfico de 32x32 pixels. El gráfico puede estar a 8 ó 16 bits de color, y no debes nunca borrar este gráfico de memoria usando funciones como <a href="func.php-func=UNLOAD_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=UNLOAD_MAP">UNLOAD_MAP</a></A> o <a href="func.php-func=UNLOAD_FPG.htm" tppabs="http://fenix.jlceb.com/func.php?func=UNLOAD_FPG">UNLOAD_FPG</a></A> .</P> <P> No es posible cambiar el icono de una ventana ya inicializada, pero puedes volver a llamar a <a href="func.php-func=SET_MODE.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_MODE">SET_MODE</a></A> para activar los cambios.</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=FULL_SCREEN.htm" tppabs="http://fenix.jlceb.com/func.php?func=FULL_SCREEN">FULL_SCREEN</a></b></td><td>&nbsp;</td><td></td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SET_MODE.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_MODE">SET_MODE</a></b></td><td>&nbsp;</td><td>Establece un modo gráfico o crea la ventana del juego</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SET_TITLE.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_TITLE">SET_TITLE</a></b></td><td>&nbsp;</td><td>Establece el título de la ventana del juego</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

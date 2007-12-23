@@ -1,0 +1,70 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=LOAD_BDF.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_BDF">LOAD_BDF</a></b> ( <B>"FICHERO"</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Recupera de disco un tipo de letra BDF </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">STRING</td><td valign="top"><b>FICHERO</b></td><td valign="top"> : </td><td valign="top">Nombre del fichero</td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>INT &nbsp; : &nbsp; Identificador con el nuevo tipo de letra</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función recupera un tipo de letra BDF desde disco. El BDF es un formato de tipo de letra creado por Adobe en uso en sistemas operativos Unix. Es un tipo de letra a dos colores, por lo que es posible usar la función <a href="func.php-func=SET_TEXT_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_TEXT_COLOR">SET_TEXT_COLOR</a></A> para dibujar textos en varios colores diferentes.</P> <P> LOAD_BDF devuelve un número entero que identifica al nuevo tipo de letra. Es posible utilizar a partir de entonces este valor con cualquier función que admita un tipo de letra como parámetro, como por ejemplo <a href="func.php-func=WRITE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE">WRITE</a></A> .</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=WRITE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE">WRITE</a></b></td><td>&nbsp;</td><td>Dibuja un texto en pantalla</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE_IN_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_IN_MAP">WRITE_IN_MAP</a></b></td><td>&nbsp;</td><td>Crea un gráfico que contenga un texto</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=UNLOAD_FNT.htm" tppabs="http://fenix.jlceb.com/func.php?func=UNLOAD_FNT">UNLOAD_FNT</a></b></td><td>&nbsp;</td><td>Libera la memoria ocupada por un tipo de letra</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

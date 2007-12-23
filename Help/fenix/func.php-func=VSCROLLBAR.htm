@@ -1,0 +1,70 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td> INT <b><a href="func.php-func=VSCROLLBAR.htm" tppabs="http://fenix.jlceb.com/func.php?func=VSCROLLBAR">VSCROLLBAR</a></b> ( <B>ALTO</B>, <B>&POSICIÓN</B>, <B>[ <I>ESTILO</I> ]</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Crea una barra de desplazamiento vertical </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>ALTO</b></td><td valign="top"> : </td><td valign="top">Alto en pixels del control</td></tr>
+<tr><td nowrap valign="top">POINTER</td><td valign="top"><b>POSICIÓN</b></td><td valign="top"> : </td><td valign="top">Puntero a la estructura con datos de posición de la barra</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"> <b>ESTILO</b></td><td valign="top"> : </td><td valign="top"><i>(opcional)</i> &nbsp; Estilo del control </td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>INT &nbsp; : &nbsp; Identificador del control creado</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Crea una barra de desplazamiento vertical. La barra de desplazamiento puede tener el mismo aspecto que las que aparecen automáticamente al redimensionar algunas ventanas, pero es posible personalizarlo con diversas opciones.</P> <P> El segundo parámetro es un puntero a una estructura de tipo ScrollBarInfo, definida en GUI.INC, y que cuenta con los siguientes campos: <UL> <LI> INT Min: valor mínimo de posición.</LI> <LI> INT Max: valor máximo de posición.</LI> <LI> INT SingleStep: valor mínimo de incremento, efectivo cuando el usuario arrastra el control o hace clic en los botones laterales de la barra.</LI> <LI> INT PageStep: valor de incremento ampliado, efectivo cuando el usuario hace clic en la zona de la barra encima o debajo del control.</LI> <LI> INT Pos: posición actual de la barra (un valor cualquiera entre Min y Max.</LI></UL> Cuando el usuario actúe sobre el control, éste actualizará automáticamente el valor de Pos, pero nunca modificará el resto.</P> <P> El tercer parámetro, opcional, permite personalizar el estilo de la barra de desplazamiento. Es una suma de cero o más de las siguientes constantes predefinidas en GUI.INC: <UL> <LI> SCROLLBAR_BUTTONS: el control tiene dos botones, superior e inferior, con flechas.</LI> <LI> SCROLLBAR_FRAME: el control tiene un recuadro dibujado a su alrededor, y un fondo.</LI> <LI> SCROLLBAR_FOCUSABLE: el usuario puede hacer foco en la barra de desplazamiento y cambiar su valor con las teclas de cursor.</LI> <LI> SCROLLBAR_FIXED: la barra de desplazamiento debe preservar siempre el valor de MinStep, siendo imposible marcar posiciones intermedias. Además, la barra de desplazamiento tendrá un aspecto alternativo, para marcar más claramente las diferencias con una barra normal.</LI></UL> El estilo por defecto, si no se especifica ninguno, es SCROLLBAR_BUTTONS + SCROLLBAR_FRAME.</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=WINDOW_ADDCONTROL.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_ADDCONTROL">WINDOW_ADDCONTROL</a></b></td><td>&nbsp;</td><td>Añade un control a una ventana</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

@@ -1,0 +1,74 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=WRITE_IN_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_IN_MAP">WRITE_IN_MAP</a></b> ( <B>FUENTE</B>, <B>"TEXTO"</B>, <B>ALINEACIÓN</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Crea un gráfico que contenga un texto </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>FUENTE</b></td><td valign="top"> : </td><td valign="top">Tipo de letra</td></tr>
+<tr><td nowrap valign="top">STRING</td><td valign="top"><b>TEXTO</b></td><td valign="top"> : </td><td valign="top">Texto a dibujar</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>ALINEACIÓN</b></td><td valign="top"> : </td><td valign="top">Tipo de alineación</td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>INT &nbsp; : &nbsp; Identificador del nuevo gráfico</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Crea un nuevo gráfico en memoria, de la misma manera que la función <a href="func.php-func=NEW_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=NEW_MAP">NEW_MAP</a></A> . El gráfico contendrá el texto especificado como parámetro, en el tipo de letra indicado, y tendrá el tamaño justo para contener todas las letras sin desperdiciar espacio. Formará parte de la librería del sistema, de código 0.</P> <P> El parámetro de alineación indica el valor que será tomado por el centro del nuevo gráfico (punto de control cero), y puede ser uno de los siguientes valores: <UL> <LI> 0: el punto ocupará la esquina superior izquierda del gráfico</LI> <LI> 1: el punto ocupará el centro de la primera fila</LI> <LI> 2: el punto ocupará la esquina superior derecha</LI> <LI> 3: el punto ocupará el centro de la primera columna</LI> <LI> 4: el punto ocupará el centro exacto del gráfico</LI> <LI> 5: el punto ocupará el centro de la última columna</LI> <LI> 6: el punto ocupará la esquina inferior izquierda</LI> <LI> 7: el punto ocupará el centro de la fila inferior</LI> <LI> 8: el punto ocupará la esquina inferior derecha</LI></UL></P> <P> El nuevo gráfico tendrá la misma profundidad de color que el tipo de letra, y pixels transparentes al igual que los propios caracteres de la fuente. La mayor utilidad de esta función consiste en poder dibujar textos con la misma variedad de efectos que los gráficos normales (escalado, transparencias, espejo, etc).</P> <P> Si no se desea usar el gráfico por más tiempo, es recomendable liberar la memoria ocupada por el mismo mediante la función <a href="func.php-func=UNLOAD_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=UNLOAD_MAP">UNLOAD_MAP</a></A> .</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=WRITE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE">WRITE</a></b></td><td>&nbsp;</td><td>Dibuja un texto en pantalla</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE_VAR.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_VAR">WRITE_VAR</a></b></td><td>&nbsp;</td><td>Dibuja un texto en pantalla, con el contenido de una variable</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE_IN_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_IN_MAP">WRITE_IN_MAP</a></b></td><td>&nbsp;</td><td>Crea un gráfico que contenga un texto</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=DELETE_TEXT.htm" tppabs="http://fenix.jlceb.com/func.php?func=DELETE_TEXT">DELETE_TEXT</a></b></td><td>&nbsp;</td><td>Elimina un texto dibujado mediante WRITE</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=MOVE_TEXT.htm" tppabs="http://fenix.jlceb.com/func.php?func=MOVE_TEXT">MOVE_TEXT</a></b></td><td>&nbsp;</td><td>Mueve un texto dibujado mediante WRITE</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

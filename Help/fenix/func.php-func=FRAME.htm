@@ -1,0 +1,65 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"><tr><td style="padding-left: 0pt"><font color=#800000><B> FRAME</B> [ porcentaje ];</font></td></tr>
+ </td></tr> <tr><td style="padding-left: 40pt"> <p> Mantiene el proceso actual en background hasta el siguiente frame o parte del mismo </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"> <b>porcentaje</b></td><td valign="top"> : </td><td valign="top"><i>(opcional)</i> &nbsp; Indica la cantidad, en porcentaje, del proceso de un frame que ha sido completado por el proceso actual </td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> La sentencia FRAME es el eje de funcionamiento de Fenix. Cuando se encuentra en un proceso, inmediatamente se detiene su ejecución y se vuelve al proceso padre, devolviéndole un valor entero que identifica al proceso actual y es igual al contenido de la variable local ID.</P> <P> Sin embargo, el proceso no es destruído, sino que queda residente en memoria. Cuando haya transcurrido un frame, el proceso seguirá ejecutándose a partir de la sentencia siguiente a FRAME, hasta que encuentre una nueva instrucción FRAME o el proceso acabe.</P> <P> Un proceso puede acabar por llegar a la instrucción <a href="func.php-func=RETURN.htm" tppabs="http://fenix.jlceb.com/func.php?func=RETURN">RETURN</a></A> o simplemente por no quedar más sentencias de código y no haber ningún bucle activo. En estos casos el proceso es destruído y no queda en memoria rastro de su presencia o antiguas variables. En cambio, un proceso que ha llegado a FRAME se mantiene en memoria.</P> <P> Si el proceso tiene en sus variable local <a href="func.php-func=GRAPH.htm" tppabs="http://fenix.jlceb.com/func.php?func=GRAPH">GRAPH</a></A> el código de un gráfico válido, este gráfico será mostrado en las coordenadas y condiciones indicadas por el resto de variables locales del proceso ( <a href="func.php-func=X.htm" tppabs="http://fenix.jlceb.com/func.php?func=X">X</a></A> , <a href="func.php-func=Y.htm" tppabs="http://fenix.jlceb.com/func.php?func=Y">Y</a></A> , <a href="func.php-func=ANGLE.htm" tppabs="http://fenix.jlceb.com/func.php?func=ANGLE">ANGLE</a></A> , etc). La mayor parte de objetos y sprites de un juego estarán creados mediante un proceso con un bucle conteniendo una sentencia FRAME que actualiza la posición frame a frame según un código dentro del bucle que gestiona su comportamiento.</P> <H3> Frames parciales</H3> <P> La sentencia FRAME admite un parámetro opcional, que indica la cantidad (en porcentaje) de frame que ha sido procesada por el proceso. Esto tiene la utilidad de hacer procesos cuyo código se ejecuta varias veces por frame o una vez cada varios frames. Por ejemplo, una sentencia FRAME 50 provoca que el proceso se vuelva a ejecutar una segunda vez dentro del mismo frame (después de que se hayan acabado de ejecutar todos los demás procesos normales).</P> <P> En cambio, una sentencia tipo FRAME 500 provocará que el proceso en cuestión espere 5 frames antes de seguir ejecutándose. Puedes conseguir con ello eventos que tardan un tiempo en ejecutarse, o bien diseñar procesos que hacen operaciones más intensivas (por ejemplo, código de IA) y que no necesitan ejecutarse contínuamente.</P> <P> El funcionamiento real del porcentaje especificado por FRAME viene a ser el siguiente: <UL> <LI> Todos los procesos cuentan con una variable indicando el "porcentaje ejecutado" del frame actual, e inicialmente vale 0.</LI> <LI> Al principio del frame, todos los procesos que tienen un porcentaje ejecutado menor a 100 se ejecutan por orden de prioridad, hasta llegar a la próxima instrucción FRAME. El porcentaje especificado en esa instrucción que lo detiene, se suma al total ejecutado hasta el momento.</LI> <LI> Cuando todos los procesos se han ejecutado, se vuelve a ejecutar el paso anterior, por lo que los procesos que hayan ejecutado FRAME con un porcentaje inferior a 100 volverán a ejecutarse.</LI> <LI> Cuando ya no quedan procesos con un porcentaje ejecutado inferior a 100, el frame ha terminado. Se dibuja la pantalla en el estado actual de cada proceso y se realizan los procesos externos (actualización de temporizadores, gestión de dispositivos de entrada, etc).</LI> <LI> Finalmente, se le resta 100 a todos los porcentajes completados de cada proceso y se vuelve al paso 2.</LI></UL></P> <P> Este sistema explica, por ejemplo, que un proceso puede dejar un residuo de frame completado para el siguiente. Si un proceso usa un porcentaje de frame tal que la división de 100 no da exacta, no se ejecutará el mismo número de veces cada frame.</P> </td></tr> 
+	</table>
+		
+</body>
+</html>
+

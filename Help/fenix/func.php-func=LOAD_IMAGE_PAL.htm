@@ -1,0 +1,71 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=LOAD_IMAGE_PAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_IMAGE_PAL">LOAD_IMAGE_PAL</a></b> ( <B>"FICHERO"</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Recupera la paleta de una imagen de disco detectando automáticamente su tipo mediante SDL_image.DLL </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">STRING</td><td valign="top"><b>FICHERO</b></td><td valign="top"> : </td><td valign="top">Nombre de un fichero de imagen</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función recupera de disco la paleta contenida por una imagen de 8 bits en cualquiera de los formatos soportados por LOAD_IMAGE.</P> <P> La función LOAD_IMAGE cargará automáticamente la paleta del primer gráfico de 8 bits que se recupere en el programa. Sin embargo, para programas que trabajan con más de una paleta de colores, es necesario utilizar LOAD_IMAGE_PAL para recuperar la paleta de colores o las imagenes de 8 bits no se mostrarán correctamente.</P> <P> La función soporta cualquier formato reconocido por LOAD_IMAGE (siempre que las imágenes sean de 8 bits y con paleta de colores).</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt"><P> Si la imagen utiliza una paleta de menos de 256 colores, sólo los primeros colores (0 - n) de la paleta actual serán modificados.</P></td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=LOAD_PAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_PAL">LOAD_PAL</a></b></td><td>&nbsp;</td><td>Recupera de disco una paleta de colores</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=LOAD_IMAGE.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_IMAGE">LOAD_IMAGE</a></b></td><td>&nbsp;</td><td>Recupera una imagen de disco detectando automáticamente su tipo, utilizando SDL_image.DLL</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

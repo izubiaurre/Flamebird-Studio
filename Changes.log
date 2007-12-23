@@ -1,0 +1,432 @@
+----------------------------------------------------------------------------------------
+FB2 CHANGES LIST
+
+This file contains a list of changes made to FB2. This list may be incompleted or
+imprecise
+----------------------------------------------------------------------------------------
+  Date         By        Bug ID       File/Module
+----------------------------------------------------------------------------------------
+· 16/05/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadido la posibilidad de llamar directamente a la calculadora del win32 directamente desde el FBmX
+
+· 16/05/2007   Izubiaurre                  \Forms\frmCPEditor.frm                            
+    Añadido la opciónde cargar y guardar la lista de puntos de control a disco y desde disco.
+
+· 15/05/2007   Izubiaurre                  \Forms\frmCPEditor.frm                            
+    Ya se pueden cambiar, editar, añadir, borrar los puntos de control de un mapa
+
+· 28/04/2007   Danko                                                                    
+    Corregido un pequeño bug en el project browser: No se actualizaba tras guardar un archivo con el "AddFileToProject" puesto a true.
+
+· 28/04/2007   Danko                                                                    
+    Añadido la opción confine "caret to text" a las preferencias del editor
+
+· 26/04/2007   Danko                                                                    
+    Arregladas y añadidas unas cuantas cosillas en el configurador de herramientas externas
+
+· 25/04/2007   Danko                                                                    
+    Algunos mejoras en el web browser integrado. Ahora tienen una barra de herramientas y además las ventanas nuevas se abren dentro de FB en lugar de en el IE.
+
+· 25/04/2007   Danko                                                                    
+    Ya empieza a funcionar el tema de definir herramientas externas, aunque todavía muy básico e incompleto.
+
+· 24/04/2007   Danko                                                                    
+    Quitado el modExecCMD que ya no se usa
+
+· 24/04/2007   Danko                                                                    
+    Ahora los elementos del projectbrowser en modo "Path_mode" se ordenan por tipo y por nombre
+
+· 24/04/2007   Danko                                                                    
+    Ahora los maps de los fpgs se ordenan automáticamente por código
+
+· 23/04/2007   Danko                                                                    
+    Modificadas las partes del código que no usaban ShowSaveDialog y ShowOpenDialog para que lo usen. Algunos cambios más relacionados con esto
+
+· 23/04/2007   Danko                                                                    
+    De nuevo se pueden agregar varios archivos al proyecto de una tacada.
+
+· 23/04/2007   Danko                                                                    
+    Añadida la función ShowSaveDialog para simplificar los cuadros de diálogos
+
+· 23/04/2007   Danko                                                                    
+    Corregido un error que se producia al usar makePathForProject con una cadena vacía. Afectaba a la creación de nuevos proyectos
+
+· 23/04/2007   Danko                                                                    
+    Añadidas las opciones de guardado del archivo actual, archivos abiertos o archivos del proyecto antes de compilar
+
+· 22/04/2007   Danko                                                                    
+    Los maps y fpgs solo muestran el mensaje de "Save succesful" cuando se guardan por primera vez (o se usa guardar como)
+
+· 22/04/2007   Danko                                                                    
+    Ya no es necesario crear los archivos en disco cuando usamos "AddToProject" en el frmNewFile. Se añaden al proyecto tras la primera guardada
+
+· 22/04/2007   Danko                                                                    
+    Ahora el formulario NewFile se muestra modal.
+
+· 22/04/2007   Danko                                                                    
+    Cambiados algunos iconos y quitada la barra Edit del formulario principal para incluirla junto con el editor de código
+
+· 20/04/2007   Danko                                                                    
+    Ahora se muestran correctamente los mapas transparentes
+
+· 20/04/2007   Danko                                                                    
+    Reactivado el botón ToogleTransparency de la barra de herramientas de los MAP
+
+· 20/04/2007   Danko                                                                    
+    Ahora se pueden crear Maps a partir de PNGs
+
+· 20/04/2007   Danko                                                                    
+    Corregido un error que ocurría cuando el mainSource estaba definido a un archivo inexistente
+
+· 20/04/2007   Danko                                                                    
+    Ahora en la cache del proyecto se guarda la ruta relativa de los archivos (hay que ver que no haya dejado de funcionar nada)
+
+· 19/04/2007   Danko                                                                    
+    Arreglado un pequeño fallo que hacía que algunos elementos del formulario properties no se mostrasen correctamente
+
+· 19/04/2007   Danko                                                                    
+    Ahora se pueden agregar los gráficos a los FPGs abietos o del proyecto
+
+· 19/04/2007   Danko                                                                    
+    La barra de herramientas Map ahora se muestra en el frmMap
+
+· 19/04/2007   Danko                                                                    
+    Ahora los iconos de debug y errors también funcionan con las antiguas versiones de Fenix
+
+· 19/04/2007   Danko                                                                    
+    Añadidos unos iconos que informan de cuando hay disponible información del FXI
+
+· 19/04/2007   Danko                                                                    
+    Añadido un panel en la barra de estado que nos informa si el FXI ha mostrado o no errores
+
+· 19/04/2007   Danko                                                                    
+    Ahora la salida del FXI se captura en las ventanas debug y compile.
+
+· 17/04/2007   Danko                                                                    
+    BugFixTemporal de un error en el analizador de código. Al declararse una función o un proceso con declare, el analizador lo considera dos veces y se intenta repetir la clave.
+
+· 17/04/2007   Danko                  \Forms\frmDoc.frm                                 
+    Ahora el caption de de los sources se actualiza correctamente al guardarlos
+
+· 17/04/2007   Danko                  \Modules\modExecution.bas                         
+    Corregido un error que hacía que cuando el stdout de la compilación tuviese un mensaje de error que contuviese una cadena con ":" no se cogiera el número de la línea correctamente
+
+· 15/04/2007   Danko                                                                    
+    Creada la función ShowOpenDialog y el módulo FileFilters para facilitar la tarea de mostrar cuadros de diálogo y el manejo de las extensiones de archivo (gracias a esto se han eliminado unos cuantos cdlg.ShowOpen...)
+
+· 15/04/2007   Danko                                                                    
+    Ahora se pueden añadir multiples MAP a la vez a un FPG :D
+
+· 13/04/2007   Danko                                                                    
+    Cambiado el texto de las opciones Build & Run por Compile and run project. El de antes daba lugar a confusión.
+
+· 13/04/2007   Danko                                                                    
+    Corregido un bug que hacía que en ciertos ordenadores, y para ciertas determinadas configuraciones 
+	(archivo config.ini) se produjese un error "13. Type missmatch" nada más cargar el entorno, 
+	impidiéndose la ejecución del mismo. El error era provocado debido a las conversiones entre Strings 
+	y los diferentes tipos de las variables que almacenan la configuración. Por ello y como medida cautelosa 
+	a partir de ahora esta conversión de tipos debe hacerse manualmente con una sentencia condicional y 
+	los valores asignados a la propiedad value del Ini file deben ser strings.
+
+· 12/04/2007   Danko                  \Forms\frmAbout.frm                               
+    Actualizado el frmAbout. Si alguien tiene alguna sugerencia o queja sobre lo que pone ahora que lo diga.... :P
+
+· 11/04/2007   Danko                                                                    
+    Cambiado el texto de los botones "Apply sangria" y "Reduce sangria" por un texto más apropiado: 
+	"Shift line right" y "Shift line lef"
+
+· 11/04/2007   Danko                                                                    
+    Añadido el botón save all a la barra de herramientas
+
+· 11/04/2007   Danko                                                                    
+    Corregido error grave que provocaba un error de automatización en algunos ordenadores
+
+· 11/04/2007   Danko                                                                    
+    Eliminados los archivos de configuración como conf.ini y recents.ini del CVS. Son archivos 
+	de configuración y no deberían estar ahí.
+
+· 11/04/2007   Danko                                                                    
+    Se ha cambiado el nombre a muchos de los formularios (los que todavía usaban frm_Nombre en lugar 
+	de frmNombre). Se ha borrado algún formulario inútil que había en el CVS y he quitado del archivo 
+	de proyecto el formulario frm_new.frm, que no se usaba para nada actualmente (no lo he borrado del 
+	cvs porque contiene código que puede servir en un futuro)
+
+· 11/04/2007   Danko                                                                    
+    Las ventanas de debug, output y errors tenían un On error resume next debido a que en ocasiones 
+	se pasaba un valor negativo a la función move del txtOutput. Ahora he puesto para que se asegure 
+	de que nunca se tiene un valor negativo y he quitado el On error resume next (causa problemas 
+	cuando se interacciona con otros errores del entorno y dificulta la depuración)
+
+· 11/04/2007   Danko                                                                    
+    Cambiados varios iconos
+
+· 10/04/2007   Danko                                                                    
+    Arreglado el problema de que no se pueda usar el botón de stop y pause cuando corremos FB desde 
+	visual basic. Esto facilita la depuración del mismo enormemente :D.
+
+· 10/04/2007   Danko                                                                    
+    He añadido código para que se descarguen los formularios de los paneles al finalizar la 
+	aplicación y para que se desarme la barra de herramientas ya que podían causar que la 
+	aplicación fallase
+
+· 10/04/2007   Danko                                                                    
+    Añadido el menú view que permite ocultar y mostrar los distintos paneles. Además se ha
+	añadido el modo fullscreen, pruebenlo...
+
+· 08/04/2007   Danko                  \Forms\frmMain.frm                                
+    Corregido un error que hacía que las barras de herramientas no se mostrasen apropiadamente
+	cuando se cargaba el formulario principal sin maximizar
+
+· 08/04/2007   Danko                                                                    
+    Eliminado gran cantidad de código repetido de la función CreateInterface (relacionado con 
+	la parte de dockear formularios)
+
+· 08/04/2007   Danko                                                                    
+    Dividido el código de createInterface en otros procedimientos. Ahora está mucho más claro.
+
+· 08/04/2007   Danko                  \Forms\frmMain.frm                                
+    Pequeño bugfix en el tamaño de la toolbars
+
+· 08/04/2007   Danko                  \Modules\modExecution.bas                         
+    Añadido soporte básico para adicionar maps a FPGs
+
+· 08/04/2007   Danko                  \Modules\modExecution.bas                         
+    Corregido el bug que hacía que no se pudiera compilar y ejecutar correctamente
+
+· 08/04/2007   Danko                                                                    
+    Corregido bug de refresco de tabs al llamar a la ayuda o modificar un documento (no se ponía la *)
+
+· 18/02/2007   Danko                  \Modules\modMenuActions.bas                       
+    Corregido bug al usar deshacer desde el menú.
+
+· 24/01/2007   Danko                  \Class\cProject.cls                               
+    Corregido un error que se producia cuando se intentaba eliminar un archivo del proyecto 
+	desde el menu Project. Lo que ocurría es que se llamaba al método RemoveFile de la clase 
+	cProject pasandole como argumento la ruta del archivo relativa al projecto que luego era
+	usada como clave (key) a la hora de eliminar el elemento de la colección m_colFiles. 
+	El problema es que la colección en cuestión almacena como key la ruta completa y no 
+	la relativa luego el elemento que se intentaba eliminar no existía.
+
+· 22/01/2007   Danko                  \Modules\modMenuActions.bas                       
+    Corregido pequeño problema con Redo (cuando no había nada por rehacer)
+
+· 22/01/2007   Danko                  \Forms\frmMain.frm                                
+    Añadidas distintas teclas de acceso rápido
+
+· 22/01/2007   Danko                  \Forms\frmPreferences.frm                         
+    Ahora se pueden cargar y guardar configuraciones de estilo predefinidas
+
+· 22/01/2007   Danko                                                                    
+    Añadido el aviso de licencia GNU GPL a todos los módulos del programa
+
+· 22/01/2007   Danko                                                                    
+    Fusionado el código de Izubiaurre con el mío
+
+· 22/01/2007   Danko                  \Forms\frmProjectBrowser.frm                      
+    Más cambios en el project browser (pequeños cambios). Corregidas algunas cosillas 
+	y comentado y traducido todo el código del módulo
+
+· 22/01/2007   Danko                  \Modules\modFileManagment.bas                     
+    Corregido un pequeño error que se producía cuando se creaba un nuevo formulario 
+	IFileForm: No se descargaba el mismo si la función NewW() retornaba 0
+
+· 21/01/2007   Danko                                                                    
+    Los botones Close y CloseAll de la barra de herramientas ya funcionan (antes no)
+
+· 21/01/2007   Danko                                                                    
+    Desplazadas algunas pocas acciones de menú de las que quedaban todavía en el frmMain al
+	modMenuActions
+
+· 21/01/2007   Danko                                                                    
+    Se ha añadido un Exit Sub/Function en aquellos métodos que usaban un manejador de 
+	error ya que si se producía un error en otra parte del código (que no tuviese que 
+	ver con el método) y se omitía el manejador saltaba también
+
+· 21/01/2007   Danko                                                                    
+    El Project Browser ahora solo añade o elimina los nodos necesarios de modo que al
+	refrescar los nodos conservan su estado expandido/sin expandir
+
+· 21/01/2007   Danko                                                                    
+    Se ha añadido la clase DOSOutput para solventar el problema que existía antes 
+	con la rutina de ejecución del  fxc (hacía que se congelase el programa)
+
+· 01/12/2006   Danko                                                                    
+    Añadido un pequeño reproductor de módulos de sonido
+
+· 01/12/2006   Danko                                                                    
+    Comienzo del FPGEditor.
+
+· 01/12/2006  Danko                                                                    
+    Añadida la configuración del editor
+
+· 01/12/2006   Danko                                                                    
+    Restaurada la libreria vbalmditabs, en concreto, una versión modificada por mí que le
+	agrega soporte para iconos y alguna cosa más.
+
+· 06/09/2006   Danko                                                                    
+    Arreglado el frmSave para que funcione correctamente. Arreglado los Untitled documents
+	y el asterísco que aparece en el caption. Corregidas algunas cosas de los menús y algún 
+	que otro cambio más
+
+· 04/09/2006   Danko                  \Modules\modApplication.bas                       
+    Creado un nuevo módulo modMenuAction que contendrá las acciones de los menus
+
+· 04/09/2006   Danko                  \Modules\modApplication.bas                       
+    Limpiado el código de la función Main
+
+· 04/09/2006   Danko                                                                    
+    Cambiado el comportamiento de muchas funciones que utilizaban TypeOf frm is "frmDoc" 
+	para ajustarlas al nuevo modelo de interfaz IFileForm
+
+· 04/09/2006   Danko                  \Modules\modApplication.bas                       
+    Arreglado error en Load Lang (que no se observaba por tener un On error resume next).
+
+· 02/09/2006   Danko                                                                    
+    Reemplazada la librería dll vbalMDITabs por un nuevo ocx FBRevMDITab. La versión original
+	de este control la he modificado 
+	para que se haga un LockWindowUpdate a la ventana MDI cuando se cierra un tab 
+	(para corregir un efecto gráfico).
+
+· 02/09/2006   Danko                                                                    
+    Gran cambio en el código relativo a la apertura, guardado, etc de archivos. Implementado
+	el modelo de interfaz IFileWindow
+
+· 31/08/2006   Danko                                                                    
+    CAMBIO IMPORTANTE: Se ha sustituido la biblioteca de tipos GDIPlus por otra más completa (GDI+.tbl). 
+	Se ha reescrito por completo la clase cMap (que ahora permite entre otras cosas guardar mapas) y se 
+	ha comenzado a integrar con el formulario de propiedades y con el resto del entorno. 
+	Se ha eliminado el módulo gdiplus.mod que ya no	se usa.
+	También se ha remplazado la zlib.dll existente por una nueva versión (1.2.3 teóricamente, aunque el 
+	archivo indica 1.2.2) y ahora se llama zlibvb.dll (siguiendo la recomendación del leeme de la zlib).
+
+· 01/06/2006   JaViS                  \Forms\Frm_tree.frm                               
+    arreglado el ir a var privadas cuando pertenecen al main
+
+· 01/06/2006   JaViS                  \Modules\mod_IA.bas                               
+    Ahora refresca archivos includes mas seguidos cuando se modifican
+
+· 31/05/2006   Danko                  \Forms\frmProjectBrowser.frm                      
+    Ahora se expande la lista de archivos del proyecto en el project browser
+
+· 31/05/2006   Danko     959679       \Forms\frmMain.frm                                
+    Corregido el error de visualización de los formularios dockeados en la parte inferior 
+	o superior al restaurar la ventana
+
+· 31/05/2006   Danko     1123169      \Forms\frmMain.frm                                
+    Corregido error en la apertura de los recent
+
+· 31/05/2006   Danko                                                                    
+    El tracker se muestra ahora como una ventana más (tipo documento o mapa) en lugar de acoplada en el entorno
+
+· 26/05/2006   Danko     1073738      \Forms\frmTrackerItem.frm                         
+    Bug de categorías y desarrolladores eliminados corregido
+
+· 22/05/2006   JaViS                                                                    
+    bug de declaracion de funciones arreglado (paso un tiempo eh? :P )
+
+· 09/12/2004   JaViS                                                                    
+    ahora se guarfan las pos de los tabs
+
+· 08/12/2004   Danko                                                                    
+    Añadidas nuevas categorias por defecto a un proyecto nuevo (fnt, midi...)
+
+· 28/11/2004   JaViS                                                                    
+    añadido el soporte para dll del FB1
+
+· 26/11/2004   Danko                  \Forms\frmLicense.frm                             
+    Arreglado un error que hacia que se saliese del programa al intentar mostrar la licencia
+
+· 21/11/2004   JaViS                  \FB2.vbp                                          
+    Agregada la posibilidad de mostrar la ayuda online disponible en el CVS de Fenix ^^ 
+	apretando F1 sobre una palabra
+
+· 15/11/2004   JaViS                                                                    
+    arreglado el tree para que funcione al hacer doble click, ademas ahora el cache cambio,
+	asi que no se debe usar con versiones antiguas
+
+· 13/11/2004   BlueSteel              \Forms\frmPreferences.frm
+	agregué muchas cosas a este form, aunque la mayoría están incompletas todavía. lo único 
+	que funciona completamente es el tema del registro de tipos de archivo. tanto las opciones
+	de colores del CS como las user tools están sin terminar y por eso no se muestran. prometo 
+	ordenar un poco ese código ^_^U
+
+· 11/11/2004   JaViS                                                                    
+    agregado soporte para cache de proyecto ^^ muy lindo :D
+
+· 02/11/2004   BlueSteel              \Resources\txtPreview.txt                          
+      agregado archivo de texto ejemplo, para ver los cambios realizados a la configuración 
+	  de CS (aunque estos todavía no funcionan)
+
+· 02/11/2004   BlueSteel	      \Forms\frmMain.frm
+    ahora sí se pueden activar los bitmaps de las toolbars
+
+· 01/11/2004   BlueSteel	      \Forms\frmDoc.frm
+    agregado código para usar el modo double buffer
+
+· 01/11/2004   BlueSteel	      \Forms\frmPreferences.frm
+    agregada configuración del CS, apenas empezada, todavía no funciona :(
+    agregada opción modo double buffer   
+    le agregué tabs, para organizar un poco mejor las cosas (sugerencia de JaViS ^_~)
+     
+
+· 01/11/2004   BlueSteel	      \Modules\modApplication.bas
+    agregada variable R_doublebuf 
+
+· 01/11/2004   BlueSteel	      \Forms\frmMain.frm
+    eliminado botón "Options" del menú "Run". esas opciones ahora se manejan desde el panel de
+	preferencias
+
+· 30/10/2004   BlueSteel	      \Forms\frmLicense.frm
+    arreglado bug que permitía editar el texto de la licencia (ovsesivo yo? nahh XD)
+
+· 30/10/2004   BlueSteel	      \Forms\frmMain.frm y otros
+    cambiado ícono 11 de imagelist1, por uno cortesía de AnyEdit XD
+    reemplazadas todas las asignaciones hardcoded de estilos por las variables M_Style y T_Style, 
+	cuyos valores dependen de la info previamente leída del INI (ver nota anterior, esto se 
+	aplica a todos los forms que usen menús o toolbars)
+    agregado botón Preferences en el menú Edit y en tbrMain
+    cambiado botón "About FBII" por "About FB2" en el menú Help
+
+· 30/10/2004   BlueSteel	      \Modules\modApplication.bas
+    agregado chequeo de estilos ANTES de comenzar la carga de frmMain
+    actualizada la lectura del config.ini para usar las nuevas keys de estilos (esto puede 
+	dar problemas la primera vez que se corra el programa y lea un ini viejo, pero igual el 
+	panel de preferencias guarda la nueva versión del ini
+    agregadas variables M_Style y T_Style para manejar los estilos de menús y toolbars, respectivamente
+    agregadas variables de configuración A_StyleXP y A_Bitmaps, usadas por el nuevo frmPreferences 	      
+
+· 30/10/2004   BlueSteel               \Forms\frmPreferences.frm
+    añadido frmPreferences provisorio, más que nada para que sirva a modo de base para después
+	ir completándolo (para que el usuario pueda modificar el comportamiento del CS, por ej)
+
+· 14/10/2004   JaViS     1014466                                                        
+    solucionado el bug del ID 1014466, detalles en traker del sourceforge
+
+· 09/10/2004   JaViS                                                                    
+    añadido el soporte para agregar varios archivos a un proyecto de una sola vez
+
+· 03/10/2004   JaViS                  \Forms\frmDoc.frm                                 
+    ahora antes de compilar borra el DCB existente
+
+· 02/10/2004   JaViS     1031646      \Forms\Frm_tree.frm                               
+    lo he tocado un poco a ver si se arregla solo XD
+
+· 02/10/2004   JaViS                  \Forms\frmRunOptions.frm                          
+    arreglado para que actualice unas var que faltaban al aceptar
+
+· 28/09/2004   JaViS                                                                    
+    arreglado el directorio de compilacion para que sea relativo a la posicion del proyecto
+
+· 22/09/2004   JaViS                  \Forms\frmDoc.frm                                 
+    Ahora si esta arrelgado del todo, el proximo paso es hacer este dir relativo a la pos. del FBP
+
+· 21/09/2004   JaViS                  \Forms\frmDoc.frm                                 
+    Arreglado un pequeño bug en la ejecucion de un proceso que tenia definido un dir de compilacion
+
+· 05/09/2004   Danko                  \Forms\frmDoc.frm                                 
+    Corregido error grave que impedía guardar archivos nuevos y guardar archivos como. Causado
+	por no comprobar si el nombre del fichero es "" antes de usar Dir
+
+· 04/09/2004   Danko                                                                    
+    Creación del archivo de registro de cambios Changes.log
+

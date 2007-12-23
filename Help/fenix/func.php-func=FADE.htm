@@ -1,0 +1,75 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=FADE.htm" tppabs="http://fenix.jlceb.com/func.php?func=FADE">FADE</a></b> ( <B>R</B>, <B>G</B>, <B>B</B>, <B>VELOCIDAD</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Activa una transición de colores automática </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>R</b></td><td valign="top"> : </td><td valign="top">Cantidad de componente Rojo</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>G</b></td><td valign="top"> : </td><td valign="top">Cantidad de componente Verde</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>B</b></td><td valign="top"> : </td><td valign="top">Cantidad de componente Azul</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>VELOCIDAD</b></td><td valign="top"> : </td><td valign="top">Velocidad</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función activa una transición de colores automática, que puede usarse para oscurecer la pantalla, hacer un fundido, o colorear su contenido. Llamar a la función simplemente activa ciertas variables internas y pone a 1 la variable global <a href="func.php-func=FADING.htm" tppabs="http://fenix.jlceb.com/func.php?func=FADING">FADING</a></A> . A partir de entonces, el motor gráfico se encargará automáticamente de colorear la pantalla cada frame.</P> <P> Los valores de componentes R, G y B recibidos por esta función se dan en porcentaje. Un porcentaje de 100% dejará un color sin modificar, mientras un porcentaje de 0% eliminará por completo la componente. También es posible especificar un valor por encima de 100. Se considera que un valor de 200 en una componente, debe poner al máximo la intensidad de la misma. Estos valores permiten hacer combinaciones flexibles, como por ejemplo un fundido al blanco (200,200,200) o bien aumentar la intensidad de color de una o varias componentes (150,150,100). Tal vez el valor más habitual sea el fundido al negro (0,0,0) o restaurar el estado normal de los colores (100,100,100).</P> <P> El valor de velocidad es un valor entero entre 1 y 64. Un valor de 64 activaría los porcentajes de color indicados de forma inmediata en el próximo frame, mientras un valor de 1 iría modificando las componentes de forma sucesiva, de forma que alcanzarían los valores especificados como parámetro en aproximadamente unos 60 frames. Un valor intermedio permite realizar la transición más rápidamente.</P> <P> La variable global <A NAME="FADING"></A> estará a 1 inmediatamente después de llamar a esta función. El motor gráfico la pondrá a 0 cuando la transición alcance los colores especificados como parámetro.</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt">En modo de 8 bits, esta función modifica la paleta de colores de forma interna (los valores recuperados por funciones como <A NAME="GET_COLORS"></A> seguirán siendo los mismos, pero en pantalla se verán modificados cada frame de forma acorde a los parámetros utilizados). Esta es una operación prácticamente instantánea. En cambio, en modo de 16 bits esta función modifica efectivamente los valores de todos los pixels en pantalla, realizando una costosa operación por cada uno de ellos. Esta operación es muy lenta y representa un coste considerable en la tasa de frames por segundo. Si se desea hacer un juego con efectos de colorización globales, se recomienda usar modo de 8 bits o bien usar los efectos localmente en una zona reducida de la pantalla mediante blendops. Si ello no fuera posible, entonces es preferible escoger una resolución de pantalla limitada para aumentar el rendimiento. Hay que tener en cuenta que, incluso una vez acabada la transición, si las componentes finales de los colores no son 100 para las tres, el motor gráfico seguirá modificando los pixels de pantalla cada frame, por lo que el perjuicio al rendimiento no se limitará al período que dure la transición y seguirá presente una vez acabada esta.</td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=FADE_ON.htm" tppabs="http://fenix.jlceb.com/func.php?func=FADE_ON">FADE_ON</a></b></td><td>&nbsp;</td><td>Restaura una transición de color</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=FADE_OFF.htm" tppabs="http://fenix.jlceb.com/func.php?func=FADE_OFF">FADE_OFF</a></b></td><td>&nbsp;</td><td>Restaura una transición de color</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SET_COLORS.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_COLORS">SET_COLORS</a></b></td><td>&nbsp;</td><td>Cambia inmediatamente los valores de la paleta de colores</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

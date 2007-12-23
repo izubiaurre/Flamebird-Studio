@@ -1,0 +1,75 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=SET_COLORS.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_COLORS">SET_COLORS</a></b> ( <B>PRIMER</B>, <B>NUMERO</B>, <B>&COLOR</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Cambia inmediatamente los valores de la paleta de colores </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>PRIMER</b></td><td valign="top"> : </td><td valign="top">Número del primer color de paleta a cambiar</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>NUMERO</b></td><td valign="top"> : </td><td valign="top">Número de colores a cambiar</td></tr>
+<tr><td nowrap valign="top">POINTER</td><td valign="top"><b>COLOR</b></td><td valign="top"> : </td><td valign="top">Puntero a un array de bytes con los nuevos valores</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Modifica inmediatamente los valores actuales de la paleta de colores del sistema. La paleta de colores contiene 256 entradas de tres bytes cada una e incluye los componentes rojo, verde y azul (en ese orden) de cada uno de los 256 colores disponibles en un modo de 8 bits.</P> <P> Todos los gráficos de 8 bits están representados por un byte por cada pixel. Cada byte representa un índice dentro de la paleta de colores, donde se encuentra el color real que se verá en pantalla al mostrarse dicho pixel. Modificar la paleta de colores durante la ejecución del programa permite modificar de forma instantánea la apariencia de los pixels, sin cambiar el contenido en bits de la pantalla o de los gráficos. Esta técnica tiene múltiples aplicaciones, desde colorear, iluminar u oscurecer toda la pantalla, a emular movimientos o animaciones cambiando o rotando una serie de colores determinados.</P> <P> Esta función permite cambiar una serie consecutiva de colores, que pueden variar de un color a la paleta completa. Para utilizarla, es preciso crear en algún lugar de memoria un array de bytes que contenga tres bytes por cada color que desee cambiarse, y escribir en él las nuevas componentes deseadas por cada color (0 indica ausencia de la componente, y 255 valor máximo; por ejemplo las componentes 255, 0, 0 indicarían un color rojo de máxima intensidad). Seguidamente basta con llamar a esta función especificando el número del primer color a cambiar (0 para el primer color de la paleta), el número total de colores a cambiar (de 1 a 256), y la dirección de memoria del array, empleando el operador & .</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt">Puede ser más cómodo usar una estructura o un tipo de dato definido por el usuario para representar las componentes de los colores. Es válido usar una estructura con 256 elementos, cada uno de ellos con tres variables tipo byte, en lugar de un array de 768 bytes, por ejemplo.</td></tr>
+<tr><td style="padding-left: 40pt">Es preciso llamar a esta función cada vez que se desee hacer un cambio en la paleta. Si se desea hacer un degradado u otro efecto, habrá que llamar a la función cada frame. No basta con llamarla una vez y limitarse luego a cambiar los valores en memoria del array usado como parámetro.</td></tr>
+<tr><td style="padding-left: 40pt">En un modo de 16 bits, los gráficos de 8 bits deben convertirse a 16 bits cada vez que se dibujan. Esto significa que el motor gráfico leerá los valores de la paleta en el momento de dibujarlos: en modo de 16 bits cada pixel de un gráfico contiene el color real utilizado, y no es posible cambiar la apariencia de los colores sin cambiar los bits del gráfico en sí. Si se desean utilizar gráficos de 8 bits en un modo de 16 bits y poder usar esta u otras funciones de paleta para hacer efectos, es preciso usar los gráficos de 8 bits como gráficos de un proceso (de manera que el motor los vuelva a dibujar cada frame) y nunca dibujarlos sobre el fondo de pantalla o dentro de gráficos de 16 bits, ya que eso los convertiría a 16 bits. También es posible usar un gráfico de 8 bits como fondo en modo de 16 bits, teniendo cuidado de no dibujar ningún gráfico de 16 bits sobre él, ya que eso también convertiría el fondo de pantalla a 16 bits y dejarían de afectarle los cambios sobre la paleta.</td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=GET_PIXEL.htm" tppabs="http://fenix.jlceb.com/func.php?func=GET_PIXEL">GET_PIXEL</a></b></td><td>&nbsp;</td><td>Lee el valor de un pixel de un gráfico</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=GET_COLORS.htm" tppabs="http://fenix.jlceb.com/func.php?func=GET_COLORS">GET_COLORS</a></b></td><td>&nbsp;</td><td>Recupera los valores actuales de la paleta de colores</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

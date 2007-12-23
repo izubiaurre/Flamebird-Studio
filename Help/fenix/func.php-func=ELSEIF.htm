@@ -1,0 +1,62 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"><tr><td style="padding-left: 0pt"><font color=#800000><B> IF</B> <B> (</B> expresión <B> )</B> <BLOCKQUOTE> <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=Sentencias  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=Sentencias'" tppabs="http://fenix.jlceb.com/func.php?func=Sentencias">Sentencias</a></A> <BR></BR> ...</BLOCKQUOTE> <B> ELSEIF</B> <B> (</B> expresión <B> )</B> <BLOCKQUOTE> <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=Sentencias  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=Sentencias'" tppabs="http://fenix.jlceb.com/func.php?func=Sentencias">Sentencias</a></A> <BR></BR> ...</BLOCKQUOTE> <B> ELSE</B> <BLOCKQUOTE> <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=Sentencias  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=Sentencias'" tppabs="http://fenix.jlceb.com/func.php?func=Sentencias">Sentencias</a></A> <BR></BR> ...</BLOCKQUOTE> <B> END</B></font></td></tr>
+ </td></tr> <tr><td style="padding-left: 40pt"> <p> Ejecuta secciones de código condicionalmente </p> </td></tr>  <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta sentencia permite ejecutar código condicionalmente. Al llegar a la sentencia IF, la expresión entre paréntesis se evalúa numéricamente y, si resulta cierta, el bloque de código a continuación se ejecuta. Una vez acabado, o si la expresión resultó falsa, la ejecución continúa normalmente a partir de la siguiente sentencia.</P> <P> La sentencia IF permite partir el bloque de código en dos o más secciones. Si se incluye una cláusula ELSE en mitad del código, el bloque se divide en dos trozos y la parte posterior al ELSE se ejecuta sí y sólo si la expresión original resultó ser false.</P> <P> Además, el bloque anterior al ELSE puede dividirse a su vez por varias cláusulas ELSEIF. Como su nombre indica, estas cláusulas introducen una nueva condición y el código a continuación de las mismas se ejecutará en lugar de los demás si la expresión del IF fue falsa pero la expresada a continuación es correcta.</P> <H3> Orden de evaluación</H3> <P> Una cadena de IF/ELSEIF se ejecuta secuencialmente: primero se comprueba la expresión del primer IF. Si resulta cierta, se ejecuta su código y tras él se continúa después del END. Sólo si resulta falsa se procede a comprobar la expresión del segundo ELSEIF. Con esta segunda expresión se repite la misma operación: si resulta cierta, se ejecuta el código a continuación inmediatamente y nunca se evalúa cualquier ELSEIF posterior.</P> <P> Es importante tener en cuenta este orden de evaluación si las expresiones a evaluar tienen efectos secundarios (por ejemplo, se llama a funciones que modifican variables globales o se utiliza en ella operadores como ++)</P> </td></tr> 
+	</table>
+		
+</body>
+</html>
+

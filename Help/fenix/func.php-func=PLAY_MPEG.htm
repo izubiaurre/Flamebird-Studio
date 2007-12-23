@@ -1,0 +1,72 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=PLAY_MPEG.htm" tppabs="http://fenix.jlceb.com/func.php?func=PLAY_MPEG">PLAY_MPEG</a></b> ( <B>VÍDEO</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Inicia la reproducción de un vídeo </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>VÍDEO</b></td><td valign="top"> : </td><td valign="top">Identificador del vídeo</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función empieza a reproducir un vídeo MPEG. El vídeo no se muestra en pantalla automáticamente. Lo que hace esta función, en cambio, es devolver el código de un gráfico perteneciente a la librería 0 que representa en todo momento el frame actual del video.</P> <P> Para mostrar el video en pantalla, la forma recomendada es asignar el código devuelto por PLAY_MPEG a la variable <a href="func.php-func=GRAPH.htm" tppabs="http://fenix.jlceb.com/func.php?func=GRAPH">GRAPH</a></A> de un proceso. Las coordenadas <a href="func.php-func=X.htm" tppabs="http://fenix.jlceb.com/func.php?func=X">X</a></A> e <a href="func.php-func=Y.htm" tppabs="http://fenix.jlceb.com/func.php?func=Y">Y</a></A> del proceso identificarán entonces la posición del video en pantalla, a partir de su centro.</P> <P> Puedes usar el gráfico normalmente en todo tipo de operaciones. Por ejemplo, puedes usar la variable <a href="func.php-func=FLAGS.htm" tppabs="http://fenix.jlceb.com/func.php?func=FLAGS">FLAGS</a></A> para mostrar un video invertido, o transparente, o cambiarlo de tamaño con <a href="func.php-func=SIZE.htm" tppabs="http://fenix.jlceb.com/func.php?func=SIZE">SIZE</a></A> . Puedes usar también este gráfico en operaciones de dibujo como <a href="func.php-func=MAP_PUT.htm" tppabs="http://fenix.jlceb.com/func.php?func=MAP_PUT">MAP_PUT</a></A> o <a href="func.php-func=MAP_XPUT.htm" tppabs="http://fenix.jlceb.com/func.php?func=MAP_XPUT">MAP_XPUT</a></A> , pero ten en cuenta que en ese caso sólo accedes al último frame. El contenido del gráfico se reescribe contínuamente, por lo que no es posible modificarlo directamente (por ejemplo, para añadir un subtítulo). Si quieres llevar a cabo este tipo de operaciones, tendrás que dibujar los elementos adicionales en pantalla, con una coordenada <a href="func.php-func=Z.htm" tppabs="http://fenix.jlceb.com/func.php?func=Z">Z</a></A> superior, o bien copiar cada frame a otro gráfico antes de operar.</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt">No se permite la reproducción de video MPEG en modo de 8 bits (256 colores).</td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=LOAD_MPEG.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_MPEG">LOAD_MPEG</a></b></td><td>&nbsp;</td><td>Recupera de disco un fichero de vídeo</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=STOP_MPEG.htm" tppabs="http://fenix.jlceb.com/func.php?func=STOP_MPEG">STOP_MPEG</a></b></td><td>&nbsp;</td><td>Detiene la reproducción de un vídeo</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=PAUSE_MPEG.htm" tppabs="http://fenix.jlceb.com/func.php?func=PAUSE_MPEG">PAUSE_MPEG</a></b></td><td>&nbsp;</td><td>Detiene la reproducción de un MPEG temporalmente</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

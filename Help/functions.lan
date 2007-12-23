@@ -1,0 +1,1042 @@
+// LAN FUNCION DEFINITION FILE FROM FB2
+// MADE BY: VIATOR IN: 12/DIC/2004. MODIFIED BY DANKO IN 25/ENE/2007
+// LAST UPDATE: 12/12/2004. 25/ENE/2007
+// FENIX COMPARIBILITY: FENIX 0.84B
+//
+// FB2Team 2004/2005 (c) GNU GENERAL PUBLIC LICENSE
+
+** DEPURADO *************************************************************************************************************************************
+
+[SAY]
+QOfPrototipes = 1
+Prototipe     = SAY ( string MESSAGE )
+
+** MATEMATICAS **********************************************************************************************************************************
+
+[RAND]
+QOfPrototipes = 1
+Prototipe     = int RAND ( int MIN, int MAX )
+
+[RAND_SEED]
+QOfPrototipes = 1
+Prototipe     = RAND_SEED ( int SEED )
+
+[ABS]
+QOfPrototipes = 1
+Prototipe     = int ABS ( int NUMBER )
+
+[POW]
+QOfPrototipes = 1
+Prototipe     = float POW ( float NUMBER, float POW )
+
+[FGET_ANGLE]
+QOfPrototipes = 1
+Prototipe     = int FGET_ANGLE ( int X1, int Y1, int X2, int Y2 )
+
+[FGET_DIST]
+QOfPrototipes = 1
+Prototipe     = int FGET_DIST ( int X1, int Y1, int X2, int Y2 )
+
+[NEAR_ANGLE]
+QOfPrototipes = 1
+Prototipe     = int NEAR_ANGLE ( int ANGLE1, int ANGLE2, int MAX_INC )
+
+[ADVANCE]
+QOfPrototipes = 1
+Prototipe     = ADVANCE ( int DISTANCE )
+
+[XADVANCE]
+QOfPrototipes = 1
+Prototipe     = XADVANCE ( int ANGLE, int DISTANCE )
+
+[SQRT]
+QOfPrototipes = 1
+Prototipe     = float SQRT ( float NUMBER )
+
+[COS]
+QOfPrototipes = 1
+Prototipe     = float COS ( float ANGLE )
+
+[SIN]
+QOfPrototipes = 1
+Prototipe     = float SIN ( float ANGLE )
+
+[TAN]
+QOfPrototipes=1
+Prototipe=float TAN ( float ANGLE )
+
+[ACOS]
+QOfPrototipes = 1
+Prototipe     = float ACOS ( float NUMBER )
+
+[ASIN]
+QOfPrototipes = 1
+Prototipe     = float ASIN ( float NUMBER )
+
+[ATAN]
+QOfPrototipes = 1
+Prototipe     = float ATAN ( float NUMBER )
+
+** INTERACCIÓN ENTRE PROCESOS *******************************************************************************************************************
+
+[GET_ANGLE]
+QOfPrototipes = 1
+Prototipe     = int GET_ANGLE ( int PROCESS_ID )
+
+[GET_DIST]
+QOfPrototipes = 1
+Prototipe     = int GET_DIST ( int PROCESS_ID )
+
+[GET_DISTX]
+QOfPrototipes = 1
+Prototipe     = int GET_DISTX ( int ANGLE, int DISTANCE )
+
+[GET_DISTY]
+QOfPrototipes = 1
+Prototipe     = int GET_DISTY ( int ANGLE, int DISTANCE )
+
+[GET_ID]
+QOfPrototipes = 1
+Prototipe     = int GET_ID (int TYPE)
+
+[COLLISION]
+QOfPrototipes = 2
+Prototipe     = int COLLISION ( int TYPE )
+Prototipe2    = int COLLISION ( int ID )
+
+[SIGNAL]
+QOfPrototipes = 1
+Prototipe     = SIGNAL ( int PROCESS, int SIGNAL )
+
+[LET_ME_ALONE]
+QOfPrototipes = 1
+Prototipe     = LET_ME_ALONE ( )
+
+[EXIT]
+QOfPrototipes = 3
+Prototipe     = EXIT ( string TEXT, int NUMBER )
+Prototipe2    = EXIT ( string TEXT )
+Prototipe3    = EXIT ( )
+
+** ENTRADA/SALIDA *******************************************************************************************************************************
+
+[KEY]
+QOfPrototipes = 1
+Prototipe     = int KEY ( int KEY )
+
+[GET_JOY_BUTTON]
+QOfPrototipes = 1
+Prototipe     = int GET_JOY_BUTTON ( int BUTTON )
+
+[GET_JOY_POSITION]
+QOfPrototipes = 1
+Prototipe     = int GET_JOY_POSITION ( int AXIS )
+
+[SELECT_JOY]
+QOfPrototipes = 1
+Prototipe     = int SELECT_JOY ( int JOYSTICK )
+
+[NUMBER_JOY]
+QOfPrototipes = 1
+Prototipe     = int SELECT_JOY ( )
+
+** INICIALIZACIÓN Y CARGA ***********************************************************************************************************************
+
+[SET_MODE]
+QOfPrototipes = 4
+Prototipe     = SET_MODE ( int MODE )
+Prototipe2    = SET_MODE ( int WIDE, int HIGH )
+Prototipe3    = SET_MODE ( int WIDE, int HIGH, int BPP )
+Prototipe4    = SET_MODE ( int WIDE, int HIGH, int BPP, int FLAGS )
+
+[SET_FPS]
+QOfPrototipes = 1
+Prototipe     = SET_FPS ( int FPS, int JUMP )
+
+[LOAD_MAP]
+QOfPrototipes = 1
+Prototipe     = int LOAD_MAP ( string FILE )
+
+[LOAD_FPG]
+QOfPrototipes = 2
+Prototipe     = int LOAD_FPG ( string FILE )
+Prototipe2    = int LOAD_FPG ( string FILE , pointer RETURN )
+
+[UNLOAD_MAP]
+QOfPrototipes = 1
+Prototipe     = UNLOAD_MAP ( int LIBRARY, int GRAPHIC )
+
+[UNLOAD_FPG]
+QOfPrototipes = 1
+Prototipe     = UNLOAD_FPG ( int LIBRARY )
+
+[GRAPHIC_SET]
+QOfPrototipes = 1
+Prototipe     = GRAPHIC_SET ( int LIBRARY, int GRAPHIC, int TYPE, int NUMBER )
+
+[GRAPHIC_INFO]
+QOfPrototipes = 1 
+Prototipe     = int GRAPHIC_INFO ( int LIBRARY, int GRAPHIC, int TYPE )
+
+** PUNTOS DE CONTROL ****************************************************************************************************************************
+
+[GET_POINT]
+QOfPrototipes = 1
+Prototipe     = GET_POINT ( int LIBRARY, int GRAPHIC, int POINT, pointer X, pointer Y )
+
+[GET_REAL_POINT]
+QOfPrototipes = 1
+Prototipe     = GET_REAL_POINT ( int POINT, pointer X, pointer Y )
+
+[SET_POINT]
+QOfPrototipes = 1
+Prototipe     = SET_POINT ( int LIBRARY, int GRAPHIC, int POINT, int X, int Y)
+
+[SET_CENTER]
+QOfPrototipes = 1
+Prototipe     = SET_CENTER ( int LIBRARY, int GRAPHIC, int X, int Y )
+
+** REGIONES *************************************************************************************************************************************
+
+[DEFINE_REGION]
+QOfPrototipes = 1
+Prototipe     = DEFINE_REGION ( int REGION, int X, int Y, int WIDE, int HIGH )
+
+[OUT_REGION]
+QOfPrototipes = 1
+Prototipe     = int OUT_REGION (int PROCESS, int REGION)
+
+** FONDO DE PANTALLA ****************************************************************************************************************************
+
+[PUT]
+QOfPrototipes = 1
+Prototipe     = PUT ( int LIBRARY, int GRAPHIC, int X, int Y )
+
+[XPUT]
+QOfPrototipes = 1
+Prototipe     = XPUT ( int LIBRARY, int GRAPHIC, int X, int Y, int ANGLE, int SIZE, int FRLAGS, int REGION )
+
+[PUT_PIXEL]
+QOfPrototipes = 1
+Prototipe     = PUT_PIXEL ( int X, int Y, int COLOR )
+
+[PUT_SCREEN]
+QOfPrototipes = 1
+Prototipe     = PUT_SCREEN ( int LIBRERY, int GRAPHIC )
+
+[CLEAR_SCREEN]
+QOfPrototipes = 1
+Prototipe     = CLEAR_SCREEN ( )
+
+[GET_PIXEL]
+QOfPrototipes = 1
+Prototipe     = int GET_PIXEL ( int X, int Y )
+
+** BITMAPS **************************************************************************************************************************************
+
+[MAP_BLOCK_COPY]
+QOfPrototipes = 1
+Prototipe     = MAP_BLOCK_COPY ( int LIBRARY, int TARGET, int TX, int TY, int SOURCE, int SX, int SY, int WIDE, int HIGH )
+
+[MAP_GET_PIXEL]
+QOfPrototipes = 1
+Prototipe     = int MAP_GET_PIXELl ( int LIBRARY, int GRAPHIC, int X, int Y )
+
+[MAP_PUT]
+QOfPrototipes = 1
+Prototipe     = MAP_PUT ( int LIBRARY, int GRAPHIC_1, int GRAPHIC_2, int X, int Y )
+
+[MAP_XPUT]
+QOfPrototipes = 1
+Prototipe     = MAP_XPUT ( int LIBRARY, int GRAPHIC_1, int GRAPHIC_2, int X, int Y, int ANGLE, int SIZE, int FLAGS, int REGION )
+
+[MAP_PUT_PIXEL]
+QOfPrototipes = 1
+Prototipe     = MAP_PUT_PIXEL ( int LIBRARY, int GRAPHIC, int X, int Y, int COLOR )
+
+[NEW_MAP]
+QOfPrototipes = 1
+Prototipe     = int NEW_MAP ( int WIDE, int HIGH, int BPP)
+
+[MAP_CLEAR]
+QOfPrototipes = 1
+Prototipe     = MAP_CLEAR ( int LIBRARY, int GRAPHIC, int COLOR )
+
+[MAP_CLONE]
+QOfPrototipes = 1
+Prototipe     = int MAP_CLONE (int LIBRARY, int GRAPHIC)
+
+[MAP_NAME]
+QOfPrototipes = 1
+Prototipe     = MAP_NAME ( )
+
+[MAP_SET_NAME]
+QOfPrototipes = 1
+Prototipe     = MAP_SET_NAME (int LIBRARY, int GRAPHIC, string NAME )
+
+[MAP_EXISTS]
+QOfPrototipes = 1
+Prototipe     = int MAP_EXISTS ( int LIBRARY, int GRAPHIC )
+
+[MAP_XPUTNP]
+QOfPrototipes = 1
+Prototipe     = int MAP_XPUTNP (int FILE_TRG, int GRAPH_TRG, int FILE_SRC, int GRAPH_SRC, int X, int Y, int ANGLE, int SCALE_X, int SCALE_Y, int FLAGS)
+
+[FPG_EXISTS]
+QOfPrototipes = 1
+Prototipe     = int FPG_EXISTS ( int LIBRARY )
+
+** FPG ******************************************************************************************************************************************
+
+[FPG_ADD]
+QOfPrototipes = 1
+Prototipe     = FPG_ADD ( int LIBRARY, int GRAPHIC, int SRC_LIBRARY, int SRC_GRAPHIC )
+
+[NEW_FPG]
+QOfPrototipes = 1
+Prototipe     = NEW_FPG ( )
+
+[FPG_NEW]
+QOfPrototipes = 1
+Prototipe     = FPG_NEW ( )
+
+** TEXTOS ***************************************************************************************************************************************
+
+[LOAD_FNT]
+QOfPrototipes = 1
+Prototipe     = int LOAD_FNT ( string FILE )
+
+[UNLOAD_FNT]
+QOfPrototipes = 1
+Prototipe     = UNLOAD_FNT ( int FONT )
+
+[WRITE]
+QOfPrototipes = 1
+Prototipe     = int WRITE ( int FONT, int X, int Y, int TYPE, string TEXT )
+
+[WRITE_INT]
+QOfPrototipes = 1
+Prototipe     = int WRITE_INT ( int FONT, int X, int Y, int TYPE, pointer VAR )
+
+[MOVE_TEXT]
+QOfPrototipes = 1
+Prototipe     = MOVE_TEXT ( int MOVE, intX, int Y )
+
+[DELETE_TEXT]
+QOfPrototipes = 1
+Prototipe     = DELETE_TEXT ( int TEXT )
+
+[WRITE_IN_MAP]
+QOfPrototipes = 1
+Prototipe     = int WRITE_IN_MAP (int FONT, int TYPE, string TEXT)
+
+[TEXT_WIDTH]
+QOfPrototipes = 1
+Prototipe     = int TEXT_WIDTH (int FONT, string TEXT)
+
+[TEXT_HEIGHT]
+QOfPrototipes = 1
+Prototipe     = int TEXT_HEIGHT ( int FONT, string TEXT )
+
+[SAVE_FNT]
+QOfPrototipes = 1
+Prototipe     = SAVE_FNT ( int FONT, string FILE )
+
+[LOAD_BDF]
+QOfPrototipes = 1
+Prototipe     = LOAD_BDF ( string FILE )
+
+** FECHA ****************************************************************************************************************************************
+
+[TIME]
+QOfPrototipes= 1
+Prototipe    = int TIME ( )
+
+[FTIME]
+QOfPrototipes = 1
+Prototipe     = string FTIME ( string FORMAT, int TIME )
+
+** FICHEROS *************************************************************************************************************************************
+
+[SAVE]
+QOfPrototipes = 1
+Prototipe     = int SAVE ( string FILE, varspace VAR )
+
+[LOAD]
+QOfPrototipes = 1
+Prototipe     = int LOAD ( string FILE, varspace VAR )
+
+[FOPEN]
+QOfPrototipes = 1
+Prototipe     = int FOPEN ( string FILE, int TYPE )
+
+[FCLOSE]
+QOfPrototipes = 1
+Prototipe     = FCLOSE ( int FILE )
+
+[FREAD]
+QOfPrototipes = 1
+Prototipe     = int FREAD ( int FILE, varspace VAR)
+
+[FWRITE]
+QOfPrototipes = 1
+Prototipe     = int FWRITE ( int FILE, varspace VAR)
+
+[FSEEK]
+QOfPrototipes = 1
+Prototipe     = fseek ( int FILE, int POSITION, int TYPE )
+
+[FTELL]
+QOfPrototipes = 1
+Prototipe     = int FTELL ( int FILE )
+
+[FLENGTH]
+QOfPrototipes = 1
+Prototipe     = int FLENGTH ( int FILE )
+
+[FPUTS]
+QOfPrototipes = 1
+Prototipe     = int FPUTS ( int FILE, string STRING )
+
+[FGETS]
+QOfPrototipes = 1
+Prototipe     = string FGETS ( int FILE )
+
+[FEOF]
+QOfPrototipes = 1
+Prototipe     = int FEOF ( int FILE )
+
+[FILE]
+QOfPrototipes = 1
+Prototipe     = string FILE ( string FILE )
+
+** MODO7 ****************************************************************************************************************************************
+
+[START_MODE7]
+QOfPrototipes = 1
+Prototipe     = START_MODE7 ( int NUMBER, int LIBRARY, int GFX_INT, int GFX_EXT, int REGION, int HORIZON )
+
+[STOP_MODE7]
+QOfPrototipes = 1
+Prototipe     = STOP_MODE7 ( int NUMBER )
+
+** SCROLL ***************************************************************************************************************************************
+
+[START_SCROLL]
+QOfPrototipes = 1
+Prototipe     = START_SCROLL ( int NUMBER, int LIBRERY, int GRAPHIC, int BACKGROUND, int REGION, int FLAGS )
+
+[STOP_SCROLL]
+QOfPrototipes = 1
+Prototipe     = STOP_SCROLL ( int NUMBER )
+
+[MOVE_SCROLL]
+QOfPrototipes = 1
+Prototipe     = MOVE_SCROLL ( int NUMBER )
+
+** ANIMACIONES FLI ******************************************************************************************************************************
+
+[START_FLI]
+QOfPrototipes = 1
+Prototipe     = int START_FLI ( string NAME, int X, int Y )
+
+[END_FLI]
+QOfPrototipes = 1
+Prototipe     = END_FLI ( )
+
+[FRAME_FLI]
+QOfPrototipes = 1
+Prototipe     = int FRAME_FLI ( )
+
+[RESET_FLI]
+QOfPrototipes = 1
+Prototipe     = RESET_FLI ( )
+
+** TRATAMIENTO DE CADENAS ***********************************************************************************************************************
+
+[LEN]
+QOfPrototipes = 1
+Prototipe     = int LEN ( string STRING )
+
+[UCASE]
+QOfPrototipes = 1
+Prototipe     = string UCASE ( string STRING )
+
+[LCASE]
+QOfPrototipes = 1
+Prototipe     = string LCASE ( string STRING )
+
+[SUBSTR]
+QOfPrototipes = 2
+Prototipe     = string SUBSTR ( string STRING, int BEGINING, int END )
+Prototipe2    = string SUBSTR ( string STRING, int BEGINING )
+
+[FIND]
+QOfPrototipes = 2
+Prototipe     = int FIND ( string STRING, string FOUND )
+Prototipe2    = int FIND ( string STRING, string FOUND , int BEGINING)
+
+[ITOA]
+QOfPrototipes = 1
+Prototipe     = string ITOA ( int INTEGER )
+
+[FTOA]
+QOfPrototipes = 1
+Prototipe     = string FTOA ( float FLOAT )
+
+[ATOI]
+QOfPrototipes = 1
+Prototipe     = int ATOI ( string STRING )
+
+[ATOF]
+QOfPrototipes = 1
+Prototipe     = float ATOF ( string STRING )
+
+[ASC]
+QOfPrototipes = 1
+Prototipe     = byte ASC ( string STRING )
+
+[CHR]
+QOfPrototipes = 1
+Prototipe     = string CHR ( byte NUMBER )
+
+** EXTENSIONES ADICIONALES **********************************************************************************************************************
+
+[LOAD_PNG]
+QOfPrototipes = 1
+Prototipe     = int LOAD_PNG ( string FILE )
+
+[LOAD_PCX]
+QOfPrototipes = 1
+Prototipe     = int LOAD_PCX ( string FILE )
+
+[MAP_BUFFER]
+QOfPrototipes = 1
+Prototipe     = pointer MAP_BUFFER ( int LIBRARY, int GRAPHIC )
+
+[SET_COLORS]
+QOfPrototipes = 1
+Prototipe     = SET_COLORS ( int FIRST, int NUMBER, pointer COLOR )
+
+[GET_COLORS]
+QOfPrototipes = 1
+Prototipe     = GET_COLORS ( int FIRST, int NUMBER, pointer PAL )
+
+[ALLOC]
+QOfPrototipes = 1 
+Prototipe     = pointer ALLOC ( int BYTES )
+
+[FREE]
+QOfPrototipes = 1
+Prototipe     = FREE ( pointer MEM )
+
+[REALLOC]
+QOfPrototipes = 1
+Prototipe     = pointer REALLOC ( pointer MEM, int BYTES )
+
+[EXISTS]
+QOfPrototipes = 1
+Prototipe     = int EXISTS ( int PROCESS )
+
+[MEMSET]
+QOfPrototipes = 1
+Prototipe     = MEMSET ( pointer MEM, byte NUMBER, int BYTES )
+
+[MEMSETW]
+QOfPrototipes = 1
+Prototipe     = MEMSETW ( pointer MEM, word NUMBER, int WORDS )
+
+[MEMCOPY]
+QOfPrototipes = 1
+Prototipe     = MEMCOPY ( pointer TARGET, pointer SOURCE, int BYTES )
+
+[MEMORY_TOTAL]
+QOfPrototipes = 1
+Prototipe     = float memory_total ( )
+
+[MEMORY_FREE]
+QOfPrototipes = 1
+Prototipe     = int MEMORY_FREE ( )
+
+** FUNCIONES DE PRIMITIVAS **********************************************************************************************************************
+
+[DRAWING_MAP]
+QOfPrototipes = 1
+Prototipe     = DRAWING_MAP ( int LIBRARY, int GRAPHIC )
+
+[DRAWING_COLOR]
+QOfPrototipes = 1
+Prototipe     = DRAWING_COLOR ( int COLOR )
+
+[DRAW_LINE]
+QOfPrototipes = 1
+Prototipe     = DRAW_LINE ( int X1, int Y1, int X2, int Y2 )
+
+[DRAW_RECT]
+QOfPrototipes = 1
+Prototipe     = DRAW_RECT (int X1, int Y1, int X2, int Y2)
+
+[DRAW_BOX]
+QOfPrototipes = 1
+Prototipe     = DRAW_BOX (int X1, int Y1, int X2, int Y2)
+
+[DRAW_CIRCLE]
+QOfPrototipes = 1
+Prototipe     = DRAW_CIRCLE (int X, int Y, int RADIO)
+  
+[DRAW_FCIRCLE]
+QOfPrototipes = 1
+Prototipe     = DRAW_FCIRCLE (int X, int Y, int RADIO)
+
+[SET_TEXT_COLOR]
+QOfPrototipes = 1
+Prototipe     = SET_TEXT_COLOR ( int COLOR )
+
+** BUSQUEDA DE CAMINOS **************************************************************************************************************************
+
+[PATH_FIND]
+QOfPrototipes = 1
+Prototipe     = int PATH_FIND ( int LIBRARY, int GRAPHIC, int X1, int Y1, int X2, int Y2, int OPTIONS )
+
+[PATH_GETXY]
+QOfPrototipes = 1
+Prototipe     = int PATH_GETXY ( pointer X, pointer Y )
+
+[PATH_WALL]
+QOfPrototipes = 1
+Prototipe     = int PATH_WALL ( int NUMBER )
+
+** BLENDOPS *************************************************************************************************************************************
+
+[BLENDOP_NEW]
+QOfPrototipes = 1
+Prototipe     = int BLENDOP_NEW ( )
+
+[BLENDOP_IDENTITY]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_IDENTITY ( int BLENDOP )
+
+[BLENDOP_TINT]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_TINT ( int BLENDOP, float AMOUNT, byte R, byte G, byte B )
+
+[BLENDOP_TRANSLUCENCY]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_TRANSLUCENCY ( int BLENDOP, float AMOUNT )
+
+[BLENDOP_INTENSITY]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_INTENSITY ( int BLENDOP, float AMOUNT )
+
+[BLENDOP_SWAP]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_SWAP ( int BLENDOP )
+
+[BLENDOP_ASSIGN]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_ASSIGN ( int LIBRERY, int GRAPHIC, int BLENDOP )
+
+[BLENDOP_APPLY]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_APPLY ( int LIBRERY, int GRAPHIC, int BLENDOP )
+
+[BLENDOP_FREE]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_FREE ( int BLENDOP )
+
+[BLENDOP_GRAYSCALE]
+QOfPrototipes = 1
+Prototipe     = BLENDOP_GRAYSCALE ( int BLENDOP , int METOD)
+
+** WM *******************************************************************************************************************************************
+
+[SET_TITLE]
+QOfPrototipes = 1
+Prototipe     = SET_TITLE ( string TITLE )
+
+[SET_ICON]
+QOfPrototipes = 1
+Prototipe     = SET_ICON ( int FPG, int GRAPHIC )
+
+** EXTENDED WRITE *******************************************************************************************************************************
+
+[WRITE_VAR]
+QOfPrototipes = 1
+Prototipe     = int WRITE_VAR ( int FONT, int X, int Y, int TYPE, varspace VAR )
+
+[WRITE_FLOAT]
+QOfPrototipes = 1
+Prototipe     = int WRITE_FLOAT ( int FONT, int X, int Y, int TYPE, pointer FLOAT )
+
+[WRITE_STRING]
+QOfPrototipes = 1
+Prototipe     = int WRITE_STRING ( int FONT, int X, int Y, int TYPE, pointer STRING )
+
+** NUEVAS FUNCIONES DE SONIDO *******************************************************************************************************************
+
+[LOAD_SONG]
+QOfPrototipes = 1
+Prototipe     = LOAD_SONG ( string FILE )
+
+[PLAY_SONG]
+QOfPrototipes = 1
+Prototipe     = int PLAY_SONG ( int SONG, int LOOP )
+
+[UNLOAD_SONG]
+QOfPrototipes = 1
+Prototipe     = UNLOAD_SONG ( int SONG )
+
+[STOP_SONG]
+QOfPrototipes = 1
+Prototipe     = STOP_SONG ( )
+
+[PAUSE_SONG]
+QOfPrototipes = 1
+Prototipe     = PAUSE_SONG ( )
+
+[RESUME_SONG]
+QOfPrototipes = 1
+Prototipe     = RESUME_SONG ( )
+
+[SET_SONG_VOLUME]
+QOfPrototipes = 1
+Prototipe     = SET_SONG_VOLUME ( int VOLUME )
+
+[IS_PLAYING_SONG]
+QOfPrototipes = 1
+Prototipe     = int IS_PLAYING_SONG ( )
+
+[LOAD_WAV]
+QOfPrototipes = 1
+Prototipe     = int LOAD_WAV ( string FILE )
+
+[PLAY_WAV]
+QOfPrototipes = 1
+Prototipe     = PLAY_WAV ( int WAV, int LOOP )
+
+[UNLOAD_WAV]
+QOfPrototipes = 1
+Prototipe     = UNLOAD_WAV ( int WAV )
+
+[PAUSE_WAV]
+QOfPrototipes = 1
+Prototipe     = PAUSE_WAV ( int WAV )
+
+[RESUME_WAV]
+QOfPrototipes = 1
+Prototipe     = RESUME_WAV ( int WAV )
+
+[IS_PLAYING_WAV]
+QOfPrototipes = 1
+Prototipe     = IS_PLAYING_WAV ( int WAV )
+
+[SET_WAV_VOLUME]
+QOfPrototipes = 1
+Prototipe     = SET_WAV_VOLUME ( int WAV, int VOLUME )
+
+[FADE_MUSIC_IN]
+QOfPrototipes = 1
+Prototipe     = FADE_MUSIC_IN ( int SONG, int LOOP, int TIME )
+
+[FADE_MUSIC_OFF]
+QOfPrototipes = 1
+Prototipe     = FADE_MUSIC_OFF ( int TIME )
+
+[SET_PANNING]
+QOfPrototipes = 1
+Prototipe     = SET_PANNING ( int WAV, int LEFT, int RIGHT )
+
+[SET_POSITION]
+QOfPrototipes = 1
+Prototipe     = SET_POSITION ( int WAV, int ANGLE, int DISTANCE )
+
+[SET_DISTANCE]
+QOfPrototipes = 1
+Prototipe     = SET_DISTANCE ( int WAV, int DISTANCE )
+
+[REVERSE_STEREO]
+QOfPrototipes = 1
+Prototipe     = REVERSE_STEREO ( int WAV, int FLIP )
+
+** FUNCIONES DE MAQ *****************************************************************************************************************************
+
+[GRAYSCALE]
+QOfPrototipes = 1
+Prototipe     = GRAYSCALE ( int LIBRARY, int GRAPHIC, byte TYPE )
+
+[RGBSCALE]
+QOfPrototipes = RGBSCALE
+Prototipe     = rgbscale ( int LIBRARY, int GRAPHIC, float R, float G, float B )
+
+[BLUR]
+QOfPrototipes = 1
+Prototipe     = BLUR ( int LIBRARY, int GRAPHIC, byte TYPE )
+
+[FILTER]
+QOfPrototipes = 1
+Prototipe     = FILTER ( int LIBRARY, int GRAPHIC, pointer ARRAY )
+
+[QUICKSORT]
+QOfPrototipes = 1
+Prototipe     = QUICKSORT ( pointer ARRAY, int SIZE, int NUMBER, int OFFSET, byte SIZE_O, byte TYPE )
+
+** PALETAS DE COLORES ***************************************************************************************************************************
+
+[LOAD_PAL]
+QOfPrototipes = 1
+Prototipe     = LOAD_PAL ( string FILE )
+
+[FADE]
+QOfPrototipes = 1
+Prototipe     = FADE ( int R, int G, int B, int SPEED, int DIR )
+
+[FADE_ON]
+QOfPrototipes = 1
+Prototipe     = FADE_ON ( )
+
+[FADE_OFF]
+QOfPrototipes = 1
+Prototipe     = FADE_OFF ( )
+
+[ROLL_PALETTE]
+QOfPrototipes = 1
+Prototipe     = ROLL_PALETTE ( int FIRST, int NUMBER, int DES )
+
+[CONVERT_PALETTE]
+QOfPrototipes = 1
+Prototipe     = CONVERT_PALETTE ( int LIBRARY, int GRAPHIC, pointer ARRAY )
+
+[FIND_COLOR]
+QOfPrototipes = 1
+Prototipe     = int FIND_COLOR ( int R, int G, int B )
+
+[RGB]
+QOfPrototipes = 1
+Prototipe     = int RGB ( int R, int G, int B )
+
+[GET_RGB]
+QOfPrototipes = 1
+Prototipe     = GET_RGB ( int COLOR, pointer R, pointer G, pointer B )
+
+** NUEVAS FUNICONES EN LA 0.83 ******************************************************************************************************************
+
+[GET_SCREEN]
+QOfPrototipes = 1
+Prototipe     = int GET_SCREEN ( )
+
+[TRIM]
+QOfPrototipes = 1
+Prototipe     = stirng TRIM ( string STRING )
+
+[FORMAT]
+QOfPrototipes = 3
+Prototipe     = stirng TRIM ( int NUMBER )
+Prototipe2    = stirng TRIM ( float NUMBER )
+Prototipe3    = stirng TRIM ( float NUBER, int DECIMALS )
+
+[STRREV]
+QOfPrototipes = 1
+Prototipe     = stirng STRREV ( string STRING )
+
+[LPAD]
+QOfPrototipes = 1
+Prototipe     = stirng LPAD ( string STRING, int NUMBER)
+
+[RPAD]
+QOfPrototipes = 1
+Prototipe     = stirng RPAD ( string STRING, int NUMBER)
+
+[STRCASECMP]
+QOfPrototipes = 1
+Prototipe     = int STRCASECMP ( string STRING1, string STRING2 )
+
+[SAVE_PNG]
+QOfPrototipes = 1
+Prototipe     = SAVE_PNG ( int LIBRARY, int GRAPHIC, string FILE )
+
+[REGEX]
+QOfPrototipes = 1
+Prototipe     = int REGEX ( string EXPRESION, string STRING )
+
+[REGEX_REPLACE]
+QOfPrototipes = 1
+Prototipe     = int REGEX_REPLACE ( string EXPRESION, string REPLACE, string STRING )
+
+[SPLIT]
+QOfPrototipes = 1
+Prototipe     = int REGEX_REPLACE ( string EXPRESION, string STRING , pointer ARRAY, int SIZE )
+
+[JOIN]
+QOfPrototipes = 1
+Prototipe     = JOIN ( string SEPARATOR, pointer ARRAY , int SIZE )
+
+[DRAW_CURVE]
+QOfPrototipes = 1
+Prototipe     = int DRAW_CURVE ( int X1, int Y1, int X2, int Y2, int X3, int Y3, int X4, int Y4 , int NUMBER)
+
+[DRAWING_Z]
+QOfPrototipes = 1
+Prototipe     = DRAWING_Z ( int NUMBER )
+
+[DELETE_DRAW] 
+QOfPrototipes = 1
+Prototipe     = DELETE_DRAW ( int DRAW )
+
+[MOVE_DRAW]
+QOfPrototipes = 1
+Prototipe     = MOVE_DRAW ( int DRAW , int X, int Y )
+
+[DRAWING_ALPHA]
+QOfPrototipes = 1
+Prototipe     = DRAWING_ALPHA ( int NUMBER )
+
+** NUEVAS FUNCIONES EN LA 0.84 ******************************************************************************************************************
+
+[CD]
+QOfPrototipes = 2
+Prototipe     = string CD ( )
+Prototipe2    = string CD ( string DIR )
+
+[CHDIR]
+QOfPrototipes = 1
+Prototipe     = int CHDIR ( string DIR )
+
+[MKDIR]
+QOfPrototipes = 1
+Prototipe     = int MKDIR ( string DIR )
+
+[RMDIR]
+QOfPrototipes = 1
+Prototipe     = int RMDIR ( string DIR )
+
+[FILE_EXISTS]
+QOfPrototipes = 1
+Prototipe     = int FILE_EXISTS ( string FILE )
+
+[GLOB]
+QOfPrototipes = 1
+Prototipe     = string FILE_EXISTS ( string SEARCH )
+
+[GET_TEXT_COLOR]
+QOfPrototipes = 1
+Prototipe     = int GET_TEXT_COLOR ( )
+
+[NEW_FNT]
+QOfPrototipes = 1
+Prototipe     = int NEW_FNT ( int BPP )
+
+[FNT_NEW]
+QOfPrototipes = 1
+Prototipe     = int FNT_NEW ( int BPP )
+
+[GET_GLYPH]
+QOfPrototipes = 1
+Prototipe     = int GET_GLYPH ( int FONT, int NUMBER )
+
+[SET_GLYPH]
+QOfPrototipes = 1
+Prototipe     = int SET_GLYPH ( int FONT, int NUMBER , int LIBRARY, int GRAPHIC )
+
+[DRAWING_STIPPLE]
+QOfPrototipes = 1
+Prototipe     = DRAWING_STIPPLE ( int KIND )
+
+[SAVE_PAL]
+QOfPrototipes = 1
+Prototipe     = int SAVE_PAL ( int FILE )
+
+** NUEVAS FUNCIONES EN LA 0.85 ******************************************************************************************************************
+
+[LOAD_FBM]
+QOfPrototipes = 1
+Prototipe     = int LOAD_FBM ( string FILE )
+
+[SAVE_FBM]
+QOfPrototipes = 1
+Prototipe     = int LOAD_FBM ( int LIBRARY, int GRAPHIC, string FILE )
+
+[LOAD_FGC]
+QOfPrototipes = 2
+Prototipe     = int LOAD_FGC ( string FILE )
+Prototipe2    = int LOAD_FGC ( string FILE , pointer RETURN )
+
+[SAVE_FGC]
+QOfPrototipes = 1
+Prototipe     = int SAVE_FGC ( int LIBRARY, string FILE )
+
+[CD_DRIVES]
+QOfPrototipes = 1
+Prototipe     = int CD_DRIVES ( )
+
+[CD_STATUS]
+QOfPrototipes = 1
+Prototipe     = int CD_STATUS ( int ID )
+
+[CD_NAME]
+QOfPrototipes = 1
+Prototipe     = string CD_NAME ( int ID )
+
+[CD_GETINFO]
+QOfPrototipes = 1
+Prototipe     = int CD_GETINFO ( int ID )
+
+[CD_PLAY]
+QOfPrototipes = 2
+Prototipe     = int CD_GETINFO ( int ID )
+Prototipe2    = int CD_GETINFO ( int ID , int TRACKS )
+
+[CD_STOP]
+QOfPrototipes = 1
+Prototipe     = CD_STOP ( int ID )
+
+[CD_PAUSE]
+QOfPrototipes = 1
+Prototipe     = CD_PAUSE ( int ID )
+
+[CD_RESUME]
+QOfPrototipes = 1
+Prototipe     = CD_RESUME ( int ID )
+
+[CD_EJECT]
+QOfPrototipes = 1
+Prototipe     = CD_EJECT ( int ID )
+
+[MINIMIZE]
+QOfPrototipes = 1
+Prototipe     = MINIMIZE ( )
+
+[MOVE_WINDOW]
+QOfPrototipes = 1
+Prototipe     = MOVE_WINDOW ( int X, int Y )
+
+[KSORT]
+QOfPrototipes = 2
+Prototipe     = int KSORT ( varspace A, varspace B, int NUMBER )
+Prototipe2    = int KSORT ( varspace A, varspace B )
+
+[SORT]
+QOfPrototipes = 2
+Prototipe     = int SORT ( varspace VAR, int NUMBER )
+Prototipe2    = int SORT ( varspace VAR )
+
+[SAVE_FPL]
+QOfPrototipes = 1
+Prototipe     = SAVE_FPL ( string FILE )
+
+[SET_CHANNEL_VOLUME]
+QOfPrototipes = 1
+Prototipe     = SET_CHANNEL_VOLUME ( int WAV, int VOLUME )
+
+[JOY_NAME]
+QOfPrototipes = 1
+Prototipe     = string JOY_NAME ( int ID )
+
+[JOY_BUTTONS]
+QOfPrototipes = 1
+Prototipe     = int JOY_BUTTONS ( )
+
+[JOY_AXES]
+QOfPrototipes = 1
+Prototipe     = int JOY_AXES ( )
+
+*************************************************************************************************************************************************

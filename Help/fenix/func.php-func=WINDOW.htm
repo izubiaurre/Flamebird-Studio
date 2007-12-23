@@ -1,0 +1,75 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td> INTEGER <b><a href="func.php-func=WINDOW.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW">WINDOW</a></b> ( <B>[ <I>TÍTULO</I> ]</B>, <B>[ <I>ESTILO</I> ]</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Crea una nueva ventana </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"> <b>TÍTULO</b></td><td valign="top"> : </td><td valign="top"><i>(opcional)</i> &nbsp; Título de la ventana </td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"> <b>ESTILO</b></td><td valign="top"> : </td><td valign="top"><i>(opcional)</i> &nbsp; Estilo de la ventana </td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>INTEGER &nbsp; : &nbsp; Identificador único de la ventana</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Crea una nueva ventana en memoria. Una ventana es una sección de pantalla delimitada por un rectángulo que puede contener uno o más controles. Una ventana puede disponer de una barra de título, un borde fijo o redimensionable, botones del sistema, o ser desplazada libremente por el usuario. El comportamiento exacto de la ventana se define mediante el estilo de la misma, que puede especificarse como parámetro a esta función y puede ser uno de los siguientes: <UL> <LI> STYLE_FIXED: La ventana cuenta con un borde, pero no puede redimensionarse. Usa este estilo para ventanas que muestran controles que no vayan a redimensionarse, como por ejemplo una caja de herramientas, pero que formen parte del interfaz de la aplicación.</LI> <LI> STYLE_STATIC: La ventana no tiene borde, y no puede ser movida ni redimensionada por el usuario. Usa esta ventana cuando quieras crear efectos especiales o disponer de elementos en el interfaz de usuario que quieras manipular manualmente en tu programa.</LI> <LI> STYLE_DIALOG: La ventana cuenta con un borde y no puede redimensionarse ni ocultarse (minimizarse). Usa estas ventanas para obtener información puntual del usuario (son llamadas cuadros de diálogo).</LI> <LI> STYLE_RESIZABLE_DIALOG: Ventana idéntica a la anterior, pero en este caso el usuario puede redimensionarla. Algunos cuadros de diálogo pueden ser útiles a mayor tamaño, por ejemplo aquellos que contengan listas de información que puedan crecer hasta un tamaño indeterminado.</LI> <LI> STYLE_NORMAL: Ventana corriente, que puede minimizarse, redimensionarse y maximizarse. Este es el estilo por defecto si no empleas ninguno.</LI> <LI> STYLE_DOCK_NORTH: Esta ventana se posicionará automáticamente en la parte superior de la pantalla, abarcando todo su ancho, y siempre será visible por encima del resto. Además, el usuario no podrá moverla de sitio. Usa este estilo para crear barras de menús o herramientas.</LI> <LI> STYLE_DOCK_SOUTH: Idéntico al anterior, pero para la parte inferior de la pantalla. Usalo para crear barras de tareas o de estado.</LI> <LI> STYLE_DOCK_WEST: Esta ventana se posicionará a la izquierda del escritorio, siempre visible por encima del resto.</LI> <LI> STYLE_DOCK_EAST: Idéntico al anterior, pero para la derecha. Un punto importante en ambos estilos es que los estilos DOCK_NORTH y DOCK_SOUTH tienen preferencia, es decir, la barra de menús o de tareas siempre tocará los extremos derechos e izquierdos de pantalla.</LI></UL></P> <P> Además, esta función permite especificar un título. Sólo las ventanas que disponen de título mostrarán la cabecera de la ventana con los botones de cerrar, minimizar y maximizar. Si se desea, es posible crear una ventana con título "oculto", es decir, una ventana con título (que aparece en la lista de tareas) pero sin cabecera. Para ello es preciso usar un título con prefijo "*". Una ventana titulada "*Tools" aparecerá con el texto "Tools" en la barra de tareas, pero no tendrá cabecera.</P> <P> Todas las ventanas, excepto las de estilos DOCK y FIXED, se dibujarán con una sombra para destacar su profundidad.</P> <P> Las ventanas de estilos DOCK son especiales, ya que una ventana maximizada se redimensionará de manera que ocupe el espacio que estas dejen disponible, y no más.</P> <P> La ventana recién creada no estará inmediatamente visible, pero puede agregarse al escritorio en cualquier momento mediante la función <a href="func.php-func=DESKTOP_ADDWINDOW.htm" tppabs="http://fenix.jlceb.com/func.php?func=DESKTOP_ADDWINDOW">DESKTOP_ADDWINDOW</a></A> . Es buena idea crear primero los controles que vaya a contener la ventana mediante repetidas llamadas a la función <a href="func.php-func=WINDOW_ADDCONTROL.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_ADDCONTROL">WINDOW_ADDCONTROL</a></A> .</P> <P> Esta función devuelve un valor entero que identifica de forma única a la ventana creada. Este valor debe guardarse y utilizar en cualquier llamada posterior al resto de funciones con prefijo WINDOW_.</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=WINDOW_DESTROY.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_DESTROY">WINDOW_DESTROY</a></b></td><td>&nbsp;</td><td>Destruye una ventana</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WINDOW_RESIZE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_RESIZE">WINDOW_RESIZE</a></b></td><td>&nbsp;</td><td>Cambia el tamaño de una ventana</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WINDOW_MOVE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_MOVE">WINDOW_MOVE</a></b></td><td>&nbsp;</td><td>Mueve la posición de una ventana</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WINDOW_TOP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_TOP">WINDOW_TOP</a></b></td><td>&nbsp;</td><td></td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WINDOW_ONTOP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_ONTOP">WINDOW_ONTOP</a></b></td><td>&nbsp;</td><td></td></tr>
+<tr><td valign="top"><b><a href="func.php-func=DESKTOP_ADDWINDOW.htm" tppabs="http://fenix.jlceb.com/func.php?func=DESKTOP_ADDWINDOW">DESKTOP_ADDWINDOW</a></b></td><td>&nbsp;</td><td></td></tr>
+<tr><td valign="top"><b><a href="func.php-func=DESKTOP_REMOVEWINDOW.htm" tppabs="http://fenix.jlceb.com/func.php?func=DESKTOP_REMOVEWINDOW">DESKTOP_REMOVEWINDOW</a></b></td><td>&nbsp;</td><td>Quita una ventana del escritorio</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

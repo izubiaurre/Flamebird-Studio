@@ -1,0 +1,62 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"><tr><td style="padding-left: 0pt"><font color=#800000>Tipos de dato</font></td></tr>
+ </td></tr> <tr><td style="padding-left: 40pt"> <p> Tipos de dato disponibles para variables </p> </td></tr>  <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Fenix soporta tipos de dato simples (contienen un dato concreto, como un número o cadena) y datos compuestos, datos que a su vez contienen una serie de datos simples.</P> <H3> Datos numéricos</H3> <P> Fenix incluye una variedad de tipos de dato para almacenar datos numéricos. Normalmente un programa contiene gran cantidad de datos de este tipo, así que es de importancia vital escoger el tipo de dato adecuado según la cantidad de memoria que deba ocupar cada dato y la precisión necesaria:</P> <DL> <DT> <a href="func.php-func=INT.htm" tppabs="http://fenix.jlceb.com/func.php?func=INT">INT</a></A></DT> <DD> Número entero de 32 bits con signo. Admite un número entre -2147483648 y 2147483647 aproximadamente.</DD> <DT> <a href="func.php-func=DWORD.htm" tppabs="http://fenix.jlceb.com/func.php?func=DWORD">DWORD</a></A></DT> <DD> Número entero de 32 bits sin signo. Admite un número entre 0 y 4294967296.</DD> <DT> <a href="func.php-func=SHORT.htm" tppabs="http://fenix.jlceb.com/func.php?func=SHORT">SHORT</a></A></DT> <DD> Número entero de 16 bits con signo. Admite un número entre -32767 y 32768.</DD> <DT> <a href="func.php-func=WORD.htm" tppabs="http://fenix.jlceb.com/func.php?func=WORD">WORD</a></A></DT> <DD> Número entero de 16 bits sin signo. Admite un número entre 0 y 65535.</DD> <DT> <a href="func.php-func=BYTE.htm" tppabs="http://fenix.jlceb.com/func.php?func=BYTE">BYTE</a></A></DT> <DD> Número entero de 8 bits sin signo. Admite un número entre 0 y 255.</DD> <DT> <a href="func.php-func=FLOAT.htm" tppabs="http://fenix.jlceb.com/func.php?func=FLOAT">FLOAT</a></A></DT> <DD> Número en coma flotante de 32 bits. Admite cualquier número, incluyendo decimales, aunque con poca precisión (sólo se conservan los dígitos más significativos).</DD></DL> <P> Normalmente usarás el tipo INT para la mayoría de ocasiones. Sin embargo, puedes usar SHORT para guardar tablas con una cantidad elevada de números que sabes que no serán muy grandes, ya que ahorras la mitad de memoria. BYTE es ideal para guardar valores de color, ya que el rango típico es entre 0 y 255 para ello.</P> <P> Los tipos de dato enteros tienen un rango limitador: cuando sumas o restas una cantidad que provoca que el número salga fuera del rango que admiten, los bits más significativos del nuevo número se pierden, lo que provoca que el número "de la vuelta": si a una variable WORD que contiene 65535 le sumas 1, el valor resultante es 0 en lugar de 65536, ya que 65536 queda fuera del rango admitido por los tipos WORD.</P> <H3> <a href="func.php-func=SIGNED.htm" tppabs="http://fenix.jlceb.com/func.php?func=SIGNED">SIGNED</a></A> y <a href="func.php-func=UNSIGNED.htm" tppabs="http://fenix.jlceb.com/func.php?func=UNSIGNED">UNSIGNED</a></A></H3> <P> Todos los datos de tipo entero vistos en el apartado anterior (todos salvo FLOAT) permiten especificar como prefijo SIGNED o UNSIGNED para obtener versiones de los mismos con o sin signo. Esto equivale a usar un tipo de dato entero del mismo número de bits pero con la salvedad del signo. Por ejemplo, UNSIGNED INT equivale exactamente a DWORD. La única variante de este tipo que no tiene una palabra clave como alias es SIGNED BYTE, un entero de 8 bits que puede contener un número entre 127 y -128.</P> <P> Un número entero sin signo dispone de un rango más grande y puede ser además útil en casos en los que es preciso que en un cálculo nunca aparezcan valores negativos, incluso por error de fuera de rango.</P> <H3> Textos</H3> <P> Fenix conoce dos tipos de dato especializados en almacenar textos:</P> <DL> <DT> <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=CHAR  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=CHAR'" tppabs="http://fenix.jlceb.com/func.php?func=CHAR">CHAR</a></A></DT> <DD> Contiene un único carácter (una letra, signo, espacio o carácter especial de control). Es posible realizar operaciones numéricas con un carácter o asignar su valor a una variable de tipo entero, con lo que se extrae el valor ASCII del carácter.</DD> <DT> <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=STRING  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=STRING'" tppabs="http://fenix.jlceb.com/func.php?func=STRING">STRING</a></A></DT> <DD> Contiene una cadena de texto (una serie de varios caracteres que puede también estar vacía) de ancho variable, potencialmente ilimitada.</DD></DL> <P> Un dato de tipo CHAR ocupa 8 bits (hay 256 posibles caracteres diferentes reconocidos por Fenix, normalmente usando el juego de caracteres ISO8859-1, similar al estándar de Windows). Un tipo de dato STRING ocupa una cantidad de memoria variable y se almacena de forma independiente a los datos de tu programa: en la posición donde se declara (por ejemplo, en la zona de datos global o en el interior de una estructura) sólo se almacena un identificador de carácter interno.</P> <P> Puedes realizar operaciones típicas con cadenas, como concatenarlas usando el operador +, acceder a un carácter de su interior como si de un array se tratase, o modificarlas mediante la librería de funciones de cadena disponible en Fenix.</P> <H3> Punteros ( <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=POINTER  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=POINTER'" tppabs="http://fenix.jlceb.com/func.php?func=POINTER">POINTER</a></A> )</H3> <H3> Arrays</H3> <H3> Estructuras ( <a href="func.php-func=STRUCT.htm" tppabs="http://fenix.jlceb.com/func.php?func=STRUCT">STRUCT</a></A> )</H3> <H3> Tipos definidos por el usuario ( <a href="func.php-func=TYPE.htm" tppabs="http://fenix.jlceb.com/func.php?func=TYPE">TYPE</a></A> )</H3> </td></tr> 
+	</table>
+		
+</body>
+</html>
+

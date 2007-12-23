@@ -1,0 +1,78 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=WRITE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE">WRITE</a></b> ( <B>FUENTE</B>, <B>X</B>, <B>Y</B>, <B>ALINEACIÓN</B>, <B>"TEXTO"</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Dibuja un texto en pantalla </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>FUENTE</b></td><td valign="top"> : </td><td valign="top">Tipo de letra</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>X</b></td><td valign="top"> : </td><td valign="top">Coordenada horizontal</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>Y</b></td><td valign="top"> : </td><td valign="top">Coordenada vertical</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>ALINEACIÓN</b></td><td valign="top"> : </td><td valign="top">Tipo de alineación</td></tr>
+<tr><td nowrap valign="top">STRING</td><td valign="top"><b>TEXTO</b></td><td valign="top"> : </td><td valign="top">Texto a dibujar</td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>INT &nbsp; : &nbsp; Identificador del nuevo texto</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Dibuja un texto en pantalla, en la posición indicada y haciendo uso del tipo de letra especificado (que puede ser 0 para indicar el tipo de letra del sistema, o bien un identificador devuelto por una función como <a href="func.php-func=LOAD_FNT.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_FNT">LOAD_FNT</a></A> ).</P> <P> El parámetro de alineación indica el significado de las coordenadas, ya que en función de su valor, el texto será alineado respecto a este punto como sigue: <UL> <LI> 0: el punto ocupará la esquina superior izquierda del texto, una vez escrito</LI> <LI> 1: el texto estará centrado horizontalmente sobre el punto, que ocupará la fila superior del mismo</LI> <LI> 2: el punto ocupará la esquina superior derecha</LI> <LI> 3: el texto estará centrado verticalmente sobre el punto, que ocupará la columna izquierda del mismo</LI> <LI> 4: el texto estará centrado horizontal y verticalmente alrededor del punto</LI> <LI> 5: el texto estará centrado verticalmente del punto, que ocupará la fila derecha del mismo</LI> <LI> 6: el punto ocupará la esquina inferior izquierda</LI> <LI> 7: el texto será centrado horizontalmente. El punto ocupará la fila inferior del mismo.</LI> <LI> 8: el punto ocupará la esquina inferior derecha</LI></UL></P> <P> Este texto será dibujado a cada frame, en el momento de profundidad indicado por la variable global <a href="func.php-func=TEXT_Z.htm" tppabs="http://fenix.jlceb.com/func.php?func=TEXT_Z">TEXT_Z</a></A> . Es importante entender que una nueva llamada a esta función incluso con los mismos parámetros crearía un segundo texto adicional a dibujar. Es preciso llamar a la función <a href="func.php-func=DELETE_TEXT.htm" tppabs="http://fenix.jlceb.com/func.php?func=DELETE_TEXT">DELETE_TEXT</a></A> cuando se desea que un texto ya no sea visible por más tiempo, teniendo cuidado con usar esta función dentro de un bucle.</P> <P> Los tipos de letra de 1 bit por pixel pueden ser dibujados a cualquier color, escogiéndolo con la función <a href="func.php-func=SET_TEXT_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_TEXT_COLOR">SET_TEXT_COLOR</a></A> . Los textos escritos con esta función recuerdan el color escogido en el momento que se llamaron, así que es válido dibujar varios textos a diferente color. El tipo de letra del sistema es un tipo de letra de 1 bit por pixel.</P> <P> Esta función tiene una utilidad limitada, ya que el texto será fijo cada frame. Si se desea mostrar en pantalla el contenido de alguna variable que pueda ir cambiando, es preciso usar en su lugar la función <a href="func.php-func=WRITE_VAR.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_VAR">WRITE_VAR</a></A> .</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=GET_TEXT_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=GET_TEXT_COLOR">GET_TEXT_COLOR</a></b></td><td>&nbsp;</td><td>Devuelve el color con que se escribirán los textos.</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SET_TEXT_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=SET_TEXT_COLOR">SET_TEXT_COLOR</a></b></td><td>&nbsp;</td><td>Escoge el color con el que se dibujarán los textos de funciones como</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE">WRITE</a></b></td><td>&nbsp;</td><td>Dibuja un texto en pantalla</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE_VAR.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_VAR">WRITE_VAR</a></b></td><td>&nbsp;</td><td>Dibuja un texto en pantalla, con el contenido de una variable</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE_IN_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_IN_MAP">WRITE_IN_MAP</a></b></td><td>&nbsp;</td><td>Crea un gráfico que contenga un texto</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=DELETE_TEXT.htm" tppabs="http://fenix.jlceb.com/func.php?func=DELETE_TEXT">DELETE_TEXT</a></b></td><td>&nbsp;</td><td>Elimina un texto dibujado mediante WRITE</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=MOVE_TEXT.htm" tppabs="http://fenix.jlceb.com/func.php?func=MOVE_TEXT">MOVE_TEXT</a></b></td><td>&nbsp;</td><td>Mueve un texto dibujado mediante WRITE</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

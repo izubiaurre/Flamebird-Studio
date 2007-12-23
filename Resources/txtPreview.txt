@@ -1,0 +1,10 @@
+//This is a comment
+
+Program Example;
+Begin
+	set_title("Example");
+	set_mode(320,240,16);
+	while (not key(_esc))
+	   frame;
+	end
+end

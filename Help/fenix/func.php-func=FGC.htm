@@ -1,0 +1,66 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"><tr><td style="padding-left: 0pt"><font color=#800000><B> FGC</B> (Fenix Graphics Collection) <B> FPL</B> (Fenix Palette)</font></td></tr>
+ </td></tr> <tr><td style="padding-left: 40pt"> <p> Librería con múltiples gráficos FBM Informacion de color de una paleta gráfica </p> </td></tr>  <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Un fichero FGC contiene un conjunto de gráficos FBM, cada uno de ellos identificado por un índice entre 0 y 999. El máximo de gráficos FBM soportado dentro de un FGC es por lo tanto de 1000.</P> <P> Esta sección describe el contenido de un fichero FGC. No es necesario conocer estos detalles simplemente para programar juegos, pero serán de utilidad a quien quiera realizar utilidades en lenguajes externos que lean o escriban ficheros FGC.</P> <P> Un fichero FGC no incluye compresión. Fenix soporta de forma transparente el uso de compresión GZIP en los ficheros, sin necesidad de marcarlos especialmente con extensión .gz. Normalmente un fichero FGC se guarda en disco comprimido de esta manera, pero en el resto del fichero asumiremos que el fichero FGC no está comprimido.</P> <P> En la descripción siguiente, DWORD identifica un número entero de 4 bytes sin signo mientras INT indica entero de 4 bytes con signo. Estos valores se guardan siguiendo la codificación Intel de bytes en memoria, así que hay que darles la vuelta al leer o escribir el fichero en otras plataformas.</P> <H3> Cabecera</H3> <P> Un fichero FGC comienza con la siguiente cabecera: <TABLE> <TR> <TH> MAGIC</TH> <TD> 16 bytes</TD> <TD> Cadena de caracteres de identificación del fichero. Debe contener exactamente "FenixLibrary" y, a continuación, los cuatro bytes 1Ah, 0Dh, 0Ah y 00h. Esta terminación indica, en un fichero MS-DOS, final de fichero. Gracias a ella un comando TYPE en MS-DOS no mostraría los datos binarios del fichero. En este formato se conserva por razones puramente nostálgicas.</TD></TR> <TR> <TH> VERSION</TH> <TD> DWORD</TD> <TD> Código de versión. Se compone de un número mayor de 16 bits y un número menor de 16 bits. Actualmente es 0x0100. Si el formato se modificase en el futuro pero de manera que los ficheros fuesen compatibles con el formato actual, se incrementaría el número menor. Las rutinas de carga deben rechazar un fichero FGC sólo si el número mayor no es 01.</TD></TR> <TR> <TH> NOMBRE</TH> <TD> 64 bytes</TD> <TD> Cadena ASCIIZ con el nombre de la librería (opcional). El nombre puede ocupar exactamente 64 caracteres, con lo que sólo en ese caso no se guardará el 0 terminal.</TD></TR> <TR> <TH> PROFUNDIDAD</TH> <TD> DWORD</TD> <TD> Bits por pixel de las imágenes. Actualmente sólo son válidos 1, 8 ó 16. Todas las imágenes dentro del mismo fichero FGC deben, forzadamente, ser del mismo número de colores.</TD></TR> <TR> <TH> TOTAL</TH> <TD> DWORD</TD> <TD> Número de gráficos que contiene este fichero FGC.</TD></TR> <TR> <TH> PALETA</TH> <TD> DWORD</TD> <TD> Offset de la paleta dentro del fichero, si se encuentra. Sólo un fichero FGC de 8 bits contiene una paleta de colores.</TD></TR> <TR> <TH> OFFSETS</TH> <TD> "TOTAL" DWORDS</TD> <TD> Offsets en el fichero de cada uno de los gráficos que aparecen dentro del FGC. Hay tantos valores tipo DWORD como gráficos haya en el FGC. Las siguientes condiciones deben cumplirse: <UL> <LI> Todos estos offsets deben ser mayores que el de la paleta de colores, si ésta está presente.</LI> <LI> El offset de un gráfico debe ser siempre mayor que el offset del gráfico inmediatamente anterior en esta tabla</LI></UL> Los offsets permiten a las rutinas de lectura "saltarse" secciones adicionales de información que no pueden interpretar, entre gráfico y gráfico. Esto abre las puertas a futuras expansiones del formato sin perder compatibilidad hacia atrás.</TD></TR></TABLE></P> <H3> Paleta de colores</H3> <P> A continuación, si el FGC es de 8 bits (tal como indica la cabecera del fichero) y sólo en ese caso, habrán 768 bytes con la paleta de colores.  Cada color ocupa tres bytes en orden RGB (rojo, verde y azul) y con un rango para cada componente de color de 0 a 255.</P> <H3> Datos de cada gráfico</H3> <P> Cada gráfico dentro del fichero FGC se guarda en formato <a href="func.php-func=FBM.htm" tppabs="http://fenix.jlceb.com/func.php?func=FBM">FBM</a></A> , a partir del offset indicado en la cabecera. Sin embargo, el formato FBM utilizado tiene dos variantes respecto al formato FBM estándar descrito aquí: <UL> <LI> No contiene cabecera. El gráfico empieza directamente con el descriptor FBM justo en el offset indicado en la cabecera del FGC. La profundidad de color se recoge también de la cabecera del FGC, ya que no está presente en dicho descriptor.</LI> <LI> No contiene paleta de colores, incluso aunque sea un gráfico de 8 bits. Todos los gráficos dentro del FGC comparten la misma paleta de colores, guardada en el FGC justo antes que los datos de los gráficos.</LI></UL></P> <P> Un fichero FPL contiene toda la informacion de color de una paleta gráfica.  Actualmente solo se soportan paletas gráficas de 8 bits, pero es posible  que en un futuro se añada soporte para paletas indexadas de mayor profundidad de color.</P> <P> Esta sección describe el contenido de un fichero FPL. No es necesario conocer estos detalles simplemente para programar juegos, pero serán de utilidad a quien quiera realizar utilidades en lenguajes externos que lean o escriban ficheros FPL.</P> <P> Un fichero FPL no incluye compresión. Fenix soporta de forma transparente el uso de compresión GZIP en los ficheros, sin necesidad de marcarlos especialmente con extensión .gz. Normalmente un fichero FPL se guarda en disco comprimido de esta manera, pero en el resto del fichero asumiremos que el fichero FPL no está comprimido.</P> <P> En la descripción siguiente, DWORD identifica un número entero de 4 bytes sin signo mientras INT indica entero de 4 bytes con signo. Estos valores se guardan siguiendo la codificación Intel de bytes en memoria, así que hay que darles la vuelta al leer o escribir el fichero en otras plataformas.</P> <H3> Cabecera</H3> <P> Un fichero FPL comienza con la siguiente cabecera: <TABLE> <TR> <TH> MAGIC</TH> <TD> 16 bytes</TD> <TD> Cadena de caracteres de identificación del fichero. Debe contener exactamente "FenixPalette" y, a continuación, los cuatro bytes 1Ah, 0Dh, 0Ah y 00h. Esta terminación indica, en un fichero MS-DOS, final de fichero. Gracias a ella un comando TYPE en MS-DOS no mostraría los datos binarios del fichero. En este formato se conserva por razones puramente nostálgicas.</TD></TR> <TR> <TH> VERSION</TH> <TD> DWORD</TD> <TD> Código de versión. Se compone de un número mayor de 16 bits y un número menor de 16 bits. Actualmente es 0x0100. Si el formato se modificase en el futuro pero de manera que los ficheros fuesen compatibles con el formato actual, se incrementaría el número menor. Las rutinas de carga deben rechazar un fichero FPL sólo si el número mayor no es 01.</TD></TR> <TR> <TH> PROFUNDIDAD</TH> <TD> DWORD</TD> <TD> Bits por pixel de las información de color. Actualmente sólo es válida la de 8 bits por pixel (bpp).</TD></TR></TABLE></P> <H3> Paleta de colores</H3> <P> A continuación, si el FPL es de 8 bits (tal como indica la cabecera del fichero) habrán 768 bytes con la paleta de colores.  Cada color ocupa tres bytes en orden RGB (rojo, verde y azul) y con un rango para cada componente de color de 0 a 255.</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt">Esta es una versión temporal de este formato de fichero. Los gráficos con profundidad de color de 24 bits se soportarán próximamente en los ficheros FBM.</td></tr>
+<tr><td style="padding-left: 40pt">Esta es una versión temporal de este formato de fichero. Es posible que en versiones posteriores se soporten paletas indexadas con mayor resolucion de color con intencion de reducir el tamaño necesario para almacenar gráficos en formatos de alta densidad de color (16, 24 y 32 bpp) .</td></tr>
+<tr><td> &nbsp; </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

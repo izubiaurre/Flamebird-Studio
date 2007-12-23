@@ -1,0 +1,69 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=NEW_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=NEW_MAP">NEW_MAP</a></b> ( <B>ANCHO</B>, <B>ALTO</B>, <B>PROFUNDIDAD</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Crea un nuevo gráfico en memoria </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>ANCHO</b></td><td valign="top"> : </td><td valign="top">Ancho en pixels del nuevo gráfico</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>ALTO</b></td><td valign="top"> : </td><td valign="top">Alto en pixels del nuevo gráfico</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>PROFUNDIDAD</b></td><td valign="top"> : </td><td valign="top">Profundidad de color (en bits por pixel: 1, 8 ó 16)</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función crea un nuevo gráfico con el tamaño y número de bits por pixel de color especificados. El gráfico se crea dentro de la librería 0, y se le asigna un número cualquiera disponible, que no haya sido usado por ningún otro gráfico anterior.</P> <P> La profundidad de color tiene el siguiente significado: <UL> <LI> Un gráfico de 1 bit por pixel no tiene información de color. Los pixels a 0 representan pixels transparentes, y los bits a 1 serán dibujados usando el color escogido mediante la función <a href="func.php-func=DRAWING_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=DRAWING_COLOR">DRAWING_COLOR</a></A> .</LI> <LI> Un gráfico de 8 bits por pixel tiene 256 valores disponibles para cada pixel. Cada valor representa un índice en una tabla de colores general, la paleta de colores, que afecta a todos los gráficos de 8 bits.</LI> <LI> Un gráfico de 16 bits contiene información de los componentes rojo, verde y azul de cada pixel, por lo que es independiente de ninguna paleta de colores. La codificación exacta de estas componentes dentro de los 16 bits depende de la tarjeta gráfica, por lo que sólo es válido crear y usar gráficos de 16 bits si primero se establece un modo gráfico de 16 bits.</LI></UL></P> <P> El nuevo gráfico se crea con todos los pixels a 0 (es decir, transparentes).</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=MAP_CLONE.htm" tppabs="http://fenix.jlceb.com/func.php?func=MAP_CLONE">MAP_CLONE</a></b></td><td>&nbsp;</td><td>Crea una copia de un gráfico</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

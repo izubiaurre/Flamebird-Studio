@@ -1,0 +1,62 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"><tr><td style="padding-left: 0pt"><font color=#800000>[ <a href="func.php-func=CONST.htm" tppabs="http://fenix.jlceb.com/func.php?func=CONST">CONST</a></A> <BLOCKQUOTE> <I> constantes</I></BLOCKQUOTE> END ] <BR></BR> [ <a href="func.php-func=GLOBAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=GLOBAL">GLOBAL</a></A> <BLOCKQUOTE> <I> variables</I></BLOCKQUOTE> END ] <BR></BR> [ <a href="func.php-func=LOCAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOCAL">LOCAL</a></A> <BLOCKQUOTE> <I> variables</I></BLOCKQUOTE> END ]</font></td></tr>
+ </td></tr> <tr><td style="padding-left: 40pt"> <p> Es posible declarar datos constantes, globales y locales </p> </td></tr>  <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Hay tres secciones de datos diferentes que pueden aparecer en un programa. Todas ellas son opcionales y pueden aparecer en cualquier orden. Sin embargo, en Fenix es siempre necesario declarar un dato <I> antes</I> de usarlo, por lo que se recomienda que estas secciones aparezcan siempre antes que ningún proceso, al principio del programa.</P> <P> Fenix distingue entre los siguientes datos:</P> <DL> <DT> Datos globales</DT> <DD> Los datos globales son únicos. Sólo aparecen una vez, y cualquier objeto dentro del juego puede utilizarlos o consultarlos. En un juego, los datos globales incluirían la puntuación del jugador, el número de nivel actual, o la tabla de records. No importa cuántos procesos existan o cuántos objetos haya en pantalla, sólo hay una puntuación o una tabla de records. Consulta <a href="func.php-func=GLOBAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=GLOBAL">GLOBAL</a></A> para saber más acerca de la sintaxis utilizada para declarar datos globales.</DD> <DT> Datos locales</DT> <DD> Por otra parte, en el juego habrán numerosos objetos visibles, como enemigos o trampas. Cada uno de ellos tendrá ciertas propiedades. Por ejemplo, cada enemigo puede tener puntos de vida para representar cuanto daño ha causado sobre él el protagonista. Los datos locales representan estas propiedades, con una salvedad: son importantes, y todos los objetos sin excepción pueden usarlos y comprobar los de los demás. Por ejemplo, todos los objetos visibles tienen una posición en pantalla, y desde cualquier otro objeto o proceso puedes consultarla en todo momento. Consulta <a href="func.php-func=LOCAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOCAL">LOCAL</a></A> para saber más acerca de cómo declarar datos locales.</DD> <DT> Datos privados</DT> <DD> Los datos privados son propiedades que permanecen ocultas. Pueden ser contadores internos, datos temporales, o contener cualquier otra cosa. Cada tipo de proceso u objeto define sus propios datos privados, y no pueden consultarse desde otros objetos o procesos. Los datos privados no se declaran en una sección aparte del programa, sino dentro de cada proceso concreto.</DD></DL> <P> Un problema habitual que encontrarás al programar en Fenix es decidir cuándo un dato debe ser local o privado. En general, si un dato es usado por más de un tipo de proceso y puede ser necesario consultarlo desde otros procesos, debe ser un dato local. Siempre que no sea necesario, usa un dato privado.</P> </td></tr> 
+	</table>
+		
+</body>
+</html>
+

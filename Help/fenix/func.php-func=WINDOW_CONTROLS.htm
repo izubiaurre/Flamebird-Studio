@@ -1,0 +1,70 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=WINDOW_CONTROLS.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_CONTROLS">WINDOW_CONTROLS</a></b> ( <B>VENTANA</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Devuelve el número total de controles contenidos en una ventana </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>VENTANA</b></td><td valign="top"> : </td><td valign="top">Identificador de la ventana</td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>INT &nbsp; : &nbsp; Número de controles</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función permite obtener el número total de controles contenidos en una ventana existente, que hayan sido añadidos a la misma empleando la función <a href="func.php-func=WINDOW_ADDCONTROL.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_ADDCONTROL">WINDOW_ADDCONTROL</a></A> .</P> <P> Esta información puede utilizarse para recorrer todos los controles usando <a href="func.php-func=WINDOW_CONTROL.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_CONTROL">WINDOW_CONTROL</a></A> .</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=WINDOW.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW">WINDOW</a></b></td><td>&nbsp;</td><td>Crea una nueva ventana</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WINDOW_ADDCONTROL.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_ADDCONTROL">WINDOW_ADDCONTROL</a></b></td><td>&nbsp;</td><td>Añade un control a una ventana</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WINDOW_CONTROL.htm" tppabs="http://fenix.jlceb.com/func.php?func=WINDOW_CONTROL">WINDOW_CONTROL</a></b></td><td>&nbsp;</td><td>Devuelve alguno de los controles contenidos por la ventana</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

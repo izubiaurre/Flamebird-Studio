@@ -1,0 +1,84 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=LVARS+INDEX.htm" tppabs="http://fenix.jlceb.com/func.php?func=LVARS+INDEX">Variables locales</a></b>  <tr><td style="padding-left: 40pt"> <P> Las variables locales están presentes en todos y cada uno de los procesos de Fenix. Representan datos que normalmente son de interés para un objeto visible en pantalla, como su número de gráfico ( <a href="func.php-func=GRAPH.htm" tppabs="http://fenix.jlceb.com/func.php?func=GRAPH">GRAPH</a></A> ) o sus coordenadas en pantalla ( <a href="func.php-func=X.htm" tppabs="http://fenix.jlceb.com/func.php?func=X">X</a></A> , <a href="func.php-func=Y.htm" tppabs="http://fenix.jlceb.com/func.php?func=Y">Y</a></A> ).</P> <P> Es posible acceder a variables locales de otro proceso empleando el operador punto (.) si se dispone del identificador del mismo. También es posible declarar nuevas variables locales, además de las predefinidas, dentro de la sección <a href="func.php-func=LOCAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOCAL">LOCAL</a></A> de un programa. Sin embargo es preciso tener en cuenta que estas variables serán creadas dentro de todos los procesos, incluso de aquellos que no las usen, por lo que es preciso tener cuidado y limitar la cantidad de memoria que ocupan reduciendo su uso al máximo.</P> </td></tr> <tr><td> <b>CONTENIDO</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=FILE.htm" tppabs="http://fenix.jlceb.com/func.php?func=FILE">FILE</a></b></td><td>&nbsp;</td><td>Identificador de la librería gráfica</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=ALPHA.htm" tppabs="http://fenix.jlceb.com/func.php?func=ALPHA">ALPHA</a></b></td><td>&nbsp;</td><td>Indica la transparencia del gráfico del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=ANGLE.htm" tppabs="http://fenix.jlceb.com/func.php?func=ANGLE">ANGLE</a></b></td><td>&nbsp;</td><td>Especifica el ángulo de visualización en milésimas de grado</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=BIGBRO.htm" tppabs="http://fenix.jlceb.com/func.php?func=BIGBRO">BIGBRO</a></b></td><td>&nbsp;</td><td>Identificador del último proceso creado antes del nuestro</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=CNUMBER.htm" tppabs="http://fenix.jlceb.com/func.php?func=CNUMBER">CNUMBER</a></b></td><td>&nbsp;</td><td>Indica en qué ventanas de scroll o modo7 se visualiza el proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=CTYPE.htm" tppabs="http://fenix.jlceb.com/func.php?func=CTYPE">CTYPE</a></b></td><td>&nbsp;</td><td>Define el tipo de coordenadas del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=FATHER.htm" tppabs="http://fenix.jlceb.com/func.php?func=FATHER">FATHER</a></b></td><td>&nbsp;</td><td>Identificador del proceso padre</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=FLAGS.htm" tppabs="http://fenix.jlceb.com/func.php?func=FLAGS">FLAGS</a></b></td><td>&nbsp;</td><td>Indica operacioones especiales que se aplicarán al gráfico del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=GRAPH.htm" tppabs="http://fenix.jlceb.com/func.php?func=GRAPH">GRAPH</a></b></td><td>&nbsp;</td><td>Identificador del gráfico del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=PRIORITY.htm" tppabs="http://fenix.jlceb.com/func.php?func=PRIORITY">PRIORITY</a></b></td><td>&nbsp;</td><td>Nivel de prioridad del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=REGION.htm" tppabs="http://fenix.jlceb.com/func.php?func=REGION">REGION</a></b></td><td>&nbsp;</td><td>Región de recorte del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=RESOLUTION.htm" tppabs="http://fenix.jlceb.com/func.php?func=RESOLUTION">RESOLUTION</a></b></td><td>&nbsp;</td><td>Factor de ampliación para las coordenadas X e Y</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SIZE.htm" tppabs="http://fenix.jlceb.com/func.php?func=SIZE">SIZE</a></b></td><td>&nbsp;</td><td>Escalado del gráfico</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SIZE_X.htm" tppabs="http://fenix.jlceb.com/func.php?func=SIZE_X">SIZE_X</a></b></td><td>&nbsp;</td><td>Escalado horizontal del gráfico</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SIZE_Y.htm" tppabs="http://fenix.jlceb.com/func.php?func=SIZE_Y">SIZE_Y</a></b></td><td>&nbsp;</td><td>Escalado vertical del gráfico</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SMALLBRO.htm" tppabs="http://fenix.jlceb.com/func.php?func=SMALLBRO">SMALLBRO</a></b></td><td>&nbsp;</td><td>Identificador del proceso creado después del nuestro</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SON.htm" tppabs="http://fenix.jlceb.com/func.php?func=SON">SON</a></b></td><td>&nbsp;</td><td>Identificador del último proceso hijo</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=X.htm" tppabs="http://fenix.jlceb.com/func.php?func=X">X</a></b></td><td>&nbsp;</td><td>Posición X del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=XGRAPH.htm" tppabs="http://fenix.jlceb.com/func.php?func=XGRAPH">XGRAPH</a></b></td><td>&nbsp;</td><td>Tabla de gráficos en función del ángulo</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=Y.htm" tppabs="http://fenix.jlceb.com/func.php?func=Y">Y</a></b></td><td>&nbsp;</td><td>Posición Y del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=Z.htm" tppabs="http://fenix.jlceb.com/func.php?func=Z">Z</a></b></td><td>&nbsp;</td><td>Posición Z del proceso</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=BLENDOP.htm" tppabs="http://fenix.jlceb.com/func.php?func=BLENDOP">BLENDOP</a></b></td><td>&nbsp;</td><td>Indica el identificador de la BLENDOP que debe aplicarse al proceso</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

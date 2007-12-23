@@ -1,0 +1,74 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=LOAD_FPG.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_FPG">LOAD_FPG</a></b> ( <B>"FICHERO"</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Recupera de disco una librería FPG </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">STRING</td><td valign="top"><b>FICHERO</b></td><td valign="top"> : </td><td valign="top">Nombre del fichero</td></tr>
+</table> </td></tr>
+<tr><td> <b>VALOR DE RETORNO </b> </td></tr>
+<tr><td style="padding-left: 40pt"> <p>INT &nbsp; : &nbsp; Código de la librería FPG recuperada</p> </td></tr> <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función carga en memoria el contenido de un fichero FPG, que contiene una librería con hasta 1000 gráficos diferentes, todos ellos con la misma profundidad de color (pero, por otra parte, tan flexibles como los gráficos recuperados independientemente con <a href="func.php-func=LOAD_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_MAP">LOAD_MAP</a></A> ).</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt">El primer fichero FPG en recuperarse siempre tiene el código 0. Si tu juego es sencillo y sólo tendrá unos pocos gráficos, puedes considerar guardarlos todos en un mismo fichero FPG y recuperarlo al comienzo de tu programa. Puedes usar 0 a partir de entonces en todas las llamadas a funciones que empleen gráficos, como código de librería.</td></tr>
+<tr><td style="padding-left: 40pt">Una librería FPG mantiene todos sus gráficos en memoria simultáneamente. Si tu juego va a tener una gran cantidad de gráficos de gran tamaño, se recomienda que los distribuyas en varios ficheros FPG que vayas recuperando conforme son necesarios. Puedes liberar la memoria ocupada por un FPG empleando la función <A HREF="javascript:if(confirm('http://fenix.jlceb.com/UNLOAD_FPG  \n\nThis file was not retrieved by Teleport Pro, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/UNLOAD_FPG'" tppabs="http://fenix.jlceb.com/UNLOAD_FPG"></A> , una vez ya no es necesario.</td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=FPG_NEW.htm" tppabs="http://fenix.jlceb.com/func.php?func=FPG_NEW">FPG_NEW</a></b></td><td>&nbsp;</td><td>Crea una nueva librería FPG en memoria</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SAVE_FPG.htm" tppabs="http://fenix.jlceb.com/func.php?func=SAVE_FPG">SAVE_FPG</a></b></td><td>&nbsp;</td><td>Guarda en disco una librería FPG</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=UNLOAD_FPG.htm" tppabs="http://fenix.jlceb.com/func.php?func=UNLOAD_FPG">UNLOAD_FPG</a></b></td><td>&nbsp;</td><td>Libera la memoria ocupada por una librería FPG</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

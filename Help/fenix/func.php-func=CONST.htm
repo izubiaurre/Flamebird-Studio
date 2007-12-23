@@ -1,0 +1,62 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"><tr><td style="padding-left: 0pt"><font color=#800000><B> CONST</B> <BLOCKQUOTE> <I> nombre</I> = <I> valor</I> ; <BR></BR> <I> nombre</I> = <I> valor</I> ; <BR></BR> ...</BLOCKQUOTE> <B> END</B></font></td></tr>
+ </td></tr> <tr><td style="padding-left: 40pt"> <p> Declara las constantes del programa </p> </td></tr>  <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta sección contiene declaraciones de constantes. Una constante es parecida a una variable global, con importantes diferencias: <UL> <LI> Una constante no tiene tipo. Puede contener un valor numérico (entero o con decimales) o bien una <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=cadenas de texto  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=cadenas de texto'" tppabs="http://fenix.jlceb.com/func.php?func=cadenas de texto">cadenas de texto</a> cadena de texto</A> entre comillas.</LI> <LI> Una constante no puede ser modificada. Su valor es constante, por lo que permanecerá inalterable a lo largo de todo el programa.</LI></UL></P> <P> Una constante es útil para almacenar al principio del programa valores numéricos o textos. Por ejemplo, puedes usar constantes para identificar todos los textos que aparecerán en pantalla: si en el futuro quieres traducir a otro idioma tu programa, será mucho más sencillo al tener todos los textos localizados en el mismo sitio. También puedes usar constantes para guardar valores numéricos fijos y no tener que recordarlos cada vez, como la magnitud de la fuerza de gravedad en tu juego. Eso también te facilitará la tarea en el futuro si quieres realizar ajustes a estos valores, ya que bastará con modificar la sección CONST y el cambio afectará a todo el programa.</P> <P> Una constante se declara siempre indicando su nombre, seguido del signo = y del valor al que hace referencia (un número con decimales opcionales usando el punto decimal . o bien una cadena de texto entre comillas); por último, la declaración de una constante debe acabar en punto y coma.</P> <P> Es posible usar una expresión como valor asignado a una constante (es decir, un cálculo matemático empleando los <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=operadores  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=operadores'" tppabs="http://fenix.jlceb.com/func.php?func=operadores">operadores</a></A> disponibles en Fenix) pero el resultado debe ser constante, es decir, no es posible usar variables, funciones del sistema o nombres de procesos en la expresión.</P> <P> El nombre de una constante es un identificador. Los <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=identificadores  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=identificadores'" tppabs="http://fenix.jlceb.com/func.php?func=identificadores">identificadores</a></A> en Fenix son una palabra que empieza por una letra o bien por el signo _ y que puede contener únicamente letras, números o el signo _. No importa si el identificador se escribe en mayúsculas o minúsculas, aunque si se hacen servir acentos o caracteres internacionales, el identificador debe escribirse siempre con los mismos acentos o caracteres. No es posible usar como nombre de variable una palabra clave que identifica una sentencia o directiva del lenguaje.</P> <P> Cada vez que el identificador que se refiere a una constante aparezca más adelante en el programa, será interpretado por el compilador como si hubieses escrito en su lugar el valor con el que se declara la constante en la sección CONST. Es válido usar una constante en cualquier lugar donde se pudiera usar el número o cadena de texto (incluyendo, por ejemplo, inicialización de valores por defecto para variables en otras secciones de datos, incluso más adelante dentro de la misma sección CONST).</P> <P> Es posible que la sección CONST aparezca varias veces en el mismo programa. Las constantes declaradas en las secciones siguientes son igualmente válidas y se añaden a las declaradas anteriormente. Sin embargo, una constante debe declararse siempre antes de ser usada.</P> <H3> Variables globales predefinidas</H3> <P> Además de las variables que declares en tu programa, tienes disponibles una serie de <B> variables del sistema</B> predefinidas a las que puedes acceder en todo momento. Estas variables contienen información útil sobre el entorno de ejecución de tu programa y otros datos del sistema. Puedes acceder <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=Variables globales  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=Variables globales'" tppabs="http://fenix.jlceb.com/func.php?func=Variables globales">Variables globales</a> aquí</A> a una lista y descripción de estas variables.</P> </td></tr> 
+	</table>
+		
+</body>
+</html>
+

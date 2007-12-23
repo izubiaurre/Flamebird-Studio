@@ -1,0 +1,68 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td> POINTER <b><a href="func.php-func=ALLOC.htm" tppabs="http://fenix.jlceb.com/func.php?func=ALLOC">ALLOC</a></b> ( <B>BYTES</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Reserva de memoria dinámica </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">INT</td><td valign="top"><b>BYTES</b></td><td valign="top"> : </td><td valign="top">Tamaño en bytes de la zona de memoria a reservar</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Reserva una zona de memoria y devuelve un puntero a la misma.  Esta es una función avanzada que requiere dominio del concepto de PUNTERO.  Dicha zona de memoria puede contener restos de un uso anterior o datos aleatorios y es responsabildiad del programdor inicializarla.</P> <P> El puntero devuelto por ALLOC puede asignarse a cualquier variable de tipo POINTER, p.e. byte pointer o int pointer.  Se aconseja guardar el puntero en una variable global i acceder a la memoria usando el operador [] a lo largo del programa.</P> <P> En caso de no poder reservar la memoria solicitada, alloc genera un error en tiempo de ejecución, sin embargo no es un caso frecuente, ya que el sistema operativo puede emplear el espacio de disco libre para crear memória de intercambio para solucionarlo.</P> <P> El número de elementos que cabran en la nueva zona de memoria reservada será igual al tamaño total dividido por el tamaño de cada elemento para el tipo de puntero utilizado. Para reservar espacio para 1000 bytes hay que reservar 1000 bytes, pero para reservar espacio para 1000 ints hay que reservar 4000 bytes, 1000 * 4 bytes, que es el valor que devuelve sizeof(int).</P> <P> El puntero devuelto por alloc no debe descartarse ya que es preciso utilizarlo con la función <a href="func.php-func=FREE.htm" tppabs="http://fenix.jlceb.com/func.php?func=FREE">FREE</a></A> , para liberar la memoria utilizada.</P> </td></tr> <tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=FREE.htm" tppabs="http://fenix.jlceb.com/func.php?func=FREE">FREE</a></b></td><td>&nbsp;</td><td>Libera memoria dinámica reservada anteriormente</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=REALLOC.htm" tppabs="http://fenix.jlceb.com/func.php?func=REALLOC">REALLOC</a></b></td><td>&nbsp;</td><td>Amplía o reduce el espacio reservado de un bloque de memoria</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

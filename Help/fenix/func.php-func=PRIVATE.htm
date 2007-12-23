@@ -1,0 +1,62 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"><tr><td style="padding-left: 0pt"><font color=#800000><a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=PROCESS  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=PROCESS'" tppabs="http://fenix.jlceb.com/func.php?func=PROCESS">PROCESS</a></A> nombre ( [ parámetros ] ) <BR></BR> <BR></BR> <B> PRIVATE</B> <BLOCKQUOTE> <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=Variables  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=Variables'" tppabs="http://fenix.jlceb.com/func.php?func=Variables">Variables</a></A> <BR></BR> ...</BLOCKQUOTE> <BR></BR> BEGIN <BR></BR> ...</font></td></tr>
+ </td></tr> <tr><td style="padding-left: 40pt"> <p> Declara las variables privadas de un proceso </p> </td></tr>  <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta sección contiene declaraciones de <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=variables  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=variables'" tppabs="http://fenix.jlceb.com/func.php?func=variables">variables</a></A> privadas de un proceso concreto. Estas variables son propias del proceso: ningún otro proceso tiene acceso a ellas y sólo procesos del mismo tipo exactamente al actual guardan una copia de las mismas.  El valor de una variable privada puede ser (y seguramente será) diferente de un proceso que la tenga a otro. Las variables privadas identifican datos temporales o de propósito concreto dentro de un proceso, como un contador o un valor de estado que no tiene relevancia para el resto de procesos.</P> <P> Consulta la sección <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=Variables  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=Variables'" tppabs="http://fenix.jlceb.com/func.php?func=Variables">Variables</a></A> para obtener más información acerca de la sintaxis a usar para declarar una variable, y <a href="javascript:if(confirm('http://fenix.jlceb.com/func.php?func=Tipos de dato  \n\nThis file was not retrieved by Teleport Pro, because it is linked too far away from its Starting Address. If you increase the in-domain depth setting for the Starting Address, this file will be queued for retrieval.  \n\nDo you want to open it from the server?'))window.location='http://fenix.jlceb.com/func.php?func=Tipos de dato'" tppabs="http://fenix.jlceb.com/func.php?func=Tipos de dato">Tipos de dato</a></A> para saber qué clases de variable hay disponibles.</P> <P> La sección PRIVATE aparece dentro de cada proceso y es opcional. Un proceso que no la use no dispone de variables privadas, aunque sí tiene variables locales (acude a la sección <a href="func.php-func=LOCAL.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOCAL">LOCAL</a></A> para más información).</P> <P> A diferencia de las variables locales o globales, no existen variables privadas predefinidas. Un proceso por defecto no tiene ninguna variable privada hasta que no se declare alguna.</P> </td></tr> 
+	</table>
+		
+</body>
+</html>
+

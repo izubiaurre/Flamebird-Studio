@@ -1,0 +1,75 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=LOAD_TTF.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_TTF">LOAD_TTF</a></b> ( <B>"FICHERO"</B>, <B>TAMAÑO</B> ) </td></tr> <tr><td style="padding-left: 40pt"> <p> Recupera un tipo de letra Truetype del disco, creando una fuente interna a partir del tamaño deseado </p> </td></tr> <tr><td> <b>PARÁMETROS</b> </td></tr>
+<tr><td style="padding-left: 28pt"> <table cellpadding="8pt"><tr><td nowrap valign="top">STRING</td><td valign="top"><b>FICHERO</b></td><td valign="top"> : </td><td valign="top">Nombre del fichero TTF</td></tr>
+<tr><td nowrap valign="top">INT</td><td valign="top"><b>TAMAÑO</b></td><td valign="top"> : </td><td valign="top">Tamaño (altura en pixels) deseado</td></tr>
+</table> </td></tr>
+ <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> Esta función recupera de disco un tipo de letra Truetype y crea internamente los bitmaps de todos los caracteres en el juego de caracteres estándar (ISO-8859-1). La función devuelve un identificador de fuente (o tipo de letra) que puede utilizarse en las llamadas a funciones como <a href="func.php-func=WRITE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE">WRITE</a></A> o <a href="func.php-func=WRITE_IN_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_IN_MAP">WRITE_IN_MAP</a></A> .</P> <P> El tamaño indicado es un valor meramente orientativo. Existirán caracteres cuyo tamaño final sea ligeramente superior al indicado. Además, el tamaño final del caracter depende del tipo de letra, aunque a un mismo tamaño varios tipos de letra deben tener un aspecto comparable.</P> <P> Esta función crea una fuente a dos colores, donde cada pixel puede estar activado o desactivado. En un principio el color elegido para dibujar texto es el blanco, pero puede escogerse cualquier otro color usando la función <a href="func.php-func=TEXT_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=TEXT_COLOR">TEXT_COLOR</a></A> .</P> <P> Si se desea, es posible guardar la fuente resultante con la función SAVE_FNT. Un fichero FNT es mucho más rápido de cargar que una fuente TTF, pero sólo contiene la fuente final (los bitmaps de cada caracter), mientras el fichero TTF contiene información para dibujar texto a cualquier resolución y tamaño.</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt"><P> Tanto LOAD_TTF como LOAD_TTFA guardan información sobre el último fichero TTF recuperado en memoria, lo cual les permite acelerar las siguientes llamadas a la función que se hagan con la misma funete (siempre que estas llamadas sean consecutivas). Esto puede ocurrir a menudo, por ejemplo si se desea utilizar un tipo de letra Truetype a varios tamaños. Sin embargo, se recomiendo usar ficheros TTF reducidos en tamaño, o al menos recuperar en último lugar el fichero TTF más pequeño.</P></td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=LOAD_TTFAA.htm" tppabs="http://fenix.jlceb.com/func.php?func=LOAD_TTFAA">LOAD_TTFAA</a></b></td><td>&nbsp;</td><td>Recupera un tipo de letra Truetype del disco, creando una fuente interna a partir del tamaño deseado, con anti-alias</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE">WRITE</a></b></td><td>&nbsp;</td><td>Dibuja un texto en pantalla</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=WRITE_IN_MAP.htm" tppabs="http://fenix.jlceb.com/func.php?func=WRITE_IN_MAP">WRITE_IN_MAP</a></b></td><td>&nbsp;</td><td>Crea un gráfico que contenga un texto</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=SAVE_FNT.htm" tppabs="http://fenix.jlceb.com/func.php?func=SAVE_FNT">SAVE_FNT</a></b></td><td>&nbsp;</td><td>Graba en disco un tipo de letra FNT</td></tr>
+<tr><td valign="top"><b><a href="func.php-func=TEXT_COLOR.htm" tppabs="http://fenix.jlceb.com/func.php?func=TEXT_COLOR">TEXT_COLOR</a></b></td><td>&nbsp;</td><td></td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+

@@ -1,0 +1,67 @@
+<html><?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	Referencia de Fenix
+</title>
+<style>
+	body	{ font-family: Verdana; font-size: 15px }
+	a	{ text-decoration: none; color: #c00000; font-weight: bold }
+	a:hover { color: #ff6600 }
+	thead	{ background: black; color: white; padding: 4pt }
+	li	{ padding: 4pt; padding-left: 12pt }
+	pre	{ padding: 8pt; padding-left: 12pt; border: solid black 1px; background-color: white; margin-right: 40px }
+	td      { padding: 4pt; vertical-align: top; }
+	th      { padding: 4pt; vertical-align: top; background: #E0E0F0; text-align: left; width: 200px }
+	body    { background: #F0F0F0 }
+</style>
+</head>
+<body>
+
+	<form action="func.php-func=.htm" tppabs="http://fenix.jlceb.com/func.php?func=">
+	<div style=" 
+		color: #A0A0A0; 
+		border: outset #600000 2px; 
+		background: #660000;
+		text-align: center; 
+		vertical-align: middle;
+		font-weight: bold;
+		height: 24px;
+		margin: 0px; ">
+		[ <a style="color: white" href="func.php-funcs=^(dll-){0}.htm" tppabs="http://fenix.jlceb.com/func.php?funcs=^(dll/){0}">TODO</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top">SECCIONES</a> |
+		  <a style="color: white" target="_top" href="func.php-frame=top&dirs=^dll-.htm" tppabs="http://fenix.jlceb.com/func.php?frame=top&dirs=^dll/">DLLs</a> |
+		  Buscar Función: <input name="func" size="15" onfocus="select()"/> ]
+	</div>
+	</form>
+	
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</script>
+
+<script> document.forms[0].func.focus() </script>
+	<table cellspacing="8pt"> <tr><td>  <b><a href="func.php-func=FLAGS.htm" tppabs="http://fenix.jlceb.com/func.php?func=FLAGS">FLAGS</a></b>  </td></tr> <tr><td style="padding-left: 40pt"> <p> Indica operacioones especiales que se aplicarán al gráfico del proceso </p> </td></tr>  <tr><td> <b>DESCRIPCIÓN</b> </td></tr> 
+		           <tr><td style="padding-left: 40pt"> <P> El valor de esta variable activa operacionese especiales que se realizarán en el momento de dibujar el gráfico del proceso en la pantalla.  Puede contener uno o la suma de varios de los valores siguientes:</P> <P><ul><li>1 : Espejado horizontal</CONST></li><li>2 : Espejado vertical</CONST></li><li>4 : transparencia</CONST></li><li>8 : alpha</CONST></li><li>16 : blit aditivo</CONST></li><li>32 : bllit sustractivo</CONST></li><li>128 : NO_COLOR_KEY</CONST></li></ul> <BR></BR> El valor por defecto de esta variable es 0.</P> <P> El espejado es distinto a la rotación, y también es mucho más rapido de dibujar que una rotación convencional.</P> <P> Para gráficos grandes que no deban respetar transparencias, es interesante utilizar como valor de flags el de NO_COLOR_KEY ya que  el dibujado sin transparencia es mucho más rápido que el dibujado con transparencias.</P> <P> El blit aditivo y sustractivo consiste en  hacer que el gráfico sume/reste sus componentes de color pixel a pixel con el valor que tenia antes de dibujar el gráfico ese pixel de pantalla, por tanto colores con componentes de color elevadas tiende a la saturación (se acercan al blanco) en el caso del blit aditivo y tienden a 0 en el caso del sustractivo.</P> <P> El indicador de transparencia (valor 4) corresponde a una transparencia del 50% mientras que el de alpha trabaja en combinación con la variable local <a href="func.php-func=ALPHA.htm" tppabs="http://fenix.jlceb.com/func.php?func=ALPHA">ALPHA</a></A> .</P> </td></tr> <tr><td> <b>NOTAS</b> </td></tr>
+<tr><td style="padding-left: 40pt"><P> La combinación de blit aditivo/sustractivo solo funciona en combinación con ALPHA en la versión de Fenix del CVS.</P></td></tr>
+<tr><td> &nbsp; </td></tr>
+<tr><td> <b>VEA TAMBIÉN</b> </td></tr>
+<tr><td style="padding-left: 40pt"> <table cellpadding="6pt"><tr><td valign="top"><b><a href="func.php-func=ALPHA.htm" tppabs="http://fenix.jlceb.com/func.php?func=ALPHA">ALPHA</a></b></td><td>&nbsp;</td><td>Indica la transparencia del gráfico del proceso</td></tr>
+</table> </td></tr>
+
+	</table>
+		
+</body>
+</html>
+
