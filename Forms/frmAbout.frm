@@ -13,15 +13,24 @@ Begin VB.Form frmAbout
    MaxButton       =   0   'False
    MinButton       =   0   'False
    Moveable        =   0   'False
-   Picture         =   "frmAbout.frx":000C
-   ScaleHeight     =   7710
-   ScaleWidth      =   7785
+   ScaleHeight     =   514
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   519
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.Label Label15 
       BackStyle       =   0  'Transparent
-      Caption         =   $"frmAbout.frx":12C050
-      Height          =   615
+      Caption         =   $"frmAbout.frx":000C
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
       Left            =   2520
       TabIndex        =   29
       Top             =   5880
@@ -182,7 +191,7 @@ Begin VB.Form frmAbout
    Begin VB.Label Label21 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Imanol Izubiaurre"
+      Caption         =   "Imanol Zubiaurre"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   8.25
@@ -196,7 +205,7 @@ Begin VB.Form frmAbout
       Left            =   2520
       TabIndex        =   20
       Top             =   2760
-      Width           =   1215
+      Width           =   1200
    End
    Begin VB.Label Label11 
       AutoSize        =   -1  'True
@@ -214,7 +223,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00C00000&
       Height          =   210
       Left            =   4440
-      MouseIcon       =   "frmAbout.frx":12C0E8
+      MouseIcon       =   "frmAbout.frx":00A4
       MousePointer    =   99  'Custom
       TabIndex        =   19
       Top             =   2760
@@ -256,7 +265,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00C00000&
       Height          =   210
       Left            =   3600
-      MouseIcon       =   "frmAbout.frx":12C254
+      MouseIcon       =   "frmAbout.frx":0210
       MousePointer    =   99  'Custom
       TabIndex        =   17
       Top             =   1560
@@ -354,7 +363,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00C00000&
       Height          =   210
       Left            =   4440
-      MouseIcon       =   "frmAbout.frx":12C3C0
+      MouseIcon       =   "frmAbout.frx":037C
       MousePointer    =   99  'Custom
       TabIndex        =   12
       Top             =   2040
@@ -376,7 +385,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00C00000&
       Height          =   210
       Left            =   4440
-      MouseIcon       =   "frmAbout.frx":12C52C
+      MouseIcon       =   "frmAbout.frx":04E8
       MousePointer    =   99  'Custom
       TabIndex        =   11
       Top             =   2520
@@ -398,7 +407,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00C00000&
       Height          =   210
       Left            =   3480
-      MouseIcon       =   "frmAbout.frx":12C698
+      MouseIcon       =   "frmAbout.frx":0654
       MousePointer    =   99  'Custom
       TabIndex        =   10
       Top             =   1320
@@ -552,7 +561,7 @@ Begin VB.Form frmAbout
       Height          =   495
       Left            =   2520
       TabIndex        =   2
-      Top             =   6600
+      Top             =   6360
       Width           =   4695
    End
    Begin VB.Label Label17 
@@ -601,9 +610,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -625,9 +634,16 @@ Private Sub Command1_Click()
     frmLicense.Show 1
 End Sub
 
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    If KeyAscii = vbKeyEscape Then
+        cmdOk_Click
+    End If
+End Sub
+
 Private Sub Form_Load()
     Me.Caption = "About " & App.Title
     lblVersion.Caption = App.Major & "." & App.Minor & "." & App.Revision
+    Picture = LoadPicture(App.Path & "\Resources\frmAbout.jpg")
 End Sub
 
 Private Sub Image1_Click()
@@ -638,10 +654,10 @@ Private Sub Label27_Click()
 
 End Sub
 
-Private Sub lblLin_Click(index As Integer)
+Private Sub lblLin_Click(Index As Integer)
     frmLicense.Show 1
 End Sub
 
-Private Sub lblOk_Click(index As Integer)
+Private Sub lblOk_Click(Index As Integer)
     Unload Me
 End Sub

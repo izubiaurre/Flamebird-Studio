@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -50,101 +50,121 @@ Dim m_bUnderline    As Boolean
 Dim m_eUnit         As unit
 Dim m_bStrikeout    As Boolean
 
+'Public Current_Color As Long
+'Public Current_Char As Long
+'Public Zoom As Long
+'Public Alpha As Boolean
+'
+'Dim Draw_Rect As RECT
+Private sLastError As String
+
+
+
 Public Function CreateFont(ByVal oFont As StdFont, Optional ByVal eFontStyle As FontStyle = FontStyleRegular, Optional ByVal eUnit As unit = UnitPoint) As Long
-  m_eStyle = eFontStyle
-  m_eUnit = eUnit
-  m_sName = oFont.name
-  m_bBold = oFont.Bold
-  m_bItalic = oFont.Italic
-  m_bUnderline = oFont.Underline
-  m_sngSize = oFont.Size
-  m_bStrikeout = oFont.Strikethrough
-  'If CreateFontFamily(m_sName) <> Status.Ok Then ' Failed, try Generic
-    CreateGenericFont m_sName
-  'End If
-  If fontFamily Then
-    CreateFont = Execute(GdipCreateFont(fontFamily, CSng(oFont.Size), eFontStyle, eUnit, font))
-  End If
+    m_eStyle = eFontStyle
+    m_eUnit = eUnit
+    m_sName = oFont.name
+    m_bBold = oFont.Bold
+    m_bItalic = oFont.Italic
+    m_bUnderline = oFont.Underline
+    m_sngSize = oFont.Size
+    m_bStrikeout = oFont.Strikethrough
+    'If CreateFontFamily(m_sName) <> Status.Ok Then ' Failed, try Generic
+        CreateGenericFont m_sName
+    'End If
+    If fontFamily Then
+        CreateFont = Execute(GdipCreateFont(fontFamily, CSng(oFont.Size), eFontStyle, eUnit, font))
+    End If
 End Function
 
 Private Function CreateFontFamily(ByVal lFontName As String) As Long
-  CreateFontFamily = Execute(GdipCreateFontFamilyFromName(lFontName, 0, fontFamily))
+    CreateFontFamily = Execute(GdipCreateFontFamilyFromName(lFontName, 0, fontFamily))
 End Function
 
 Private Function CreateGenericFont(ByVal lFontName As String) As Long
-  fontFamily = 0
-  CreateGenericFont = Execute(GdipGetGenericFontFamilySansSerif(fontFamily))
+    fontFamily = 0
+    CreateGenericFont = Execute(GdipGetGenericFontFamilySansSerif(fontFamily))
 End Function
 
 Public Function CreateFromHdc(ByVal lHdc As Long, ByVal oFont As StdFont) As Long
-  m_sName = oFont.name
-  m_bBold = oFont.Bold
-  m_bItalic = oFont.Italic
-  m_bUnderline = oFont.Underline
-  m_sngSize = oFont.Size
-  m_bStrikeout = oFont.Strikethrough
-  CreateFromHdc = Execute(GdipCreateFontFromDC(lHdc, font))
-  If CreateFromHdc = status.Ok Then
-    GdipGetFontStyle font, m_eStyle
-    GdipGetFontUnit font, m_eUnit
-  End If
+    m_sName = oFont.name
+    m_bBold = oFont.Bold
+    m_bItalic = oFont.Italic
+    m_bUnderline = oFont.Underline
+    m_sngSize = oFont.Size
+    m_bStrikeout = oFont.Strikethrough
+    CreateFromHdc = Execute(GdipCreateFontFromDC(lHdc, font))
+    If CreateFromHdc = status.Ok Then
+        GdipGetFontStyle font, m_eStyle
+        GdipGetFontUnit font, m_eUnit
+    End If
 End Function
 
 Public Sub Dispose()
-  If fontFamily Then GdipDeleteFontFamily fontFamily
-  If font Then GdipDeleteFont font
+    If fontFamily Then GdipDeleteFontFamily fontFamily
+    If font Then GdipDeleteFont font
 End Sub
 
 Private Function Execute(ByVal lReturn As Long) As Long
-  If lReturn Then
-    lCurErr = lReturn
-    If Not gdip Is Nothing Then gdip.Error lReturn, "cFont"
-  Else
-    lCurErr = 0
-  End If
-  Execute = lCurErr
+    If lReturn Then
+        lCurErr = lReturn
+        If Not gdip Is Nothing Then gdip.Error lReturn, "cFont"
+    Else
+        lCurErr = 0
+    End If
+    Execute = lCurErr
 End Function
 
 Public Property Get Bold() As Boolean
-  Bold = m_bBold
+    Bold = m_bBold
 End Property
 
 Public Property Get Handle() As Long
-  Handle = font
+    Handle = font
 End Property
 
 Public Property Get Height() As Long
-  Height = m_lHeight
+    Height = m_lHeight
 End Property
 
 Public Property Get Italic() As Boolean
-  Italic = m_bItalic
+    Italic = m_bItalic
 End Property
 
 Public Property Get name() As String
-  name = m_sName
+    name = m_sName
 End Property
 
 Public Property Get Size() As Single
-  Size = m_sngSize
+    Size = m_sngSize
 End Property
 
 Public Property Get StrikeOut() As Boolean
-  StrikeOut = m_bStrikeout
+    StrikeOut = m_bStrikeout
 End Property
 
 Public Property Get Style() As FontStyle
-  Style = m_eStyle
+    Style = m_eStyle
 End Property
 
 Public Property Get Underline() As Boolean
-  Underline = m_bUnderline
+    Underline = m_bUnderline
 End Property
 
 Public Property Get unit() As unit
-  unit = m_eUnit
+    unit = m_eUnit
 End Property
 
-Private Sub Class_Terminate()
-  Dispose
+Private Sub SetLastError(sError As String)
+    sLastError = sError
 End Sub
+
+Public Function GetLastError() As String
+    GetLastError = sLastError
+End Function
+
+Private Sub Class_Terminate()
+    Dispose
+End Sub
+
+

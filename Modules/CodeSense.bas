@@ -2,9 +2,9 @@ Attribute VB_Name = "CodeSenseModule"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -206,7 +206,7 @@ Const cmCmdWhitespaceDisplayOn As Integer = 238      ' Turns on whitespace displ
 Const cmCmdWhitespaceDisplayOff As Integer = 239     ' Turns off whitespace display
 Const cmCmdOvertypeOn As Integer = 240               ' Turns on overtype mode
 Const cmCmdOvertypeOff As Integer = 241              ' Turns off overtype mode
-Const cmCmdCodeList As Integer = 242              ' Invokes the CodeSense list view control
+Const cmCmdCodeList As Integer = 242                 ' Invokes the CodeSense list view control
 Const cmCmdLast As Integer = 242                     ' The last command id (not an actual command)
 
 '////////////////////////////////////////////////////////////////////////////////////////
@@ -376,3 +376,4 @@ Const cmNotifyDel As Integer = &H2               ' parent window should receive 
 Const cmBtnLeft As Integer = &H1                 ' left mouse button
 Const cmBtnRight As Integer = &H2                ' right mouse button
 Const cmBtnMiddle As Integer = &H4               ' middle mouse button
+

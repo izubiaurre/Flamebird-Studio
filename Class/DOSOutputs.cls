@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ Private Type PROCESS_INFORMATION
     hProcess As Long
     hThread As Long
     dwProcessID As Long
-    dwThreadID As Long
+    dwThreadId As Long
 End Type
 
 'This function launch the the commend and return the relative process
@@ -130,8 +130,8 @@ End Property
 
 'This property ReadOnly get the complete output after
 'a command execution
-Public Property Get Outputs()
-    Outputs = mOutputs
+Public Property Get outputs()
+    outputs = mOutputs
 End Property
 
 Public Property Get ThreadID() As Long
@@ -204,7 +204,7 @@ Public Function ExecuteCommand(Optional CommandLine As String) As String
         RaiseEvent ReceiveOutputs(Left(strBuff, lngBytesread))
     Loop While ret <> 0
     
-    mThreadID = proc.dwThreadID
+    mThreadID = proc.dwThreadId
     
     'Close the opened handles
     ret = CloseHandle(proc.hProcess)

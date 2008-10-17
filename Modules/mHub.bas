@@ -2,9 +2,9 @@ Attribute VB_Name = "modFunctions"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -20,28 +20,28 @@ Option Explicit
 
 'Used in SetMinWindowSize
 Public OldWindowProc As Long
-Public Declare Function CallWindowProc Lib "user32.dll" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByVal msg As Long, ByVal wParam As Long, lParam As WINDOWPOS) As Long
+Public Declare Function CallWindowProc Lib "user32.dll" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal Hwnd As Long, ByVal Msg As Long, ByVal wParam As Long, lParam As WINDOWPOS) As Long
 
 Public Const GWL_WNDPROC = (-4)
 Public MinWidth As Integer
 Public MinHeight As Integer
 Type WINDOWPOS
-  hwnd As Long
+  Hwnd As Long
   hWndInsertAfter As Long
   X As Long
   Y As Long
   cx As Long
   cy As Long
-  flags As Long
+  Flags As Long
 End Type
 Public Const WM_WINDOWPOSCHANGING = &H46
 Public Const WM_WINDOWPOSCHANGED = &H47
 
 'FormDrag Stuff
 Public Declare Sub ReleaseCapture Lib "user32" ()
-Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
-Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Integer, ByVal lParam As Long) As Long
-Public Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal Hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
+Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal Hwnd As Long, ByVal wMsg As Long, ByVal wParam As Integer, ByVal lParam As Long) As Long
+Public Declare Function SetWindowPos Lib "user32" (ByVal Hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 
 'WebPage Launcher
 Public Const SW_SHOW = 5
@@ -53,7 +53,7 @@ Public Declare Function GetWindowsDirectory Lib "kernel32" Alias "GetWindowsDire
 Public Declare Function GetTempDirectory Lib "kernel32" Alias "GetWindowsDirectoryA" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
 Public Declare Function SHGetPathFromIDList Lib "shell32.dll" (ByVal pidl As Long, ByVal pszPath As String) As Long
 Public Declare Function SHGetSpecialFolderLocation Lib "shell32.dll" (ByVal hwndOwner As Long, ByVal nFolder As Long, pidl As ITEMIDLIST) As Long
-Public Declare Function SHGetFolderPath Lib "ShFolder" Alias "SHGetFolderPathA" (ByVal hwnd As Long, ByVal CSIDL As Long, ByVal TOKENHANDLE As Long, ByVal flags As Long, ByVal lpPath As String) As Long
+Public Declare Function SHGetFolderPath Lib "ShFolder" Alias "SHGetFolderPathA" (ByVal Hwnd As Long, ByVal CSIDL As Long, ByVal TOKENHANDLE As Long, ByVal Flags As Long, ByVal lpPath As String) As Long
 Public Const CSIDL_DESKTOP = &H0                 '{desktop}
 Public Const CSIDL_INTERNET = &H1                'Internet Explorer (icon on desktop)
 Public Const CSIDL_PROGRAMS = &H2                'Start Menu\Programs
@@ -119,10 +119,10 @@ Const SND_MEMORY = &H4
 Const SND_LOOP = &H8
 Const SND_NOSTOP = &H10
 
-Public Sub PlaySound(filename As String)
+Public Sub PlaySound(Filename As String)
     Dim wFlags%, X, SoundName As String
     
-    SoundName$ = filename
+    SoundName$ = Filename
     wFlags% = SND_ASYNC Or SND_NODEFAULT
     X = sndPlaySound(SoundName$, wFlags%)
 End Sub
@@ -131,7 +131,7 @@ Public Function LoadWebPage(ByVal vPage As String, f As Form)
   
   On Error Resume Next
   vPage = Trim(vPage)
-  ShellExecute f.hwnd, "open", vPage, vbNullString, vbNullString, SW_SHOW
+  ShellExecute f.Hwnd, "open", vPage, vbNullString, vbNullString, SW_SHOW
   On Error GoTo 0
   
 End Function
@@ -139,7 +139,7 @@ End Function
 Public Sub FormDrag(TheForm As Form)
     
     ReleaseCapture
-    Call SendMessage(TheForm.hwnd, &HA1, 2, 0&)
+    Call SendMessage(TheForm.Hwnd, &HA1, 2, 0&)
     
 End Sub
 
@@ -149,7 +149,7 @@ Public Function fGetSpecialFolder(ByVal lngCSIDL As Long, f As Form) As String
     Dim strFolder As String
     Dim Path As String * 260
     
-    lngRtn = SHGetSpecialFolderLocation(f.hwnd, lngCSIDL, udtIDL)
+    lngRtn = SHGetSpecialFolderLocation(f.Hwnd, lngCSIDL, udtIDL)
     If lngRtn = 0 Then
         strFolder = Space$(260)
         lngRtn = SHGetPathFromIDList( _
@@ -159,7 +159,7 @@ Public Function fGetSpecialFolder(ByVal lngCSIDL As Long, f As Form) As String
             InStr(1, strFolder, Chr$(0)) - 1) & "\"
         End If
     Else
-        lngRtn = SHGetFolderPath(f.hwnd, lngCSIDL, 0, 0, Path)
+        lngRtn = SHGetFolderPath(f.Hwnd, lngCSIDL, 0, 0, Path)
         If lngRtn = 0 Then
             strFolder = Space$(260)
             lngRtn = SHGetPathFromIDList( _
@@ -284,16 +284,16 @@ Err:
     InDesignMode = True
 End Function
 
-Public Function SetMinWindowSize(ByVal hwnd As Long, ByVal msg As Long, ByVal wParam As Long, lParam As WINDOWPOS) As Long
+Public Function SetMinWindowSize(ByVal Hwnd As Long, ByVal Msg As Long, ByVal wParam As Long, lParam As WINDOWPOS) As Long
   
   ' Keep the dimensions in bounds.
-  If msg = WM_WINDOWPOSCHANGING Then
+  If Msg = WM_WINDOWPOSCHANGING Then
     If lParam.cx < MinWidth Then lParam.cx = MinWidth
     If lParam.cy < MinHeight Then lParam.cy = MinHeight
   End If
   
   ' Continue normal processing. VERY IMPORTANT!
-  SetMinWindowSize = CallWindowProc(OldWindowProc, hwnd, msg, wParam, lParam)
+  SetMinWindowSize = CallWindowProc(OldWindowProc, Hwnd, Msg, wParam, lParam)
   
 End Function
 

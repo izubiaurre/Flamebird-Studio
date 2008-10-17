@@ -1,2 +1,1 @@
-Línea 11: la propiedad Icon de frmProjectProperties tenía una referencia a archivo no válida.
-Línea 368: la propiedad Picture de Image1 tenía una referencia a archivo no válida.
+Línea 316: la clase vbalDTab6.vbalDTabControl del control TabControl no era una clase de control cargada.

@@ -2,9 +2,9 @@ Attribute VB_Name = "modPlugin"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ End Sub
 Public Sub RunPlugin(sPlugin As String)
 
 'On Error GoTo Error_H
-    MsgBox sPlugin
+    'MsgBox sPlugin
     'Declare a clean object to use
     Dim objPlugIn As Object
     Dim strResponse As String
@@ -95,14 +95,14 @@ Public Sub RunPlugin(sPlugin As String)
     'MsgBox FormX.Name
     'if the plug-in returns an error, let us know
     If strResponse <> vbNullString Then
-        MsgBox strResponse
+        'MsgBox strResponse
     End If
     
 Exit Sub
 
 Error_H:
 
-MsgBox sPlugin & " - Error executing the plugin" & vbCrLf & Err.Description
+MsgBox sPlugin & " - Error executing the plugin" & vbCrLf & Err.description
 
 End Sub
 

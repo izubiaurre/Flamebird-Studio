@@ -2,9 +2,9 @@ Attribute VB_Name = "modZlib"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -124,6 +124,10 @@ Global Const Z_VERSION_ERROR = (-6)
 '  Comments) 1950 to 1952 in the files ftp://ds.internic.net/rfc/rfc1950.txt
 '  (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format).
 
+'copy-pasted directly
+Public Declare Function gzReadStr Lib "zlibvb.dll" _
+    Alias "gzread" (ByVal n As Long, ByVal ptr As String, ByVal lenght As Long) As Long
+    
 #If ZLIB_SHORT_NAMES Or ZLIB_ASCII_ONLY Then
 #If ZLIB_ASCII_ONLY Then
 Public Declare Function compress Lib "zlibvb.dll" (ByVal dest As String, destLen As Long, _
@@ -137,7 +141,7 @@ Public Declare Function uncompress Lib "zlibvb.dll" (dest As Byte, destLen As Lo
         Source As Byte, ByVal sourceLen As Long) As Long
 #End If 'ZLIB_ASCII_ONLY
 
-Public Declare Function gzopen Lib "zlibvb.dll" (ByVal Path As String, ByVal mode As String) As Long
+Public Declare Function gzopen Lib "zlibvb.dll" (ByVal Path As String, ByVal Mode As String) As Long
 'Public Declare Function ZlibGzopen Lib "zlibvb.dll" Alias "gzopen" (ByVal path As String, _
         ByVal mode As String) As Long
         
@@ -146,6 +150,8 @@ Public Declare Function gzread Lib "zlibvb.dll" (ByVal file As Long, _
         ByVal buf As String, ByVal buf_len As Long) As Long
 Public Declare Function gzwrite Lib "zlibvb.dll" (ByVal file As Long, _
         ByVal buf As String, ByVal buf_len As Long) As Long
+Public Declare Function gzReadStr Lib "zlibvb.dll" _
+    Alias "gzread" (ByVal n As Long, ByVal ptr As String, ByVal lenght As Long) As Long
 #Else
 Public Declare Function gzread Lib "zlibvb.dll" (ByVal file As Long, _
         buf As Any, ByVal buf_len As Long) As Long
@@ -173,7 +179,7 @@ Public Declare Function ZlibCompress Lib "zlibvb.dll" Alias "compress" (dest As 
 Public Declare Function ZlibUncompress Lib "zlibvb.dll" Alias "uncompress" (dest As Byte, destLen As Long, _
         Source As Byte, ByVal sourceLen As Long) As Long
 Public Declare Function ZlibGzopen Lib "zlibvb.dll" Alias "gzopen" (ByVal Path As String, _
-        ByVal mode As String) As Long
+        ByVal Mode As String) As Long
 Public Declare Function ZlibGzread Lib "zlibvb.dll" Alias "gzread" (ByVal file As Long, _
         buf As Byte, ByVal buf_len As Long) As Long
 Public Declare Function ZlibGzwrite Lib "zlibvb.dll" Alias "gzwrite" (ByVal file As Long, buf As Byte, _

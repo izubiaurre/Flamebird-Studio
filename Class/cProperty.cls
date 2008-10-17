@@ -16,9 +16,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ Public Property Get CallBackFunction() As String
     CallBackFunction = m_CallBackFunction
 End Property
 
-Public Property Let value(newValue As Variant)
+Public Property Let Value(newValue As Variant)
     'Comprobamos el tipo de propiedad
     Select Case m_Type
     Case ptInteger 'Entero
@@ -123,9 +123,9 @@ Public Property Let value(newValue As Variant)
     
 End Property
 
-Public Property Get value() As Variant
-Attribute value.VB_UserMemId = 0
-    value = m_Value
+Public Property Get Value() As Variant
+Attribute Value.VB_UserMemId = 0
+    Value = m_Value
 End Property
 
 Public Property Let Editable(newEditable As Boolean)
@@ -136,12 +136,12 @@ Public Property Get Editable() As Boolean
     Editable = m_Editable
 End Property
 
-Public Property Let Description(newDesc As String)
+Public Property Let description(newDesc As String)
     m_Description = newDesc
 End Property
 
-Public Property Get Description() As String
-    Description = m_Description
+Public Property Get description() As String
+    description = m_Description
 End Property
 
 Public Property Let IsLimited(newLimited As Boolean)

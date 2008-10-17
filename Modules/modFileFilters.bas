@@ -66,11 +66,11 @@ errhandler:
     If Err.Number > 0 Then ShowError ("modFileFilters.comPoseFileFilters")
 End Function
 
-Private Sub addFileFilter(Key As String, Description As String, filter As String)
+Private Sub addFileFilter(Key As String, Description As String, Filter As String)
     Dim s(1) As String
     
     s(0) = Description
-    s(1) = filter
+    s(1) = Filter
     
     m_FileFilters.Add Key, s
 End Sub
@@ -98,14 +98,23 @@ Public Sub CreateFileFilters()
     addFileFilter "GRAPHIC_COLLECTIONS", "All graphic collections", composeExtensions("FPG", "FGC")
     
     addFileFilter "FNT", "Fenix font file", "fnt"
-    
-    addFileFilter "MODULES", "All known song modules", "mod|s3m|xm|it|mid"
-    
-    addFileFilter "STREAM", "All known audio stream files", "ogg|mp3|wav"
-    
+
+    addFileFilter "MOD", "Mod", "mod"
+    addFileFilter "S3M", "S3m", "s3m"
+    addFileFilter "XM", "Xm", "xm"
+    addFileFilter "IT", "Impulse Tracker file", "it"
+    addFileFilter "MID", "Midi", "mid"
+    addFileFilter "MODULES", "All known song modules", composeExtensions("MOD", "S3M", "XM", "IT", "MID")
+    addFileFilter "OGG", "Ogg Vorbis stream file", "ogg"
+    addFileFilter "WAV", "Wave audio file", "wav"
+    addFileFilter "STREAMS", "All known audio stream files", composeExtensions("OGG", "WAV")
+    'addFileFilter "MODULES", "All known song modules", "mod|s3m|xm|it|mid"
+    'addFileFilter "STREAM", "All known audio stream files", "ogg|mp3|wav"
+    addFileFilter "SOUND_FILES", "All sound files", composeExtensions("MODULES", "STREAMS")
+
     addFileFilter "READABLE_FILES", "All readable files", _
-                composeExtensions("FBP", "SOURCE", "PALETTE", "MAP", "FPG", "MODULES")
+                composeExtensions("FBP", "SOURCE", "PALETTE", "MAP", "FPG", "FNT", "MODULES", "STREAMS")
     
     addFileFilter "COMMON_FILES", "All common files", composeExtensions("SOURCE", "PALETTE", _
-                "GRAPHIC_FILES", "GRAPHIC_COLLECTIONS", "MODULES", "STREAM")
+                "GRAPHIC_FILES", "GRAPHIC_COLLECTIONS", "SOUND_FILES")
 End Sub

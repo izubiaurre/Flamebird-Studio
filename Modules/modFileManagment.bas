@@ -2,9 +2,9 @@ Attribute VB_Name = "modFileManagment"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -50,6 +50,8 @@ Public Property Get FileFormOpenFilter(ff As EFileFormConstants) As String
         sFilter = getFilter("MAP")
     Case FF_FPG
         sFilter = getFilter("FPG")
+    Case FF_FNT
+        sFilter = getFilter("FNT")
     Case Else
         MsgBox "Unknow FileFilter type (this should have never happened). Contact FBMX team"
     End Select
@@ -65,6 +67,8 @@ Public Property Get FileFormSaveFilter(ff As EFileFormConstants) As String
         sFilter = getFilter("MAP")
     Case FF_FPG
         sFilter = getFilter("FPG")
+    Case FF_FNT
+        sFilter = getFilter("FNT")
     Case Else
         MsgBox "Unknow FileFilter type (this should have never happened). Contact FBMX team"
     End Select
@@ -80,6 +84,8 @@ Public Property Get FileFormDefaultExt(ff As EFileFormConstants) As String
         sFilter = "map"
     Case FF_FPG
         sFilter = "fpg"
+    Case FF_FNT
+        sFilter = "fnt"
     Case Else
         MsgBox "Unknow FileFilter type (this should have never happened). Contact FBMX team"
     End Select
@@ -115,11 +121,24 @@ Public Function makePathForProject(ByVal sFile As String) As String
     ' si no contiene el nombre de la unidad es que el path es relativo
     If FSO.GetDriveName(sFile) = "" Then
         Dim directorioBase As String
-        directorioBase = FSO.GetParentFolderName(openedProject.filename)
+        directorioBase = FSO.GetParentFolderName(openedProject.Filename)
         sFile = directorioBase & "\" & IIf(Left(sFile, 1) = "\", Right(sFile, Len(sFile) - 1), sFile)
     End If
     
     makePathForProject = sFile
+End Function
+
+' si el path es relativo, le agrega el dir del project, sin el filename
+Public Function getPath(ByVal sFile As String) As String
+    If sFile = "" Then Exit Function
+    ' si no contiene el nombre de la unidad es que el path es relativo
+    If FSO.GetDriveName(sFile) = "" Then
+        Dim directorioBase As String
+        directorioBase = FSO.GetParentFolderName(openedProject.Filename)
+        sFile = directorioBase '& "\" & IIf(Left(sFile, 1) = "\", Right(sFile, Len(sFile) - 1), sFile)
+    End If
+    
+    getPath = sFile
 End Function
 
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
@@ -152,7 +171,7 @@ Public Sub OpenProject(ByVal sFile As String, Optional bNew As Boolean)
     End If
     
     Set openedProject = New cProject
-    openedProject.filename = sFile
+    openedProject.Filename = sFile
     
     If bNew Then 'Si no existe creamos un proyecto con configuración por defecto
         openedProject.projectName = "My project"
@@ -185,7 +204,7 @@ Public Sub OpenProject(ByVal sFile As String, Optional bNew As Boolean)
                 nombre = makePathForProject(nombre)
              End If
         End If
-        AddRecent openedProject.filename, rtProject
+        AddRecent openedProject.Filename, rtProject
         frmProjectBrowser.RefreshTree
     Else
         'Reestablece el antiguo proyecto
@@ -290,13 +309,16 @@ End Function
 
 'Creates a new File Form optionaly loading a file into it. The return value is a TEMPORAL solution
 Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile As String) As Form
+
+    On Error GoTo errhandler
+    
     'This is a temporal solution to handle the Untitled documents count
     Static UntitledCount(0 To 10) As Integer
     
     Dim fFileForm As IFileForm
-    Dim fForm As Form 'To acess standar form methods (i.e. show) NOT FOR ANY OTHER PURPOSE
+    Dim fForm As Form 'To acess standard form methods (i.e. show) NOT FOR ANY OTHER PURPOSE
     
-    LockWindowUpdate frmMain.hwnd
+    LockWindowUpdate frmMain.Hwnd
     'Determina el formulario que debe crear en función del tipo de archivo
     Select Case ff
     Case FF_SOURCE
@@ -305,15 +327,23 @@ Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile
         Set fFileForm = New frmMap
     Case FF_FPG
         Set fFileForm = New frmFpg
+    Case FF_FNT
+        Set fFileForm = New frmFnt
     End Select
     Set fForm = fFileForm
-    
-    Load fForm
+      
+    'Load fForm
+                 
     If sFile = "" Then 'New file
         If fFileForm.NewW(UntitledCount(ff)) Then  'New FileForm succesful
             fForm.Show
             Set NewFileForm = fFileForm 'TEMPORAL: No NewFileForm no debería tener un valor de retorno
             UntitledCount(ff) = UntitledCount(ff) + 1
+            If ff = FF_SOURCE Then
+                ' insert here necromancer code
+                fForm.cs.AddText frmCodeWizard.sCode
+                frmCodeWizard.sCode = ""
+            End If
         Else
             Unload fFileForm
         End If
@@ -339,6 +369,11 @@ Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile
     
     LockWindowUpdate False
     Set fFileForm = Nothing
+    
+    Exit Function
+    
+errhandler:
+    If Err.Number > 0 Then MsgBox "NewFileForm":    Resume Next
 End Function
 
 'Shows open dialog to open a file associated with a FileForm
@@ -369,8 +404,10 @@ Public Sub OpenFileByExt(ByVal sFile As String)
         OpenProject sFile
     Case "fpg"
         NewFileForm FF_FPG, sFile
-    Case "mod", "xm", "it", "s3m", "mid"
+    Case "mod", "xm", "it", "s3m", "mid", "ogg", "wav"
         LoadPlayer sFile
+    Case "fnt"
+        NewFileForm FF_FNT, sFile
     Case Else
         MsgBox "File type not recognized", vbCritical
     End Select
@@ -423,7 +460,7 @@ errhandler:
         Set cdlg = Nothing
         Exit Sub
     ElseIf Err.Number > 0 Then 'Raise any different error
-        Err.Raise Err.Number, Err.Source, Err.Description
+        Err.Raise Err.Number, Err.Source, Err.description
     End If
 End Sub
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
@@ -433,8 +470,22 @@ End Sub
 Public Sub OpenSong()
     Dim sFiles() As String
     
-    If ShowOpenDialog(sFiles, getFilter("MODULES"), True, False) > 0 Then
+    If ShowOpenDialog(sFiles, _
+        "All known song modules (*.mod, *.s3m, *.xm, *.it, *.mid)|*.mod;*.s3m;*.xm;*.it;*.mid|" & _
+        "All known audio stream files (*.ogg, *.wav)|*.ogg;*.wav|" & _
+        "Mod module file (*.mod)|*.mod|" & _
+        "S3m module file (*.s3m)|*.s3m|" & _
+        "Xm module file (*.xm)|*.xm|" & _
+        "It module file (*.it)|*.it|" & _
+        "Midi file (*.mid)|*mid|" & _
+        "Wave audio file (*.wav)|*.wav|" & _
+        "Ogg Vorbis stream file (*.ogg)|*.ogg|" & _
+        "All files (*.*)|*.*|" _
+        , True, False) > 0 Then
         LoadPlayer sFiles(0)
+'    ElseIf ShowOpenDialog(sFiles, getFilter("STREAM"), True, False) > 0 Then
+'        LoadPlayer sFiles(0)
+        AddRecent sFiles(0)
     End If
 End Sub
 

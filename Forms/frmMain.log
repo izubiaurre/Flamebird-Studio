@@ -1,1 +1,7 @@
-Línea 20: la clase FB_RevMDITabs.RevMDITabsCtl del control MDITabs no era una clase de control cargada.
+Línea 20: la clase vbalHkCt6.vbalHookControl del control ctlAccelerator no era una clase de control cargada.
+Línea 37: la clase vbalTBar6.cToolbar del control tbrMain no era una clase de control cargada.
+Línea 46: la clase vbalTBar6.cReBar del control cReBar no era una clase de control cargada.
+Línea 52: la clase vbalIml6.vbalImageList del control ImgListDialog no era una clase de control cargada.
+Línea 66: la clase vbalSbar6.vbalStatusBar del control StatusBar no era una clase de control cargada.
+Línea 87: la clase TabDock.TTabDock del control TabDock no era una clase de control cargada.
+Línea 97: la clase vbalIml6.vbalImageList del control ImgList1 no era una clase de control cargada.

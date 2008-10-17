@@ -74,7 +74,7 @@ Begin VB.Form frmRegisterFiletypes
       Top             =   0
       Width           =   3975
       Begin VB.CheckBox chkDCB 
-         Caption         =   "Open DCB files with Fenix Interpreter"
+         Caption         =   "Open DCB files with Interpreter"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   8.25
@@ -136,9 +136,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -181,8 +181,28 @@ Else
     End If
 End If
 
+If trFiles.Nodes(4).Checked Then
+    If Not FileAssociated(".bmk", "FlameBird.Source Bookmark") Then
+        Call RegisterType(".bmk", "FlameBird.Source Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\FBMX_bmk.ico")
+    End If
+Else
+    If FileAssociated(".bmk", "FlameBird.Source Bookmark") Then
+        Call DeleteType(".bmk", "FlameBird.Source Bookmark")
+    End If
+End If
 
-If chkDCB.value = 1 Then
+If trFiles.Nodes(5).Checked Then
+    If Not FileAssociated(".cpt", "Fenix/Bennu image file Control Point list") Then
+        Call RegisterType(".cpt", "Fenix/Bennu image file Control Point list", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
+    End If
+Else
+    If FileAssociated(".cpt", "Fenix/Bennu image file Control Point list") Then
+        Call DeleteType(".cpt", "Fenix/Bennu image file Control Point list")
+    End If
+End If
+
+
+If chkDcb.Value = 1 Then
     If FileAssociated(".dcb", "Fenix.Bin") Then
         Call DeleteType(".dcb", "Fenix.Bin")
     End If
@@ -194,7 +214,8 @@ If chkDCB.value = 1 Then
             .Key = "FenixPath"
             .Default = " "
             
-            Fxi = .value & "\fxi.exe"
+            'Fxi = .value & "\fxi.exe"
+            Fxi = .Value & "\bgdi.exe"
         End With
         If FSO.FileExists(Fxi) Then
             Fxi = Chr(34) & Fxi & Chr(34) & " " & Chr(34) & "%1" & Chr(34)
@@ -210,30 +231,39 @@ Else
 End If
 
 
-Unload Me
+    Unload Me
 End Sub
 
 Private Sub Command2_Click()
-Unload Me
+    Unload Me
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    If KeyAscii = vbKeyEscape Then
+        Command2_Click
+    End If
 End Sub
 
 Private Sub Form_Load()
 
-trFiles.CheckBoxes = True
-trFiles.Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Fenix.Source")
-trFiles.Nodes.Add(, , "map", "MAP - Fenix image files").Checked = FileAssociated(".map", "Fenix.ImageFile")
-trFiles.Nodes.Add(, , "fbp", "FBP - FlameBird Project files").Checked = FileAssociated(".fbp", "FlameBird.Project")
-
-chkDCB.value = Abs(CInt(FileAssociated(".dcb", "Fenix.Bin")))
+    trFiles.CheckBoxes = True
+    trFiles.Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Fenix.Source")
+    trFiles.Nodes.Add(, , "map", "MAP - Bennu/Fenix image files").Checked = FileAssociated(".map", "Fenix.ImageFile")
+    trFiles.Nodes.Add(, , "fbp", "FBP - FlameBird Project files").Checked = FileAssociated(".fbp", "FlameBird.Project")
+    trFiles.Nodes.Add(, , "bmk", "BMK - FlameBird source bookmark files").Checked = FileAssociated(".bmk", "FlameBird.Source Bookmark")
+    trFiles.Nodes.Add(, , "cpt", "CPT - Bennu/Fenix image file Control Point lists").Checked = FileAssociated(".cpt", "Fenix/Bennu image file Control Point list")
+    
+    
+    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Fenix.Bin")))
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    If chkDontAsk.value = 1 Then
+    If chkDontAsk.Value = 1 Then
         With Ini
             .Path = App.Path & CONF_FILE
             .Section = "General"
             .Key = "AskFileRegister"
-            .value = "0"
+            .Value = "0"
         End With
     End If
 End Sub

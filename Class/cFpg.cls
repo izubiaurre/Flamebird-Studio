@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -429,7 +429,7 @@ Public Function Save(sFile As String) As Long
                 gzwrite lFile, m.Code, 4 'Code
                 lMLen = 64 + (m.CPointsCount - 1) * 4 + m.Width * m.Height
                 gzwrite lFile, lMLen, 4 'Len
-                sMDesc = StringToAsciiZ(m.Description, 32)
+                sMDesc = StringToAsciiZ(m.description, 32)
                 gzwrite lFile, ByVal sMDesc, 32 'Description
                 sMFileName = StringToAsciiZ("SINARCHIVO", 12)
                 gzwrite lFile, ByVal sMFileName, 12 'FileName

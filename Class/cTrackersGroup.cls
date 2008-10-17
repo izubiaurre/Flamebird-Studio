@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ Private counter As Long 'Contador para asignar IDs a los trackers de la coleccón
 '-----------------------------------------------------------------------------
 
 'Añade un tracker a la colección a partir de los parámetros que se especifican
-Public Sub Add(name As String, Optional Description As String = "", _
+Public Sub Add(name As String, Optional description As String = "", _
                     Optional IconIndex As Long = -1, Optional VisibleColumns _
                     As TrackerColumns = tcGeneral, Optional SortColumn = 5, _
                     Optional SortOrder As ECGSortOrderConstants = CCLOrderDescending, _
@@ -51,7 +51,7 @@ Public Sub Add(name As String, Optional Description As String = "", _
     tr.name = name
     tr.IconIndex = IconIndex
     tr.VisibleColumns = VisibleColumns
-    tr.Description = Description
+    tr.description = description
     tr.SortColumn = SortColumn
     tr.SortOrder = SortOrder
     tr.AutoExpandSelItems = AutoExpandSelItems
@@ -60,8 +60,8 @@ Public Sub Add(name As String, Optional Description As String = "", _
     tr.OldItemsDays = OldItemsDays
     
     counter = counter + 1 'incrementamos el contador
-    tr.id = counter
-    m_Col.Add tr, Hex(counter) 'Añade el tracker a la colección
+    tr.Id = counter
+    m_Col.Add tr, hex(counter) 'Añade el tracker a la colección
     
     Set tr = Nothing
 End Sub
@@ -70,7 +70,7 @@ End Sub
 Public Sub AddIndirect(tracker As cTracker)
     'Añadimos el tracker
     With tracker
-        Add .name, .Description, .IconIndex, .VisibleColumns, .SortColumn, .SortOrder, _
+        Add .name, .description, .IconIndex, .VisibleColumns, .SortColumn, .SortOrder, _
             .AutoExpandSelItems, .ColorItemsByPriority, .ColorOldItems, .OldItemsDays
     End With
     
@@ -125,7 +125,7 @@ Public Function IndexForName(ByVal sName As String) As Long
     Dim tr As cTracker, i As Long
     For Each tr In Me
         If LCase(tr.name) = LCase(sName) Then
-            IndexForName = tr.id
+            IndexForName = tr.Id
             Exit Function
         End If
     Next

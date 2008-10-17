@@ -170,7 +170,7 @@ Begin VB.Form frmDevelopersList
    Begin VB.Image Image1 
       Height          =   765
       Left            =   0
-      Picture         =   "frmDevelopersList.frx":0662
+      Stretch         =   -1  'True
       Top             =   0
       Width           =   8835
    End
@@ -183,9 +183,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -375,6 +375,7 @@ Private Sub SaveDevelopers(devs As cDeveloperCollection)
 End Sub
 
 Private Sub Form_Load()
+    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
     With grdDev
         .AddColumn "DevName", "Developer name", , , 100
         .AddColumn "RealName", "Real name", , , 150

@@ -74,9 +74,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -169,6 +169,8 @@ Private Function ZoomMap(fIncrement As Single)
     If Not newSizeIndex = m_SizeIndex Then
         m_SizeIndex = newSizeIndex
         PaintMap
+        frmMain.setStatusMessage (map.Width & "," & map.Height & " @ " & m_SizeIndex * 100 & "% - BPP" & map.Depth)
+        'frmMain.StatusBar.PanelText("MAIN") = map.Width & "," & map.Height & " @ " & m_SizeIndex * 100 & "% - BPP" & map.Depth
     End If
 End Function
 
@@ -186,10 +188,11 @@ Public Function EditPalette() As Long
         
         Dim objPlugIn As Object
         Dim strResponse As String
+        Dim posible As Boolean
         ' Run the Plugin
 
         Set objPlugIn = CreateObject("Pal_Edit.clsPluginInterface")
-        'strResponse = objPlugIn.CreatePaletteFromArray(map.palette, frmMain, 0, m_Title)
+        'posible = objPlugIn.CreatePaletteFromArray(map.palette, frmMain, 0, m_Title)
         strResponse = objPlugIn.Run(frmMain)
         
         'if the plug-in returns an error, let us know
@@ -203,7 +206,7 @@ Public Function EditPalette() As Long
 End Function
 
 Public Function EditDescription(ByVal newVal As String) As Long
-    map.Description = newVal
+    map.description = newVal
     EditDescription = -1
     IsDirty = True
 End Function
@@ -269,6 +272,11 @@ Public Function EditCode(ByVal newVal As Integer) As Long
     EditCode = lSucceded
 End Function
 
+Private Sub Form_Activate()
+    frmMain.setStatusMessage (map.Width & "," & map.Height & " @ " & m_SizeIndex * 100 & "% - BPP" & map.Depth)
+    'frmMain.StatusBar.PanelText("MAIN") = map.Width & "," & map.Height & " @ " & m_SizeIndex * 100 & "% - BPP" & map.Depth
+End Sub
+
 Private Sub Form_Load()
     'Configure toolbar
     With tbrMap
@@ -287,21 +295,21 @@ Private Sub Form_Load()
         .AddButton "Adds a copy of the map to one of the opened or project Fpgs", 4, , , "Add to FPG", CTBDropDownArrow + CTBAutoSize, "AddToFpg"
     End With
     'Create the rebar
-    With Rebar
+    With rebar
         If A_Bitmaps Then
-            .BackgroundBitmap = App.Path & "\resources\backrebar.bmp"
+            .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
-        .CreateRebar Me.hwnd
-        .AddBandByHwnd tbrMap.hwnd, , True, False
+        .CreateRebar Me.Hwnd
+        .AddBandByHwnd tbrMap.Hwnd, , True, False
     End With
-    Rebar.RebarSize
+    rebar.RebarSize
     
     m_SizeIndex = 1
     m_ShowTransparent = False
 
     'Set up scroll bars:
     Set m_cScroll = New cScrollBars
-    m_cScroll.Create picScrollBox.hwnd
+    m_cScroll.create picScrollBox.Hwnd
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -321,49 +329,49 @@ End Sub
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
         picScrollBox.Move 0, _
-                        ScaleY(Rebar.RebarHeight, vbPixels, vbTwips)
+                        ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
         picScrollBox.Width = Me.ScaleWidth
         picScrollBox.Height = Me.ScaleHeight - picScrollBox.Top
-        Rebar.RebarSize
+        rebar.RebarSize
     End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    Rebar.RemoveAllRebarBands 'Just for safety
+    rebar.RemoveAllRebarBands 'Just for safety
 End Sub
 
-Private Sub m_FpgsMenu_Click(ByVal index As Long)
+Private Sub m_FpgsMenu_Click(ByVal Index As Long)
     Dim values() As String
     Dim bError As Boolean
     Dim frm As Form
     Dim fpgForm As frmFpg
     Dim ff As IFileForm
     Dim fpg As cFpg
-    Dim mode As Integer
+    Dim Mode As Integer
     
-    values() = Split(m_FpgsMenu.ItemKey(index), "|")
+    values() = Split(m_FpgsMenu.ItemKey(Index), "|")
     
     'Get the fpg depending on if it is an opened file or a project file
     If values(0) = "OPENED" Then
-        mode = 0
+        Mode = 0
         For Each frm In Forms
-            If frm.hwnd = CLng(values(1)) Then
+            If frm.Hwnd = CLng(values(1)) Then
                 Set ff = frm
                 Set fpgForm = frm
                 Set fpg = fpgForm.fpg
             End If
         Next
     ElseIf values(0) = "PROJECT" Then
-        mode = 1
+        Mode = 1
         Set fpg = New cFpg
         If fpg.Load(makePathForProject(values(1))) <> -1 Then bError = True
     End If
     
     If bError = False Then
         If addMapToFpg(fpg, getMapCopy(map)) = True Then
-            If mode = 0 Then 'If it is an OPENED FPG, set IsDirty to true
+            If Mode = 0 Then 'If it is an OPENED FPG, set IsDirty to true
                 fpgForm.IsDirty = True
-            ElseIf mode = 1 Then 'If not, save the changes
+            ElseIf Mode = 1 Then 'If not, save the changes
                 fpg.Save makePathForProject(values(1))
             End If
         End If
@@ -434,9 +442,9 @@ End Sub
 
 Private Sub m_cScroll_Scroll(eBar As EFSScrollBarConstants)
    If (eBar = efsHorizontal) Then
-      picMap.Left = -Screen.TwipsPerPixelX * m_cScroll.value(eBar)
+      picMap.Left = -Screen.TwipsPerPixelX * m_cScroll.Value(eBar)
    Else
-      picMap.Top = -Screen.TwipsPerPixelY * m_cScroll.value(eBar)
+      picMap.Top = -Screen.TwipsPerPixelY * m_cScroll.Value(eBar)
    End If
 End Sub
 
@@ -577,7 +585,7 @@ Private Function IPropertiesForm_GetProperties() As cProperties
     Set props = New cProperties
     
     With props
-        .Add "Description", "Description", ptText, Me, "EditDescription", map.Description, True, 32
+        .Add "Description", "Description", ptText, Me, "EditDescription", map.description, True, 32
         '.Add "File", "File", ptText, Me, "", map.FilePath, False
         .Add "Width", "Width", ptNumeric, Me, "WidthP_Changed", map.Width, False
         .Add "Height", "Height", ptNumeric, Me, "HeightP_changed", map.Height, False
@@ -593,17 +601,17 @@ Private Function IPropertiesForm_GetProperties() As cProperties
         
         .Add "C.Points", "CP", ptLink, Me, "EditCP", cp, True
     End With
-  
+    
     props("Depth").AddOption "8 bits"
     props("Depth").AddOption "16 bits"
 
-    props("Description").Description = "Specifies the name of the map in the FPG"
-    props("Code").Description = "Specifies the code of the map in the FPG"
-    props("Width").Description = "Specifies the with of the MAP"
-    props("Height").Description = "Specifies the height of the MAP"
-    props("Palette").Description = "Specifies the palette to use with the MAP (only 8 bits) "
-    props("Depth").Description = "Specifies number of bits per pixel of the MAP"
-    props("CP").Description = "Set control points (including center)"
+    props("Description").description = "Specifies the name of the map in the FPG"
+    props("Code").description = "Specifies the code of the map in the FPG"
+    props("Width").description = "Specifies the with of the MAP"
+    props("Height").description = "Specifies the height of the MAP"
+    props("Palette").description = "Specifies the palette to use with the MAP (only 8 bits) "
+    props("Depth").description = "Specifies number of bits per pixel of the MAP"
+    props("CP").description = "Set control points (including center)"
 
     Set IPropertiesForm_GetProperties = props
 '    If map.Available Then
@@ -650,6 +658,8 @@ Private Sub tbrMap_ButtonClick(ByVal lButton As Long)
         ZoomMap -0.5
     Case "ZoomRestore"
         SizeIndex = 1
+        frmMain.setStatusMessage (map.Width & "," & map.Height & " @ " & m_SizeIndex * 100 & "% - BPP" & map.Depth)
+        'frmMain.StatusBar.PanelText("MAIN") = map.Width & "," & map.Height & " @ " & m_SizeIndex * 100 & "% - BPP" & map.Depth
     Case "ToogleTrans"
         ToggleTransparency
         tbrMap.ButtonChecked("ToogleTrans") = ShowTransparent
@@ -671,7 +681,7 @@ Private Sub createFpgsMenu()
     
     Set m_FpgsMenu = New cMenus
     m_FpgsMenu.DrawStyle = M_Style
-    m_FpgsMenu.CreateFromNothing Me.hwnd
+    m_FpgsMenu.CreateFromNothing Me.Hwnd
     
     lParentIndex = m_FpgsMenu.AddItem(0, Key:="FpgsMenu")
     
@@ -680,7 +690,7 @@ Private Sub createFpgsMenu()
         If TypeOf frm Is frmFpg Then
             Set ff = frm
             'The key will be "OPENED|hwnd|ItemCount"
-            m_FpgsMenu.AddItem lParentIndex, ff.Title, , , "OPENED|" & frm.hwnd & "|" & CStr(m_FpgsMenu.ItemCount)
+            m_FpgsMenu.AddItem lParentIndex, ff.Title, , , "OPENED|" & frm.Hwnd & "|" & CStr(m_FpgsMenu.ItemCount)
         End If
     Next
     
@@ -707,6 +717,6 @@ Private Sub tbrMap_DropDownPress(ByVal lButton As Long)
         Case "AddToFpg":
             createFpgsMenu
             Call m_FpgsMenu.PopupMenu("FpgsMenu", _
-                Me.ScaleX(Me.Left + X, vbTwips, vbPixels), Me.ScaleY(Y, vbTwips, vbPixels) + Rebar.RebarHeight * 1.5, TPM_VERNEGANIMATION + TPM_LEFTALIGN)
+                Me.ScaleX(Me.Left + X, vbTwips, vbPixels), Me.ScaleY(Y, vbTwips, vbPixels) + rebar.RebarHeight * 1.5, TPM_VERNEGANIMATION + TPM_LEFTALIGN)
     End Select
 End Sub

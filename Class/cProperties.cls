@@ -16,9 +16,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -34,32 +34,32 @@ Option Explicit
 Private m_Col As Collection
 
 Public Function Add(ByVal Caption As String, Key As String, ByVal TypeOfProp As PropertyType, _
-                    ByRef CallingObject As Object, ByVal CallBackFunction As String, ByVal value As String, _
+                    ByRef CallingObject As Object, ByVal CallBackFunction As String, ByVal Value As String, _
                     ByVal Editable As Boolean, Optional max As Integer, _
                     Optional min As Integer = 0, Optional CanBeEmpty As Boolean = False)
     
     On Error GoTo ErrHandle
     
     'Creamos la propiedad y establecemos sus propiedades
-    Dim prop As New cProperty
-    prop.name = Caption
-    prop.Key = Key
-    prop.TypeOfProp = TypeOfProp
-    Set prop.CallingObject = CallingObject
-    prop.CallBackFunction = CallBackFunction
-    prop.value = value
-    prop.Editable = Editable
-    If Not IsMissing(max) And Not IsMissing(min) Then prop.SetLimits max, min
-    prop.CanBeEmpty = CanBeEmpty
+    Dim Prop As New cProperty
+    Prop.name = Caption
+    Prop.Key = Key
+    Prop.TypeOfProp = TypeOfProp
+    Set Prop.CallingObject = CallingObject
+    Prop.CallBackFunction = CallBackFunction
+    Prop.Value = Value
+    Prop.Editable = Editable
+    If Not IsMissing(max) And Not IsMissing(min) Then Prop.SetLimits max, min
+    Prop.CanBeEmpty = CanBeEmpty
     
-    m_Col.Add prop, prop.Key 'Agrega la propiedad a la colección
+    m_Col.Add Prop, Prop.Key 'Agrega la propiedad a la colección
     
-    Set prop = Nothing
+    Set Prop = Nothing
     Exit Function
     
 ErrHandle:
-    MsgBox Err.Description
-    Set prop = Nothing
+    MsgBox Err.description
+    Set Prop = Nothing
 End Function
 
 Public Property Get item(ByVal ItemIndex As Variant) As cProperty

@@ -365,7 +365,7 @@ Begin VB.Form frmProjectProperties
    Begin VB.Image Image1 
       Height          =   750
       Left            =   0
-      Picture         =   "frmProjectProperties.frx":058A
+      Stretch         =   -1  'True
       Top             =   0
       Width           =   5700
    End
@@ -375,7 +375,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Public filename As String
+Public Filename As String
 Dim WithEvents browseDir As cBrowseForFolder
 Attribute browseDir.VB_VarHelpID = -1
 Dim cdialog As cCommonDialog
@@ -384,7 +384,7 @@ Attribute cdialog.VB_VarHelpID = -1
 Private Sub BrowseFolders(txt As TextBox)
     Dim s As String
     With browseDir
-        .hwndOwner = Me.hwnd
+        .hwndOwner = Me.Hwnd
         .InitialDir = App.Path
         .FileSystemOnly = True
         .StatusText = True
@@ -399,7 +399,7 @@ Private Sub BrowseFolders(txt As TextBox)
 End Sub
 
 Private Sub chkEspecificFenix_Click()
-    frmFenixPath.Enabled = CBool(chkEspecificFenix.value)
+    frmFenixPath.Enabled = CBool(chkEspecificFenix.Value)
 End Sub
 
 Private Sub cmdCompilationDir_Click()
@@ -435,8 +435,16 @@ Private Sub cmdCancel_Click()
     Unload Me
 End Sub
 
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    If KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+    End If
+End Sub
+
 Private Sub Form_Load()
     Set browseDir = New cBrowseForFolder
+    
+    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
     
     Dim nTab As cTab
     With TabControl
@@ -451,7 +459,7 @@ Public Sub SaveConf()
     With openedProject
         .projectName = txtName.text
         .compilationDir = txtCompilationDir.text
-        .useOtherFenix = CBool(chkEspecificFenix.value)
+        .useOtherFenix = CBool(chkEspecificFenix.Value)
         .fenixDir = txtFenixPath.text
         .compilerArguments = txtParameters.text
         .mainSource = txtMainPRG.text
@@ -461,7 +469,7 @@ Public Sub LoadConf()
     With openedProject
         txtName.text = .projectName
         txtCompilationDir.text = .compilationDir
-        chkEspecificFenix.value = Abs(CInt(.useOtherFenix))
+        chkEspecificFenix.Value = Abs(CInt(.useOtherFenix))
         txtFenixPath.text = .fenixDir
         txtParameters.text = .compilerArguments
         txtMainPRG.text = .mainSource

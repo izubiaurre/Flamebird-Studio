@@ -2,9 +2,9 @@ Attribute VB_Name = "modExecution"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -19,20 +19,20 @@ Attribute VB_Name = "modExecution"
 Option Explicit
 
 'MSG Constants (for future multi-language support)
-Private Const MSG_COMPILE_NOFENIXDIR = "Fenix directory has not been configured or does not exist"
+Private Const MSG_COMPILE_NOFENIXDIR = "Compiler directory has not been configured or does not exist"
 Private Const MSG_COMPILE_FILENOTFOUND = "The file you are trying to compile does not exist"
 Private Const MSG_COMPILE_NOTALREADYSAVED = "The file has not been saved yet. Save the file before compile"
-Private Const MSG_COMPILE_NOSTDOUT = "Flamebird is waintg for Fenix to finish compiling for getting its output but " _
+Private Const MSG_COMPILE_NOSTDOUT = "Flamebird is waintg for the compiler to finish compiling for getting its output but " _
         & "nothing seems to happen. Do you want to wait a bit more?"
-Private Const MSG_COMPILE_NODCB = "Flamebird is waintg for Fenix to create the dcb file but " _
+Private Const MSG_COMPILE_NODCB = "Flamebird is waintg for the compiler to create the dcb file but " _
         & "nothing seems to happen. Do you want to wait a bit more?"
-Private Const MSG_RUN_DBCNOTFOUND = "DCB file not found. Compile first!"
+Private Const MSG_RUN_DBCNOTFOUND = "DCB file not found. You must compile first"
 
 Private Declare Function GetTickCount Lib "kernel32" () As Long
-Private Declare Function GetWindowThreadProcessId Lib "user32.dll" (ByVal hwnd As Long, lpdwProcessId As Long) As Long
+Private Declare Function GetWindowThreadProcessId Lib "user32.dll" (ByVal Hwnd As Long, lpdwProcessId As Long) As Long
 Private Declare Function GetDesktopWindow Lib "user32.dll" () As Long
-Private Declare Function SetTimer Lib "user32.dll" (ByVal hwnd As Long, ByVal nIDEvent As Long, ByVal uElapse As Long, ByVal lpTimerFunc As Long) As Long
-Private Declare Function KillTimer Lib "user32.dll" (ByVal hwnd As Long, ByVal nIDEvent As Long) As Long
+Private Declare Function SetTimer Lib "user32.dll" (ByVal Hwnd As Long, ByVal nIDEvent As Long, ByVal uElapse As Long, ByVal lpTimerFunc As Long) As Long
+Private Declare Function KillTimer Lib "user32.dll" (ByVal Hwnd As Long, ByVal nIDEvent As Long) As Long
     
 Private objDOS As New DOSOutputs
 Private mTimerId As Long
@@ -79,22 +79,22 @@ End Sub
     
 Private Function isFxiRunning() As Boolean
     Dim sTitulo As String
-    Dim hwnd As Long
+    Dim Hwnd As Long
     Dim found As Boolean
     Dim procId As Long
     
     'Get the first window
-    hwnd = GetWindow(GetDesktopWindow(), GW_CHILD)
+    Hwnd = GetWindow(GetDesktopWindow(), GW_CHILD)
     
     found = False
     'Search in the rest of the windows
-    Do While hwnd <> 0&
-        If GetWindowThreadProcessId(hwnd, procId) = objDOS.ThreadID Then
+    Do While Hwnd <> 0&
+        If GetWindowThreadProcessId(Hwnd, procId) = objDOS.ThreadID Then
             found = True
             Exit Do
         End If
         'Get the next window
-        hwnd = GetWindow(hwnd, GW_HWNDNEXT)
+        Hwnd = GetWindow(Hwnd, GW_HWNDNEXT)
     Loop
     
     isFxiRunning = found
@@ -108,6 +108,7 @@ Private Sub ReadFxiOutputAndErrors()
     Dim textStream As textStream
     
     
+    On Error GoTo errors:
     'Look for the output files in the Fenix dir and the file dir
     If FSO.FileExists(mFxiDir & "\stdout.txt") Then
         stdoutFile = mFxiDir & "\stdout.txt"
@@ -141,9 +142,13 @@ Private Sub ReadFxiOutputAndErrors()
     frmErrors.txtOutput.text = stderr
     
     frmMain.StatusBar.RedrawPanel ("FXI_OUTPUT_INFO")
+    Exit Sub
+errors:
+    MsgBox "Execution terminated abnormally"
+    Exit Sub
 End Sub
 
-Private Sub TimerProc(ByVal hwnd As Long, ByVal nIDEvent As Long, _
+Private Sub TimerProc(ByVal Hwnd As Long, ByVal nIDEvent As Long, _
               ByVal uElapse As Long, ByVal lpTimerFunc As Long)
     'Check if the fxi is not running and
     If isFxiRunning() = False Then
@@ -155,7 +160,7 @@ End Sub
 
 '-------------------------------------------------------------------------------------
 'FUNCTION: SearchErrorLine()
-'DESCRIPTION: Searches the string "Error in file... at line X" in the CString.
+'DESCRIPTION: Searches the string ":error:" in the CString.
 '             which is supposed to be the output of the fxc.
 '             The name of the file where the error takes place is stored in sFileError
 '             and the error message is placed in the sError string.
@@ -173,17 +178,36 @@ Private Function SearchErrorLine(ByVal Cstring As String, ByRef sFileError As St
     'Read line by line
     For i = 0 To UBound(lines)
         sLine = Trim(lines(i))
-        If InStr(1, sLine, "Error in file", vbTextCompare) > 0 Then
-            'Get the file where the error occurrs
-            sFileError = Trim(Mid(sLine, 15, InStr(sLine, " at line ") - Len(" at line ") - 5))
-            'Get Error line number
-            searchStart = InStr(sLine, "at line") + 7
-            searchEnd = InStr(Mid(sLine, searchStart), ":") - 1
-            numLine = CInt(Trim(Mid(sLine, searchStart, searchEnd)))
-            result = numLine
-            'Get the error message
-            sError = Trim(Mid(sLine, InStrRev(sLine, ":") + 1))
-            Exit For
+'        Old Mode
+'        If InStr(1, sLine, "Error in file", vbTextCompare) > 0 Then
+'            'Get the file where the error occurrs
+'            sFileError = Trim(Mid(sLine, 15, InStr(sLine, " at line ") - Len(" at line ") - 5))
+'            'Get Error line number
+'            searchStart = InStr(sLine, "at line") '+ 7
+'            searchEnd = InStr(Mid(sLine, searchStart), ":") - 1
+'            numLine = CInt(Trim(Mid(sLine, searchStart, searchEnd)))
+'            result = numLine
+'            'Get the error message
+'            sError = Trim(Mid(sLine, InStrRev(sLine, ":") + 1))
+'            Exit For
+'        End If
+        
+
+        If InStr(1, sLine, ": error:", vbTextCompare) > 0 Then
+             'Get the file where the error occurrs
+             sFileError = Trim(Left(sLine, InStr(3, sLine, ":", vbTextCompare) - 1))
+                'MsgBox sFileError
+             'Get Error line number
+             searchStart = InStr(3, sLine, ":") + 1
+                'MsgBox searchStart
+             searchEnd = InStr(sLine, ": error:")
+                'MsgBox searchEnd
+             numLine = CInt(Trim(Mid(sLine, searchStart, searchEnd - searchStart)))
+                'MsgBox numLine
+             result = numLine
+             'Get the error message
+             sError = Trim(Right(sLine, Len(sLine) - (InStr(sLine, ": error") + 8)))
+             Exit For
         End If
     Next
     SearchErrorLine = result
@@ -270,32 +294,54 @@ Public Function Compile(ByVal sFile As String) As Boolean
                 FSO.DeleteFile fxcDir & "\stdout.txt"
             End If
             
-            'Execute FXC
-            sCommand = fxcDir & "\fxc.exe "
-            If R_Debug Then 'Debug mode on (compile using parameters)
-                sCommand = sCommand + " -g "
+            'Execute Compiler
+            If R_Compiler = 1 Then
+                sCommand = Chr(34) & fxcDir & "\fxc.exe" & Chr(34) & " "
+            Else
+                sCommand = Chr(34) & fxcDir & "\bgdc.exe" & Chr(34) & " "
             End If
-            sCommand = sCommand & Chr(34) & sFile & Chr(34)
+            If R_Debug Then 'Debug mode on (compile using parameters)
+                sCommand = sCommand + " -g"
+            End If
+            If R_MsDos Then
+                sCommand = sCommand + " -c"
+            End If
+            If R_Stub Then
+                'sCommand = sCommand + " -s " & fxcDir & "\bgdi.exe"
+                sCommand = sCommand + " -s " & "bgdi.exe"
+            End If
+            If R_AutoDeclare Then
+                sCommand = sCommand + " -Ca"
+            End If
+            sCommand = sCommand & " " & Chr(34) & sFile & Chr(34) '& " > " & Chr(34) & stdoutFile & Chr(34)
+                   'MsgBox sCommand
+                   Clipboard.Clear
+                   Clipboard.SetText sCommand
             stdout = objDOS.ExecuteCommand(sCommand)
+            
+            'MsgBox stdout
                         
             'The output can be empty if the fxc does not produce an stdout stream
             'in that case, the output should be in the stdout.txt in the fenix folder
             'so we just wait for this file to be created
             If (stdout = "") Then
-                'Wait for the stdout file to be created
+                'MsgBox "a"
                 bCancel = False
-                timeStart = GetTickCount()
-                While FSO.FileExists(stdoutFile) = False And bCancel = False
-                    DoEvents
-                    If GetTickCount() - timeStart > 4000 Then
-                        msgResult = MsgBox(MSG_COMPILE_NOSTDOUT, vbYesNo + vbQuestion)
-                        If msgResult = vbNo Then
-                            bCancel = True
-                        Else
-                            timeStart = GetTickCount()
+                If R_Stub Then
+                    'Wait for the stdout file to be created
+                    timeStart = GetTickCount()
+                    While FSO.FileExists(stdoutFile) = False And bCancel = False
+                        DoEvents
+                        If GetTickCount() - timeStart > 4000 Then
+                            msgResult = MsgBox(MSG_COMPILE_NOSTDOUT, vbYesNo + vbQuestion)
+                            If msgResult = vbNo Then
+                                bCancel = True
+                            Else
+                                timeStart = GetTickCount()
+                            End If
                         End If
-                    End If
-                Wend
+                    Wend
+                End If
                 
                 If bCancel = False Then
                     'Wait for the stdout file to be filled
@@ -331,12 +377,17 @@ Public Function Compile(ByVal sFile As String) As Boolean
                 textStream.Close
             End If
             
+            stdout = Right(stdout, Len(stdout) - 249)
+            
             frmOutput.txtOutput.text = stdout
             'Search for the error line
             errorLine = SearchErrorLine(stdout, sFileError, sError)
             If errorLine = -1 Then 'No error line in debuger
-                'Wait for the dcb to be created
                 bCancel = False
+                If R_Stub Then
+                    dcbFile = Left(dcbFile, Len(dcbFile) - 3) & "exe"
+                End If
+                'Wait for the dcb to be created
                 timeStart = GetTickCount()
                 While FSO.FileExists(dcbFile) = False And bCancel = False
                     DoEvents
@@ -358,7 +409,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
                 
                 bResult = True 'Compilation succesfull
             Else 'Show a message and go to the line where the error ocurred
-                MsgBox "Error compiling " & sFileError & " at line " & errorLine & vbCrLf & sError
+                MsgBox "Error compiling " & sFileError & " at line " & errorLine & vbCrLf & vbCrLf & sError
                 sFileError = replace(sFileError, "/", "\")
                 Set fDoc = FindFileForm(sFileError)
                 If fDoc Is Nothing Then 'The file is not opened
@@ -394,7 +445,7 @@ Public Function Run(ByVal sFile As String) As Boolean
     Dim dcbFile As String, sCommand As String
     Dim bResult As Boolean
     Dim fxiDir As String
-    
+
     'Determine which compilation Fenix Directory to use
     fxiDir = fenixDir
     If Not openedProject Is Nothing Then
@@ -402,7 +453,7 @@ Public Function Run(ByVal sFile As String) As Boolean
             fxiDir = openedProject.fenixDir
         End If
     End If
-    
+
     mFxiDir = fxiDir
     
     bResult = False
@@ -411,17 +462,30 @@ Public Function Run(ByVal sFile As String) As Boolean
         dcbFile = FSO.GetParentFolderName(sFile) & "\" & FSO.GetBaseName(sFile) & ".dcb"
         mFileDir = FSO.GetParentFolderName(sFile)
         If FSO.FileExists(dcbFile) Then
-            sCommand = fxiDir & "\fxi.exe " & Chr(34) & dcbFile & Chr(34)
+            If R_Compiler = 1 Then  ' Fenix
+                sCommand = Chr(34) & fxiDir & "\fxi.exe " & Chr(34) & " " & Chr(34) & dcbFile & Chr(34)
+            Else                    ' Bennu
+                sCommand = Chr(34) & fxiDir & "\bgdi.exe " & Chr(34) & " " & Chr(34) & dcbFile & Chr(34)
+            End If
             'Params
-            If R_filter Then sCommand = sCommand & " -f "
-            If R_DoubleBuf Then sCommand = sCommand & " -b "
+            'If R_filter Then sCommand = sCommand & " -f "
+            'If R_DoubleBuf Then sCommand = sCommand & " -b "
             objDOS.ExecuteCommand sCommand
             bResult = True 'Execution succesful
             
             'Start the end-running check timer
             mTimerId = SetTimer(0&, 0&, 300, AddressOf TimerProc)
-        Else 'DCB does not exists
-            MsgBox MSG_RUN_DBCNOTFOUND, vbExclamation
+        Else
+            If R_Stub Then  ' execute .exe file cause doesn't exist dcb file
+                sCommand = Left(dcbFile, Len(dcbFile) - 3) & "exe"
+                objDOS.ExecuteCommand sCommand
+                bResult = True 'Execution succesful
+            
+                'Start the end-running check timer
+                mTimerId = SetTimer(0&, 0&, 300, AddressOf TimerProc)
+            Else            'DCB does not exists
+                MsgBox MSG_RUN_DBCNOTFOUND, vbExclamation
+            End If
         End If
     Else 'Invalid Fenix Dir
         MsgBox MSG_COMPILE_NOFENIXDIR, vbExclamation

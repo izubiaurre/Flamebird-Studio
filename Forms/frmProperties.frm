@@ -228,9 +228,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -260,18 +260,18 @@ Public Sub ClearProperties()
     props.Clear
 End Sub
 Public Sub AddProperty(ByVal Caption As String, ByVal Key As String, ByVal TypeOfProp As PropertyType, _
-                    ByRef CallingObject As Object, ByVal CallBackFunction As String, ByVal value As String, _
+                    ByRef CallingObject As Object, ByVal CallBackFunction As String, ByVal Value As String, _
                     ByVal Editable As Boolean, Optional max As Integer, _
                     Optional min As Integer = 0, Optional CanBeEmpty As Boolean = False)
-    props.Add Caption, Key, TypeOfProp, CallingObject, CallBackFunction, value, Editable, max, min, CanBeEmpty
+    props.Add Caption, Key, TypeOfProp, CallingObject, CallBackFunction, Value, Editable, max, min, CanBeEmpty
 End Sub
 
 Public Sub AddPropertyOption(ByVal Key As String, OptionName As String)
     props(Key).AddOption OptionName
 End Sub
 
-Public Sub AddPropertyDescription(ByVal Key As String, Description As String)
-    props(Key).Description = Description
+Public Sub AddPropertyDescription(ByVal Key As String, description As String)
+    props(Key).description = description
 End Sub
 
 Private Sub cboOption_KeyPress(KeyAscii As Integer)
@@ -287,10 +287,10 @@ Private Sub Form_Load()
 
     'Establece la apariencia especial del picProperties
     Dim PictureStyle As Long
-    PictureStyle = GetWindowLong(picDesc.hwnd, GWL_EXSTYLE)
+    PictureStyle = GetWindowLong(PICDESC.Hwnd, GWL_EXSTYLE)
     PictureStyle = PictureStyle Or WS_EX_STATICEDGE
-    SetWindowLong picDesc.hwnd, GWL_EXSTYLE, PictureStyle
-    picDesc.Refresh
+    SetWindowLong PICDESC.Hwnd, GWL_EXSTYLE, PictureStyle
+    PICDESC.Refresh
     
     'conecta los controles con el splitter
     CurHeight = 800
@@ -314,18 +314,18 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub RefreshGrid()
-    Dim prop As Variant
+    Dim Prop As Variant
     Dim cnt As Integer
     cnt = 1
     grdProp.Clear False 'Borramos las filas
-    For Each prop In props 'para cada propiedad en la colección
+    For Each Prop In props 'para cada propiedad en la colección
         With grdProp
             .AddRow
-            .CellText(cnt, 1) = prop.name
-            If prop.TypeOfProp <> ptCombo Then
-                .CellText(cnt, 2) = prop.value
+            .CellText(cnt, 1) = Prop.name
+            If Prop.TypeOfProp <> ptCombo Then
+                .CellText(cnt, 2) = Prop.Value
             Else ' Si es un combo, value señala al ínidice, no al texto
-                .CellText(cnt, 2) = prop.OptionItem(prop.value)
+                .CellText(cnt, 2) = Prop.OptionItem(Prop.Value)
             End If
             cnt = cnt + 1
         End With
@@ -369,7 +369,7 @@ Private Sub grdProp_PreCancelEdit(ByVal lRow As Long, ByVal lCol As Long, newVal
         'Llamamos a la función CallBack, pasándole el nuevo índice y el texto asociado
         If (CallByName(.CallingObject, .CallBackFunction, VbMethod, newValue)) Then   ', .OptionItem(newValue))
             grdProp.CellText(lRow, lCol) = .OptionItem(newValue)
-            .value = newValue
+            .Value = newValue
         End If
     Case ptLink
         'Este tipo de propiedad no hace nada, el trabajo es gestionado
@@ -401,7 +401,7 @@ Private Sub grdProp_PreCancelEdit(ByVal lRow As Long, ByVal lCol As Long, newVal
         'llamamos a la función callback, pasándole el nuevo valor
         If CallByName(.CallingObject, .CallBackFunction, VbMethod, newValue) Then
             grdProp.CellText(lRow, lCol) = newValue
-            .value = newValue
+            .Value = newValue
         End If
     End Select
     End With
@@ -410,7 +410,7 @@ Private Sub grdProp_PreCancelEdit(ByVal lRow As Long, ByVal lCol As Long, newVal
 
 canceledit:
     bStayInEditMode = True
-    txtEditBox = props(lRow).value
+    txtEditBox = props(lRow).Value
     Exit Sub
 End Sub
 
@@ -443,7 +443,7 @@ Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iK
             For Each opt In props(lRow)
                 .AddItem opt
             Next
-            .ListIndex = props(lRow).value
+            .ListIndex = props(lRow).Value
             .Visible = True
             .SetFocus
         End With
@@ -451,7 +451,7 @@ Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iK
     Case ptLink
         With cmdLink
             'posiciona el botón
-            lblCaption = props(lRow).value
+            lblCaption = props(lRow).Value
             .Move lLeft + grdProp.Left, lTop + grdProp.Top + Screen.TwipsPerPixelY + 8, lWidth - 10, lHeight - 30
             .Visible = True
         End With
@@ -481,7 +481,7 @@ Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iK
             'lo muestra, lo rellena, le da el foco y selecciona el texto
             picEditBox.Visible = True
             picEditBox.ZOrder
-            .text = props(lRow).value 'texto inicial
+            .text = props(lRow).Value 'texto inicial
             .SetFocus
             .SelStart = 0
             .SelLength = Len(.text)
@@ -495,7 +495,7 @@ End Sub
 Private Sub grdProp_SelectionChange(ByVal lRow As Long, ByVal lCol As Long)
     'Pone la descripción
     lblPropName.Caption = props(lRow).name
-    lblDesc.Caption = props(lRow).Description
+    lblDesc.Caption = props(lRow).description
 End Sub
 
 Private Sub HSplitter_EndMoving()
@@ -509,8 +509,8 @@ Private Sub HSplitter_EndMoving()
     End If
     grdProp.Height = FHeight
 
-    ITop = picDesc.Top
-    IHeight = picDesc.Height
+    ITop = PICDESC.Top
+    IHeight = PICDESC.Height
     FTop = HSplitter.Top + HSplitter.Height
     FHeight = (ITop - FTop) + IHeight
     If FHeight < MIN_PICDESC_HEIGHT Then 'hemos bajado demasiado el splitter
@@ -518,8 +518,8 @@ Private Sub HSplitter_EndMoving()
         HSplitter_EndMoving
         Exit Sub
     End If
-    picDesc.Top = FTop
-    picDesc.Height = FHeight
+    PICDESC.Top = FTop
+    PICDESC.Height = FHeight
     CurHeight = FHeight
 End Sub
 
@@ -531,8 +531,8 @@ End Sub
 
 Private Sub picDesc_Resize()
     'Ajusta el tamaño del lblDescription
-    lblDesc.Width = picDesc.ScaleWidth - lblDesc.Left - 10
-    lblDesc.Height = picDesc.ScaleHeight - lblDesc.Top
+    lblDesc.Width = PICDESC.ScaleWidth - lblDesc.Left - 10
+    lblDesc.Height = PICDESC.ScaleHeight - lblDesc.Top
 End Sub
 
 Private Sub picEditBox_Resize()
@@ -569,12 +569,12 @@ On Error Resume Next
     'Si el formulario es muy pequeño, no resizeamos los controles (para que
     'picDesc no quede por debajo de su tamaño mínimo;
     If (Bottom - Top) < (MIN_PICDESC_HEIGHT + FORM_SPLIT_DIST) Then
-        picDesc.Left = Left: picDesc.Width = Right: grdProp.Left = Left
+        PICDESC.Left = Left: PICDESC.Width = Right: grdProp.Left = Left
         grdProp.Width = Right: HSplitter.Left = Left: HSplitter.Width = Width
     Else
         If (Bottom - Top) < CurHeight Then CurHeight = Bottom - Top - FORM_SPLIT_DIST
-        picDesc.Move Left, Bottom - CurHeight + Top, Right, CurHeight
-        HSplitter.Move Left, picDesc.Top - HSplitter.Height, Right
+        PICDESC.Move Left, Bottom - CurHeight + Top, Right, CurHeight
+        HSplitter.Move Left, PICDESC.Top - HSplitter.Height, Right
         grdProp.Move Left, Top, Right, HSplitter.Top
     End If
 End Function

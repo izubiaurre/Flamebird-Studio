@@ -688,9 +688,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -759,7 +759,7 @@ Private Sub SelectTracker(sKey As String)
     With AT
         'general
         txtName = .name
-        txtDescription = .Description
+        txtDescription = .description
         GetIconsFromIlst picIcons
         focus.Move MARGINX + .IconIndex * 16, MARGINY
         'behavior
@@ -821,11 +821,11 @@ Private Sub cboTrackers_Click()
 End Sub
 
 Private Sub chkAutoexpand_Click()
-    AT.AutoExpandSelItems = CBool(chkAutoexpand.value)
+    AT.AutoExpandSelItems = CBool(chkAutoexpand.Value)
 End Sub
 
 Private Sub chkColorByPriority_Click()
-    AT.ColorItemsByPriority = CBool(chkColorByPriority.value)
+    AT.ColorItemsByPriority = CBool(chkColorByPriority.Value)
 End Sub
 
 Private Sub chkMarkOldItems_Click()
@@ -977,7 +977,7 @@ Private Sub tabConfig_TabClick(theTab As vbalDTab6.cTab, ByVal iButton As MouseB
 End Sub
 
 Private Sub txtDescription_LostFocus()
-    AT.Description = txtDescription 'Change
+    AT.description = txtDescription 'Change
 End Sub
 
 Private Sub txtName_LostFocus()
@@ -985,7 +985,7 @@ Private Sub txtName_LostFocus()
     
     'Check for trackers with the same name
     tID = colTrackers.IndexForName(txtName)
-    If tID And tID <> AT.id Then
+    If tID And tID <> AT.Id Then
         MsgBox "There is another tracker with the name '" & txtName & "'", vbOKOnly + vbCritical
        ' Cancel = True
         txtName.text = AT.name

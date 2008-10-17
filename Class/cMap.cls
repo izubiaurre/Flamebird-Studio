@@ -16,9 +16,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -115,10 +115,10 @@ Property Let Code(ByVal newVal As Long)
     m_Code = newVal
 End Property
 
-Property Get Description() As String
-    Description = AsciiZToString(m_Description)
+Property Get description() As String
+    description = AsciiZToString(m_Description)
 End Property
-Property Let Description(ByVal newVal As String)
+Property Let description(ByVal newVal As String)
     m_Description = StringToAsciiZ(newVal, Len(m_Description))
 End Property
 
@@ -138,13 +138,13 @@ Property Get Available() As Boolean
     Available = m_MapAvailable
 End Property
 
-Property Get ControlPoint(index As Integer) As Integer()
+Property Get ControlPoint(Index As Integer) As Integer()
     Dim res(1) As Integer
     
     If m_MapAvailable Then
-        If index < ((UBound(m_CPoints) + 1) / 2) And Not (index < 0) Then
-            res(0) = m_CPoints(index * 2)
-            res(1) = m_CPoints(index * 2 + 1)
+        If Index < ((UBound(m_CPoints) + 1) / 2) And Not (Index < 0) Then
+            res(0) = m_CPoints(Index * 2)
+            res(1) = m_CPoints(Index * 2 + 1)
             ControlPoint = res
         End If
     End If
@@ -158,12 +158,12 @@ Property Get CPointsCount() As Integer
     End If
 End Property
 
-Property Let ControlPoint(index As Integer, cp() As Integer)
+Property Let ControlPoint(Index As Integer, cp() As Integer)
     If m_MapAvailable Then
-        If (index < ((UBound(m_CPoints) + 1) / 2)) And ((UBound(cp) - LBound(cp)) = 1) Then
-            If Not (index < 0) Then
-                m_CPoints(index * 2) = cp(LBound(cp))
-                m_CPoints(index * 2 + 1) = cp(UBound(cp))
+        If (Index < ((UBound(m_CPoints) + 1) / 2)) And ((UBound(cp) - LBound(cp)) = 1) Then
+            If Not (Index < 0) Then
+                m_CPoints(Index * 2) = cp(LBound(cp))
+                m_CPoints(Index * 2 + 1) = cp(UBound(cp))
             End If
         End If
     End If
@@ -183,19 +183,19 @@ Public Function NewCPoint(cpX As Integer, cpY As Integer) As Long
     NewCPoint = lSucceded
 End Function
 
-Public Function RemoveCPoint(index As Integer) As Long
+Public Function RemoveCPoint(Index As Integer) As Long
     Dim aux() As Integer
     Dim cnt As Long, lSucceded As Long
     
     If m_MapAvailable Then
         If CPointsCount > 1 Then
-            If index < ((UBound(m_CPoints) + 1) / 2) And Not (index < 0) Then
+            If Index < ((UBound(m_CPoints) + 1) / 2) And Not (Index < 0) Then
                 'Reordena los restantes elementos en un array auxiliar
                 ReDim aux(UBound(m_CPoints) - 2) As Integer
-                For cnt = 0 To index * 2 - 1
+                For cnt = 0 To Index * 2 - 1
                     aux(cnt) = m_CPoints(cnt)
                 Next
-                For cnt = index * 2 + 2 To UBound(m_CPoints)
+                For cnt = Index * 2 + 2 To UBound(m_CPoints)
                     aux(cnt - 2) = m_CPoints(cnt)
                 Next
                 
@@ -948,25 +948,25 @@ End Function
 'DESCRIPTION Retrieves the map data (copying it into an array arg)
 'RETURNS: -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
-Public Function GetData16(ByRef data() As Integer) As Long
+Public Function GetData16(ByRef Data() As Integer) As Long
     Dim lSucceded As Long
-    If (UBound(data) - LBound(data)) < m_Width * m_Height - 1 Then
+    If (UBound(Data) - LBound(Data)) < m_Width * m_Height - 1 Then
         lSucceded = 0
         SetLastError "Insufficient array len to allocate data"
     Else
         lSucceded = -1
-        data = m_Data16
+        Data = m_Data16
     End If
     GetData16 = lSucceded
 End Function
-Public Function GetData8(ByRef data() As Byte) As Long
+Public Function GetData8(ByRef Data() As Byte) As Long
     Dim lSucceded As Long
-    If (UBound(data) - LBound(data)) < m_Width * m_Height - 1 Then
+    If (UBound(Data) - LBound(Data)) < m_Width * m_Height - 1 Then
         lSucceded = 0
         SetLastError "Insufficient array len to allocate data"
     Else
         lSucceded = -1
-        data = m_Data8
+        Data = m_Data8
     End If
     GetData8 = lSucceded
 End Function

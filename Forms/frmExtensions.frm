@@ -90,8 +90,10 @@ Begin VB.Form frmExtensions
          Caption         =   "&Remove"
          Height          =   375
          Left            =   6000
+         MaskColor       =   &H80000000&
          TabIndex        =   2
          Top             =   600
+         UseMaskColor    =   -1  'True
          Width           =   1095
       End
       Begin VB.CommandButton cmdAddTool 
@@ -266,9 +268,9 @@ Begin VB.Form frmExtensions
       Width           =   1170
    End
    Begin VB.Image Image1 
-      Height          =   765
+      Height          =   825
       Left            =   -720
-      Picture         =   "frmExtensions.frx":0426
+      Stretch         =   -1  'True
       Top             =   0
       Width           =   8835
    End
@@ -318,7 +320,7 @@ Private Sub ConfigureControls()
     
     'Controls position
     Width = 7400
-    Height = 5800
+    Height = 5900
     tabCategories.Move 0, 840, 7300, 4100
     
     
@@ -383,7 +385,7 @@ Private Sub chkUseToolForFileAssoc_Click()
     
     If ToolIndex <> -1 Then
         tool = ExternalTools(ToolIndex)
-        tool.UseForFileAssoc = IIf(chkUseToolForFileAssoc.value = 0, False, True)
+        tool.UseForFileAssoc = IIf(chkUseToolForFileAssoc.Value = 0, False, True)
         ExternalTools(ToolIndex) = tool
     End If
 End Sub
@@ -430,7 +432,16 @@ Private Sub cmdRemoveTool_Click()
     End If
 End Sub
 
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    If KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+    End If
+End Sub
+
 Private Sub Form_Load()
+
+    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+    
     ConfigureControls
     
     LoadExternalTools
@@ -446,7 +457,7 @@ Private Sub lstTools_Click()
                 txtTitle.text = .Title
                 txtCommand.text = .Command
                 txtParams.text = .Params
-                chkUseToolForFileAssoc.value = IIf(.UseForFileAssoc, 1, 0)
+                chkUseToolForFileAssoc.Value = IIf(.UseForFileAssoc, 1, 0)
             End With
         End If
     End If

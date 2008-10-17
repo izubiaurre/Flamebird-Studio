@@ -17,9 +17,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -74,13 +74,13 @@ Dim linea As String
     getLine = linea
 End Function
 
-Public Property Let filename(ByVal vData As String)
+Public Property Let Filename(ByVal vData As String)
     mvarfilename = vData
     mvarcanRead = True
 End Property
 
-Public Property Get filename() As String
-    filename = mvarfilename
+Public Property Get Filename() As String
+    Filename = mvarfilename
 End Property
 
 Public Property Get lineNumber() As String

@@ -70,9 +70,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -94,6 +94,7 @@ Private Enum ViewModeConstants
     vmCategories
 End Enum
 Private m_ViewMode As ViewModeConstants
+Private objDOS As New DOSOutputs
 
 Private WithEvents pMenu As cMenus
 Attribute pMenu.VB_VarHelpID = -1
@@ -118,8 +119,8 @@ End Property
 
 
 'Popup menu action control
-Private Sub pMenu_Click(ByVal index As Long)
-    Select Case pMenu.ItemKey(index)
+Private Sub pMenu_Click(ByVal Index As Long)
+    Select Case pMenu.ItemKey(Index)
         Case "mnuViewModePath" 'View Mode Path
             ViewMode = vmPath
         Case "mnuViewModeCategories" 'View Mode Categories
@@ -129,6 +130,10 @@ End Sub
 
 'User clicked in a toolbar button
 Private Sub tbrPB_ButtonClick(ByVal lButton As Long)
+    Dim i As Long
+    
+    On Error GoTo errhandler
+    
     Select Case tbrPB.ButtonKey(lButton)
         Case "Add": 'Add file
             If Not openedProject Is Nothing Then
@@ -140,9 +145,32 @@ Private Sub tbrPB_ButtonClick(ByVal lButton As Long)
                     Dim sFilePath As String
                     If tvProject.SelectedItem.Tag = "File" Then  'It's a file
                         sFilePath = makePathForProject(tvProject.SelectedItem.Key)
-                        If MsgBox("Delete " & sFilePath & " from project?", vbQuestion + vbYesNo) = vbYes Then
+                        If MsgBox("Remove " & sFilePath & " from project?", vbQuestion + vbYesNo) = vbYes Then
                             openedProject.RemoveFile sFilePath
                             RefreshTree
+                        End If
+                    Else 'it's a folder
+                        sFilePath = makePathForProject(tvProject.SelectedItem.Key)
+                        If MsgBox("Remove " & sFilePath & " from project?" & vbCrLf & "This action will remove all the children files from the project", vbQuestion + vbYesNo) = vbYes Then
+                            For i = 1 To tvProject.SelectedItem.Children().count
+                                sFilePath = tvProject.SelectedItem.Children(i).Key
+                                openedProject.RemoveFile sFilePath
+                            Next i
+                            tvProject.SelectedItem.Children().Clear
+                            tvProject.SelectedItem.Delete
+                            RefreshTree
+                        End If
+                    End If
+                End If
+            End If
+        Case "Open Folder":     ' Open folder in Explorer
+            If Not openedProject Is Nothing Then
+                If Not tvProject.SelectedItem Is Nothing Then
+                    If Left(tvProject.SelectedItem.Key, 1) <> "?" Then
+                        If tvProject.SelectedItem.Tag = "File" Then
+                            Shell "explorer.exe " & getPath(tvProject.SelectedItem.Key), vbMaximizedFocus
+                        Else
+                            Shell "explorer.exe " & makePathForProject(tvProject.SelectedItem.Key), vbMaximizedFocus
                         End If
                     End If
                 End If
@@ -152,6 +180,9 @@ Private Sub tbrPB_ButtonClick(ByVal lButton As Long)
                 RefreshTree
             End If
     End Select
+    Exit Sub
+errhandler:
+    Resume Next
 End Sub
 
 'User selected a dropdown button
@@ -159,8 +190,8 @@ Private Sub tbrPB_DropDownPress(ByVal lButton As Long)
     Dim X As Long, Y As Long, rc As RECT, rc2 As RECT
     Dim lX As Long, lY As Long
     
-    GetWindowRect tbrhPB.hwnd, rc 'Toolbar dimensions
-    GetWindowRect Me.hwnd, rc2 'Form dimensions
+    GetWindowRect tbrhPB.Hwnd, rc 'Toolbar dimensions
+    GetWindowRect Me.Hwnd, rc2 'Form dimensions
     
     With tbrPB
         .GetDropDownPosition lButton, X, Y 'Button position
@@ -178,7 +209,13 @@ Private Sub tvProject_NodeDblClick(node As vbalTreeViewLib6.cTreeViewNode)
     If node.Tag = "File" Then  'Open the node if it's a file
         file = node.Key
         file = makePathForProject(file) 'The key stores the relative path so we must construct the absolute path
-        OpenFileByExt file
+        If FindFileForm(file) Is Nothing Then   ' The file is already opened
+            OpenFileByExt file
+        Else                                    ' Focus
+            Dim fForm As Form
+            Set fForm = FindFileForm(file)
+            fForm.SetFocus
+        End If
     End If
 End Sub
 
@@ -195,6 +232,7 @@ Private Sub Form_Load()
         .Style = etvwTreelinesPlusMinusPictureText
         .NoCustomDraw = False
         .LineStyle = etvwRootLines
+        .SelectedNoFocusBackColor = RGB(192, 192, 192)
     End With
     'Configure toolbar
     With tbrPB
@@ -205,24 +243,27 @@ Private Sub Form_Load()
         
         .AddButton "Add file to project", iml.ItemIndex("ADD") - 1, , , , , "Add"
         .AddButton "Remove file from project", iml.ItemIndex("REMOVE") - 1, , , , , "Remove"
+        .AddButton , , , , , CTBSeparator
+        .AddButton "Open folder in Explorer", iml.ItemIndex("FOLDER_OPENED") - 1, , , , , "Open Folder"
+        .AddButton , , , , , CTBSeparator
         .AddButton "Refresh list", iml.ItemIndex("REFRESH") - 1, , , , , "Refresh"
 '        .AddButton "Move up", iml.ItemIndex("MOVE_UP"), , , , , "MoveUp"
 '        .AddButton "MoveDown", iml.ItemIndex("MOVE_DOWN"), , , , , "MoveDown"
         .AddButton , , , , , CTBSeparator
-        .AddButton "View Mode", iml.ItemIndex("VIEW_MODE") - 1, , , , CTBDropDownArrow, "Viewmode"
+        .AddButton "View Mode", iml.ItemIndex("PATH_MODE") - 1, , , , CTBDropDownArrow, "Viewmode"
     End With
     'Configure toolbar host
     With tbrhPB
         .Capture tbrPB
         If A_Bitmaps Then
-            .BackgroundBitmap = App.Path & "\resources\backrebar.bmp"
+            .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
     End With
     'Create the popup menu for the ViewMode button
     Dim pId As Long
     Set pMenu = New cMenus
     With pMenu
-        .CreateFromNothing (tbrhPB.hwnd)
+        .CreateFromNothing (tbrhPB.Hwnd)
         .DrawStyle = M_Style
         Set .ImageList = iml
         pId = .AddItem(0, Key:="mnuViewMode")
@@ -334,7 +375,7 @@ Private Sub ViewInPathMode()
     
     If Not openedProject Is Nothing Then
         'If the openedProject has changed, clear all nodes
-        If tvProject.Nodes.Exists(PROJECTKEY + openedProject.filename) = False Then
+        If tvProject.Nodes.Exists(PROJECTKEY + openedProject.Filename) = False Then
             tvProject.Nodes.Clear
         End If
         'Look for those nodes whose associated file does not exist in project and mark them to delete
@@ -353,7 +394,7 @@ Private Sub ViewInPathMode()
                 'we must delete these folders if any other file is present at them so look for the
                 'top most folder which satisfaces this condition
                 Set node = tvProject.Nodes(toDeleteKeys(j))
-                While node.Parent.Children.count = 1 And node.Parent.Key <> PROJECTKEY + openedProject.filename
+                While node.Parent.Children.count = 1 And node.Parent.Key <> PROJECTKEY + openedProject.Filename
                     Set node = node.Parent
                 Wend
                 node.Delete
@@ -362,8 +403,8 @@ Private Sub ViewInPathMode()
         
         'Now add or edit existing nodes
         With openedProject
-            sProjectTitle = .projectName & " (" & Dir(.filename) & ")"
-            Set pId = addNode(, etvwFirst, PROJECTKEY + openedProject.filename, sProjectTitle, iml.ItemIndex("PROJECT") - 1, iml.ItemIndex("PROJECT") - 1) 'Project node
+            sProjectTitle = .projectName & " (" & Dir(.Filename) & ")"
+            Set pId = addNode(, etvwFirst, PROJECTKEY + openedProject.Filename, sProjectTitle, iml.ItemIndex("PROJECT") - 1, iml.ItemIndex("PROJECT") - 1) 'Project node
             
             'For each file in the project
             Dim sFile As Variant
@@ -394,9 +435,11 @@ Private Sub ViewInPathMode()
                 End If
             Next
         End With
-        
+        tvProject.Nodes(1).Selected = True
+        tvProject.Nodes(1).expanded = True
         'Sort items
         Call pId.Sort(etvwItemDataThenAlphabetic)
+        tbrPB.ButtonImage("Viewmode") = iml.ItemIndex("PATH_MODE") - 1
     End If
 End Sub
 
@@ -419,9 +462,9 @@ Private Sub ViewInCategoryMode()
     i = 0
     If Not openedProject Is Nothing Then
         With openedProject
-            sProjectTitle = .projectName & " (" & Dir(.filename) & ")"
+            sProjectTitle = .projectName & " (" & Dir(.Filename) & ")"
             'Project node key
-            Set pId = tvProject.Nodes.Add(, etvwFirst, PROJECTKEY + openedProject.filename, .projectName, iml.ItemIndex("PROJECT") - 1)
+            Set pId = tvProject.Nodes.Add(, etvwFirst, PROJECTKEY + openedProject.Filename, .projectName, iml.ItemIndex("PROJECT") - 1)
             
             'Add categories and its elements
             For Each cat In .Categories
@@ -457,6 +500,9 @@ Private Sub ViewInCategoryMode()
                 End If
             Next
         End With
+        tvProject.Nodes(1).Selected = True
+        tvProject.Nodes(1).expanded = True
+        tbrPB.ButtonImage("Viewmode") = iml.ItemIndex("CATEGORY_MODE") - 1
     End If
 End Sub
 
@@ -470,6 +516,19 @@ Private Sub ExpandAll()
     For i = 1 To tvProject.NodeCount
         If tvProject.Nodes.Exists(i) Then
             tvProject.Nodes(i).expanded = True
+        End If
+    Next
+End Sub
+
+Public Sub FindAndSelect(sFile As String)
+    Dim i As Integer
+
+    For i = 1 To tvProject.NodeCount
+        If tvProject.Nodes(i).Tag = "File" Then
+            If getPath(tvProject.Nodes(i).Key) & "\" & tvProject.Nodes(i).Key = sFile Then
+                tvProject.Nodes(i).Selected = True
+                Exit Sub
+            End If
         End If
     Next
 End Sub
@@ -490,5 +549,9 @@ Private Function ITDockMoveEvents_Move(Left As Integer, Top As Integer, Bottom A
     Exit Function
     
 errhandler:
-    Debug.Print "ERROR: " & Err.Number & " " & Err.Description
+    Debug.Print "ERROR: " & Err.Number & " " & Err.description
 End Function
+
+Private Sub tvProject_SelectedNodeChanged()
+    'MsgBox getPath(tvProject.SelectedItem.Key) & "\" & tvProject.SelectedItem.Key & "," & tvProject.SelectedItem.Index
+End Sub

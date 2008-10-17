@@ -343,9 +343,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -390,18 +390,38 @@ Public Sub SelectMap(m As cMap)
         'Fill CP with the map cp data
         For i = 0 To m_map.CPointsCount - 1
             cp() = m_map.ControlPoint(i)
-            cpoints(i).X = cp(0)
-            cpoints(i).Y = cp(1)
-            cpexists(i) = True
+            If cp(0) <> -1 And cp(1) <> -1 Then
+                'MsgBox i & " exists"
+                cpoints(i).X = cp(0)
+                cpoints(i).Y = cp(1)
+                cpexists(i) = True
+            Else
+                'MsgBox i & " not exists"
+                cpexists(i) = False
+            End If
             lastcp = lastcp + 1
         Next
     End If
+    ' new! using newest cMap class
+'    Dim ids() As Long
+'    Dim lX As Long, lY As Long
+'    Dim i As Long
+'    ids = m_map.GetControlPointsIds()
+'    For i = 0 To m_map.ControlPointsCount - 1
+'        If m_map.GetControlPoint(ids(i), lX, lY) Then
+'            cpexists(i) = true
+'            cponts(i).x = lx
+'            cponts(i).y = ly
+'        End If
+'    Next
+'    lastcp = m_map.getlastcontrolpointid
+    ' end of the new part
     FillGrid
 End Sub
 
 Private Sub AddCp(ByVal bInsert As Boolean)
     
-    Dim index As Long
+    Dim Index As Long
     Dim i As Integer
     
     If lastcp < 999 Then
@@ -424,37 +444,24 @@ Private Sub AddCp(ByVal bInsert As Boolean)
             If .SelectedRow > 0 Then
                 Dim tempIndex As Integer
                 tempIndex = .CellText(.SelectedRow, 1)
-                index = .RowItemData(.SelectedRow)
+                Index = .RowItemData(.SelectedRow)
                 'Move cpdata 1 position down
-                CopyMemory ByVal VarPtr(cpoints(index + 1)), ByVal VarPtr(cpoints(index)), (999 - index) * 4
+                CopyMemory ByVal VarPtr(cpoints(Index + 1)), ByVal VarPtr(cpoints(Index)), (999 - Index) * 4
                 'Move cpexists 1 position down
-                CopyMemory ByVal VarPtr(cpexists(index + 1)), ByVal VarPtr(cpexists(index)), (999 - index) * 2
+                CopyMemory ByVal VarPtr(cpexists(Index + 1)), ByVal VarPtr(cpexists(Index)), (999 - Index) * 2
                 lastcp = lastcp + 1
                 'Assign the new item data
-'                For i = .SelectedRow To .Rows - 1
-''                    .RowItemData(i) = .RowItemData(i) + 1
-''                    .CellDetails i, 1, CStr(.RowItemData(i)), DT_RIGHT
-''                    .CellDetails i, 2, CStr(cpoints(.RowItemData(i)).X), DT_RIGHT
-''                    .CellDetails i, 3, CStr(cpoints(.RowItemData(i)).Y), DT_RIGHT
-'
-'                    .CellText(i + 1, 2) = .CellText(i, 2)
-'                    .CellText(i + 1, 3) = .CellText(i, 3)
-'                Next
-                'Create the new cp and start editing
-'                For i = 0 To 5
-'                    Debug.Print cpexists(i)
-'                Next
-                'Stop
-                cpoints(index).X = 10
-                cpoints(index).Y = 10
-                cpexists(index) = True
+
+                cpoints(Index).X = 10
+                cpoints(Index).Y = 10
+                cpexists(Index) = True
                 .AddRow .SelectedRow
                 .EndEdit
                 .SelectedRow = .SelectedRow - 1
                 .RowItemData(.SelectedRow) = lastcp
                 .CellDetails .SelectedRow, 1, CStr(tempIndex), DT_RIGHT
-                .CellDetails .SelectedRow, 2, CStr(cpoints(index).X), DT_RIGHT
-                .CellDetails .SelectedRow, 3, CStr(cpoints(index).Y), DT_RIGHT
+                .CellDetails .SelectedRow, 2, CStr(cpoints(Index).X), DT_RIGHT
+                .CellDetails .SelectedRow, 3, CStr(cpoints(Index).Y), DT_RIGHT
                 
                 changeSameIndex .SelectedRow + 1, tempIndex
                 
@@ -463,11 +470,13 @@ Private Sub AddCp(ByVal bInsert As Boolean)
         End If
         End With
         dirty = True
+        printCPs
     End If
 End Sub
 
 Private Sub FillGrid()
     Dim i As Integer
+    Dim cont As Integer
     With grd
         .Redraw = False
         .Clear
@@ -477,13 +486,21 @@ Private Sub FillGrid()
         .ColumnAlign(1) = ecgHdrTextALignCentre
         .ColumnAlign(2) = ecgHdrTextALignRight
         .ColumnAlign(3) = ecgHdrTextALignRight
+        cont = 0
         For i = 0 To 999
             If cpexists(i) Then
+                'MsgBox i & " exists... adding row (cont=" & cont & ")"
+                Debug.Print "LOADING-> " & i & " " & cpexists(i) & " : " & cpoints(i).X & " " & cpoints(i).Y
                 .AddRow
-                .RowItemData(i + 1) = i
-                .CellDetails i + 1, 1, CStr(i), DT_RIGHT
-                .CellDetails i + 1, 2, CStr(cpoints(i).X), DT_RIGHT
-                .CellDetails i + 1, 3, CStr(cpoints(i).Y), DT_RIGHT
+'                .RowItemData(i + 1) = i
+'                .CellDetails i + 1, 1, CStr(i), DT_RIGHT
+'                .CellDetails i + 1, 2, CStr(cpoints(i).X), DT_RIGHT
+'                .CellDetails i + 1, 3, CStr(cpoints(i).Y), DT_RIGHT
+                .RowItemData(cont + 1) = i
+                .CellDetails cont + 1, 1, CStr(i), DT_RIGHT
+                .CellDetails cont + 1, 2, CStr(cpoints(i).X), DT_RIGHT
+                .CellDetails cont + 1, 3, CStr(cpoints(i).Y), DT_RIGHT
+                cont = cont + 1
             End If
         Next
         .AddRow lItemData:=-1
@@ -513,14 +530,34 @@ End Sub
 
 Private Sub cmdAccept_Click()
     Dim i As Integer
+    Dim indexTemp As Integer
     
-    For i = 0 To lastcp
+    indexTemp = 0
     
+    For i = 0 To 999
         m_map.RemoveCPoint i
-        
+    Next i
+    ' remove all the cps
+    'm_map.removeallcontrolpoints
+    
+'    If cpexists(0) Then
+'        Dim dataCP() As Integer
+'        ReDim dataCP(1) As Integer
+'        'dataCP(UBound(dataCP) - 1) = cpoints(0).X
+'        'dataCP(UBound(dataCP)) = cpoints(0).Y
+'        dataCP(0) = cpoints(0).X
+'        dataCP(1) = cpoints(0).Y
+'        m_map.SetCPData (dataCP)
+'    End If
+    For i = 1 To lastcp
         If cpexists(i) Then
+            Debug.Print "ACCEPT-> " & i & " " & cpexists(i) & " : " & cpoints(i).X & " " & cpoints(i).Y
             m_map.NewCPoint cpoints(i).X, cpoints(i).Y
+            'new method to save cps
+            'm_map.setcontrolpoint(i,cpoints(i).x, cpoints(i).y)
+            'delete then else part
         Else
+            Debug.Print "ACCEPT-> " & i & " " & cpexists(i) & " : -1, -1"
             m_map.NewCPoint -1, -1
         End If
         
@@ -538,6 +575,7 @@ Private Sub cmdBottom_Click()
         .CellText(.SelectedRow, 3) = m_map.Height
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdBottomLeft_Click()
@@ -546,6 +584,7 @@ Private Sub cmdBottomLeft_Click()
         .CellText(.SelectedRow, 3) = m_map.Height
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdBottomRight_Click()
@@ -554,6 +593,7 @@ Private Sub cmdBottomRight_Click()
         .CellText(.SelectedRow, 3) = m_map.Height
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdCenter_Click()
@@ -562,6 +602,7 @@ Private Sub cmdCenter_Click()
         .CellText(.SelectedRow, 3) = m_map.Height / 2
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdDiscard_Click()
@@ -625,24 +666,41 @@ Private Sub cmdImport_Click()
               Exit Sub
         End If
     
+        emptyList
+        printCPs
+        
+'        Dim oldRows As Integer
+'        oldRows = grd.Rows
+
         n_points = myTextStream.ReadLine
         
         For i = 1 To n_points
             indexCP = myTextStream.ReadLine
             X = myTextStream.ReadLine
             Y = myTextStream.ReadLine
+            Debug.Print indexCP & ": " & X & "," & Y
             With grd
-                addCPAt indexCP, X, Y
-                cpexists(indexCP) = True
+                addCPAt indexCP + 1, X, Y, False
+                'cpexists(indexCP) = True
             End With
 
         Next i
-            
+        
+        grd.RemoveRow 1
+'        For i = 1 To oldRows
+'            'MsgBox i & " from " & grd.Rows
+'            grd.RemoveRow grd.SelectedColByIndex(i)
+''            grd.SelectedRow = i
+''            grd.RemoveRow grd.SelectedRow
+'        Next
+        
+        grd.SelectedCol = 1
+
         myTextStream.Close
         lastcp = n_points - 1
         
         dirty = True
-        
+        printCPs
     End If
 End Sub
 
@@ -668,12 +726,14 @@ begin:
         GoTo begin
     End If
     
-    If 999 >= iIndex Or iIndex >= 0 Then
-        addCPAt iIndex, 0, 0
-        dirty = True
-    ElseIf cpexists(iIndex) Then
+
+    If cpexists(iIndex) Then
         MsgBox "Index exists. Please try another index that doesn't exist", , "Incorrect index"
         GoTo begin
+    ElseIf 999 >= iIndex Or iIndex >= 0 Then
+        addCPAt iIndex, 0, 0, True
+        dirty = True
+        printCPs
     Else
         MsgBox "Index number incorrect. Please try again", , "Incorrect index"
         GoTo begin
@@ -687,6 +747,7 @@ Private Sub cmdLeft_Click()
         .CellText(.SelectedRow, 3) = m_map.Height / 2
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdMoveDown_Click()
@@ -694,18 +755,27 @@ Private Sub cmdMoveDown_Click()
     Dim tempX As Integer, tempY As Integer
     
     With grd
-        If .SelectedRow < lastcp Then
+        'If .SelectedRow < lastcp Then
+        If .SelectedRow < .Rows - 1 Then
 
-            tempX = .CellText(.SelectedRow, 2)
-            tempY = .CellText(.SelectedRow, 3)
+            tempX = CInt(.CellText(.SelectedRow, 2))
+            tempY = CInt(.CellText(.SelectedRow, 3))
             
-            .CellText(.SelectedRow, 2) = .CellText(.SelectedRow + 1, 2)
-            .CellText(.SelectedRow, 3) = .CellText(.SelectedRow + 1, 3)
+            .CellText(.SelectedRow, 2) = CInt(.CellText(.SelectedRow + 1, 2))
+            .CellText(.SelectedRow, 3) = CInt(.CellText(.SelectedRow + 1, 3))
+            cpoints(CInt(.CellText(.SelectedRow, 1))).X = CInt(.CellText(.SelectedRow + 1, 2))
+            cpoints(CInt(.CellText(.SelectedRow, 1))).Y = CInt(.CellText(.SelectedRow + 1, 3))
             .CellText(.SelectedRow + 1, 2) = tempX
             .CellText(.SelectedRow + 1, 3) = tempY
+            cpoints(CInt(.CellText(.SelectedRow + 1, 1))).X = tempX
+            cpoints(CInt(.CellText(.SelectedRow + 1, 1))).Y = tempY
+            
+            If .SelectedRow < .Rows Then
+                .SelectedRow = .SelectedRow + 1
+            End If
             
             dirty = True
-            
+            printCPs
         End If
     End With
 End Sub
@@ -717,16 +787,23 @@ Private Sub cmdMoveUp_Click()
     With grd
         If .SelectedRow > 1 Then
 
-            tempX = .CellText(.SelectedRow, 2)
-            tempY = .CellText(.SelectedRow, 3)
+            tempX = CInt(.CellText(.SelectedRow, 2))
+            tempY = CInt(.CellText(.SelectedRow, 3))
             
             .CellText(.SelectedRow, 2) = .CellText(.SelectedRow - 1, 2)
             .CellText(.SelectedRow, 3) = .CellText(.SelectedRow - 1, 3)
+            cpoints(CInt(.CellText(.SelectedRow, 1))).X = CInt(.CellText(.SelectedRow - 1, 2))
+            cpoints(CInt(.CellText(.SelectedRow, 1))).Y = CInt(.CellText(.SelectedRow - 1, 3))
             .CellText(.SelectedRow - 1, 2) = tempX
             .CellText(.SelectedRow - 1, 3) = tempY
+            cpoints(CInt(.CellText(.SelectedRow - 1, 1))).X = tempX
+            cpoints(CInt(.CellText(.SelectedRow - 1, 1))).Y = tempY
+            If .SelectedRow > 2 Then
+                .SelectedRow = .SelectedRow - 1
+            End If
             
             dirty = True
-            
+            printCPs
         End If
     End With
         
@@ -735,7 +812,8 @@ End Sub
 Private Sub cmdRemove_Click()
     With grd
         If .Rows > 1 Then
-            cpexists(.CellText(.SelectedRow, 1)) = False
+            Debug.Print "DEL-> " & .CellText(.SelectedRow, 1)
+            cpexists(CInt(.CellText(.SelectedRow, 1))) = False
 '            cpoints(.CellText(.SelectedRow, 1)).X = -1
 '            cpoints(.CellText(.SelectedRow, 1)).Y = -1
             .RemoveRow (.SelectedRow)
@@ -743,6 +821,7 @@ Private Sub cmdRemove_Click()
                 lastcp = lastcp - 1
             End If
             dirty = True
+            printCPs
         End If
     End With
 End Sub
@@ -753,6 +832,7 @@ Private Sub cmdRight_Click()
         .CellText(.SelectedRow, 3) = m_map.Height / 2
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdTop_Click()
@@ -761,6 +841,7 @@ Private Sub cmdTop_Click()
         .CellText(.SelectedRow, 3) = "0"
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdTopLeft_Click()
@@ -769,6 +850,7 @@ Private Sub cmdTopLeft_Click()
         .CellText(.SelectedRow, 3) = "0"
     End With
     dirty = True
+    printCPs
 End Sub
 
 Private Sub cmdTopRight_Click()
@@ -777,10 +859,18 @@ Private Sub cmdTopRight_Click()
         .CellText(.SelectedRow, 3) = "0"
     End With
     dirty = True
+    printCPs
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    If KeyAscii = vbKeyEscape Then
+        cmdDiscard_Click
+    End If
 End Sub
 
 Private Sub Form_Load()
     dirty = False
+    printCPs
     ConfigureGrid
 End Sub
 
@@ -870,41 +960,110 @@ Private Sub txtEdit_Change()
     Dim SCoord As String
     
     With grd
-        SCoord = CStr(CInt(txtEdit.text))
-        .CellDetails .SelectedRow, .SelectedCol, SCoord, DT_RIGHT
-        
-    End With
-End Sub
-
-Private Sub addCPAt(index As Integer, X As Integer, Y As Integer)
-    With grd
-        If lastcp < index Then
-            lastcp = index
+        If txtEdit.text = "" Then
+            txtEdit.text = "0"
         End If
-        cpoints(index).X = 0
-        cpoints(index).Y = 0
-        cpexists(index) = True
-        
-        .AddRow .Rows
-        .RowItemData(.Rows - 1) = lastcp
-        .CellDetails .Rows - 1, 1, CStr(index), DT_RIGHT
-        .CellDetails .Rows - 1, 2, CStr(X), DT_RIGHT
-        .CellDetails .Rows - 1, 3, CStr(Y), DT_RIGHT
-        .SelectedRow = .Rows - 1
-        .EndEdit
-        .StartEdit .Rows - 1, 2
-            
+        SCoord = CStr(CInt(txtEdit.text))
+        If SCoord = -1 Then
+            MsgBox "Control-Points coordinate must be different form -1"
+        Else
+            .CellDetails .SelectedRow, .SelectedCol, SCoord, DT_RIGHT
+            cpoints(.CellText(.SelectedRow, 1)).X = .CellText(.SelectedRow, 2)
+            cpoints(.CellText(.SelectedRow, 1)).Y = .CellText(.SelectedRow, 3)
+            dirty = True
+            printCPs
+        End If
     End With
 End Sub
 
-Private Sub changeSameIndex(from As Integer, index As Integer)
+Private Sub addCPAt(Index As Integer, X As Integer, Y As Integer, editing As Boolean)
+
+    Dim Pos As Integer
+    
+    With grd
+        If lastcp < Index Then
+            lastcp = Index
+            
+            cpoints(Index).X = X
+            cpoints(Index).Y = Y
+            cpexists(Index) = True
+            
+            .AddRow .Rows
+            .RowItemData(.Rows - 1) = lastcp
+            .CellDetails .Rows - 1, 1, CStr(Index), DT_RIGHT
+            .CellDetails .Rows - 1, 2, CStr(X), DT_RIGHT
+            .CellDetails .Rows - 1, 3, CStr(Y), DT_RIGHT
+            .SelectedRow = .Rows - 1
+            .EndEdit
+            If editing Then
+                .StartEdit .Rows - 1, 2
+            End If
+            dirty = True
+            printCPs
+        Else
+            Pos = findIndexPos(Index)
+'            MsgBox pos
+            'pos = .Rows
+            
+            cpoints(Index).X = X
+            cpoints(Index).Y = Y
+            cpexists(Index) = True
+            
+            .AddRow Pos
+            .RowItemData(Pos) = Index
+            .CellDetails Pos, 1, CStr(Index), DT_RIGHT
+            .CellDetails Pos, 2, CStr(X), DT_RIGHT
+            .CellDetails Pos, 3, CStr(Y), DT_RIGHT
+            .SelectedRow = Pos
+            .EndEdit
+            If editing Then
+                .StartEdit Pos, 2
+            End If
+            dirty = True
+            printCPs
+        End If
+    End With
+End Sub
+
+Private Sub changeSameIndex(from As Integer, Index As Integer)
     Dim i As Integer
     With grd
         For i = from To .Rows
-            If CInt(.CellText(i, 1)) = index Then
-                changeSameIndex i, index + 1
+            If CInt(.CellText(i, 1)) = Index Then
+                changeSameIndex i, Index + 1
                 .CellText(i, 1) = .CellText(i, 1) + 1
             End If
         Next i
     End With
+End Sub
+
+
+Private Function findIndexPos(Index As Integer) As Integer
+    Dim i As Integer
+    With grd
+        For i = 1 To .Rows
+            If CInt(.CellText(i, 1)) > Index Then
+'                MsgBox i & " : ( " & CInt(.CellText(i, 1)) & " > " & index & " )"
+                findIndexPos = i
+                Exit Function
+            End If
+        Next i
+    End With
+End Function
+
+Private Sub printCPs()
+    Dim i As Integer
+    For i = 0 To lastcp + 5
+        Debug.Print i & " " & cpexists(i) & " : " & cpoints(i).X & " "; cpoints(i).Y & Chr(vbKeyTab) & "-- lastcp: " & lastcp
+    Next i
+End Sub
+
+Private Sub emptyList()
+    Dim i As Integer
+    For i = 1 To lastcp
+        cpexists(i) = False
+        cpoints(i).X = -1
+        cpoints(i).Y = -1
+        grd.RemoveRow (i)
+    Next i
 End Sub

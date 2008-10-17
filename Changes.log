@@ -6,11 +6,352 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
-· 16/05/2007   Izubiaurre                  \Forms\frmMain.frm                                
-    Añadido la posibilidad de llamar directamente a la calculadora del win32 directamente desde el FBmX
+· 17/10/2008   Izubiaurre                  \Modules\modFileManagment.bas                     
+    Por enésima vez corrigo el bug de las pestañas vacías que se cargaban al abrir un archivo ya abierto.
 
-· 16/05/2007   Izubiaurre                  \Forms\frmCPEditor.frm                            
-    Añadido la opciónde cargar y guardar la lista de puntos de control a disco y desde disco.
+· 12/10/2008   JaViS                       \Modules\modFileAssociation.bas                   
+    Añadidos las extensiones *.cpt y *.bmk. No estoy muy seguro de haberlo hecho bien.
+
+· 11/10/2008   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Ya muestra la transparencia en los fuentes. Pero, no el típico cuadro.
+
+· 11/10/2008   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Los fuentes ya aparecen centrados en el IFileForm
+
+· 11/10/2008   Izubiaurre                  \Modules\modExecution.bas                         
+    Ya recoge bien las salidas de errores del compilador.
+
+· 10/10/2008   Izubiaurre                  \Modules\modExecution.bas                         
+    La salida del compilador ahora es más práctico. Se ha quitado la información que no se necesitaba.
+
+· 09/10/2008   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Corregido pequeño error en el autoindentador
+
+· 08/10/2008   Izubiaurre                  \Forms\frmSplash.frm                              
+    Pequeña correción en el imágen del Splash.
+
+· 08/10/2008   Izubiaurre                  \Modules\modExecution.bas                         
+    Recupera la compatibilidad con Bennu (Bennugd Wip11)
+
+· 03/10/2008   Izubiaurre                  fdl.lan                                           
+    Añadidos las funciones que faltan de la última versión Bennu.
+
+· 27/09/2008   Izubiaurre                  \Forms\frmPreferences.frm                         
+    La pantalla Preferencias ahora se muestra correctamente.
+
+· 20/08/2008   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Ligera mejora en la pantalla Preferencias. Ahora la información está más ordenada, en una estructura tipo árbol en vez de pestañas. Las pestañas no cabían en la pantalla. Para el futuro, esta organización será más útil.
+
+· 19/08/2008   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Ahora, puede desactivarse la linea de ayuda de los procesos/funciones o posicionarlos encima o debajo.
+
+· 19/08/2008   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Ligera mejora en los iconos del ProjectBrowser. En vez del icono redondo, ahora muestra la vista actual.
+
+· 19/08/2008   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Añadido el marcado automático del proceso/función actual en la lista del ProgramInspector. 
+
+· 18/08/2008   Izubiaurre                                                                    
+    Después de un largo parón, vuelvo con unos pequeños cambios. Se añade la herramienta "moddesc.exe" al proyecto.
+
+· 09/05/2008   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Vuelvo a la carga. Corregido el bug pesado que te escribía end_fli cuando querías escribir solamente end.
+
+· 30/12/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadido la entrada de menú "Code completion help".
+
+· 29/12/2007   Izubiaurre                  \FBMX.vbp                                         
+    Ahora se pueden cerrar las ventanas con la tecla ESC. 
+
+· 26/12/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadido "Close Project" al menú File. Adenás, también he insertado el tema turquesa (de Danko) para el CodeSense.
+
+· 19/12/2007   Izubiaurre                  \Forms\frmMSDOSCommand.frm                        
+    Añadido nuevo diálogo. Guarda hasta 100 comandos shell/MS-DOS con sus directorios de trabajo. Estos datos se guardan en en el archivo "\Conf\command.ini"
+
+· 19/12/2007   Izubiaurre                  \FBMX.vbp                                         
+    Corregidos varios bugs que llevaban su tiempo en el proyecto. Ya no se abré el "Form" al reabrir una archivo ya abierto. Al elegir el último elemento de un FPG, FBMX caía. Gracias GINO.
+
+· 14/12/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Cuando cambiamos de pestaña o archivo en la pantalla principal, si estamos dentro de un Proyecto, este archivo aparecerá como elegido en el project Browser.
+
+· 13/12/2007   Izubiaurre                                                                    
+    Ya se pueden filtrar las constantes, globales, locales... del PI.
+
+· 11/12/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Añadidos los filtros al IntelliSense. También se puede desactivar y definir la sensibilidad del mismo.
+
+· 28/11/2007   Izubiaurre                  empty.bat                                         
+    He añadido un archivo de batch (empty.bat) que limpia la lista de archivos recientes y la lista de herramientas externas. Muy útil para proyectos o compilaciones nuevas y limpias para descargar.
+
+· 21/11/2007   Izubiaurre                  \Modules\modExecution.bas                         
+    Ya es retrocompatible con Fenix y al mimos tiempo puede trabajar para Bennu.
+
+· 21/11/2007   Izubiaurre                  \Forms\frmPlayer.frm                              
+    Ya funciona correctamente el módulo de sonido. 
+
+· 19/11/2007   Izubiaurre                  \Forms\frmPlayer.frm                              
+    Ya no cae FBMX cuando se abría por segunda vez el FlamePlayer. faltan poder usar bien el Pause y el repeat. Otra pijada más sería ponerle colores diferentes al espectro.
+
+· 19/11/2007   Izubiaurre                  \Modules\fmod_init.bas                            
+    Creado este módulo, para poder esquivar un extraño error en el FMOD. Posiblemente se podrían insertar las funciones y todo lo demás en algún otro módulo, pero así queda claro lo que hace.
+
+· 15/11/2007   Izubiaurre                  \Modules\modApplication.bas                       
+    He cambiado la estructura del archivo fdl.lan y ahora en el IntelliSense muestra las funciones, variables, constantes del lenguaje.
+
+· 13/11/2007   Izubiaurre                  \Forms\frmProjectBrowser.frm                      
+    Añadido la función para abrir la carpeta en el que se encuentra el objeto seleccionado. Las vistas por categorías o por carpetas, ya se muestran con carpetas abiertas.
+
+· 13/11/2007   Izubiaurre                                                                    
+    Aún no me he decidido con los mini-iconos del Program Inspector. GINO me está ayudando.
+
+· 13/11/2007   Izubiaurre                                                                    
+    Entre los cambios, he movido/ordenado el menú. He quitado un par de funciones tontas que tenía, más que nada por falta de espacio y que no se usarán casi nunca. Además he añadido una nueva función sobre textos: Sentence case. 
+
+· 12/11/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos dos nuevas funciones: Clear line y Deselect. Son autoexplicativas.
+
+· 12/11/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Los archivos *.prg que no tienen bookmarks, no generan archivos adjuntos *.bmk y si anteriormente lo tenían, se borra. tampoco se pueden usar los controles de navegaciónde bookmarks y el Form para editar sus nombres cuando no hay bookmarks.
+
+· 12/11/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Los archivos de audio abiertos, ahora se guardan en la lista Recent.
+
+· 11/11/2007   Izubiaurre                                                                    
+    Día activo.
+
+· 11/11/2007   Izubiaurre                  \Forms\frmSplash.frm                              
+    He cambiado la imágen del splash. Ahora es mucho más moderno y actual (según mi punto de vista). Poco a poco, iré mejorando las demás.
+
+· 11/11/2007   Izubiaurre                  \Forms\frmProjectBrowser.frm                      
+    Añadido la opción de quitar una carpeta del proyecto a través del botón quitar ("---"). 
+
+· 11/11/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadido la función "Clear Line". Limpia la línea actual. Lo he sacado del VB, o mejor dicho, lo he echado en falta. 
+
+· 11/11/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Corregido un pequeño bug que había pasado desapercibido (al duplicar una línea, al deshacer, no se completaba bien en un paso).  
+
+· 11/11/2007   Izubiaurre                  \Forms\frmMSDOS.frm                               
+    He corregido un bug y he mejorado el asunto de las llamadas externas. Ahora sólo falta implementar en cBroser y guardar los datos a un .ini.
+
+· 11/11/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    He quitado el asunto de los Macros.
+
+· 09/11/2007   Izubiaurre                  \Forms\frmPlayer.frm                              
+    He cambiado totalmente el código de este form. Ahora utliza la API de FMOD_EX, que mejora el FMOD 3.75 en algunos puntos. Como compatibilidad con VB mejorada, union de tipos FSOUND y FMUSIC... Sólo me falta corregir el error que salta al abrir una segunda vez el form.
+
+· 09/11/2007   Izubiaurre                                                                    
+    Ya funcionan en un 20% el creador de fuentes (frmNewFNT.frm). Ya muestra una preview de la fuente a construir en un pictureBox (falta pasar a 8bpp).
+
+· 08/11/2007   Izubiaurre                  \Forms\frmMSDOS.frm                               
+    Añadido un nuevo formulario que lanza comandos de MS-DOS. Guarda los comandos y los directorios de trabajo utilizados. Asimismo, puede recoger los resultados de la llamada y mostrarlos en el formulario o ver en tiempo real el progreso del comando. 
+
+· 06/11/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    He añadido Macros, pero no estoy muy seguro de su uso, ya que no es intuitivo y muy práctico que digamos.
+
+· 07/11/2007   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Alguno cambios menores en el diseño e insertado el texto de los parámetros elegidos para la compilación.
+
+· 31/10/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos un par de nuevas funciones: ir a la definición y ir a la última posición (ir a la posición previa). Son como sus homónimas de VB.
+
+· 30/10/2007   Izubiaurre                  \FBMX.vbp                                         
+    Algunas nuevas mejoras en el tamaño del ejecutable ( %50 menos pesado que el original). He comprimido las imágenes del Splash, el cual está en el ejecutable y los demás los he sacado a la carpeta \Resources y los he unificado y comprimido.
+
+· 29/10/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Mejoras en el tamaño del ejecutable (%33 menos pesado) y corregidos varios errores gráficos con el tema XP.
+
+· 26/10/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadido la opción de abrir archivos font. He cambiado tambien, el icono del mismo en el ProjectBrowser. Ahora me parece más acertado. 
+
+· 25/10/2007   Izubiaurre                  \Forms\frmPlayer.frm                              
+    Ya suenan los Oggs y Wavs en el FlamePlayer ;)
+
+· 25/10/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Estoy añadiendo la posibilidad de cargar archivos Fnt, Ogg y Wav.
+
+· 18/10/2007   Izubiaurre                  \Forms\frmPreferences.frm                         
+    He empezado con los cambios en las pestañas de opciones. Creo que al tener Bennu más opciones de compilación habrá que sacar otra pestaña. Además, he añadido la opción de elegir el color del "backrebar".
+
+· 17/10/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    En la carpeta \Resources\ he creado a partir del backrebar.bmp, otros 9 backrebars, más que nada como pijadas... 
+
+· 15/10/2007   Izubiaurre                  \Forms\frmAbout.frm                               
+    La imágen del fondo hace que el Form se vuelva muy pesado (1MB). Hay que quitar o comprimir la imagen.
+
+· 15/10/2007   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Corregidos algunos textos y añadido la opción de elegir qué compilador se quiere usar (Fenix o Bennu).
+
+· 10/10/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Voy añadiendo iconos al interfaz del menú.
+
+· 13/09/2007   Izubiaurre                  \FBMX.vbp                                         
+    FBMX es compatible con Bennu. Hay que poner laguna opción de elegir como compilador Fenix o Bennu.
+
+· 12/09/2007   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Restaura el fondo y agranda o achata la caja según la imagen que guarda. Al mover las barras de scroll parpadea la imagen. Creo que Darío ya me habló de ello. 
+
+· 12/09/2007   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Ya pinta según Zoom. No restaura el fondo del pictureBox y no reescala la caja, pero por ahora funciona.
+
+· 12/09/2007   Izubiaurre                  \Class\cFont.cls                                  
+    Me he asqueado con el motor de clases de VB. Es horroroso... Lo que tenía ordenado, ahora tengo que subir al frmFnt y hacerlo todo a mano.
+
+· 11/09/2007   Izubiaurre                  \Class\cFont.cls                                  
+    El método Save, más los de las propiedades de info de font (Num, May, Min, Symbolos, Extendida) están hechas. El método Save no tiene funcionalidad por ahora, hasta que haya un editor es inútil hacerlo. Las propiedades se muestran correctamente en el tabDock properties.
+
+· 11/09/2007   Izubiaurre                  \Class\cFont.cls                                  
+    Los métodos Load y Destroy ya están en esta clase.
+
+· 10/09/2007   Izubiaurre                  \Modules\modFntFunctions.bas                      
+    Añadido éste módulo (creado por GINO). Contiene interesantes funciones sobre fuentes.
+
+· 10/09/2007   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Añadidos propiedades temporales para el tabDock properties y la barra de iconos (aún no funcional).
+
+· 10/09/2007   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Creado a partir de frmMap, este formulario MDI. Aün no es nada operativo, pero puede usarse como base.
+
+· 09/09/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Corregido y funcional lo antes dicho.
+
+· 09/09/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadido al menu la ayuda a través de WIKI. Quiero hacer que también se pueda ver la ayuda (Shift+F1)de la función,  variable, constante... a través del WIKI pero, aún no lo he conseguido.
+
+· 06/09/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    He encontrado un error en la etiquetación de los bookmarks. No sé cuándo desaparecen de la lista aunque los bookmarks sigan ahí... Investigaré.
+
+· 06/09/2007   Izubiaurre                  \Forms\frmFpg.frm                                 
+    Corregido un pequeño error al seleccionar la última celda o gráfico del fpg. Ahora muestra bien los nombres, dimensiones y todo lo demás.
+
+· 30/08/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Faltan añadir iconos a muchas funciones...
+
+· 30/08/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos unas cuantas funciones de búsqueda, y añadidos algunos atajos de teclado a viejas funciones.
+
+· 30/08/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Corregido (quitado del ejecutable) algunos msgbox que se me habían colado.
+
+· 29/08/2007   Izubiaurre                  \FBMX.vbp                                         
+    Ahora tiene aspecto del skin o tema instalado en XP. Hay algunos errores visuales, pero funciona, en lo que he probado, correctamente.
+
+· 29/08/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Añadido la función de etiquetar (nombrar) bookmarks. También se pueden guardar y cargar automáticamente e invisiblemente para el usuario. Así, al reiniciar FBMX, los bookmarks se pondrán en el lugar donde estaban.
+
+· 29/08/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    He movido la función refreshStatusbar() a este form.
+
+· 29/08/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    El IntelliSense muestra los iconoso de cada tipo de elemento (Constantes, variables, procesos/funciones)
+
+· 27/08/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    El IntelliSense ahora muestra constantes y variables definidos por el usuario además de las funcione y procesos. También se diferencian por sus iconoso entre ellos.
+
+· 27/08/2007   Izubiaurre                  \Forms\frmProgramInspector.frm                    
+    Cambiados dos iconos del ProgramInspector para que la lista de constantes, variables, procesos y funciones sea más legible.
+
+· 27/08/2007   Izubiaurre                  \Forms\frmProgramInspector.frm                    
+    Añadido al código, líneas que resaltan los procesos y funciones del código. 
+
+· 27/08/2007   Izubiaurre                  \Forms\frmProgramInspector.frm                    
+    Corregidos un par de búsquedas en el ProgramInspector. Ahora se puede ir directamente a los function y a los structs.
+
+· 25/08/2007   Izubiaurre                  \Forms\frmProgramInspector.frm                    
+    Corregido el error al clickar sobre un proceso o variable se abría una nueva pestaña vacía.
+
+· 24/08/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Se ha añadido la función de edición en modo columna.
+
+· 23/08/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    He corregido algunas funciones que no funcionaban como se esperaba o eran muy lentos.
+
+· 11/07/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Ya funcionan las combinaciones de teclas. En un futuro, debrían ser programables las combinaciones de teclas para que no sean hardcode.
+
+· 10/07/2007   Izubiaurre                  \Forms\Wizard.frm                                 
+    Formulario nuevo para generar código (esqueleto) automáticamente. Este formulario ayuda a los iniciados en el lenguaje a crear intros, logos y menús fácilmente.  
+
+· 09/07/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Ahora se pueden insertar carácteres/símbolos desde la ventana de insertASCII.
+
+· 09/07/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Añadido la mejora de mostrar info sobre el source actual (línea actual, nº total de líneas, inicio de selección, fin de selección y nº de chars en la selección). Puede que tanga que revisarlo un poquito, ya que se activa demasiadas veces, pero funciona. ;)
+
+· 09/07/2007   Izubiaurre                  \Modules\mWinHook.bas                             
+    Nuevo módulo para el ocx de control de combinaciones de teclas.
+
+· 09/07/2007   Izubiaurre                  \Class\IWindowsHook.cls                           
+    Nueva clase para el ocx de control de combinaciones de teclas.
+
+· 09/07/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadido un pequeño ocx de código visible, para controlar combinaciones de teclado antes imposibles en VB. Se añaden a los menus, nuevos atajos.
+
+· 08/07/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos un par de simples funciones para seleccionar línea actual y seleccionar palabra actual desde el menú.
+
+· 06/07/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Movido parte de las funciones del Edit al submenu Navigation, parte para quitar peso como para mejor comprensión del mismo.
+
+· 03/07/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadido la opción de imprimir el código fuente. 
+
+· 01/07/2007   Izubiaurre                  \Forms\frmMap.frm                                 
+    Añadido la mejora de mostrar info sobre el map (tamaño, zoom, BPPs) en el StatusBar
+
+· 01/07/2007   Izubiaurre                  \Forms\frmFpg.frm                                 
+    Añadido la mejora de mostrar info sobre el fpg (map actual seleccionado, tamaño, descripción...) en el StatusBar
+
+· 01/07/2007   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Añadido la mejora de mostrar la línea actual del código en el StatusBar
+
+· 01/07/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos nuevas funciones de navegación: next function y prev function. 
+
+· 28/06/2007   Izubiaurre                  \Forms\frmInsertASCII.frm                         
+    Creado nuevo formulario con posibilidad de añadir carácteres ASCII (parecido al insertar símbolo del Word).
+
+· 28/06/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadido la función de estandarizar o unificar rutas de carpetas: "\" -> "/". Este cambio hará compatible el código para sistemas diferentes al win32. 
+
+· 28/06/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos unos pequeños convertidores entre BIN - HEX - DEC. 
+
+· 26/06/2007   Izubiaurre                  \Forms\frmCPEditor.frm                            
+    Corregido el import de puntos de control desde un archivo cps.
+
+· 26/06/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadido el comando 'Add to ToDo list'. Añade la línea o la selección actual como 'elemento' al FireTracker.
+
+· 26/06/2007   Izubiaurre                  \Forms\frmToDoList.frm                            
+    Añadido una función pública para que se puedan crear 'elementos' en el FireTracker.
+
+· 25/06/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos otras dos funciones: Eliminar palabra, y elimiar parte de la palabra. Los nombres no son muy apropiados, pero a veces es útil. El funcionamiento del borrar palabra no es muy prática y deberá ser mejorada en un futuro. Falla el atajo de teclado de este último.
+
+· 25/06/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos dos nueva funciones: Eliminar línea y duplicar línea. Creo que serán muy útiles en la edición. Duplicar es bastante espartano pero funciona. Tendré que mejorar en un futuro.
+
+· 21/06/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos dos nuevas funciones: Mover línea arriba, mover línea abajo. Faltan por funcionar los atajos de teclado.
+
+· 31/05/2007   Izubiaurre     1706134      \Modules\modMenuActions.bas                       
+    Corregido (temporalmente) un error al descomentar varias líneas comentadas, donde si la útlima línea no era seleccionada completamente, se desomentaba mal.
+
+· 30/05/2007   Izubiaurre                  \Forms\frmCPEditor.frm                            
+    Corregido un mal funcionamiento del comando mover abajo en la lista de CPs. Antes, no cambiaba los dos últimos, ahora ya se intercambian bien el último y el penúltimo.
+
+· 25/05/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Corregido un bug que borraba parte de una línea al descomentar.                       
+    Corregido un pequeño bug cuando se hacía uncomment en un source vació. 
+
+· 24/05/2007   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Solventado un pequeño bug en la identación de código. Saltaba la palabra clave "Repeat".
+
+· 16/05/2007   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadido la posibilidad de llamar directamente a la calculadora del win32 directamente desde el FBmX.                            
+    Añadido la opción de cargar y guardar la lista de puntos de control a disco y desde disco.
 
 · 15/05/2007   Izubiaurre                  \Forms\frmCPEditor.frm                            
     Ya se pueden cambiar, editar, añadir, borrar los puntos de control de un mapa

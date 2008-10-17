@@ -16,9 +16,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ End Property
 Property Get Section() As String
     Section = m_sSection
 End Property
-Property Get value() As String
+Property Get Value() As String
 Dim sBuf As String
 Dim iSize As String
 Dim iRetCode As Integer
@@ -100,13 +100,13 @@ Dim iRetCode As Integer
     iSize = Len(sBuf)
     iRetCode = GetPrivateProfileString(m_sSection, m_sKey, m_sDefault, sBuf, iSize, m_sPath)
     If (iSize > 0) Then
-        value = Left$(sBuf, iRetCode)
+        Value = Left$(sBuf, iRetCode)
     Else
-        value = ""
+        Value = ""
     End If
 
 End Property
-Property Let value(sValue As String)
+Property Let Value(sValue As String)
 Dim iPos As Integer
     ' Strip chr$(0):
     iPos = InStr(sValue, Chr$(0))
@@ -211,16 +211,16 @@ On Error GoTo SaveError
     sSaveKey = Key
     If Not (frmThis.WindowState = vbMinimized) Then
         Key = "Maximised"
-        value = (frmThis.WindowState = vbMaximized) * -1
+        Value = (frmThis.WindowState = vbMaximized) * -1
         If (frmThis.WindowState <> vbMaximized) Then
             Key = "Left"
-            value = frmThis.Left
+            Value = frmThis.Left
             Key = "Top"
-            value = frmThis.Top
+            Value = frmThis.Top
             Key = "Width"
-            value = frmThis.Width
+            Value = frmThis.Width
             Key = "Height"
-            value = frmThis.Height
+            Value = frmThis.Height
         End If
     End If
     Key = sSaveKey
@@ -242,14 +242,14 @@ On Error GoTo LoadError
     sSaveDefault = Default
     Default = "FAIL"
     Key = "Left"
-    lLeft = CLngDefault(value, frmThis.Left)
+    lLeft = CLngDefault(Value, frmThis.Left)
     Key = "Top"
-    lTop = CLngDefault(value, frmThis.Top)
+    lTop = CLngDefault(Value, frmThis.Top)
     Key = "Width"
-    lWidth = CLngDefault(value, frmThis.Width)
+    lWidth = CLngDefault(Value, frmThis.Width)
     If (lWidth < lMinWidth) Then lWidth = lMinWidth
     Key = "Height"
-    lHeight = CLngDefault(value, frmThis.Height)
+    lHeight = CLngDefault(Value, frmThis.Height)
     If (lHeight < lMinHeight) Then lHeight = lMinHeight
     If (lLeft < 4 * Screen.TwipsPerPixelX) Then lLeft = 4 * Screen.TwipsPerPixelX
     If (lTop < 4 * Screen.TwipsPerPixelY) Then lTop = 4 * Screen.TwipsPerPixelY
@@ -271,7 +271,7 @@ On Error GoTo LoadError
         frmThis.Move lLeft, lTop, lWidth, lHeight
     End If
     Key = "Maximised"
-    If (CLngDefault(value, 0) <> 0) Then
+    If (CLngDefault(Value, 0) <> 0) Then
         frmThis.WindowState = vbMaximized
     End If
     Key = sSaveKey

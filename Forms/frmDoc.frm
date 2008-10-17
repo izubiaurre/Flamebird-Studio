@@ -15,8 +15,16 @@ Begin VB.Form frmDoc
    ScaleHeight     =   3780
    ScaleWidth      =   5580
    WindowState     =   2  'Maximized
+   Begin VB.ComboBox cmbBookmarkList 
+      Height          =   315
+      Left            =   3600
+      TabIndex        =   1
+      Top             =   120
+      Visible         =   0   'False
+      Width           =   1935
+   End
    Begin vbalTBar6.cReBar ReBar 
-      Left            =   3120
+      Left            =   2520
       Top             =   120
       _ExtentX        =   1508
       _ExtentY        =   661
@@ -35,16 +43,16 @@ Begin VB.Form frmDoc
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   16
-      Size            =   9184
+      Size            =   10332
       Images          =   "frmDoc.frx":2B8A
       Version         =   131072
-      KeyCount        =   8
-      Keys            =   "ÿÿÿÿÿÿÿ"
+      KeyCount        =   9
+      Keys            =   "ÿÿÿÿÿÿÿÿ"
    End
    Begin CodeSenseCtl.CodeSense cs 
       Height          =   3135
       Left            =   0
-      OleObjectBlob   =   "frmDoc.frx":4F8A
+      OleObjectBlob   =   "frmDoc.frx":5406
       TabIndex        =   0
       Top             =   600
       Width           =   5535
@@ -58,9 +66,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -83,6 +91,8 @@ Private Const MSG_COMPILE_NOFENIXDIR = "Fenix directory has not been configured 
 Private Const MSG_COMPILE_NOTALREADYSAVED = "The file has not been saved yet. Save the file before compile"
 Private Const MSG_RUN_DBCNOTFOUND = "DCB file not found. Compile first!"
 
+Public curPosition As Long
+Public prePosition As Long
 
 Dim selRange As CodeSenseCtl.IRange
 Private nextTipText() As String
@@ -91,6 +101,16 @@ Public mustRefresh As Boolean
 Dim showingList As CodeSenseCtl.ICodeList 'determina si se esta mostrando la lista de autocompletado
 Dim showingToolTip As CodeSenseCtl.ICodeTip
 
+' struct to save and use the bookmark named list
+Private Type bookmarkL
+    line_number As Long
+    name As String
+End Type
+Dim bookmarkList() As bookmarkL
+Private curBookmark As Long
+Private numLines As Long
+
+
 Private m_FilePath As String
 Private m_IsDirty As Boolean 'This should be never set directly (use the IsDirty property)
 Private m_Title As String 'Basicaly the caption of the form
@@ -98,8 +118,17 @@ Private m_addToProject As Boolean
 
 Implements IFileForm
 
+Private Sub cmbBookmarkList_Click()
+    curBookmark = cmbBookmarkList.ListIndex
+    cs.ExecuteCmd cmCmdGoToLine, bookmarkList(curBookmark + 2).line_number
+    cs.HighlightedLine = bookmarkList(curBookmark + 2).line_number - 1
+End Sub
+
 Private Sub Cs_Change(ByVal Control As CodeSenseCtl.ICodeSense)
     On Error Resume Next
+
+    ' this part controlls bookmark's state change
+    testBookmarkListState (cs.LineCount - numLines)
     
     IsDirty = True
     '*********************************************************************************
@@ -121,19 +150,82 @@ Private Sub Cs_Change(ByVal Control As CodeSenseCtl.ICodeSense)
             
         End If
     End If
-
+    
 End Sub
+
+Private Function cs_Click(ByVal Control As CodeSenseCtl.ICodeSense) As Boolean
+    RefreshStatusBar
+End Function
+
+'Private Function cs_CmdFailure(ByVal Control As CodeSenseCtl.ICodeSense, ByVal lCmd As CodeSenseCtl.cmCommand, ByVal lErrCode As CodeSenseCtl.cmCommandErr) As Boolean
+'    RefreshStatusBar
+'End Function
 
 Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList) As Boolean
     Dim i As Long
-    'agrega items a la lista de autocompletado
-    For i = 1 To UBound(functionList)
-        ListCtrl.AddItem functionList(i)
+    
+    If Not IS_Show Then
+        Cs_CodeList = False
+        Exit Function
+    End If
+    
+    ' adds func/proc/vars/const... to the autocomplete list
+    ListCtrl.hImageList = frmProgramInspector.programImageList.hIml
+
+    If IS_LangDefFunc Then
+        For i = 1 To UBound(functionList)
+            ListCtrl.AddItem functionList(i), 18 - 1, 1
+        Next i
+    End If
+        
+    If IS_UserDefFunc Then
+        For i = 1 To UBound(userFunctionList)
+            ListCtrl.AddItem userFunctionList(i), 9 - 1, 1
+        Next i
+    End If
+        
+    If IS_LangDefConst Then
+        For i = 1 To UBound(constList)
+            ListCtrl.AddItem constList(i), 11 - 1, 2
+        Next i
+    End If
+        
+    If IS_LangDefVar Then
+        For i = 1 To UBound(globalList)
+            ListCtrl.AddItem globalList(i), 12 - 1, 2
+        Next i
+        
+        For i = 1 To UBound(localList)
+            ListCtrl.AddItem localList(i), 13 - 1, 2
+        Next i
+            
+        For i = 1 To UBound(globalStructList)
+            ListCtrl.AddItem globalStructList(i), 16 - 1, 2
+        Next i
+        
+    '    For i = 1 To UBound(localStructList)
+    '        ListCtrl.AddItem constList(i), 4, 2
+    '    Next i
+    End If
+        
+    If IS_UserDefVar Then
+        For i = 1 To UBound(varList)
+            ListCtrl.AddItem varList(i), 2 - 1, 2
+        Next i
+    End If
+    
+    If IS_UserDefConst Then
+        For i = 1 To UBound(userConstList)
+            ListCtrl.AddItem userConstList(i), 1 - 1, 2
+        Next i
+    End If
+    
+    For i = 1 To UBound(userTypeList)
+        ListCtrl.AddItem userTypeList(i), 8 - 1, 2
     Next i
     
-    'agrega items a la lista de autocompletado
-    For i = 1 To UBound(varList)
-        ListCtrl.AddItem varList(i)
+    For i = 1 To UBound(typeList)
+        ListCtrl.AddItem typeList(i), 17 - 1, 2
     Next i
     
     Dim wordIndex As Long
@@ -164,6 +256,14 @@ Private Function Cs_CodeListCancel(ByVal Control As CodeSenseCtl.ICodeSense, ByV
     Set showingList = Nothing
 End Function
 
+Private Function cs_CodeListChar(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList, ByVal wChar As Long, ByVal lKeyData As Long) As Boolean
+    RefreshStatusBar
+End Function
+
+Private Sub cs_CodeListHotTrack(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList, ByVal lItem As Long)
+    RefreshStatusBar
+End Sub
+
 Private Function Cs_CodeListSelChange(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList, ByVal lItem As Long) As String
     ' Set the tooltip text...
     'Cs_CodeListSelChange = "This is function #" & lItem + 1
@@ -172,11 +272,11 @@ End Function
 Private Function Cs_CodeListSelMade(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList) As Boolean
     Dim strItem As String
     Dim range As New CodeSenseCtl.range
-    
+
     ' Determine which item was selected in the list
     strItem = ListCtrl.GetItemText(ListCtrl.SelectedItem)
     
-    ' Get actual  selection
+    ' Get current selection
     Set range = cs.GetSel(True)
     
     'si no esta seleccionado mas de una linea
@@ -186,6 +286,9 @@ Private Function Cs_CodeListSelMade(ByVal Control As CodeSenseCtl.ICodeSense, By
         range.StartColNo = range.StartColNo - Len(cs.CurrentWord)
     End If
     
+    If LCase(cs.CurrentWord) = "end" Then
+        Exit Function
+    End If
     'selecciona la palabra que en la que este actualmente posicionado
     cs.SetSel range, False
     
@@ -240,7 +343,7 @@ Private Function Cs_CodeTip(ByVal Control As CodeSenseCtl.ICodeSense) As CodeSen
 End Function
 
 Private Function Cs_CodeTipCancel(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ToolTipCtrl As CodeSenseCtl.ICodeTip) As Boolean
-Set showingToolTip = Nothing
+    Set showingToolTip = Nothing
 End Function
 
 Private Sub Cs_CodeTipInitialize(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ToolTipCtrl As CodeSenseCtl.ICodeTip)
@@ -455,10 +558,26 @@ End Function
 
 
 
+Private Sub cs_DeleteLine(ByVal Control As CodeSenseCtl.ICodeSense, ByVal lLine As Long, ByVal lItemData As Long)
+    RefreshStatusBar
+    MsgBox "Delete line in CS"
+    If existsBookmark(lLine) <> -1 Then
+        delBookmark (existsBookmark(lLine))
+        refreshBookmarkList
+    End If
+    updateBookmarks lLine, -1
+End Sub
+
+Private Function cs_KeyDown(ByVal Control As CodeSenseCtl.ICodeSense, ByVal KeyCode As Long, ByVal Shift As Long) As Boolean
+    RefreshStatusBar
+End Function
+
 Private Function Cs_KeyPress(ByVal Control As CodeSenseCtl.ICodeSense, ByVal KeyAscii As Long, ByVal Shift As Long) As Boolean
 On Error Resume Next
+    
+    Dim i As Integer
 
-Dim i As Integer
+    RefreshStatusBar
     Dim token As CodeSenseCtl.cmTokenType
  
     'codigo para mostar el list de autocompletado
@@ -467,7 +586,9 @@ Dim i As Integer
     If ((cmTokenTypeText = token) Or (cmTokenTypeKeyword = token)) Then
     
         'si no se esta mostrando manda a crearla si se cumplen los requisitos
-        If cs.CurrentWordLength > 2 Then
+        ' show IntelliSense
+        If cs.CurrentWordLength >= IS_Sensitive - 1 Then
+        'If cs.CurrentWordLength > 0 Then
             If showingList Is Nothing And KeyAscii >= 65 And KeyAscii <= 122 And (indexOnFunctionList(cs.CurrentWord & Chr(KeyAscii)) > 0 Or indexOnVarList(cs.CurrentWord & Chr(KeyAscii)) > 0) Then
                 cs.ExecuteCmd cmCmdCodeList
             End If
@@ -475,7 +596,7 @@ Dim i As Integer
         'si se esta mostrando la lista de autompletado
         If Not showingList Is Nothing Then
             ' la destruye en los siguientes casos
-            
+
             If KeyAscii < 65 Or KeyAscii > 122 Then
                 showingList.Destroy
                 Set showingList = Nothing
@@ -544,7 +665,7 @@ Private Sub showToolTip(palabra As String)
             
             .Key = "QOfPrototipes"
             .Default = "0"
-            cantidad = CInt(.value)
+            cantidad = CInt(.Value)
             
             If cantidad > 0 Then
                 ReDim prototipo(1 To cantidad) As String
@@ -558,7 +679,7 @@ Private Sub showToolTip(palabra As String)
                         .Key = "Prototipe" & i
                     End If
                     .Default = ""
-                    prototipo(i) = .value
+                    prototipo(i) = .Value
                     i = i + 1
                 Wend
             End If
@@ -588,7 +709,7 @@ Private Function Cs_KeyUp(ByVal Control As CodeSenseCtl.ICodeSense, ByVal KeyCod
 
     'mas comprovaciones para la lista de autocompletado
     If Not showingList Is Nothing Then
-        If cs.CurrentWordLength < 3 Then
+        If cs.CurrentWordLength < 0 Then
             showingList.Destroy
             Set showingList = Nothing
         End If
@@ -600,8 +721,21 @@ Private Function Cs_MouseDown(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Bu
     On Error Resume Next
     If (Button = 2) Then
         frmMain.cMenu.PopupMenu "mnuEdit"
+        frmMain.cMenu.PopupMenu "mnuNavigation"
         'contextMenu.ShowPopupMenu X * Screen.TwipsPerPixelX, Y * Screen.TwipsPerPixelY
     End If
+End Function
+
+Private Function cs_MouseMove(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Button As Long, ByVal Shift As Long, ByVal X As Long, ByVal Y As Long) As Boolean
+    RefreshStatusBar
+End Function
+
+Private Function cs_MouseUp(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Button As Long, ByVal Shift As Long, ByVal X As Long, ByVal Y As Long) As Boolean
+    If rangoActual Is Nothing Then
+        Exit Function
+    End If
+    prePosition = curPosition
+    curPosition = rangoActual.StartLineNo + 1
 End Function
 
 Private Function Cs_RClick(ByVal Control As CodeSenseCtl.ICodeSense) As Boolean
@@ -610,8 +744,8 @@ End Function
 
 Private Sub Cs_RegisteredCmd(ByVal Control As CodeSenseCtl.ICodeSense, ByVal lCmd As CodeSenseCtl.cmCommand)
     ' comando registrado para mostrar ayuda
+    Dim sword As String
     If lCmd = 1000 Then
-        Dim sword As String
         sword = cs.CurrentWord
         If sword <> "" Then
             ' ayuda local
@@ -622,6 +756,10 @@ Private Sub Cs_RegisteredCmd(ByVal Control As CodeSenseCtl.ICodeSense, ByVal lCm
         End If
     End If
 End Sub
+
+Private Function cs_Return(ByVal Control As CodeSenseCtl.ICodeSense) As Boolean
+    updateBookmarks 1, 1
+End Function
 
 Private Sub Cs_SelChange(ByVal Control As CodeSenseCtl.ICodeSense)
     On Error Resume Next
@@ -658,10 +796,16 @@ Private Sub Form_Activate()
     End If
     MakeProgramIndex IFileForm_FilePath
     mustRefresh = False
+    cs.EnableColumnSel = False
+    'ReDim Preserve bookmarkList(1)
+    enableDisableBookmarks
 End Sub
 
 Private Sub Form_Load()
     On Error GoTo errhandler:
+    
+    prePosition = 1
+    curPosition = 1
     
     With tbrSource
         .ImageSource = CTBExternalImageList
@@ -678,17 +822,20 @@ Private Sub Form_Load()
         .AddButton eButtonStyle:=CTBSeparator
         .AddButton "Comment", 6, , , , CTBAutoSize, "Comment"
         .AddButton "Uncomment", 7, , , , CTBAutoSize, "Uncomment"
+        .AddButton eButtonStyle:=CTBSeparator
+        .AddControl cmbBookmarkList.Hwnd, , "cmbBookmarkList"
+        .AddButton "Edit Bookmarks", 8, , , , CTBAutoSize, "EditBookmarks"
     End With
     
     'Create the rebar
-    With Rebar
+    With rebar
         If A_Bitmaps Then
-            .BackgroundBitmap = App.Path & "\resources\backrebar.bmp"
+            .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
-        .CreateRebar Me.hwnd
-        .AddBandByHwnd tbrSource.hwnd, , True, False
+        .CreateRebar Me.Hwnd
+        .AddBandByHwnd tbrSource.Hwnd, , True, False
     End With
-    Rebar.RebarSize
+    rebar.RebarSize
     
     'cofigura el control de edicion
     cs.LineNumbering = True
@@ -708,11 +855,16 @@ Private Sub Form_Load()
     ' registra comando para mostrar ayuda
     ' se ejecuta en el evento Cs_RegisteredCmd
     Dim g As New CodeSenseCtl.Globals
+    Dim h As New CodeSenseCtl.HotKey    'registers hotkey
+    ' F1
     Call g.RegisterCommand(1000, "ShowHelp", "Shows the help about the current word in the control.")
-    'registra hotkey
-    Dim h As New CodeSenseCtl.HotKey
-    h.VirtKey1 = Chr(vbKeyF1)   'F8
+    h.VirtKey1 = Chr(vbKeyF1)
     Call g.RegisterHotKey(h, 1000)
+    ' Shift + F1
+'    Call g.RegisterCommand(1001, "ShowWiki", "Shows the wiki-help about the current word in the control.")
+'    h.VirtKey1 = Chr(vbKeyShift)
+'    h.VirtKey2 = Chr(vbKeyF1)
+'    Call g.RegisterHotKey(h, 1001)
 
     Exit Sub
 errhandler:
@@ -735,10 +887,10 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        Rebar.RebarSize
-        cs.Move 0, ScaleY(Rebar.RebarHeight, vbPixels, vbTwips)
+        rebar.RebarSize
+        cs.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
         cs.Width = Me.ScaleWidth
-        cs.Height = Me.ScaleHeight - ScaleY(Rebar.RebarHeight, vbPixels, vbTwips)
+        cs.Height = Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
     End If
 End Sub
     
@@ -778,6 +930,11 @@ End Property
 
 Private Function IFileForm_Load(ByVal sFile As String) As Long
     Dim lResult As Long
+    Dim sFileBMK As String
+    'Dim fs As FileSystemObject
+    Dim A As textStream
+    Dim i As Long
+    Dim str As String
     
     cs.OpenFile (sFile)
     'There is no way to determine if the cs.openfile fails so assume everything goes well
@@ -786,6 +943,28 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
     lResult = -1
     m_FilePath = sFile
     IsDirty = False
+       
+       
+    sFileBMK = Left(sFile, Len(sFile) - 3) & "bmk"
+    ReDim bookmarkList(1)
+    If FSO.FileExists(sFileBMK) Then
+        Set FSO = CreateObject("Scripting.FileSystemObject")
+        Set A = FSO.OpenTextFile(sFileBMK, ForReading)
+        i = 1
+        While Not A.AtEndOfStream
+            str = A.ReadLine
+            'addBookmark (CLng(str))
+            ReDim Preserve bookmarkList(UBound(bookmarkList) + 1)
+            bookmarkList(i + 1).line_number = CLng(str)
+            str = A.ReadLine
+            bookmarkList(i + 1).name = str
+            cs.SetBookmark bookmarkList(i + 1).line_number - 1, True
+            i = i + 1
+        Wend
+        A.Close
+        
+        refreshBookmarkList
+    End If
     
     IFileForm_Load = lResult
 End Function
@@ -806,19 +985,41 @@ Private Function IFileForm_NewW(ByVal iUntitledCount As Integer) As Long
     IsDirty = False
     m_addToProject = modMenuActions.NewAddToProject
     IFileForm_NewW = -1 'Succesful
+    ReDim bookmarkList(1)
 End Function
 
 Private Function IFileForm_Save(ByVal sFile As String) As Long
     Dim lResult As Long
+    Dim sFileBMK As String
+    'Dim fs As FileSystemObject
+    Dim A As textStream
+    Dim i As Long
+    
     
     If FSO.FileExists(sFile) Then Kill sFile 'Delete the file if exists
     
     On Error GoTo errhandler
     cs.SaveFile sFile, False 'Save the file
-    'HERE THERE SHOULD BE SOME KIND OF COMPROBATION FOR ERRORS AFTER SAVEFILE
+    
+
+    sFileBMK = Left(sFile, Len(sFile) - 3) & "bmk"
+    If FSO.FileExists(sFileBMK) Then Kill sFileBMK
+    
+    If getLastBookmarkIndex > 1 Then
+        Set FSO = CreateObject("Scripting.FileSystemObject")
+        Set A = FSO.CreateTextFile(sFileBMK, True, False)
+        For i = 2 To UBound(bookmarkList)
+            A.WriteLine (bookmarkList(i).line_number)
+            A.WriteLine (bookmarkList(i).name)
+        Next i
+        
+        A.Close
+    End If
+
+    ' HERE THERE SHOULD BE SOME KIND OF COMPROBATION FOR ERRORS AFTER SAVEFILE
     lResult = -1
     If (lResult) Then 'Save succesful
-        'Add to project if necessary
+        ' Add to project if necessary
         If IFileForm_AlreadySaved = False And m_addToProject = True Then addFileToProject sFile
     
         If m_FilePath <> sFile Then 'Show a success message only if the name changed
@@ -861,13 +1062,184 @@ Private Sub tbrSource_ButtonClick(ByVal lButton As Long)
     Case "DeleteBookmarks"
         modMenuActions.mnuBookmarkDel
     Case "ShiftRight"
-        modMenuActions.mnuAdvancedTab
+        modMenuActions.mnuEditTab
     Case "ShiftLeft"
-        modMenuActions.mnuAdvancedUnTab
+        modMenuActions.mnuEditUnTab
     Case "Comment"
-        modMenuActions.mnuAdvancedComment
+        modMenuActions.mnuEditComment
     Case "Uncomment"
-        modMenuActions.mnuAdvancedUnComment
+        modMenuActions.mnuEditUnComment
+    Case "EditBookmarks"
+        modMenuActions.mnuBookmarkEdit
     End Select
         
+End Sub
+
+Public Property Get bookmarkList_name(Index As Long) As String
+    bookmarkList_name = bookmarkList(Index).name
+End Property
+
+Public Property Get bookmarkList_line_Number(Index As Long) As Long
+    bookmarkList_line_Number = bookmarkList(Index).line_number
+End Property
+
+Public Property Let bookmarkList_name(Index As Long, name As String)
+    bookmarkList(Index).name = name
+End Property
+
+Public Property Let bookmarkList_line_Number(Index As Long, line_number As Long)
+    bookmarkList(Index).line_number = line_number
+End Property
+
+Public Function existsBookmark(ln As Long) As Long
+    Dim i As Long
+    For i = 1 To UBound(bookmarkList)
+        If bookmarkList(i).line_number = ln Then
+            existsBookmark = i
+            Exit Function
+        End If
+    Next i
+    existsBookmark = -1
+End Function
+
+Public Sub addBookmark(ln As Long)
+    Dim lines As Long
+    Dim i As Long
+
+    Dim lastBookmark As Long
+    lastBookmark = UBound(bookmarkList)
+    ReDim Preserve bookmarkList(lastBookmark + 1) As bookmarkL
+    bookmarkList(lastBookmark + 1).line_number = ln
+    bookmarkList(lastBookmark + 1).name = "Bookmark" & ln
+    
+    enableDisableBookmarks
+End Sub
+
+Public Sub delBookmark(Index As Long)
+    Dim lastBookmark As Long
+    Dim i As Long
+    lastBookmark = UBound(bookmarkList)
+    ' refresh all the list
+    If Index <> lastBookmark Then
+        For i = Index To lastBookmark - 1
+            bookmarkList(i).name = bookmarkList(i + 1).name
+            bookmarkList(i).line_number = bookmarkList(i + 1).line_number
+        Next i
+    End If
+    ReDim Preserve bookmarkList(lastBookmark - 1) As bookmarkL
+    
+    enableDisableBookmarks
+        
+End Sub
+
+Public Sub refreshBookmarkList()
+    Dim i As Long
+    cmbBookmarkList.Clear
+    For i = 2 To UBound(bookmarkList)
+        cmbBookmarkList.AddItem bookmarkList(i).name
+    Next i
+    cmbBookmarkList.Refresh
+End Sub
+
+Public Sub delAllBookmark()
+    ReDim bookmarkList(1)
+    enableDisableBookmarks
+End Sub
+
+Public Function getLastBookmarkIndex() As Long
+    On Error GoTo Err
+    getLastBookmarkIndex = UBound(bookmarkList)
+    Exit Function
+Err:
+    getLastBookmarkIndex = 1
+    Exit Function
+End Function
+
+Public Sub updateBookmarks(l As Long, n As Long)
+    Dim lastBookmark As Long
+    Dim i As Long
+    lastBookmark = UBound(bookmarkList)
+    ' updates line number after change in the code
+
+    For i = 2 To lastBookmark
+        If bookmarkList(i).line_number > l Then
+            bookmarkList(i).line_number = bookmarkList(i).line_number + n
+        End If
+    Next i
+End Sub
+
+Public Sub testBookmarkListState(diference As Long)
+    Dim lastBookmark As Long
+    Dim i As Long
+    Dim delList() As Boolean           ' lisr of bookmark that must be deleted
+    
+    lastBookmark = UBound(bookmarkList)
+    
+    ReDim delList(2 + lastBookmark)
+    For i = 2 To UBound(delList)    ' we init the list
+        delList(i) = False
+    Next i
+    
+    For i = 2 To lastBookmark
+        If Not cs.GetBookmark(bookmarkList(i).line_number - 1) Then
+            If Not cs.GetBookmark((bookmarkList(i).line_number - 1) + diference) Then
+                'delete this bookmark
+                delList(i) = True
+            Else
+                'update bookmark line number
+                'updateBookmarks bookmarkList(i).line_number, diference
+                bookmarkList_line_Number(i) = bookmarkList(i).line_number + diference
+            End If
+        End If
+    Next i
+    
+    For i = 2 To UBound(delList)    ' we delete the elements marked
+        If delList(i) Then
+            delBookmark (i)
+        End If
+    Next i
+    
+    refreshBookmarkList
+End Sub
+
+Public Sub enableDisableBookmarks()
+    If getLastBookmarkIndex > 1 Then    ' enable
+        cmbBookmarkList.Enabled = True
+        tbrSource.ButtonEnabled("EditBookmarks") = True
+    Else                                ' disable
+        cmbBookmarkList.Enabled = False
+        tbrSource.ButtonEnabled("EditBookmarks") = False
+    End If
+End Sub
+
+
+Public Sub RefreshStatusBar()
+    If rangoActual Is Nothing Then
+        Exit Sub
+    End If
+    numLines = cs.LineCount
+    If rangoActual.StartLineNo = rangoActual.EndLineNo Then
+        frmMain.StatusBar.PanelText("MAIN") = "Line: " & rangoActual.StartLineNo + 1 _
+            & " of " & cs.LineCount & Chr(vbKeyTab) & "Sel: None"
+    Else
+        frmMain.StatusBar.PanelText("MAIN") = "Line: " & rangoActual.StartLineNo + 1 _
+            & " of " & cs.LineCount & Chr(vbKeyTab) & "Sel: " _
+            & rangoActual.StartLineNo + 1 & " to " & rangoActual.EndLineNo + 1 _
+            & "   Len: " & cs.SelLengthLogical
+    End If
+    RefreshProcPos
+End Sub
+
+Public Sub RefreshProcPos()
+    Dim Pos As Long
+    If rangoActual Is Nothing Then
+        Exit Sub
+    End If
+    If rangoActual.StartLineNo = rangoActual.EndLineNo Then
+        Pos = rangoActual.StartLineNo
+        frmProgramInspector.findCurProc (Pos + 1)
+    Else
+        ' don't highñight the current proc/func
+        Pos = -1
+    End If
 End Sub

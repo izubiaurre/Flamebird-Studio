@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ Option Explicit
 ' Currently, functions that make a new bitmap are:
 ' CreateFromScan0, CreateFromHBITMAP and LoadFromFile
 
-Private Declare Sub OleCreatePictureIndirect Lib "oleaut32.dll" (lpPictDesc As picDesc, riid As CLSID, ByVal fOwn As Long, ByRef lplpvObj As Any)
+Private Declare Sub OleCreatePictureIndirect Lib "oleaut32.dll" (lpPictDesc As PICDESC, riid As CLSID, ByVal fOwn As Long, ByRef lplpvObj As Any)
 
 Public gdip As cGDIP ' Reference for Error Handling
 
@@ -54,7 +54,7 @@ Private m_lNumCodecs    As Long
 Private rc              As RECT
 Private tGuids()        As CLSID ' array of GUIDs for codecs
 Private colCodecs       As Collection   ' search into codec index on file extension
-Private stream          As IUnknown
+Private Stream          As IUnknown
 Private bProperties()   As Byte
 Private pi              As PROPERTYITEM
 Private m_lPropSize     As Long
@@ -78,8 +78,8 @@ End Function
 
 ' Assumes a zero-based byte array containing an entire image is passed
 Public Function CreateFromStream(ByRef bIn() As Byte) As Long
-  CreateStreamOnHGlobal bIn(0), False, stream
-  CreateFromStream = BitmapFromStream(stream)
+  CreateStreamOnHGlobal bIn(0), False, Stream
+  CreateFromStream = BitmapFromStream(Stream)
 End Function
 
 Public Function CreateFromHBitmap(ByVal hBitmap As Long) As Long
@@ -122,8 +122,8 @@ End Function
 Public Function CreateFromResource(ByVal lResID As Long) As Long
   Dim b() As Byte ' Changed to module wide scope, 02/14/2004
   b = LoadResData(lResID, "CUSTOM")
-  CreateStreamOnHGlobal b(0), False, stream
-  CreateFromResource = BitmapFromStream(stream)
+  CreateStreamOnHGlobal b(0), False, Stream
+  CreateFromResource = BitmapFromStream(Stream)
 End Function
 
 Public Function CreateThumbFromImage(ByVal lWidth As Long, ByVal lHeight As Long, ByVal lBitmapHandle As Long) As Long
@@ -138,7 +138,7 @@ End Property
 
 Public Sub Dispose()
   If bitmap Then GdipDisposeImage bitmap
-  Set stream = Nothing
+  Set Stream = Nothing
 End Sub
 
 Private Function EnumEncoders() As Long
@@ -218,14 +218,14 @@ End Function
 ' Returns the number of bytes from the stream in the array
 ' 0 if failure
 Friend Function GetBitmapStream(ByRef bBmpBits() As Byte, ByRef tEncoder As CLSID, ByVal lEncParamPointer As Long) As Long
-  Dim stream As IStream
+  Dim Stream As IStream
   Dim lBytesRead As Long
   Dim curMax As Currency
   
   ' True allows the global memory to be freed automatically,
   ' after the destruction of the IStream
-  If CreateStreamOnHGlobal(ByVal 0, True, stream) = 0 Then
-    If Execute(GdipSaveImageToStream(bitmap, stream, tEncoder, ByVal lEncParamPointer)) = 0 Then
+  If CreateStreamOnHGlobal(ByVal 0, True, Stream) = 0 Then
+    If Execute(GdipSaveImageToStream(bitmap, Stream, tEncoder, ByVal lEncParamPointer)) = 0 Then
       
       ' Here is an alternate method of getting information from the stream
       ' It's not nearly as versitile, and liable to be inaccurate,
@@ -248,20 +248,20 @@ Friend Function GetBitmapStream(ByRef bBmpBits() As Byte, ByRef tEncoder As CLSI
 
       ' Note: you could seek anywhere in the stream and get any portion
       ' of the bitmap stream.
-      stream.Seek 0@, STREAM_SEEK_END, curMax ' get the size of the stream
+      Stream.Seek 0@, STREAM_SEEK_END, curMax ' get the size of the stream
       curMax = curMax * 10000 ' adjust for int64
 
-      stream.Seek 0@, STREAM_SEEK_SET, 0@ ' return to the beginning
+      Stream.Seek 0@, STREAM_SEEK_SET, 0@ ' return to the beginning
 
       If curMax > 0 Then
         ReDim bBmpBits(curMax - 1)
-        stream.Read bBmpBits(0), curMax, lBytesRead ' note that lBytesRead could overflow, please fix this if you're reading more than 2 Gigs :P
+        Stream.Read bBmpBits(0), curMax, lBytesRead ' note that lBytesRead could overflow, please fix this if you're reading more than 2 Gigs :P
         GetBitmapStream = lBytesRead
       End If
     End If
   End If
 
-  Set stream = Nothing
+  Set Stream = Nothing
 End Function
 
 Private Sub GetDimension()
@@ -324,13 +324,13 @@ Public Function GetPropertyItem(ByVal eTag As PropertyTags, ByRef vValue As Vari
     GetPropertyItem = Execute(GdipGetPropertyItem(bitmap, eTag, lSize, bProperties(0)))
     If GetPropertyItem = status.Ok Then
       RtlMoveMemory pi, bProperties(0), LenB(pi) ' 2 bytes padding in memory
-      If pi.value And pi.length > 0 Then
-        ReDim bProperties(pi.length - 1)
-        RtlMoveMemory bProperties(0), ByVal pi.value, pi.length
-        m_lPropSize = pi.length
-        If pi.Type = PropertyTagTypeByte Or pi.Type = PropertyTagTypeShort Or pi.Type = PropertyTagTypeLong Then
-          vValue = GetPropertyNumeric(pi.Type, lPropertyIndex)
-        ElseIf pi.Type = PropertyTagTypeASCII Or pi.Type = PropertyTagTypeRational Then
+      If pi.Value And pi.Length > 0 Then
+        ReDim bProperties(pi.Length - 1)
+        RtlMoveMemory bProperties(0), ByVal pi.Value, pi.Length
+        m_lPropSize = pi.Length
+        If pi.type = PropertyTagTypeByte Or pi.type = PropertyTagTypeShort Or pi.type = PropertyTagTypeLong Then
+          vValue = GetPropertyNumeric(pi.type, lPropertyIndex)
+        ElseIf pi.type = PropertyTagTypeASCII Or pi.type = PropertyTagTypeRational Then
           'vValue = GetPropertyString(pi.Type, lPropertyIndex)
         Else
           Debug.Print "Error - Unhandled PropertyTagType"
@@ -378,7 +378,7 @@ End Function
 Private Function IPictureFromBitmap(ByVal lBitmap As Long) As IPicture
   Dim lError  As Long
   Dim hBitmap As Long
-  Dim picdes  As picDesc
+  Dim picdes  As PICDESC
 
   If bitmap = 0 Then Exit Function
     

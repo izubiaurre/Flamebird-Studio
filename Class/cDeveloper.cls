@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -38,15 +38,15 @@ Private m_ID As Long
 '-----------------------------------------------------------------------------
 'IMPLEMENTACIÓN PROPIEDADES Y MÉTODOS GENERALES
 '-----------------------------------------------------------------------------
-Friend Property Let id(newID As Long)
+Friend Property Let Id(newID As Long)
     m_ID = newID
 End Property
-Public Property Get id() As Long
-    id = m_ID
+Public Property Get Id() As Long
+    Id = m_ID
 End Property
 
 Public Property Get Key() As String
-    Key = CStr(Hex(m_ID))
+    Key = CStr(hex(m_ID))
 End Property
 
 'Name es la propiedad por defecto
@@ -76,5 +76,5 @@ End Property
 ' INICIALIZACIÓN Y SALIDA
 '-----------------------------------------------------------------------------
 Private Sub Class_Initialize()
-    id = -1 'El developer no está en ninguna colección
+    Id = -1 'El developer no está en ninguna colección
 End Sub

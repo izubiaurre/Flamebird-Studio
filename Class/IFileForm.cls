@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -32,10 +32,11 @@ Public Enum EFileFormConstants
     FF_SOURCE
     FF_MAP
     FF_FPG
+    FF_FNT
 End Enum
 Public Property Get IsDirty() As Boolean
 End Property
-Public Property Get filename() As String
+Public Property Get Filename() As String
 End Property
 Public Property Get FilePath() As String
 End Property
@@ -54,10 +55,10 @@ Public Property Get AlreadySaved() As Boolean 'To know when the Save As dialog m
 End Property
 Public Property Get Title() As String
 End Property
-Private Property Let IsDirty(ByVal newval As Boolean)
-    m_IsDirty = newval
+Private Property Let IsDirty(ByVal newVal As Boolean)
+    m_IsDirty = newVal
     'Put an * to the caption if dirty
-    Caption = IIf(newval, "*", "") & IFileForm_Title
+    Caption = IIf(newVal, "*", "") & IFileForm_Title
 End Property
 
 

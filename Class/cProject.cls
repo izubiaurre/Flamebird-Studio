@@ -16,9 +16,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ End Property
 Public Sub dumpCache()
     Dim fso1, txtfile, name
     Set fso1 = CreateObject("Scripting.FileSystemObject")
-    name = makePathForProject(fso1.GetBaseName(Me.filename) & ".cache")
+    name = makePathForProject(fso1.GetBaseName(Me.Filename) & ".cache")
     
     If FSO.FileExists(name) Then
         FSO.DeleteFile name, True
@@ -77,7 +77,7 @@ Public Sub dumpCache()
 
     For Each nodito In includesNodes
         txtfile.WriteLine (nodito.father)
-        txtfile.WriteLine (makePathRelative(nodito.filename))
+        txtfile.WriteLine (makePathRelative(nodito.Filename))
         txtfile.WriteLine (nodito.Icon)
         txtfile.WriteLine (nodito.Key)
         txtfile.WriteLine (nodito.lineNum)
@@ -96,7 +96,7 @@ Public Sub loadCache()
     
     Dim fso1 As New FileSystemObject, fil1 As file, ts As textStream
     
-    If fso1.FileExists(makePathForProject(fso1.GetBaseName(Me.filename) & ".cache")) = False Then
+    If fso1.FileExists(makePathForProject(fso1.GetBaseName(Me.Filename) & ".cache")) = False Then
         Exit Sub
     End If
     
@@ -106,7 +106,7 @@ Public Sub loadCache()
         includesNodes.Remove nodito.Key
     Next nodito
     
-    Set fil1 = fso1.GetFile(makePathForProject(fso1.GetBaseName(Me.filename) & ".cache"))
+    Set fil1 = fso1.GetFile(makePathForProject(fso1.GetBaseName(Me.Filename) & ".cache"))
     Set ts = fil1.OpenAsTextStream(ForReading)
     
 
@@ -115,7 +115,7 @@ Public Sub loadCache()
     While ts.AtEndOfStream = False
         Set nodito = New staticNode
         nodito.father = ts.ReadLine
-        nodito.filename = makePathForProject(ts.ReadLine)
+        nodito.Filename = makePathForProject(ts.ReadLine)
         nodito.Icon = ts.ReadLine
         nodito.Key = ts.ReadLine
         nodito.lineNum = ts.ReadLine
@@ -189,7 +189,7 @@ ErrHandle:
                 & "the project root folder. Please, delete this file before adding the new one" _
                 , vbCritical
     Else
-        MsgBox "Error trying to add a file" & vbCrLf & "Number: " & Err.Number & vbCrLf & "Description: " & Err.Description, vbCritical
+        MsgBox "Error trying to add a file" & vbCrLf & "Number: " & Err.Number & vbCrLf & "Description: " & Err.description, vbCritical
     End If
 End Function
 
@@ -268,13 +268,13 @@ If confFileName <> "" Then
         .Section = "IDESTATUS"
         'Files opened
         .Key = "quantity"
-        .value = CountFileForms()
+        .Value = CountFileForms()
         .Key = "filearray"
-        .value = FileArray()
+        .Value = FileArray()
         .Key = "activeform"
-        .value = ""
+        .Value = ""
         If Not frmMain.ActiveFileForm Is Nothing Then
-            .value = frmMain.ActiveFileForm.filename
+            .Value = frmMain.ActiveFileForm.Filename
         End If
     End With
 End If
@@ -292,11 +292,11 @@ Public Sub LoadIdeStatus()
             .Path = confFileName
             .Section = "IDESTATUS"
             .Key = "quantity"
-            cant = CInt(IIf(.value = "", 0, .value))
+            cant = CInt(IIf(.Value = "", 0, .Value))
             .Key = "filearray"
-            lista = .value
+            lista = .Value
             .Key = "activeform"
-            activo = .value
+            activo = .Value
         End With
     
         If cant > 0 Then 'Había formularios abiertos
@@ -370,13 +370,13 @@ Public Property Get compilationDir() As String
     compilationDir = m_compilationDir
 End Property
 
-Public Property Let filename(ByVal vData As String)
+Public Property Let Filename(ByVal vData As String)
     ' asigna valor nuevo
     m_FileName = vData
 End Property
-Public Property Get filename() As String
-Attribute filename.VB_UserMemId = 0
-    filename = m_FileName
+Public Property Get Filename() As String
+Attribute Filename.VB_UserMemId = 0
+    Filename = m_FileName
 End Property
 
 Public Property Get confFileName() As String
@@ -419,21 +419,21 @@ Private Sub SaveProjectConf()
             'Usar fenix alternativo
             .Key = "usespecificfenix"
             .Default = "NO"
-            .value = IIf(m_useOtherFenix, "YES", "NO")
+            .Value = IIf(m_useOtherFenix, "YES", "NO")
             'Ruta del fenix alternativo
             .Key = "fenixpath"
             .Default = ""
-            .value = m_fenixDir
+            .Value = m_fenixDir
             'Argumentos de compilacion
             .Key = "parameters"
             .Default = ""
-            .value = m_compilerArguments
+            .Value = m_compilerArguments
             'OTRAS
             .Section = "OTHER"
             'Default Developer
             .Key = "defaultdev"
             .Default = ""
-            .value = devcol.defaultDev
+            .Value = devcol.defaultDev
         End With
     End If
 End Sub
@@ -449,15 +449,15 @@ Public Sub LoadProjectConf()
             'Usar fenix alternativo
             .Key = "usespecificfenix"
             .Default = "NO"
-            m_useOtherFenix = IIf(.value = "YES", True, False)
+            m_useOtherFenix = IIf(.Value = "YES", True, False)
             'Ruta del fenix alternativo
             .Key = "fenixpath"
             .Default = ""
-            m_fenixDir = .value
+            m_fenixDir = .Value
             'Argumentos de compilacion
             .Key = "parameters"
             .Default = ""
-            m_compilerArguments = .value
+            m_compilerArguments = .Value
         End With
     End If
 End Sub
@@ -511,7 +511,7 @@ Private Sub SaveProject()
     For Each tr In colTrackers
         'GENERAL
         WriteStrInFile fnum, tr.name 'Nombre
-        WriteStrInFile fnum, tr.Description 'Descripción
+        WriteStrInFile fnum, tr.description 'Descripción
         Put fnum, , tr.IconIndex 'Icono
         
         'COLUMNAS
@@ -630,7 +630,7 @@ Public Function LoadProject() As Boolean
             .Path = confFileName
             .Section = "OTHER"
             .Key = "defaultdev"
-            devcol.defaultDev = .value
+            devcol.defaultDev = .Value
         End With
     
         'TRACKER
@@ -639,7 +639,7 @@ Public Function LoadProject() As Boolean
         For i = 1 To lngvar
             'GENERAL
             tr.name = ReadStrFromFile(fnum) 'Nombre
-            tr.Description = ReadStrFromFile(fnum)  'Descripción
+            tr.description = ReadStrFromFile(fnum)  'Descripción
             tr.IconIndex = ReadLngFromFile(fnum) 'Icono
 
             'COLUMNAS

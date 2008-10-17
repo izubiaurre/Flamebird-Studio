@@ -697,9 +697,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -774,13 +774,13 @@ Private Sub LoadItem()
     
     cboAssignedTo.text = IIf(item.AssignedTo = "", "<None>", item.AssignedTo)
     cboSubmittedBy.text = IIf(item.SubmittedBy = "", "<None>", item.SubmittedBy)
-    chkClosed.value = IIf(item.Closed, 1, 0)
-    chkHidden.value = IIf(item.Hidden, 1, 0)
-    chkLocked.value = IIf(item.Locked, 1, 0)
-    hs.value = item.Completed
-    lblCreated = format(item.DateCreated, "ddddd at ttttt")
-    lblModified = format(item.DateModified, "ddddd at ttttt")
-    lblClosed = format(item.DateClosing, "ddddd at ttttt")
+    chkClosed.Value = IIf(item.Closed, 1, 0)
+    chkHidden.Value = IIf(item.Hidden, 1, 0)
+    chkLocked.Value = IIf(item.Locked, 1, 0)
+    hs.Value = item.Completed
+    lblCreated = Format(item.DateCreated, "ddddd at ttttt")
+    lblModified = Format(item.DateModified, "ddddd at ttttt")
+    lblClosed = Format(item.DateClosing, "ddddd at ttttt")
 End Sub
 
 'Fill the item object based on the contents of the controls
@@ -792,15 +792,15 @@ Private Sub SaveItem()
     item.Priority = 5 - cboPriority.ListIndex
     item.AssignedTo = IIf(cboAssignedTo.text = "<None>", "", cboAssignedTo.text)
     item.SubmittedBy = IIf(cboSubmittedBy.text = "<None>", "", cboSubmittedBy.text)
-    item.Completed = hs.value
-    item.Closed = IIf(chkClosed.value = 0, False, True)
-    item.Hidden = IIf(chkHidden.value = 0, False, True)
-    item.Locked = IIf(chkLocked.value = 0, False, True)
+    item.Completed = hs.Value
+    item.Closed = IIf(chkClosed.Value = 0, False, True)
+    item.Hidden = IIf(chkHidden.Value = 0, False, True)
+    item.Locked = IIf(chkLocked.Value = 0, False, True)
 End Sub
 
 
 Private Sub cmdCancel_Click()
-    If bIsNew Then f.AT.Remove (Hex(item.id))
+    If bIsNew Then f.AT.Remove (hex(item.Id))
     Unload Me
 End Sub
 
@@ -830,7 +830,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
-    If Not UnloadMode = vbFormCode Then If bIsNew Then f.AT.Remove (Hex(item.id))
+    If Not UnloadMode = vbFormCode Then If bIsNew Then f.AT.Remove (hex(item.Id))
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -842,11 +842,11 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub hs_Change()
-    lblPercent = CStr(hs.value) & "%"
+    lblPercent = CStr(hs.Value) & "%"
 End Sub
 
 Private Sub hs_Scroll()
-    lblPercent = CStr(hs.value) & "%"
+    lblPercent = CStr(hs.Value) & "%"
 End Sub
 
 Private Sub imgEditCategory_Click()

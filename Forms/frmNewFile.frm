@@ -14,7 +14,17 @@ Begin VB.Form frmNewFile
    MinButton       =   0   'False
    ScaleHeight     =   4020
    ScaleWidth      =   6225
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdUseWizard 
+      Caption         =   "Use wizard"
+      Enabled         =   0   'False
+      Height          =   375
+      Left            =   4080
+      TabIndex        =   6
+      Top             =   3600
+      Width           =   975
+   End
    Begin VB.CheckBox chkAddToProject 
       Appearance      =   0  'Flat
       Caption         =   "Add file to project"
@@ -38,7 +48,7 @@ Begin VB.Form frmNewFile
       Caption         =   "&Ok"
       Default         =   -1  'True
       Height          =   375
-      Left            =   4080
+      Left            =   3000
       TabIndex        =   3
       Top             =   3600
       Width           =   975
@@ -125,7 +135,7 @@ Begin VB.Form frmNewFile
    Begin VB.Image Image1 
       Height          =   765
       Left            =   -2160
-      Picture         =   "frmNewFile.frx":70DA
+      Stretch         =   -1  'True
       Top             =   0
       Width           =   8835
    End
@@ -138,9 +148,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -177,8 +187,8 @@ Private Sub cmdOk_Click()
     If Not lstTypes.SelectedItem Is Nothing Then
         m_Key = lstTypes.SelectedItem.Key
         
-        modMenuActions.NewAddToProject = IIf(chkAddToProject.value = 0, False, True)
-        modMenuActions.NewType = m_Key
+        modMenuActions.NewAddToProject = IIf(chkAddToProject.Value = 0, False, True)
+        modMenuActions.newType = m_Key
     End If
     
     Unload Me
@@ -187,15 +197,28 @@ errhandler:
     If Err.Number > 0 Then ShowError ("frmNewFile.cmdOk_click()")
 End Sub
 
+Private Sub cmdUseWizard_Click()
+    Unload Me
+    frmCodeWizard.Show vbModal, Me
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    If KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+    End If
+End Sub
+
 Private Sub Form_Load()
     Dim i As Integer
     Dim item As vbalListViewLib6.cListItem
     
+    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+    
     If Not openedProject Is Nothing Then
         chkAddToProject.Enabled = True
-        chkAddToProject.value = 1
+        chkAddToProject.Value = 1
     Else
-        chkAddToProject.value = 0
+        chkAddToProject.Value = 0
         chkAddToProject.Enabled = False
     End If
     
@@ -230,6 +253,11 @@ Private Sub lstTypes_ItemClick(item As vbalListViewLib6.cListItem)
         chkAddToProject.Enabled = False
     Else
         If Not openedProject Is Nothing Then chkAddToProject.Enabled = True
+    End If
+    If item.Key = "SOURCE" = True Then
+        cmdUseWizard.Enabled = True
+    Else
+        cmdUseWizard.Enabled = False
     End If
 End Sub
 

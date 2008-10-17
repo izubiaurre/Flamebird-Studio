@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -54,8 +54,8 @@ Public Sub Add(name As String, RealName As String, Mail As String)
     dev.Mail = Mail
     
     counter = counter + 1 'incrementamos el contador
-    dev.id = counter
-    m_Col.Add dev, Hex(counter)
+    dev.Id = counter
+    m_Col.Add dev, hex(counter)
 End Sub
 
 Public Property Get item(ByVal ItemIndex As Variant) As cDeveloper
@@ -87,7 +87,7 @@ Public Function IDForName(ByVal sName As String) As Long
     Dim dev As cDeveloper, i As Long
     For Each dev In Me
         If LCase(dev.name) = LCase(sName) Then
-            IDForName = dev.id
+            IDForName = dev.Id
             Exit Function
         End If
     Next

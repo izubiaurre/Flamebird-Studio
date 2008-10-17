@@ -16,9 +16,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ Private Declare Function InitialiseFlatSB Lib "comctl32.dll" Alias "InitializeFl
 
 ' Scroll bar:
 Private Type SCROLLINFO
-    cbSize As Long
+    cbsize As Long
     fMask As Long
     nMin As Long
     nMax As Long
@@ -138,12 +138,12 @@ Private Type SCROLLINFO
     nPos As Long
     nTrackPos As Long
 End Type
-Private Declare Function SetScrollInfo Lib "user32" (ByVal hwnd As Long, ByVal n As Long, lpcScrollInfo As SCROLLINFO, ByVal BOOL As Boolean) As Long
-Private Declare Function GetScrollInfo Lib "user32" (ByVal hwnd As Long, ByVal n As Long, LPSCROLLINFO As SCROLLINFO) As Long
-Private Declare Function GetScrollPos Lib "user32" (ByVal hwnd As Long, ByVal nBar As Long) As Long
-Private Declare Function GetScrollRange Lib "user32" (ByVal hwnd As Long, ByVal nBar As Long, lpMinPos As Long, lpMaxPos As Long) As Long
-Private Declare Function SetScrollPos Lib "user32" (ByVal hwnd As Long, ByVal nBar As Long, ByVal nPos As Long, ByVal bRedraw As Long) As Long
-Private Declare Function SetScrollRange Lib "user32" (ByVal hwnd As Long, ByVal nBar As Long, ByVal nMinPos As Long, ByVal nMaxPos As Long, ByVal bRedraw As Long) As Long
+Private Declare Function SetScrollInfo Lib "user32" (ByVal Hwnd As Long, ByVal n As Long, lpcScrollInfo As SCROLLINFO, ByVal BOOL As Boolean) As Long
+Private Declare Function GetScrollInfo Lib "user32" (ByVal Hwnd As Long, ByVal n As Long, LPSCROLLINFO As SCROLLINFO) As Long
+Private Declare Function GetScrollPos Lib "user32" (ByVal Hwnd As Long, ByVal nBar As Long) As Long
+Private Declare Function GetScrollRange Lib "user32" (ByVal Hwnd As Long, ByVal nBar As Long, lpMinPos As Long, lpMaxPos As Long) As Long
+Private Declare Function SetScrollPos Lib "user32" (ByVal Hwnd As Long, ByVal nBar As Long, ByVal nPos As Long, ByVal bRedraw As Long) As Long
+Private Declare Function SetScrollRange Lib "user32" (ByVal Hwnd As Long, ByVal nBar As Long, ByVal nMinPos As Long, ByVal nMaxPos As Long, ByVal bRedraw As Long) As Long
     Private Const SB_BOTH = 3
     Private Const SB_BOTTOM = 7
     Private Const SB_CTL = 2
@@ -176,8 +176,8 @@ Private Declare Function SetScrollRange Lib "user32" (ByVal hwnd As Long, ByVal 
    
    Private Const SBS_SIZEGRIP = &H10&
    
-Private Declare Function EnableScrollBar Lib "user32" (ByVal hwnd As Long, ByVal wSBflags As Long, ByVal wArrows As Long) As Long
-Private Declare Function ShowScrollBar Lib "user32" (ByVal hwnd As Long, ByVal wBar As Long, ByVal bShow As Long) As Long
+Private Declare Function EnableScrollBar Lib "user32" (ByVal Hwnd As Long, ByVal wSBflags As Long, ByVal wArrows As Long) As Long
+Private Declare Function ShowScrollBar Lib "user32" (ByVal Hwnd As Long, ByVal wBar As Long, ByVal bShow As Long) As Long
 
 ' Non-client messages:
 Private Const WM_NCLBUTTONDOWN = &HA1
@@ -238,21 +238,21 @@ Private Const FSB_FLAT_MODE = 2&
 Private Const FSB_ENCARTA_MODE = 1&
 Private Const FSB_REGULAR_MODE = 0&
 
-Private Declare Function FlatSB_EnableScrollBar Lib "comctl32.dll" (ByVal hwnd As Long, ByVal int2 As Long, ByVal UINT3 As Long) As Long
-Private Declare Function FlatSB_ShowScrollBar Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Code As Long, ByVal fRedraw As Boolean) As Long
+Private Declare Function FlatSB_EnableScrollBar Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal int2 As Long, ByVal UINT3 As Long) As Long
+Private Declare Function FlatSB_ShowScrollBar Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Code As Long, ByVal fRedraw As Boolean) As Long
 
-Private Declare Function FlatSB_GetScrollRange Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Code As Long, ByVal LPINT1 As Long, ByVal LPINT2 As Long) As Long
-Private Declare Function FlatSB_GetScrollInfo Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Code As Long, LPSCROLLINFO As SCROLLINFO) As Long
-Private Declare Function FlatSB_GetScrollPos Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Code As Long) As Long
-Private Declare Function FlatSB_GetScrollProp Lib "comctl32.dll" (ByVal hwnd As Long, ByVal propIndex As Long, ByVal LPINT As Long) As Long
+Private Declare Function FlatSB_GetScrollRange Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Code As Long, ByVal LPINT1 As Long, ByVal LPINT2 As Long) As Long
+Private Declare Function FlatSB_GetScrollInfo Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Code As Long, LPSCROLLINFO As SCROLLINFO) As Long
+Private Declare Function FlatSB_GetScrollPos Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Code As Long) As Long
+Private Declare Function FlatSB_GetScrollProp Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal propIndex As Long, ByVal LPINT As Long) As Long
 
-Private Declare Function FlatSB_SetScrollPos Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Code As Long, ByVal Pos As Long, ByVal fRedraw As Boolean) As Long
-Private Declare Function FlatSB_SetScrollInfo Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Code As Long, LPSCROLLINFO As SCROLLINFO, ByVal fRedraw As Boolean) As Long
-Private Declare Function FlatSB_SetScrollRange Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Code As Long, ByVal min As Long, ByVal max As Long, ByVal fRedraw As Boolean) As Long
-Private Declare Function FlatSB_SetScrollProp Lib "comctl32.dll" (ByVal hwnd As Long, ByVal Index As Long, ByVal newValue As Long, ByVal fRedraw As Boolean) As Long
+Private Declare Function FlatSB_SetScrollPos Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Code As Long, ByVal Pos As Long, ByVal fRedraw As Boolean) As Long
+Private Declare Function FlatSB_SetScrollInfo Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Code As Long, LPSCROLLINFO As SCROLLINFO, ByVal fRedraw As Boolean) As Long
+Private Declare Function FlatSB_SetScrollRange Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Code As Long, ByVal min As Long, ByVal max As Long, ByVal fRedraw As Boolean) As Long
+Private Declare Function FlatSB_SetScrollProp Lib "comctl32.dll" (ByVal Hwnd As Long, ByVal Index As Long, ByVal newValue As Long, ByVal fRedraw As Boolean) As Long
 
-Private Declare Function InitializeFlatSB Lib "comctl32.dll" (ByVal hwnd As Long) As Long
-Private Declare Function UninitializeFlatSB Lib "comctl32.dll" (ByVal hwnd As Long) As Long
+Private Declare Function InitializeFlatSB Lib "comctl32.dll" (ByVal Hwnd As Long) As Long
+Private Declare Function UninitializeFlatSB Lib "comctl32.dll" (ByVal Hwnd As Long) As Long
 
 'Keystatus (para Alt,Control y shift)
 Private Const VK_CONTROL As Long = &H11
@@ -359,7 +359,7 @@ Dim lO As Long
     
     lO = eBar
     tSI.fMask = fMask
-    tSI.cbSize = LenB(tSI)
+    tSI.cbsize = LenB(tSI)
     
     If (m_bNoFlatScrollBars) Then
         GetScrollInfo m_hWnd, lO, tSI
@@ -373,7 +373,7 @@ Dim lO As Long
         
     lO = eBar
     tSI.fMask = fMask
-    tSI.cbSize = LenB(tSI)
+    tSI.cbsize = LenB(tSI)
     
     If (m_bNoFlatScrollBars) Then
         SetScrollInfo m_hWnd, lO, tSI, True
@@ -452,10 +452,10 @@ Dim tSI As SCROLLINFO
     pGetSI eBar, tSI, SIF_RANGE Or SIF_PAGE
     max = tSI.nMax - tSI.nPage
 End Property
-Public Property Get value(ByVal eBar As EFSScrollBarConstants) As Long
+Public Property Get Value(ByVal eBar As EFSScrollBarConstants) As Long
 Dim tSI As SCROLLINFO
     pGetSI eBar, tSI, SIF_POS
-    value = tSI.nPos
+    Value = tSI.nPos
 End Property
 Public Property Get LargeChange(ByVal eBar As EFSScrollBarConstants) As Long
 Dim tSI As SCROLLINFO
@@ -475,9 +475,9 @@ Dim tSI As SCROLLINFO
     pLetSI eBar, tSI, SIF_RANGE
     pRaiseEvent eBar, False
 End Property
-Public Property Let value(ByVal eBar As EFSScrollBarConstants, ByVal iValue As Long)
+Public Property Let Value(ByVal eBar As EFSScrollBarConstants, ByVal iValue As Long)
 Dim tSI As SCROLLINFO
-    If (iValue <> value(eBar)) Then
+    If (iValue <> Value(eBar)) Then
         tSI.nPos = iValue
         pLetSI eBar, tSI, SIF_POS
         pRaiseEvent eBar, False
@@ -515,7 +515,7 @@ Dim hParent As Long
    
 End Sub
 
-Public Sub Create(ByVal hWndA As Long)
+Public Sub create(ByVal hWndA As Long)
    pClearUp
    m_hWnd = hWndA
    pCreateScrollBar
@@ -578,7 +578,7 @@ Private Property Get ISubclass_MsgResponse() As EMsgResponse
    ISubclass_MsgResponse = emrPostProcess
 End Property
 
-Private Function ISubclass_WindowProc(ByVal hwnd As Long, ByVal iMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Function ISubclass_WindowProc(ByVal Hwnd As Long, ByVal iMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
 Dim lScrollCode As Long
 Dim tSI As SCROLLINFO
 Dim lV As Long, lSC As Long
@@ -612,7 +612,7 @@ Dim vkFlags As EFSVirtualKeyConstants 'Para saber el estado de alt, control y sh
     
       RaiseEvent MouseWheel(eBar, lDelta, vkFlags)
       If Not (lDelta = 0) Then
-         value(eBar) = value(eBar) + lDelta
+         Value(eBar) = Value(eBar) + lDelta
          ISubclass_WindowProc = 1
       End If
          
@@ -627,53 +627,53 @@ Dim vkFlags As EFSVirtualKeyConstants 'Para saber el estado de alt, control y sh
       Case SB_THUMBTRACK
          ' Is vertical/horizontal?
          pGetSI eBar, tSI, SIF_TRACKPOS
-         value(eBar) = tSI.nTrackPos
+         Value(eBar) = tSI.nTrackPos
          pRaiseEvent eBar, True
          
       Case SB_LEFT, SB_TOP
-         value(eBar) = min(eBar)
+         Value(eBar) = min(eBar)
          pRaiseEvent eBar, False
          
       Case SB_RIGHT, SB_BOTTOM
-         value(eBar) = max(eBar)
+         Value(eBar) = max(eBar)
          pRaiseEvent eBar, False
           
       Case SB_LINELEFT, SB_LINEUP
          'Debug.Print "Line"
-         lV = value(eBar)
+         lV = Value(eBar)
          If (eBar = efsHorizontal) Then
             lSC = m_lSmallChangeHorz
          Else
             lSC = m_lSmallChangeVert
          End If
          If (lV - lSC < min(eBar)) Then
-            value(eBar) = min(eBar)
+            Value(eBar) = min(eBar)
          Else
-            value(eBar) = lV - lSC
+            Value(eBar) = lV - lSC
          End If
          pRaiseEvent eBar, False
          
       Case SB_LINERIGHT, SB_LINEDOWN
           'Debug.Print "Line"
-         lV = value(eBar)
+         lV = Value(eBar)
          If (eBar = efsHorizontal) Then
             lSC = m_lSmallChangeHorz
          Else
             lSC = m_lSmallChangeVert
          End If
          If (lV + lSC > max(eBar)) Then
-            value(eBar) = max(eBar)
+            Value(eBar) = max(eBar)
          Else
-            value(eBar) = lV + lSC
+            Value(eBar) = lV + lSC
          End If
          pRaiseEvent eBar, False
           
       Case SB_PAGELEFT, SB_PAGEUP
-         value(eBar) = value(eBar) - LargeChange(eBar)
+         Value(eBar) = Value(eBar) - LargeChange(eBar)
          pRaiseEvent eBar, False
          
       Case SB_PAGERIGHT, SB_PAGEDOWN
-         value(eBar) = value(eBar) + LargeChange(eBar)
+         Value(eBar) = Value(eBar) + LargeChange(eBar)
          pRaiseEvent eBar, False
          
       Case SB_ENDSCROLL
@@ -697,13 +697,13 @@ End Function
 
 Private Function pRaiseEvent(ByVal eBar As EFSScrollBarConstants, ByVal bScroll As Boolean)
 Static s_lLastValue(0 To 1) As Long
-   If (value(eBar) <> s_lLastValue(eBar)) Then
+   If (Value(eBar) <> s_lLastValue(eBar)) Then
       If (bScroll) Then
          RaiseEvent Scroll(eBar)
       Else
          RaiseEvent Change(eBar)
       End If
-      s_lLastValue(eBar) = value(eBar)
+      s_lLastValue(eBar) = Value(eBar)
    End If
    
 End Function

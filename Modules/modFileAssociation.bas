@@ -2,9 +2,9 @@ Attribute VB_Name = "modRegisterFileType"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ Option Explicit
 '===========================================================================================================
 'START VARIABLES TO ENQUEUE FILES FROM EXPLORER
 '===========================================================================================================
-Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal Hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (hpvDest As Any, hpvSource As Any, ByVal cbCopy As Long)
 
 Private Type COPYDATASTRUCT
@@ -56,9 +56,9 @@ Private Declare Function RegOpenKey Lib "advapi32.dll" Alias "RegOpenKeyA" (ByVa
 Private Declare Function RegQueryValueEx Lib "advapi32.dll" Alias "RegQueryValueExA" (ByVal hKey As Long, ByVal lpValueName As String, ByVal lpReserved As Long, lpType As Long, lpData As Any, lpcbData As Long) As Long
 Private Declare Function RegSetValueEx Lib "advapi32.dll" Alias "RegSetValueExA" (ByVal hKey As Long, ByVal lpValueName As String, ByVal reserved As Long, ByVal dwType As Long, lpData As Any, ByVal cbData As Long) As Long
 
-Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
-Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal Hwnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal Hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal Hwnd As Long, ByVal nIndex As Long) As Long
 
 Private Const REG_SZ = 1
 
@@ -156,18 +156,18 @@ End Sub
 'START PROCEDURES TO ENQUEUE FILES FROM EXPLORER
 '===========================================================================================================
 'SUBCLASSES THE FORM
-Public Sub SubclassEnqueue(ByVal hwnd As Long)
-    nOldProc = GetWindowLong(hwnd, GWL_WNDPROC)
-    Call SetWindowLong(hwnd, GWL_WNDPROC, AddressOf EnqueueProcedure)
+Public Sub SubclassEnqueue(ByVal Hwnd As Long)
+    nOldProc = GetWindowLong(Hwnd, GWL_WNDPROC)
+    Call SetWindowLong(Hwnd, GWL_WNDPROC, AddressOf EnqueueProcedure)
 End Sub
 
 'UNSUBCLASSES THE FORM
-Public Sub UnSubclassEnqueue(ByVal hwnd As Long)
-    Call SetWindowLong(hwnd, GWL_WNDPROC, nOldProc)
+Public Sub UnSubclassEnqueue(ByVal Hwnd As Long)
+    Call SetWindowLong(Hwnd, GWL_WNDPROC, nOldProc)
 End Sub
 
 'PROCESSES WHETHER OR NOT IS FIRST INSTANCE - IF IT ISNT, IT SENDS THE FILEPATH OF PATH TO FIRST INSTANCE
-Public Sub EnqueueProcess(ByVal hwnd As Long, ByVal sCommand As String)
+Public Sub EnqueueProcess(ByVal Hwnd As Long, ByVal sCommand As String)
     If App.PrevInstance And sCommand <> "%1" And sCommand <> "" Then
         Dim lHwnd As Long
         
@@ -183,12 +183,12 @@ Public Sub EnqueueProcess(ByVal hwnd As Long, ByVal sCommand As String)
         Call SendMessage(lHwnd, WM_COPYDATA, lHwnd, nCopyData)
         End
     Else
-        SaveSetting App.Title, "ActiveWindow", "Handle", str(hwnd)
+        SaveSetting App.Title, "ActiveWindow", "Handle", str(Hwnd)
     End If
 End Sub
 
 'FIRES WHEN ANOTHER FILE IS OPENED WHEN AN INSTANCE IS ALREADY AVAILABLE
-Private Function EnqueueProcedure(ByVal hwnd As Long, ByVal uMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Function EnqueueProcedure(ByVal Hwnd As Long, ByVal uMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
     Select Case uMsg
         Case WM_COPYDATA
             Dim sCommand As String
@@ -202,9 +202,9 @@ Private Function EnqueueProcedure(ByVal hwnd As Long, ByVal uMsg As Long, ByVal 
             
             EnqueueProcedure = 0
         Case WM_CLOSE
-            Call UnSubclassEnqueue(hwnd)
+            Call UnSubclassEnqueue(Hwnd)
         Case Else
-            EnqueueProcedure = CallWindowProc(nOldProc, hwnd, uMsg, wParam, lParam)
+            EnqueueProcedure = CallWindowProc(nOldProc, Hwnd, uMsg, wParam, lParam)
     End Select
 End Function
 '===========================================================================================================

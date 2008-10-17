@@ -186,9 +186,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -288,7 +288,24 @@ Public Property Get ShowTabs() As Boolean
     ShowTabs = m_ShowTabs
 End Property
 
-Private Sub NewItem()
+Public Sub newItemToDo(Summary As String, Filename As String)
+
+    Set ai = New cTrackerItem
+    ai.SubmittedBy = devcol.defaultDev
+    ai.DateCreated = Date
+    ai.Summary = Summary
+    ai.module = Filename
+    ai.Priority = plMedium
+    AT.AddIndirect ai
+    Set ai = AT(AT.count)
+    
+    frmTrackerItem.bIsNew = True
+    frmTrackerItem.Show 1
+    SelectTracker AT
+End Sub
+
+Private Sub newItem()
+
     Set ai = New cTrackerItem
     ai.SubmittedBy = devcol.defaultDev
     ai.DateCreated = Date
@@ -302,17 +319,17 @@ Private Sub NewItem()
 End Sub
 
 Private Sub EditItem()
-    Set ai = AT(Hex(grdTracker.RowItemData(grdTracker.SelectedRow)))
+    Set ai = AT(hex(grdTracker.RowItemData(grdTracker.SelectedRow)))
     frmTrackerItem.Show 1
     SelectTracker AT 'Refresh
 End Sub
 
 Private Sub DeleteItem()
     With grdTracker
-        If MsgBox("Sure to delete the item '" & AT(Hex(.RowItemData(.SelectedRow))).Summary _
+        If MsgBox("Sure to delete the item '" & AT(hex(.RowItemData(.SelectedRow))).Summary _
                 & "' ? (This action cannot be undone)", vbQuestion + vbYesNo) = vbYes Then
             'Delete the itme
-            AT.Remove (Hex(AT(Hex(.RowItemData(.SelectedRow))).id))
+            AT.Remove (hex(AT(hex(.RowItemData(.SelectedRow))).Id))
             
             SelectTracker AT 'Refresh
         End If
@@ -388,7 +405,7 @@ Dim tProgR As RECT
    GradientFillRect lHdc, tProgR, RGB(234, 94, 45), RGB(238, 164, 36), GRADIENT_FILL_RECT_H
    
    'Escribimos el texto encima de la barra
-   DrawTextA lHdc, format(CInt(cell.text) / 100, "0%"), -1, tr, cell.TextAlign
+   DrawTextA lHdc, Format(CInt(cell.text) / 100, "0%"), -1, tr, cell.TextAlign
 
    'Creamos el contorno
    hBr = CreateSolidBrush(&H0&)
@@ -411,7 +428,7 @@ Public Sub RefreshTabs()
     tabTracker.Tabs.Clear
     For Each tr In colTrackers
         tabTracker.Tabs.Add tr.name, , tr.name, tr.IconIndex
-        tabTracker.Tabs.item(tabTracker.Tabs.count).ItemData = tr.id
+        tabTracker.Tabs.item(tabTracker.Tabs.count).ItemData = tr.Id
     Next
     
     'Search for the selected tab
@@ -456,7 +473,7 @@ Private Sub grdTracker_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal
     bCancel = True
     'Hemos pinchado "marcar como cerrado"
     If lCol = COL_CHECKBOX Then
-       AT(Hex(grdTracker.RowItemData(lRow))).Closed = Not AT(Hex(grdTracker.RowItemData(lRow))).Closed
+       AT(hex(grdTracker.RowItemData(lRow))).Closed = Not AT(hex(grdTracker.RowItemData(lRow))).Closed
        SelectTracker AT
     Else
        EditItem
@@ -502,7 +519,7 @@ Private Function EvaluateTextHeight(lRow As Long, lCol As Long) As Long
         SetRect r, 0, 0, lWidth, 0 'Ancho del rectángulo, el alto se calcula
         InflateRect r, -2, 0 'Necesario para que coincida con la región de la celda
         'Calculamos la altura necesaria para escribir el texto simulando una escritura sobre el rectángulo
-        lHeight = DrawTextA(GetDC(.hwnd), .CellText(lRow, lCol) & vbNullChar, -1, r, DT_WORDBREAK Or DT_CALCRECT)
+        lHeight = DrawTextA(GetDC(.Hwnd), .CellText(lRow, lCol) & vbNullChar, -1, r, DT_WORDBREAK Or DT_CALCRECT)
         
     End With
     
@@ -511,11 +528,11 @@ End Function
 
 'Busca la fila que se corresponde con el id especificado (en el itemData)
 'Si no la encuentra, devuelve -1
-Private Function RowIndexByID(id As Long) As Long
+Private Function RowIndexByID(Id As Long) As Long
     Dim i As Integer
     With grdTracker
         For i = 1 To .Rows
-            If .RowItemData(i) = id Then RowIndexByID = i: Exit Function
+            If .RowItemData(i) = Id Then RowIndexByID = i: Exit Function
         Next
     End With
     RowIndexByID = -1
@@ -611,7 +628,8 @@ Private Sub CreateGrid()
 End Sub
 
 'Establece el tracker activo y determina las columnas del grid que serán visibles
-Private Sub SelectTracker(tracker As cTracker)
+'Private Sub SelectTracker(tracker As cTracker)
+Public Sub SelectTracker(tracker As cTracker)
     Dim i As Long
     Dim ScrollPosX As Long, ScrollPosY As Long 'Pos Scrollbars
     Dim SelItemID As Long 'Elemento seleccionado
@@ -671,7 +689,7 @@ Private Sub FillGrid(tracker As cTracker)
         fnt.Strikethrough = it.Closed
         boldfnt.Strikethrough = it.Closed
     
-        .AddRow , it.id 'El id del elemento se guarda en el ItemData
+        .AddRow , it.Id 'El id del elemento se guarda en el ItemData
         
         .CellDetails .Rows, COL_CHECKBOX, lIconIndex:=IIf(it.Closed, ICD_CHECK, ICD_UNCHECK), lIndent:=3 'Checkbox
         .CellIcon(.Rows, COL_ICONS) = IIf(it.Locked, ICD_LOCKED, -1) 'Bloqueado
@@ -681,11 +699,11 @@ Private Sub FillGrid(tracker As cTracker)
         .CellDetails .Rows, COL_MODULE, it.module, oFont:=fnt 'Module
         .CellDetails .Rows, COL_ASSIGNEDTO, it.AssignedTo, oFont:=fnt 'AssignedTo
         .CellDetails .Rows, COL_DATECREATED, it.DateCreated, DT_RIGHT, oFont:=fnt 'Created
-        .CellDetails .Rows, COL_DATEMODIFIED, format(it.DateModified, "Short Date"), DT_RIGHT, oFont:=fnt 'Modified
+        .CellDetails .Rows, COL_DATEMODIFIED, Format(it.DateModified, "Short Date"), DT_RIGHT, oFont:=fnt 'Modified
         .CellDetails .Rows, COL_PRIORITY, it.Priority, DT_CENTER, oFont:=fnt 'Priority
         .CellDetails .Rows, COL_COMPLETED, it.Completed, DT_CENTER, oFont:=fnt
         .CellDetails .Rows, COL_DATECLOSING, IIf(it.Closed, _
-                            format(it.DateClosing, "Short Date"), "not closed"), DT_RIGHT, oFont:=fnt 'Date Closening
+                            Format(it.DateClosing, "Short Date"), "not closed"), DT_RIGHT, oFont:=fnt 'Date Closening
         .CellDetails .Rows, COL_SUBMITTEDBY, it.SubmittedBy, oFont:=fnt 'Submitted by
         .CellDetails .Rows, COL_DETAILEDDESC, it.DetailedDesc, DT_WORDBREAK, , , RGB(0, 0, 0), oFont:=fnt    'Detailded Desc
         
@@ -818,7 +836,7 @@ Private Sub tabTracker_Resize()
 End Sub
 
 Private Sub tabTracker_TabClick(theTab As vbalDTab6.cTab, ByVal iButton As MouseButtonConstants, ByVal Shift As ShiftConstants, ByVal X As Single, ByVal Y As Single)
-    SelectTracker colTrackers(Hex(theTab.ItemData))
+    SelectTracker colTrackers(hex(theTab.ItemData))
     
     If iButton = vbRightButton Then
         CreatePopupMenu "mnu" 'Menu contextual
@@ -834,7 +852,7 @@ Private Sub CreatePopupMenu(sKey As String)
     
     With mnu
         .DrawStyle = M_Style
-        Call .CreateFromNothing(Me.hwnd)
+        Call .CreateFromNothing(Me.Hwnd)
         rID = .AddItem(0, Key:=sKey)
 
         .AddItem rID, "Add Item...", Key:="AddItem"
@@ -875,7 +893,7 @@ Private Sub CreatePopupMenu(sKey As String)
                 frmTrackerManager.Show 1
 
             Case "AddItem" 'Añadir
-                NewItem
+                newItem
             Case "EditItem" 'Editar
                 EditItem
             Case "DelItem" 'Eliminar

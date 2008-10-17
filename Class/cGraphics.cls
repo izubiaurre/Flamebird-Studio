@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -82,19 +82,19 @@ End Function
 
 Public Function DrawString(ByVal sText As String, ByVal lColor As Long, ByVal oFont As cFont, Optional ByVal lLeft As Long = 0, Optional ByVal lTop As Long = 0) As Long
   Dim rcF As RECTF
-  Dim format As Long
+  Dim Format As Long
   Dim brush As Long
   
   rcF.Left = lLeft
   rcF.Top = lTop
   
   GdipCreateSolidFill lColor, brush
-  GdipStringFormatGetGenericDefault format
+  GdipStringFormatGetGenericDefault Format
   
-  DrawString = Execute(GdipDrawString(graphics, sText, Len(sText), oFont.Handle, rcF, format, brush))
+  DrawString = Execute(GdipDrawString(graphics, sText, Len(sText), oFont.Handle, rcF, Format, brush))
   
   GdipDeleteBrush brush
-  GdipDeleteStringFormat format
+  GdipDeleteStringFormat Format
 End Function
 
 Private Function Execute(ByVal lReturn As Long) As Long

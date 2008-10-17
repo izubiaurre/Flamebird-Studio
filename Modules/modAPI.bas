@@ -2,9 +2,9 @@ Attribute VB_Name = "modAPI"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -26,19 +26,19 @@ Attribute VB_Name = "modAPI"
 '     bmBits As Long
 'End Type
 
-'Public Type BITMAPINFOHEADER  '40 bytes
-'     biSize As Long
-'     biWidth As Long
-'     biHeight As Long
-'     biPlanes As Integer
-'     biBitCount As Integer
-'     biCompression As Long
-'     biSizeImage As Long
-'     biXPelsPerMeter As Long
-'     biYPelsPerMeter As Long
-'     biClrUsed As Long
-'     biClrImportant As Long
-'End Type
+Public Type BITMAPINFOHEADER  '40 bytes
+     biSize As Long
+     biWidth As Long
+     biHeight As Long
+     biPlanes As Integer
+     biBitCount As Integer
+     biCompression As Long
+     biSizeImage As Long
+     biXPelsPerMeter As Long
+     biYPelsPerMeter As Long
+     biClrUsed As Long
+     biClrImportant As Long
+End Type
 
 'Type RGBQUAD      '  4 Bytes
 '        rgbBlue As Byte
@@ -52,6 +52,15 @@ Attribute VB_Name = "modAPI"
 '     bmiColors(255) As Long
 'End Type
 
+Public Type BITMAPINFO8Bits
+        bmiHeader As BITMAPINFOHEADER
+        bmiColors(255) As RGBQUAD
+End Type
+
+Public Type BITMAPINFO16Bits
+        bmiHeader As BITMAPINFOHEADER
+        bmiColors(2) As Long
+End Type
 'Public Const BI_RGB = 0&
 'Public Const DIB_RGB_COLORS = 0 '  color table in RGBs
 'Public Const DIB_PAL_COLORS = 1   '  tabla de color en los índices de la paleta
@@ -70,7 +79,7 @@ Public Const GWL_STYLE = (-16)
 
 Const READONLY = &H1
 Const Hidden = &H2
-Const SYSTEM = &H4
+Const system = &H4
 Const ARCHIVE = &H20
 Const NORMAL = &H80
 Public Declare Function SetFileAttributes Lib "kernel32.dll" Alias "SetFileAttributesA" (ByVal lpFileName As String, ByVal dwFileAttributes As Long) As Long
@@ -88,13 +97,16 @@ Declare Function TransparentBlt Lib "msimg32.dll" (ByVal hdc As Long, ByVal X As
 Public Declare Function SetDIBitsToDevice Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal dx As Long, ByVal dy As Long, ByVal srcx As Long, ByVal srcy As Long, ByVal Scan As Long, ByVal NumScans As Long, Bits As Any, BitsInfo As BITMAPINFO, ByVal wUsage As Long) As Long
 Public Declare Function SetBitmapBits Lib "gdi32.dll" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
 Public Declare Function GetBitmapBits Lib "gdi32.dll" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
-Public Declare Function StretchDIBits Lib "gdi32.dll" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal dx As Long, ByVal dy As Long, ByVal srcx As Long, ByVal srcy As Long, ByVal wSrcWidth As Long, ByVal wSrcHeight As Long, lpBits As Any, lpBitsInfo As BITMAPINFO, ByVal wUsage As Long, ByVal dwRop As Long) As Long
+'Public Declare Function StretchDIBits Lib "gdi32.dll" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal dx As Long, ByVal dy As Long, ByVal srcx As Long, ByVal srcy As Long, ByVal wSrcWidth As Long, ByVal wSrcHeight As Long, lpBits As Any, lpBitsInfo As BITMAPINFO, ByVal wUsage As Long, ByVal dwRop As Long) As Long
+Public Declare Function StretchDIBits Lib "gdi32.dll" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal dx As Long, ByVal dy As Long, ByVal srcx As Long, ByVal srcy As Long, ByVal wSrcWidth As Long, ByVal wSrcHeight As Long, lpBits As Any, lpBitsInfo As Any, ByVal wUsage As Long, ByVal dwRop As Long) As Long
 Public Declare Function CreateDIBSection Lib "gdi32" (ByVal hdc As Long, pBitmapInfo As BITMAPINFO, ByVal un As Long, ByVal lplpVoid As Long, ByVal Handle As Long, ByVal dw As Long) As Long
 Public Declare Function SetDIBColorTable Lib "gdi32" (ByVal hdc As Long, ByVal un1 As Long, ByVal un2 As Long, pcRGBQuad As RGBQUAD) As Long
 'Public Declare Function CreateBitmap Lib "gdi32" (ByVal nWidth As Long, ByVal nHeight As Long, ByVal nPlanes As Long, ByVal nBitCount As Long, lpBits As Any) As Long
 Public Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hdc As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 
 'Functiones de dibujo
+Public Declare Function SetBrushOrgEx Lib "gdi32" (ByVal hdc As Long, ByVal nXOrg As Long, ByVal nYOrg As Long, lppt As POINTAPI) As Long
+Public Declare Function Rectangle Lib "gdi32" (ByVal hdc As Long, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Long
 Public Declare Function CreateSolidBrush Lib "gdi32" (ByVal crColor As Long) As Long
 Public Declare Function FillRect Lib "user32" (ByVal hdc As Long, lpRect As RECT, ByVal hBrush As Long) As Long
 Public Declare Function FrameRect Lib "user32" (ByVal hdc As Long, lpRect As RECT, ByVal hBrush As Long) As Long
@@ -113,23 +125,23 @@ Declare Function LoadImage Lib "user32" Alias "LoadImageA" (ByVal hInst As Long,
 
 'Contexto de Dispositivo y Objetos
 Public Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
-Public Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
+Public Declare Function GetDC Lib "user32" (ByVal Hwnd As Long) As Long
 Public Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
 Public Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 Public Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
-Public Declare Function SetRect Lib "user32" (lpRect As RECT, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Long
+Public Declare Function SetRect Lib "user32" (lpRect As RECT, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Long
 Public Declare Function InflateRect Lib "user32" (lpRect As RECT, ByVal X As Long, ByVal Y As Long) As Long
-
+Public Declare Function ReleaseDC Lib "user32" (ByVal Hwnd As Long, ByVal hdc As Long) As Long
 
 'Gestión de ventanas (de momento no se usan)
 Public Const GWL_EXSTYLE As Long = -20
 'Public Const GWL_STYLE As Long = -16
 Public Const WS_EX_STATICEDGE As Long = &H20000
-Public Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
-Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
-Public Declare Function GetClientRect Lib "user32" (ByVal hwnd As Long, lpRect As RECT) As Long
+Public Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal Hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal Hwnd As Long, ByVal nIndex As Long) As Long
+Public Declare Function GetClientRect Lib "user32" (ByVal Hwnd As Long, lpRect As RECT) As Long
 
-Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
+Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
 Public Const WM_GETMINMAXINFO As Long = &H24
 Public Type MINMAXINFO
     ptReserved As POINTAPI

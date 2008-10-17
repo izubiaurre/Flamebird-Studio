@@ -18,11 +18,11 @@ Begin VB.Form frmProgramInspector
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   8
-      Size            =   9184
+      Size            =   39032
       Images          =   "frmProgramInspector.frx":058A
       Version         =   131072
-      KeyCount        =   8
-      Keys            =   "ÿÿÿÿÿÿÿ"
+      KeyCount        =   34
+      Keys            =   "ÿÿÿÿÿÿÿold funcÿÿÿÿÿÿÿÿÿold procÿÿincludeÿÿÿÿÿÿÿÿÿÿold privateÿold structÿÿÿÿ"
    End
    Begin vbalTreeViewLib6.vbalTreeView tv_program 
       Height          =   3255
@@ -57,9 +57,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -75,14 +75,14 @@ Option Explicit
 Implements ITDockMoveEvents
 
 Private Sub Form_Load()
-tv_program.NoCustomDraw = True
-tv_program.ImageList = programImageList
-tv_program.FullRowSelect = False
-tv_program.HistoryStyle = False
-tv_program.HotTracking = True
-tv_program.TabStop = False
-tv_program.Style = etvwTreelinesPlusMinusPictureText
-tv_program.NoCustomDraw = False
+    tv_program.NoCustomDraw = True
+    tv_program.ImageList = programImageList
+    tv_program.FullRowSelect = False
+    tv_program.HistoryStyle = False
+    tv_program.HotTracking = True
+    tv_program.TabStop = False
+    tv_program.Style = etvwTreelinesPlusMinusPictureText
+    tv_program.NoCustomDraw = False
 End Sub
 
 Private Function ITDockMoveEvents_DockChange(tDockAlign As AlignConstants, tDocked As Boolean) As Variant
@@ -96,14 +96,18 @@ End Function
 
 
 Public Sub tv_program_NodeDblClick(node As vbalTreeViewLib6.cTreeViewNode)
-Dim nodito As staticNode
-Set nodito = includesNodes.item(node.Key)
+    Dim nodito As staticNode
+    Set nodito = includesNodes.item(node.Key)
+    
+    ' Setea la clase que lee el archivo
+    Dim srcFile As New cReadFile
+    Dim Filename As String
+    srcFile.Filename = nodito.Filename
 
-' Setea la clase que lee el archivo
-Dim srcFile As New cReadFile
-Dim filename As String
-srcFile.filename = nodito.filename
-
+    If frmMain.ActiveFileForm.Identify <> FF_SOURCE Then
+        Exit Sub
+    End If
+    
     ' varType & "|" & palabra & "|" & fatherNode
     ' la primera es la parte que indica que tipo de declaracion es
     ' la segunda es el nombre
@@ -115,6 +119,12 @@ srcFile.filename = nodito.filename
         
     If nodito.varType = "process" Then
         arrayBusca = Array("process", nodito.name)
+        hacer = True
+    ElseIf nodito.varType = "function" Then
+        arrayBusca = Array("function", nodito.name)
+        hacer = True
+    ElseIf nodito.varType = "struct" Then
+        arrayBusca = Array("struct", nodito.name)
         hacer = True
     End If
     
@@ -134,6 +144,7 @@ srcFile.filename = nodito.filename
             hacer = True
         End If
     End If
+    
     
     If hacer Then
         Dim linea As String
@@ -167,9 +178,10 @@ srcFile.filename = nodito.filename
                 If LCase(palabra) = LCase(arrayBusca(i)) Then
                     ' se encuentra la palabra buscada
                     If i = UBound(arrayBusca) Then
-                        Dim frmIr As Form
-                        Set frmIr = NewFileForm(FF_SOURCE, nodito.filename)
-                        
+                        'Dim frmIr As Form
+                        'Set frmIr = NewFileForm(FF_SOURCE, nodito.filename)
+                        Dim frmIr As frmDoc
+                        Set frmIr = frmMain.ActiveForm
                         If frmIr.cs.LineCount > srcFile.lineNumber - 1 Then
                             frmIr.cs.ExecuteCmd cmCmdGoToLine, CInt(srcFile.lineNumber) - 1
                             frmIr.cs.HighlightedLine = CInt(srcFile.lineNumber) - 1
@@ -193,3 +205,37 @@ srcFile.filename = nodito.filename
         Wend
     End If
 End Sub
+
+Public Sub findCurProc(lineNum As Long)
+    Dim i As Integer
+    Dim nodito As staticNode
+    Dim sel As Integer
+    Dim node As vbalTreeViewLib6.cTreeViewNode
+    
+On Error GoTo errhandler
+
+    For i = 1 To tv_program.NodeCount
+        
+        Set nodito = includesNodes.item(tv_program.Nodes(i).Key)
+        
+        If nodito.varType = "process" Or nodito.varType = "function" Then
+            If nodito.lineNum < lineNum Then
+                sel = i
+            ElseIf nodito.lineNum = lineNum Then
+                tv_program.Nodes(i).Selected = True
+                tv_program.Nodes(i).expanded = False
+                Exit Sub
+            Else
+                If sel <> 0 Then
+                    tv_program.Nodes(sel).Selected = True
+                    tv_program.Nodes(sel).expanded = False
+                End If
+                Exit Sub
+            End If
+        End If
+    Next i
+    Exit Sub
+errhandler:
+    Exit Sub
+End Sub
+

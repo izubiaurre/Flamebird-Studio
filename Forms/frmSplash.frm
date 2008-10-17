@@ -15,26 +15,6 @@ Begin VB.Form frmSplash
    ScaleWidth      =   6360
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.TextBox lblMessage 
-      Alignment       =   1  'Right Justify
-      BackColor       =   &H00FFFFFF&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00004080&
-      Height          =   195
-      Left            =   1440
-      TabIndex        =   1
-      Top             =   3060
-      Width           =   4695
-   End
    Begin VB.PictureBox Picture1 
       BorderStyle     =   0  'None
       Height          =   3375
@@ -45,6 +25,25 @@ Begin VB.Form frmSplash
       TabIndex        =   0
       Top             =   0
       Width           =   6375
+      Begin VB.Label lblMessage 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   1800
+         TabIndex        =   1
+         Top             =   3060
+         Width           =   4455
+      End
    End
 End
 Attribute VB_Name = "frmSplash"
@@ -55,9 +54,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by

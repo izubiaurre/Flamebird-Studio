@@ -14,9 +14,9 @@ Attribute VB_Exposed = False
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -72,15 +72,15 @@ Private counter As Long 'Contador para asignar IDs a los elementos del tracker
 '-----------------------------------------------------------------------------
 'IMPLEMENTACIÓN PROPIEDADES Y MÉTODOS GENERALES
 '-----------------------------------------------------------------------------
-Friend Property Let id(newID As Long)
+Friend Property Let Id(newID As Long)
     m_ID = newID
 End Property
-Public Property Get id() As Long
-    id = m_ID
+Public Property Get Id() As Long
+    Id = m_ID
 End Property
 
 Public Property Get Key() As String
-    Key = CStr(Hex(m_ID))
+    Key = CStr(hex(m_ID))
 End Property
 
 Public Property Let name(newName As String)
@@ -90,11 +90,11 @@ Public Property Get name() As String
     name = m_Name
 End Property
 
-Public Property Let Description(newDesc As String)
+Public Property Let description(newDesc As String)
     m_Description = newDesc
 End Property
-Public Property Get Description() As String
-    Description = m_Description
+Public Property Get description() As String
+    description = m_Description
 End Property
 
 Public Property Let IconIndex(newIcon As Long)
@@ -217,9 +217,9 @@ Public Sub AddIndirect(ByVal TrackerItem As cTrackerItem)
     'Necesitamos una copia del objeto porque ByVal no nos previene de modificar el
     'objeto pasado como argumento
     Set it = TrackerItem.Copy
-    it.id = counter
+    it.Id = counter
     
-    m_Col.Add it, Hex(counter) 'Agregamos el elemento a la colección
+    m_Col.Add it, hex(counter) 'Agregamos el elemento a la colección
     
     Set it = Nothing
 End Sub
@@ -240,7 +240,7 @@ End Sub
 Public Sub Clear()
     Dim p As Variant
     For Each p In m_Col
-        m_Col.Remove (Hex(p.id))
+        m_Col.Remove (hex(p.Id))
     Next
     counter = 0
 End Sub
@@ -266,7 +266,7 @@ Private Sub Class_Initialize()
     ColorOldItems = True
     m_OldItemsDays = 30
     counter = 0 'Contador a 0
-    id = -1 'El tracker no está en ninguna colección
+    Id = -1 'El tracker no está en ninguna colección
 End Sub
 
 Private Sub Class_Terminate()
@@ -281,7 +281,7 @@ Public Function Copy() As cTracker
     
     ret.AutoExpandSelItems = Me.AutoExpandSelItems
     ret.ColorItemsByPriority = Me.ColorItemsByPriority
-    ret.Description = Me.Description
+    ret.description = Me.description
     ret.IconIndex = Me.IconIndex
     ret.name = Me.name
     ret.SortColumn = Me.SortColumn

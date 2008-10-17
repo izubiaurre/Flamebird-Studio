@@ -2,9 +2,9 @@ Attribute VB_Name = "modResGen"
 'Flamebird MX
 'Copyright (C) 2003-2007 Flamebird Team
 'Contact:
-'   JaViS:      javisarias@ gmail.com(JaViS)
+'   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
-'   Izubiaurre: izubiaurre@users.sourceforge.net (Imanol Izubiaurre)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -154,11 +154,11 @@ Public Function getMapCopy(map As cMap) As cMap
     If map.Depth = 8 Then
         ReDim data8(map.Width * map.Height - 1) As Byte
         map.GetData8 data8()
-        Call Copy.CreateFromStream8(map.Description, map.Code, map.Width, map.Height, data8, map.palette)
+        Call Copy.CreateFromStream8(map.description, map.Code, map.Width, map.Height, data8, map.palette)
     ElseIf map.Depth = 16 Then
         ReDim data16(map.Width * map.Height - 1) As Integer
         map.GetData16 data16()
-        Call Copy.CreateFromStream16(map.Description, map.Code, map.Width, map.Height, data16)
+        Call Copy.CreateFromStream16(map.description, map.Code, map.Width, map.Height, data16)
     End If
     ReDim cpData(map.CPointsCount - 1) As Integer
     map.GetCPData cpData()
