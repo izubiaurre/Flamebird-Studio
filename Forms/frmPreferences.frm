@@ -18,16 +18,103 @@ Begin VB.Form frmPreferences
    ScaleWidth      =   17910
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox picCompilerPaths 
+      BorderStyle     =   0  'None
+      Height          =   4095
+      Left            =   11760
+      ScaleHeight     =   4095
+      ScaleWidth      =   5535
+      TabIndex        =   118
+      Top             =   4080
+      Width           =   5535
+      Begin VB.Frame fraPATHS 
+         Caption         =   "Compiler PATHS"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   2175
+         Left            =   0
+         TabIndex        =   119
+         Top             =   120
+         Width           =   5415
+         Begin VB.ListBox lstPATHS 
+            BeginProperty Font 
+               Name            =   "Arial"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   1320
+            Left            =   120
+            TabIndex        =   124
+            Top             =   360
+            Width           =   4095
+         End
+         Begin VB.PictureBox Picture4 
+            Appearance      =   0  'Flat
+            BorderStyle     =   0  'None
+            FillStyle       =   2  'Horizontal Line
+            ForeColor       =   &H80000008&
+            Height          =   2535
+            Left            =   4320
+            ScaleHeight     =   2535
+            ScaleWidth      =   975
+            TabIndex        =   120
+            Top             =   240
+            Width           =   975
+            Begin VB.CommandButton cmdPATHSRemoveAll 
+               Caption         =   "Remove All"
+               Height          =   375
+               Left            =   0
+               TabIndex        =   123
+               Top             =   1320
+               Width           =   975
+            End
+            Begin VB.CommandButton cmdPATHSRemove 
+               Caption         =   "Remove"
+               Height          =   375
+               Left            =   0
+               TabIndex        =   122
+               Top             =   720
+               Width           =   975
+            End
+            Begin VB.CommandButton cmdPATHSAdd 
+               Caption         =   "Add"
+               Height          =   375
+               Left            =   0
+               TabIndex        =   121
+               Top             =   120
+               Width           =   975
+            End
+         End
+      End
+   End
    Begin vbalTreeViewLib6.vbalTreeView tv_preferences 
       Height          =   3255
       Left            =   5760
-      TabIndex        =   113
+      TabIndex        =   110
       Top             =   4920
       Width           =   1815
       _ExtentX        =   3201
       _ExtentY        =   5741
       PathSeparator   =   "/"
-      LineColor       =   -2147483648
+      BackColor       =   -2147483647
+      BorderStyle     =   0
+      ForeColor       =   -2147483633
+      LineColor       =   -2147483643
+      SelectedForeColor=   -2147483648
+      SelectedForeColor=   -2147483648
+      SelectedForeColor=   -2147483648
+      SelectedForeColor=   -2147483648
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Arial"
          Size            =   8.25
@@ -47,14 +134,14 @@ Begin VB.Form frmPreferences
       ScaleHeight     =   301
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   353
-      TabIndex        =   105
+      TabIndex        =   102
       Top             =   12600
       Width           =   5295
       Begin VB.CommandButton cmdClearCommandHistory 
          Caption         =   "Clear Comand History"
          Height          =   375
          Left            =   3420
-         TabIndex        =   107
+         TabIndex        =   104
          ToolTipText     =   "Clears the MS-DOS command history."
          Top             =   720
          Width           =   1695
@@ -63,7 +150,7 @@ Begin VB.Form frmPreferences
          Caption         =   "Clear Recent List"
          Height          =   375
          Left            =   3420
-         TabIndex        =   106
+         TabIndex        =   103
          ToolTipText     =   "Clears the recently opened files list"
          Top             =   240
          Width           =   1695
@@ -77,7 +164,7 @@ Begin VB.Form frmPreferences
       Left            =   5580
       ScaleHeight     =   4395
       ScaleWidth      =   5595
-      TabIndex        =   84
+      TabIndex        =   81
       Top             =   12660
       Width           =   5595
       Begin VB.CheckBox chkPIOnlyLocalHeader 
@@ -93,7 +180,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   315
          Left            =   2940
-         TabIndex        =   91
+         TabIndex        =   88
          Top             =   1020
          Width           =   2295
       End
@@ -110,7 +197,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   315
          Left            =   2940
-         TabIndex        =   89
+         TabIndex        =   86
          Top             =   180
          Width           =   2175
       End
@@ -127,7 +214,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   180
-         TabIndex        =   88
+         TabIndex        =   85
          Top             =   1440
          Width           =   2235
       End
@@ -144,7 +231,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   180
-         TabIndex        =   87
+         TabIndex        =   84
          Top             =   1020
          Width           =   2235
       End
@@ -161,7 +248,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   315
          Left            =   180
-         TabIndex        =   86
+         TabIndex        =   83
          Top             =   600
          Width           =   2235
       End
@@ -178,7 +265,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   315
          Left            =   180
-         TabIndex        =   85
+         TabIndex        =   82
          Top             =   180
          Width           =   2115
       End
@@ -195,7 +282,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   315
          Left            =   2940
-         TabIndex        =   90
+         TabIndex        =   87
          Top             =   600
          Width           =   2235
       End
@@ -209,7 +296,7 @@ Begin VB.Form frmPreferences
       ScaleHeight     =   289
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   353
-      TabIndex        =   70
+      TabIndex        =   67
       Top             =   12480
       Width           =   5295
       Begin VB.TextBox txtIntelliSenseSensitive 
@@ -225,7 +312,7 @@ Begin VB.Form frmPreferences
          Height          =   255
          Left            =   4380
          MaxLength       =   1
-         TabIndex        =   82
+         TabIndex        =   79
          Top             =   270
          Width           =   555
       End
@@ -242,7 +329,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   2355
          Left            =   120
-         TabIndex        =   72
+         TabIndex        =   69
          Top             =   660
          Width           =   5055
          Begin VB.CheckBox chkISUserProcs 
@@ -258,7 +345,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   255
             Left            =   3540
-            TabIndex        =   79
+            TabIndex        =   76
             Top             =   1860
             Width           =   1215
          End
@@ -275,7 +362,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   315
             Left            =   3540
-            TabIndex        =   78
+            TabIndex        =   75
             Top             =   1440
             Width           =   1095
          End
@@ -292,7 +379,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   315
             Left            =   3540
-            TabIndex        =   77
+            TabIndex        =   74
             Top             =   1080
             Width           =   1155
          End
@@ -309,7 +396,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   255
             Left            =   3540
-            TabIndex        =   76
+            TabIndex        =   73
             Top             =   720
             Width           =   1035
          End
@@ -326,7 +413,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   255
             Left            =   240
-            TabIndex        =   75
+            TabIndex        =   72
             Top             =   1440
             Width           =   1275
          End
@@ -343,7 +430,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   255
             Left            =   240
-            TabIndex        =   74
+            TabIndex        =   71
             Top             =   1080
             Width           =   1155
          End
@@ -360,7 +447,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   255
             Left            =   240
-            TabIndex        =   73
+            TabIndex        =   70
             Top             =   720
             Width           =   1095
          End
@@ -390,7 +477,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   255
             Left            =   3240
-            TabIndex        =   81
+            TabIndex        =   78
             Top             =   360
             Width           =   1455
          End
@@ -408,7 +495,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   255
             Left            =   360
-            TabIndex        =   80
+            TabIndex        =   77
             Top             =   360
             Width           =   1335
          End
@@ -426,7 +513,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   315
          Left            =   240
-         TabIndex        =   71
+         TabIndex        =   68
          Top             =   240
          Width           =   2055
       End
@@ -443,7 +530,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   315
          Left            =   2760
-         TabIndex        =   83
+         TabIndex        =   80
          Top             =   300
          Width           =   1635
       End
@@ -454,9 +541,43 @@ Begin VB.Form frmPreferences
       Left            =   120
       ScaleHeight     =   3375
       ScaleWidth      =   5295
-      TabIndex        =   55
+      TabIndex        =   52
       Top             =   4440
       Width           =   5295
+      Begin VB.CheckBox chkDirs 
+         Caption         =   "Add directories to the PATH (-i):"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   240
+         TabIndex        =   117
+         Top             =   1440
+         Width           =   4095
+      End
+      Begin VB.CheckBox chkDebugDCB 
+         Caption         =   "Store debugging information at the DCB (-g)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   240
+         TabIndex        =   116
+         Top             =   1200
+         Width           =   4095
+      End
       Begin VB.TextBox txtParams 
          BeginProperty Font 
             Name            =   "Arial"
@@ -467,9 +588,10 @@ Begin VB.Form frmPreferences
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   285
+         Height          =   525
          Left            =   240
-         TabIndex        =   62
+         MultiLine       =   -1  'True
+         TabIndex        =   59
          Top             =   2760
          Width           =   4695
       End
@@ -486,7 +608,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   60
+         TabIndex        =   57
          Top             =   960
          Width           =   4695
       End
@@ -503,7 +625,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   58
+         TabIndex        =   55
          Top             =   720
          Width           =   4695
       End
@@ -520,7 +642,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   57
+         TabIndex        =   54
          Top             =   480
          Width           =   3615
       End
@@ -537,7 +659,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   56
+         TabIndex        =   53
          Top             =   240
          Value           =   1  'Checked
          Width           =   2535
@@ -555,7 +677,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   61
+         TabIndex        =   58
          Top             =   2520
          Width           =   2175
       End
@@ -572,7 +694,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   59
+         TabIndex        =   56
          Top             =   0
          Width           =   2415
       End
@@ -583,7 +705,7 @@ Begin VB.Form frmPreferences
       Left            =   5640
       ScaleHeight     =   4095
       ScaleWidth      =   5535
-      TabIndex        =   50
+      TabIndex        =   47
       Top             =   8280
       Width           =   5535
       Begin VB.Frame Frame3 
@@ -599,7 +721,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   1215
          Left            =   2880
-         TabIndex        =   108
+         TabIndex        =   105
          Top             =   2400
          Width           =   2535
          Begin VB.PictureBox Picture3 
@@ -611,7 +733,7 @@ Begin VB.Form frmPreferences
             Left            =   120
             ScaleHeight     =   855
             ScaleWidth      =   2295
-            TabIndex        =   109
+            TabIndex        =   106
             Top             =   240
             Width           =   2295
             Begin VB.OptionButton optHelpLine 
@@ -628,7 +750,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   2
                Left            =   0
-               TabIndex        =   112
+               TabIndex        =   109
                Top             =   600
                Width           =   1455
             End
@@ -646,7 +768,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   1
                Left            =   0
-               TabIndex        =   111
+               TabIndex        =   108
                Top             =   360
                Width           =   1815
             End
@@ -664,7 +786,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   0
                Left            =   0
-               TabIndex        =   110
+               TabIndex        =   107
                Top             =   120
                Width           =   1575
             End
@@ -683,7 +805,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   103
+         TabIndex        =   100
          Top             =   240
          Width           =   2295
       End
@@ -700,7 +822,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   102
+         TabIndex        =   99
          Top             =   750
          Width           =   2175
       End
@@ -717,7 +839,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   101
+         TabIndex        =   98
          Top             =   1245
          Width           =   1335
       End
@@ -734,7 +856,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   100
+         TabIndex        =   97
          Top             =   1755
          Width           =   2175
       End
@@ -751,7 +873,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   1635
          Left            =   2880
-         TabIndex        =   95
+         TabIndex        =   92
          Top             =   600
          Width           =   2535
          Begin VB.PictureBox picIndent 
@@ -762,7 +884,7 @@ Begin VB.Form frmPreferences
             Left            =   120
             ScaleHeight     =   1095
             ScaleWidth      =   1575
-            TabIndex        =   96
+            TabIndex        =   93
             Top             =   360
             Width           =   1575
             Begin VB.OptionButton opIndentScope 
@@ -778,7 +900,7 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Left            =   0
-               TabIndex        =   99
+               TabIndex        =   96
                Top             =   840
                Width           =   975
             End
@@ -795,7 +917,7 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Left            =   0
-               TabIndex        =   98
+               TabIndex        =   95
                Top             =   480
                Width           =   1335
             End
@@ -812,7 +934,7 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Left            =   0
-               TabIndex        =   97
+               TabIndex        =   94
                Top             =   120
                Width           =   855
             End
@@ -831,7 +953,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   94
+         TabIndex        =   91
          Top             =   2250
          Width           =   1935
       End
@@ -848,7 +970,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   93
+         TabIndex        =   90
          Top             =   2760
          Width           =   1575
       End
@@ -865,7 +987,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   285
          Left            =   4680
-         TabIndex        =   92
+         TabIndex        =   89
          Top             =   240
          Width           =   735
       End
@@ -882,7 +1004,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   52
+         TabIndex        =   49
          Top             =   3240
          Width           =   2295
       End
@@ -900,7 +1022,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   210
          Left            =   3840
-         TabIndex        =   104
+         TabIndex        =   101
          Top             =   285
          Width           =   660
       End
@@ -911,7 +1033,7 @@ Begin VB.Form frmPreferences
       Left            =   11400
       ScaleHeight     =   3975
       ScaleWidth      =   5295
-      TabIndex        =   30
+      TabIndex        =   27
       Top             =   8400
       Visible         =   0   'False
       Width           =   5295
@@ -928,14 +1050,14 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   375
          Left            =   120
-         TabIndex        =   35
+         TabIndex        =   32
          Top             =   3120
          Width           =   3435
       End
       Begin VB.Frame fraFiletypes 
          Height          =   3015
          Left            =   120
-         TabIndex        =   31
+         TabIndex        =   28
          Top             =   0
          Width           =   5175
          Begin VB.CheckBox chkDcb 
@@ -951,14 +1073,14 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   375
             Left            =   600
-            TabIndex        =   32
+            TabIndex        =   29
             Top             =   2520
             Width           =   4095
          End
          Begin vbalTreeViewLib6.vbalTreeView trFiles 
             Height          =   1815
             Left            =   120
-            TabIndex        =   33
+            TabIndex        =   30
             Top             =   600
             Width           =   4935
             _ExtentX        =   8705
@@ -987,7 +1109,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   375
             Left            =   120
-            TabIndex        =   34
+            TabIndex        =   31
             Top             =   240
             Width           =   5295
          End
@@ -1006,7 +1128,7 @@ Begin VB.Form frmPreferences
          ForeColor       =   &H00000080&
          Height          =   255
          Left            =   120
-         TabIndex        =   36
+         TabIndex        =   33
          Top             =   3480
          Width           =   5175
       End
@@ -1018,22 +1140,22 @@ Begin VB.Form frmPreferences
       Left            =   11640
       ScaleHeight     =   3975
       ScaleWidth      =   5295
-      TabIndex        =   15
-      Top             =   960
+      TabIndex        =   12
+      Top             =   600
       Visible         =   0   'False
       Width           =   5295
       Begin VB.Frame fraToolData 
          Height          =   2295
          Index           =   0
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   17
          Top             =   1680
          Width           =   5175
          Begin VB.TextBox txtName 
             Height          =   285
             Index           =   0
             Left            =   720
-            TabIndex        =   26
+            TabIndex        =   23
             Top             =   360
             Width           =   4335
          End
@@ -1041,7 +1163,7 @@ Begin VB.Form frmPreferences
             Height          =   285
             Index           =   0
             Left            =   720
-            TabIndex        =   25
+            TabIndex        =   22
             Top             =   720
             Width           =   3735
          End
@@ -1050,7 +1172,7 @@ Begin VB.Form frmPreferences
             Height          =   375
             Index           =   0
             Left            =   3840
-            TabIndex        =   24
+            TabIndex        =   21
             ToolTipText     =   "Add new tool"
             Top             =   1800
             Width           =   1215
@@ -1059,7 +1181,7 @@ Begin VB.Form frmPreferences
             Caption         =   "C&lear"
             Height          =   375
             Left            =   120
-            TabIndex        =   23
+            TabIndex        =   20
             Top             =   1800
             Width           =   1215
          End
@@ -1067,7 +1189,7 @@ Begin VB.Form frmPreferences
             Caption         =   "..."
             Height          =   315
             Left            =   4560
-            TabIndex        =   22
+            TabIndex        =   19
             Top             =   720
             Width           =   495
          End
@@ -1075,7 +1197,7 @@ Begin VB.Form frmPreferences
             Height          =   285
             Left            =   720
             MultiLine       =   -1  'True
-            TabIndex        =   21
+            TabIndex        =   18
             ToolTipText     =   "Insert here any command-line parameter you want to pass to the app"
             Top             =   1440
             Width           =   3855
@@ -1084,7 +1206,7 @@ Begin VB.Form frmPreferences
             Caption         =   "Name:"
             Height          =   255
             Left            =   120
-            TabIndex        =   29
+            TabIndex        =   26
             Top             =   480
             Width           =   615
          End
@@ -1092,7 +1214,7 @@ Begin VB.Form frmPreferences
             Caption         =   "Path:"
             Height          =   255
             Left            =   120
-            TabIndex        =   28
+            TabIndex        =   25
             Top             =   840
             Width           =   495
          End
@@ -1100,7 +1222,7 @@ Begin VB.Form frmPreferences
             Caption         =   "Command-line parameters:"
             Height          =   255
             Left            =   120
-            TabIndex        =   27
+            TabIndex        =   24
             Top             =   1200
             Width           =   1935
          End
@@ -1108,7 +1230,7 @@ Begin VB.Form frmPreferences
       Begin VB.Frame fraTools 
          Height          =   1575
          Left            =   120
-         TabIndex        =   16
+         TabIndex        =   13
          Top             =   0
          Width           =   5175
          Begin VB.ListBox lstUserTools 
@@ -1116,7 +1238,7 @@ Begin VB.Form frmPreferences
             ItemData        =   "frmPreferences.frx":0000
             Left            =   120
             List            =   "frmPreferences.frx":0002
-            TabIndex        =   19
+            TabIndex        =   16
             Top             =   240
             Width           =   3615
          End
@@ -1124,7 +1246,7 @@ Begin VB.Form frmPreferences
             Caption         =   "R&emove"
             Height          =   375
             Left            =   3840
-            TabIndex        =   18
+            TabIndex        =   15
             ToolTipText     =   "Remove selected tool"
             Top             =   240
             Width           =   1215
@@ -1133,7 +1255,7 @@ Begin VB.Form frmPreferences
             Caption         =   "Remove all"
             Height          =   375
             Left            =   3840
-            TabIndex        =   17
+            TabIndex        =   14
             ToolTipText     =   "Remove all tools"
             Top             =   720
             Width           =   1215
@@ -1195,22 +1317,92 @@ Begin VB.Form frmPreferences
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   615
-         Left            =   120
-         TabIndex        =   53
-         Top             =   840
-         Width           =   4455
+         Height          =   2175
+         Left            =   0
+         TabIndex        =   50
+         Top             =   120
+         Width           =   5295
          Begin VB.PictureBox Picture1 
             Appearance      =   0  'Flat
             BorderStyle     =   0  'None
             ForeColor       =   &H80000008&
-            Height          =   255
+            Height          =   1815
             Left            =   120
-            ScaleHeight     =   255
-            ScaleWidth      =   3855
-            TabIndex        =   67
+            ScaleHeight     =   1815
+            ScaleWidth      =   5055
+            TabIndex        =   64
             Top             =   240
-            Width           =   3855
+            Width           =   5055
+            Begin VB.TextBox txtCompilerPath 
+               BeginProperty Font 
+                  Name            =   "Arial"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               Height          =   285
+               Index           =   1
+               Left            =   0
+               TabIndex        =   115
+               Top             =   1200
+               Width           =   4455
+            End
+            Begin VB.CommandButton cmdExplore 
+               Caption         =   "..."
+               BeginProperty Font 
+                  Name            =   "Arial"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               Height          =   255
+               Index           =   1
+               Left            =   4560
+               TabIndex        =   114
+               Top             =   1200
+               Width           =   495
+            End
+            Begin VB.TextBox txtCompilerPath 
+               BeginProperty Font 
+                  Name            =   "Arial"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               Height          =   285
+               Index           =   0
+               Left            =   0
+               TabIndex        =   112
+               Top             =   480
+               Width           =   4455
+            End
+            Begin VB.CommandButton cmdExplore 
+               Caption         =   "..."
+               BeginProperty Font 
+                  Name            =   "Arial"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               Height          =   255
+               Index           =   0
+               Left            =   4560
+               TabIndex        =   111
+               Top             =   480
+               Width           =   495
+            End
             Begin VB.OptionButton optFenixBennu 
                Caption         =   "Bennu"
                BeginProperty Font 
@@ -1224,9 +1416,9 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Index           =   1
-               Left            =   1800
-               TabIndex        =   69
-               Top             =   0
+               Left            =   0
+               TabIndex        =   66
+               Top             =   840
                Value           =   -1  'True
                Width           =   1335
             End
@@ -1243,10 +1435,33 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Index           =   0
-               Left            =   240
-               TabIndex        =   68
+               Left            =   0
+               TabIndex        =   65
                Top             =   0
                Width           =   975
+            End
+            Begin VB.Line Line1 
+               X1              =   2400
+               X2              =   4320
+               Y1              =   240
+               Y2              =   240
+            End
+            Begin VB.Label lblFenixPath 
+               Caption         =   "Compiler path:"
+               BeginProperty Font 
+                  Name            =   "Arial"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               Height          =   255
+               Left            =   2880
+               TabIndex        =   113
+               Top             =   0
+               Width           =   1215
             End
          End
       End
@@ -1263,50 +1478,17 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   210
          Left            =   120
-         TabIndex        =   8
-         Top             =   1560
-         Width           =   2895
-      End
-      Begin VB.CommandButton cmdExplore 
-         Caption         =   "..."
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   4680
-         TabIndex        =   7
-         Top             =   360
-         Width           =   495
-      End
-      Begin VB.TextBox txtFenixPath 
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         Left            =   120
          TabIndex        =   6
-         Top             =   360
-         Width           =   4455
+         Top             =   2520
+         Width           =   2895
       End
       Begin VB.Frame grbSaveBeforeCompiling 
          BorderStyle     =   0  'None
          Caption         =   "Frame2"
-         Height          =   2055
+         Height          =   1095
          Left            =   240
-         TabIndex        =   51
-         Top             =   1800
+         TabIndex        =   48
+         Top             =   2760
          Width           =   3255
          Begin VB.PictureBox Picture2 
             Appearance      =   0  'Flat
@@ -1317,7 +1499,7 @@ Begin VB.Form frmPreferences
             Left            =   0
             ScaleHeight     =   975
             ScaleWidth      =   2655
-            TabIndex        =   63
+            TabIndex        =   60
             Top             =   120
             Width           =   2655
             Begin VB.OptionButton opAllOpenedFiles 
@@ -1333,7 +1515,7 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Left            =   120
-               TabIndex        =   66
+               TabIndex        =   63
                Top             =   600
                Width           =   1575
             End
@@ -1350,7 +1532,7 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Left            =   120
-               TabIndex        =   65
+               TabIndex        =   62
                Top             =   360
                Width           =   1695
             End
@@ -1367,28 +1549,11 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Left            =   120
-               TabIndex        =   64
+               TabIndex        =   61
                Top             =   120
                Width           =   1575
             End
          End
-      End
-      Begin VB.Label lblFenixPath 
-         Caption         =   "Fenix/Bennu path:"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   9
-         Top             =   120
-         Width           =   1935
       End
    End
    Begin VB.PictureBox picAppearance 
@@ -1405,7 +1570,8 @@ Begin VB.Form frmPreferences
          ItemData        =   "frmPreferences.frx":0004
          Left            =   2520
          List            =   "frmPreferences.frx":0006
-         TabIndex        =   54
+         Style           =   2  'Dropdown List
+         TabIndex        =   51
          Top             =   720
          Width           =   1695
       End
@@ -1422,7 +1588,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   375
          Left            =   120
-         TabIndex        =   11
+         TabIndex        =   8
          ToolTipText     =   "Self explanatory don't you think?"
          Top             =   120
          Value           =   1  'Checked
@@ -1441,7 +1607,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   375
          Left            =   120
-         TabIndex        =   10
+         TabIndex        =   7
          ToolTipText     =   "Show a bitmap texture"
          Top             =   720
          Width           =   2655
@@ -1471,7 +1637,7 @@ Begin VB.Form frmPreferences
       Left            =   5640
       ScaleHeight     =   4095
       ScaleWidth      =   5535
-      TabIndex        =   12
+      TabIndex        =   9
       Top             =   960
       Width           =   5535
       Begin VB.PictureBox picPredefSets 
@@ -1482,7 +1648,7 @@ Begin VB.Form frmPreferences
          ScaleHeight     =   370.588
          ScaleMode       =   0  'User
          ScaleWidth      =   315
-         TabIndex        =   48
+         TabIndex        =   45
          TabStop         =   0   'False
          Top             =   120
          Width           =   310
@@ -1501,7 +1667,7 @@ Begin VB.Form frmPreferences
          ItemData        =   "frmPreferences.frx":0151
          Left            =   4680
          List            =   "frmPreferences.frx":0173
-         TabIndex        =   46
+         TabIndex        =   43
          Top             =   120
          Width           =   750
       End
@@ -1518,7 +1684,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   1575
          Left            =   120
-         TabIndex        =   38
+         TabIndex        =   35
          Top             =   480
          Width           =   5295
          Begin VB.CheckBox chkUnderline 
@@ -1535,7 +1701,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   195
             Left            =   4200
-            TabIndex        =   47
+            TabIndex        =   44
             Top             =   1200
             Visible         =   0   'False
             Width           =   975
@@ -1552,7 +1718,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   1110
             Left            =   120
-            TabIndex        =   45
+            TabIndex        =   42
             Top             =   240
             Width           =   2535
          End
@@ -1569,11 +1735,11 @@ Begin VB.Form frmPreferences
                Strikethrough   =   0   'False
             EndProperty
             Height          =   315
-            Left            =   4440
-            TabIndex        =   40
+            Left            =   4560
+            TabIndex        =   37
             Top             =   240
             Visible         =   0   'False
-            Width           =   735
+            Width           =   615
          End
          Begin VB.CheckBox chkBold 
             Alignment       =   1  'Right Justify
@@ -1589,7 +1755,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   315
             Left            =   4560
-            TabIndex        =   39
+            TabIndex        =   36
             Top             =   720
             Visible         =   0   'False
             Width           =   615
@@ -1597,7 +1763,7 @@ Begin VB.Form frmPreferences
          Begin ImgColorPicker.ColorPicker cp1 
             Height          =   255
             Left            =   2880
-            TabIndex        =   41
+            TabIndex        =   38
             Top             =   480
             Width           =   1095
             _ExtentX        =   1931
@@ -1607,7 +1773,7 @@ Begin VB.Form frmPreferences
          Begin ImgColorPicker.ColorPicker cp2 
             Height          =   255
             Left            =   2880
-            TabIndex        =   43
+            TabIndex        =   40
             Top             =   1080
             Visible         =   0   'False
             Width           =   1095
@@ -1629,7 +1795,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   210
             Left            =   2760
-            TabIndex        =   44
+            TabIndex        =   41
             Top             =   840
             Width           =   915
          End
@@ -1647,7 +1813,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   210
             Left            =   2760
-            TabIndex        =   42
+            TabIndex        =   39
             Top             =   240
             Width           =   885
          End
@@ -1667,7 +1833,7 @@ Begin VB.Form frmPreferences
          Left            =   2160
          List            =   "frmPreferences.frx":019D
          Style           =   2  'Dropdown List
-         TabIndex        =   37
+         TabIndex        =   34
          Top             =   120
          Width           =   2415
       End
@@ -1675,7 +1841,7 @@ Begin VB.Form frmPreferences
          Height          =   1815
          Left            =   120
          OleObjectBlob   =   "frmPreferences.frx":019F
-         TabIndex        =   14
+         TabIndex        =   11
          Top             =   2160
          Width           =   5295
       End
@@ -1692,7 +1858,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   1680
-         TabIndex        =   49
+         TabIndex        =   46
          Top             =   150
          Width           =   495
       End
@@ -1700,7 +1866,7 @@ Begin VB.Form frmPreferences
    Begin vbalDTab6.vbalDTabControl tabCategories 
       Height          =   480
       Left            =   7200
-      TabIndex        =   13
+      TabIndex        =   10
       Top             =   360
       Width           =   1455
       _ExtentX        =   2566
@@ -1838,7 +2004,7 @@ Private Sub PlaceControls()
     Me.Width = 7440     ' 5625
     Me.Height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
-    cmdOk.Move 3120, 5400        ' 3120
+    cmdOK.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
 End Sub
 
@@ -1876,7 +2042,11 @@ Private Sub SaveConf()
         
         .Key = "FenixPath"
         .Default = " "
-        .Value = txtFenixPath.text
+        .Value = txtCompilerPath(0).text
+        
+        .Key = "BennuPath"
+        .Default = " "
+        .Value = txtCompilerPath(1).text
         
         .Key = "Compiler"
         .Default = "1"
@@ -1902,6 +2072,16 @@ Private Sub SaveConf()
         .Default = "0"
         .Value = IIf(chkMSDOS.Value = 1, "1", "0")
         R_MsDos = IIf(chkMSDOS.Value = 1, True, False)
+        
+        .Key = "DebugDCB"
+        .Default = "0"
+        .Value = IIf(chkDebugDCB.Value = 1, "1", "0")
+        R_DebugDCB = IIf(chkDebugDCB.Value = 1, True, False)
+        
+        .Key = "Paths"
+        .Default = "0"
+        .Value = IIf(chkDirs.Value = 1, "1", "0")
+        R_Paths = IIf(chkDirs.Value = 1, True, False)
         
 '        .Key = "Filter"
 '        .Default = "0"
@@ -2026,7 +2206,7 @@ Private Sub SaveConf()
     'File type association
     If trFiles.Nodes(1).Checked Then
         If Not FileAssociated(".prg", "Fenix.Source") Then
-            Call RegisterType(".prg", "Fenix.Source", "Text", "Fenix source file", App.Path + "\Icons\fenix_prg.ico")
+            Call RegisterType(".prg", "Fenix.Source", "Text", "Fenix/Bennu source file", App.Path + "\Icons\fenix_prg.ico")
         End If
     Else
         If FileAssociated(".prg", "Fenix.Source") Then
@@ -2036,7 +2216,7 @@ Private Sub SaveConf()
 
     If trFiles.Nodes(2).Checked Then
         If Not FileAssociated(".map", "Fenix.ImageFile") Then
-            Call RegisterType(".map", "Fenix.ImageFile", "Image/Map", "Fenix image file", App.Path + "\Icons\fenix_map.ico")
+            Call RegisterType(".map", "Fenix.ImageFile", "Image/Map", "Fenix/Bennu image file", App.Path + "\Icons\fenix_map.ico")
         End If
     Else
         If FileAssociated(".map", "Fenix.ImageFile") Then
@@ -2055,22 +2235,22 @@ Private Sub SaveConf()
     End If
     
     If trFiles.Nodes(4).Checked Then
-        If Not FileAssociated(".bmk", "FlameBird.Source Bookmark") Then
-            Call RegisterType(".bmk", "FlameBird.Source Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\FBMX_bmk.ico")
+        If Not FileAssociated(".bmk", "FlameBird.Bookmark") Then
+            Call RegisterType(".bmk", "FlameBird.Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\FBMX_bmk.ico")
         End If
     Else
-        If FileAssociated(".bmk", "FlameBird.Source Bookmark") Then
-            Call DeleteType(".bmk", "FlameBird.Source Bookmark")
+        If FileAssociated(".bmk", "FlameBird.Bookmark") Then
+            Call DeleteType(".bmk", "FlameBird.Bookmark")
         End If
     End If
     
     If trFiles.Nodes(5).Checked Then
-        If Not FileAssociated(".cpt", "Fenix/Bennu image file Control Point list") Then
-            Call RegisterType(".cpt", "Fenix/Bennu image file Control Point list", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
+        If Not FileAssociated(".cpt", "FlameBird.ControlPoint") Then
+            Call RegisterType(".cpt", "FlameBird.ControlPoint", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
         End If
     Else
-        If FileAssociated(".cpt", "Fenix/Bennu image file Control Point list") Then
-            Call DeleteType(".cpt", "Fenix/Bennu image file Control Point list")
+        If FileAssociated(".cpt", "FlameBird.ControlPoint") Then
+            Call DeleteType(".cpt", "FlameBird.ControlPoint")
         End If
     End If
 
@@ -2085,12 +2265,14 @@ Private Sub SaveConf()
             With Ini
                 .Path = App.Path & CONF_FILE
                 .Section = "Run"
-                .Key = "FenixPath"
-                .Default = " "
                 
                 If optFenixBennu(0) Then
+                    .Key = "FenixPath"
+                    .Default = " "
                     Fxi = .Value & "\fxi.exe"
                 Else
+                    .Key = "BennuPath"
+                    .Default = " "
                     Fxi = .Value & "\bgdi.exe"
                 End If
             End With
@@ -2108,7 +2290,11 @@ Private Sub SaveConf()
     End If
 
     'Fenix Directory
-    fenixDir = txtFenixPath.text
+    If R_Compiler = 0 Then
+        fenixDir = txtCompilerPath(0).text
+    Else
+        fenixDir = txtCompilerPath(1).text
+    End If
 
     'Editor configuration
     SaveCSConf csPreview
@@ -2170,11 +2356,16 @@ Private Sub LoadConf()
 
         .Key = "FenixPath"
         .Default = " "
-        txtFenixPath.text = .Value
+        txtCompilerPath(0).text = .Value
+        
+        .Key = "BennuPath"
+        .Default = " "
+        txtCompilerPath(1).text = .Value
         
         .Key = "Compiler"
         .Default = "1"
-        .Value = IIf(optFenixBennu(0).Value = True, "0", "1")
+        optFenixBennu(.Value).Value = True
+        '.Value = IIf(optFenixBennu(0).Value = True, "0", "1")
 
         .Key = "Debug"
         .Default = "1"
@@ -2191,6 +2382,14 @@ Private Sub LoadConf()
         .Key = "MsDos"
         .Default = "0"
         chkMSDOS.Value = IIf(.Value = 1, "1", "0")
+        
+        .Key = "DebugDCB"
+        .Default = "0"
+        chkDebugDCB.Value = IIf(.Value = "1", 1, 0)
+        
+        .Key = "Paths"
+        .Default = "0"
+        chkDirs.Value = IIf(.Value = "1", 1, 0)
         
 '        .Key = "Filter"
 '        .Default = "0"
@@ -2342,6 +2541,22 @@ Private Sub chkDebug_Click()
     printParams
 End Sub
 
+Private Sub chkDebugDCB_Click()
+    printParams
+End Sub
+
+Private Sub chkDirs_Click()
+    If chkDirs.Value Then    ' go to compilation dirs tab
+        tabCategories.Tabs.item("PATHS").Selected = True
+        tv_preferences.Nodes(9).Selected = True
+        fraPATHS.Enabled = True
+    Else
+        ' disable paths
+        fraPATHS.Enabled = False
+    End If
+    printParams
+End Sub
+
 Private Sub chkItalic_Click()
     SetStyle
 End Sub
@@ -2427,23 +2642,41 @@ Private Sub cmdClearRecents_Click()
     'LoadRecents
 End Sub
 
-Private Sub cmdExplore_Click()
+Private Sub cmdExplore_Click(Index As Integer)
     Dim s As String
-
-   c.hwndOwner = Me.Hwnd
-   c.InitialDir = App.Path
-   c.FileSystemOnly = True
-   c.StatusText = True
-   c.UseNewUI = True
-   s = c.BrowseForFolder
-   If Len(s) > 0 Then
-        txtFenixPath.text = s
-   End If
+    
+    c.hwndOwner = Me.Hwnd
+    c.InitialDir = App.Path
+    c.FileSystemOnly = True
+    c.StatusText = True
+    c.UseNewUI = True
+    s = c.BrowseForFolder
+    If Len(s) > 0 Then
+        txtCompilerPath(Index).text = s
+    End If
 End Sub
 
 Private Sub cmdOk_Click()
     SaveConf
     Unload Me
+End Sub
+
+Private Sub cmdPATHSAdd_Click()
+    Dim strPath As String
+    strPath = c.BrowseForFolder
+    If strPath <> "" Then
+        lstPATHS.AddItem (strPath)
+    End If
+End Sub
+
+Private Sub cmdPATHSRemove_Click()
+    If lstPATHS.SelCount > 0 Then
+        lstPATHS.RemoveItem (lstPATHS.ListIndex)
+    End If
+End Sub
+
+Private Sub cmdPATHSRemoveAll_Click()
+    lstPATHS.Clear
 End Sub
 
 Private Sub cp1_ColorChanged()
@@ -2481,8 +2714,8 @@ Private Sub Form_Load()
     cmbColor.AddItem "Emerald"
 
     Set c = New cBrowseForFolder
-    PlaceControls
-    LoadConf
+'    PlaceControls
+'    LoadConf
 
     Set m_flat = New cFlatControl
     m_flat.Attach picPredefSets
@@ -2503,6 +2736,8 @@ Private Sub Form_Load()
         nTab.Panel = picCompilation
         Set nTab = .Tabs.Add("OPTIONS", , "Compilation Options")
         nTab.Panel = picCompilerOptions
+        Set nTab = .Tabs.Add("PATHS", , "CompilerPaths")
+        nTab.Panel = picCompilerPaths
         'Set nTab = .Tabs.Add("TOOLS", , "Tools")
         'nTab.Panel = picUserTools
         Set nTab = .Tabs.Add("FILEASSOCIATION", , "File Association")
@@ -2530,6 +2765,8 @@ Private Sub Form_Load()
         .Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Fenix.Source")
         .Nodes.Add(, , "map", "MAP - Fenix image files").Checked = FileAssociated(".map", "Fenix.ImageFile")
         .Nodes.Add(, , "fbp", "FBP - FlameBird Project files").Checked = FileAssociated(".fbp", "FlameBird.Project")
+        .Nodes.Add(, , "bmk", "BMK - Source bookmark files").Checked = FileAssociated(".bmk", "FlameBird.Bookmark")
+        .Nodes.Add(, , "cpt", "CPT - Map control-point list files").Checked = FileAssociated(".cpt", "FlameBird.ControlPoint")
     End With
     chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Fenix.Bin")))
 
@@ -2547,13 +2784,19 @@ Private Sub Form_Load()
             tv_preferences.Nodes(4).expanded = True
         .Nodes.Add , etvwNext, "Compiler", "Compiler"
             tv_preferences.Nodes(7).AddChildNode "CompilerOptions", "Options"
-            'tv_preferences.Nodes(7).AddChildNode "CompilerPaths", "Paths"
+            tv_preferences.Nodes(7).AddChildNode "CompilerPaths", "Paths"
             tv_preferences.Nodes(7).ShowPlusMinus = True
             tv_preferences.Nodes(7).expanded = True
         .Nodes.Add , etvwNext, "ProgramInspector", "Program Inspector"
         .Style = etvwTreelinesPlusMinusPictureText
         .LineStyle = etvwRootLines
     End With
+    
+    PlaceControls
+    LoadConf
+    
+    tv_preferences.Nodes(1).Selected = True
+    tabCategories.Tabs.item("GLOBAL").Selected = True
     
     Exit Sub
 errhandler:
@@ -2633,11 +2876,29 @@ Private Sub optFenixBennu_Click(Index As Integer)
         chkAutoDeclare.Enabled = False
         chkStub.Enabled = False
         chkMSDOS.Enabled = False
+        chkDebugDCB.Enabled = False
+        chkDirs.Enabled = False
+        fraPATHS.Enabled = False
+        txtCompilerPath(0).Enabled = True
+        cmdExplore(0).Enabled = True
+        txtCompilerPath(1).Enabled = False
+        cmdExplore(1).Enabled = False
     Else                    ' Bennu
         chkDebug.Enabled = True
         chkAutoDeclare.Enabled = True
         chkStub.Enabled = True
         chkMSDOS.Enabled = True
+        chkDebugDCB.Enabled = True
+        chkDirs.Enabled = True
+        If chkDirs.Value Then
+            fraPATHS.Enabled = True
+        Else
+            fraPATHS.Enabled = False
+        End If
+        txtCompilerPath(0).Enabled = False
+        cmdExplore(0).Enabled = False
+        txtCompilerPath(1).Enabled = True
+        cmdExplore(1).Enabled = True
     End If
     printParams
 End Sub
@@ -2694,6 +2955,8 @@ Private Sub tv_preferences_NodeClick(node As vbalTreeViewLib6.cTreeViewNode)
         tabCategories.Tabs.item("COMPILATION").Selected = True
         Case "CompilerOptions":
             tabCategories.Tabs.item("OPTIONS").Selected = True
+        Case "CompilerPaths":
+            tabCategories.Tabs.item("PATHS").Selected = True
     Case "ProgramInspector":
         tabCategories.Tabs.item("PI").Selected = True
     End Select
@@ -2741,6 +3004,13 @@ Private Sub printParams()
         End If
         If chkAutoDeclare.Value Then
             sText = sText & " -Ca"
+        End If
+        If chkDebugDCB.Value Then
+            sText = sText & " -g"
+        End If
+        If chkDirs.Value Then
+            sText = sText & " -i"
+            ' and all that comes after...
         End If
     End If
     txtParams.text = sText

@@ -295,7 +295,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
             End If
             
             'Execute Compiler
-            If R_Compiler = 1 Then
+            If R_Compiler = 0 Then
                 sCommand = Chr(34) & fxcDir & "\fxc.exe" & Chr(34) & " "
             Else
                 sCommand = Chr(34) & fxcDir & "\bgdc.exe" & Chr(34) & " "
@@ -314,7 +314,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
                 sCommand = sCommand + " -Ca"
             End If
             sCommand = sCommand & " " & Chr(34) & sFile & Chr(34) '& " > " & Chr(34) & stdoutFile & Chr(34)
-                   'MsgBox sCommand
+                   MsgBox sCommand
                    Clipboard.Clear
                    Clipboard.SetText sCommand
             stdout = objDOS.ExecuteCommand(sCommand)
@@ -462,7 +462,7 @@ Public Function Run(ByVal sFile As String) As Boolean
         dcbFile = FSO.GetParentFolderName(sFile) & "\" & FSO.GetBaseName(sFile) & ".dcb"
         mFileDir = FSO.GetParentFolderName(sFile)
         If FSO.FileExists(dcbFile) Then
-            If R_Compiler = 1 Then  ' Fenix
+            If R_Compiler = 0 Then  ' Fenix
                 sCommand = Chr(34) & fxiDir & "\fxi.exe " & Chr(34) & " " & Chr(34) & dcbFile & Chr(34)
             Else                    ' Bennu
                 sCommand = Chr(34) & fxiDir & "\bgdi.exe " & Chr(34) & " " & Chr(34) & dcbFile & Chr(34)

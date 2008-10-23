@@ -6,6 +6,9 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 21/10/2008   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Ligera mejora, en la selección del compilador a nivel de aplicación. Se puede pasar de Fenix a Bennu y viceversa con sólo un click y mantener directorios de trabajo propios para cada uno.
+
 · 17/10/2008   Izubiaurre                  \Modules\modFileManagment.bas                     
     Por enésima vez corrigo el bug de las pestañas vacías que se cargaban al abrir un archivo ya abierto.
 

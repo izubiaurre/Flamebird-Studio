@@ -153,7 +153,7 @@ Attribute VB_Exposed = False
 Private Sub Command1_Click()
 If trFiles.Nodes(1).Checked Then
     If Not FileAssociated(".prg", "Fenix.Source") Then
-        Call RegisterType(".prg", "Fenix.Source", "Text", "Fenix source file", App.Path + "\Icons\fenix_prg.ico")
+        Call RegisterType(".prg", "Fenix.Source", "Text", "Fenix/Bennu source file", App.Path + "\Icons\fenix_prg.ico")
     End If
 Else
     If FileAssociated(".prg", "Fenix.Source") Then
@@ -163,7 +163,7 @@ End If
 
 If trFiles.Nodes(2).Checked Then
     If Not FileAssociated(".map", "Fenix.ImageFile") Then
-        Call RegisterType(".map", "Fenix.ImageFile", "Image/Map", "Fenix image file", App.Path + "\Icons\fenix_map.ico")
+        Call RegisterType(".map", "Fenix.ImageFile", "Image/Map", "Fenix/Bennu image file", App.Path + "\Icons\fenix_map.ico")
     End If
 Else
     If FileAssociated(".map", "Fenix.ImageFile") Then
@@ -182,22 +182,22 @@ Else
 End If
 
 If trFiles.Nodes(4).Checked Then
-    If Not FileAssociated(".bmk", "FlameBird.Source Bookmark") Then
-        Call RegisterType(".bmk", "FlameBird.Source Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\FBMX_bmk.ico")
+    If Not FileAssociated(".bmk", "FlameBird.Bookmark") Then
+        Call RegisterType(".bmk", "FlameBird.Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\FBMX_bmk.ico")
     End If
 Else
-    If FileAssociated(".bmk", "FlameBird.Source Bookmark") Then
-        Call DeleteType(".bmk", "FlameBird.Source Bookmark")
+    If FileAssociated(".bmk", "FlameBird.Bookmark") Then
+        Call DeleteType(".bmk", "FlameBird.Bookmark")
     End If
 End If
 
 If trFiles.Nodes(5).Checked Then
-    If Not FileAssociated(".cpt", "Fenix/Bennu image file Control Point list") Then
-        Call RegisterType(".cpt", "Fenix/Bennu image file Control Point list", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
+    If Not FileAssociated(".cpt", "FlameBird.ControlPoint") Then
+        Call RegisterType(".cpt", "FlameBird.ControlPoint", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
     End If
 Else
-    If FileAssociated(".cpt", "Fenix/Bennu image file Control Point list") Then
-        Call DeleteType(".cpt", "Fenix/Bennu image file Control Point list")
+    If FileAssociated(".cpt", "FlameBird.ControlPoint") Then
+        Call DeleteType(".cpt", "FlameBird.ControlPoint")
     End If
 End If
 

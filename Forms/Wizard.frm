@@ -41,7 +41,7 @@ Begin VB.Form frmCodeWizard
       EndProperty
       Height          =   4425
       Index           =   0
-      Left            =   -10000
+      Left            =   0
       TabIndex        =   44
       Tag             =   "1000"
       Top             =   840
@@ -176,7 +176,7 @@ Begin VB.Form frmCodeWizard
       EndProperty
       Height          =   4425
       Index           =   1
-      Left            =   -10000
+      Left            =   10000
       TabIndex        =   46
       Tag             =   "2000"
       Top             =   840
@@ -219,6 +219,7 @@ Begin VB.Form frmCodeWizard
       Begin VB.ComboBox cmbScalingFilter 
          Height          =   315
          Left            =   1320
+         Style           =   2  'Dropdown List
          TabIndex        =   16
          ToolTipText     =   $"Wizard.frx":05DF
          Top             =   1200
@@ -227,6 +228,7 @@ Begin VB.Form frmCodeWizard
       Begin VB.ComboBox cmbShowingMode 
          Height          =   315
          Left            =   1320
+         Style           =   2  'Dropdown List
          TabIndex        =   15
          ToolTipText     =   $"Wizard.frx":0673
          Top             =   840
@@ -235,6 +237,7 @@ Begin VB.Form frmCodeWizard
       Begin VB.ComboBox cmbBPP 
          Height          =   315
          Left            =   1320
+         Style           =   2  'Dropdown List
          TabIndex        =   14
          ToolTipText     =   "The colour deep of the video mode. 8 bit per pixel (BPP) uses paletted colours to show graphics. 16 BPP uses not-paletted colours."
          Top             =   480
@@ -243,6 +246,7 @@ Begin VB.Form frmCodeWizard
       Begin VB.ComboBox cmbVideoMode 
          Height          =   315
          Left            =   1320
+         Style           =   2  'Dropdown List
          TabIndex        =   13
          ToolTipText     =   $"Wizard.frx":0717
          Top             =   120
@@ -317,7 +321,7 @@ Begin VB.Form frmCodeWizard
       Enabled         =   0   'False
       Height          =   4425
       Index           =   2
-      Left            =   -10000
+      Left            =   10000
       TabIndex        =   48
       Tag             =   "2002"
       Top             =   840
@@ -337,6 +341,7 @@ Begin VB.Form frmCodeWizard
          ItemData        =   "Wizard.frx":087C
          Left            =   240
          List            =   "Wizard.frx":087E
+         Style           =   2  'Dropdown List
          TabIndex        =   20
          Top             =   1920
          Width           =   2295
@@ -383,6 +388,7 @@ Begin VB.Form frmCodeWizard
             Enabled         =   0   'False
             Height          =   315
             Left            =   960
+            Style           =   2  'Dropdown List
             TabIndex        =   29
             ToolTipText     =   $"Wizard.frx":0880
             Top             =   1680
@@ -530,6 +536,7 @@ Begin VB.Form frmCodeWizard
       TabIndex        =   50
       Tag             =   "2004"
       Top             =   840
+      Visible         =   0   'False
       Width           =   7155
       Begin VB.CheckBox chkClickMenu 
          Appearance      =   0  'Flat
@@ -678,6 +685,7 @@ Begin VB.Form frmCodeWizard
          Begin VB.ComboBox cmbAligment 
             Height          =   315
             Left            =   1320
+            Style           =   2  'Dropdown List
             TabIndex        =   67
             Top             =   2160
             Visible         =   0   'False
@@ -745,7 +753,7 @@ Begin VB.Form frmCodeWizard
       EndProperty
       Height          =   4425
       Index           =   4
-      Left            =   0
+      Left            =   10000
       TabIndex        =   52
       Tag             =   "3000"
       Top             =   840

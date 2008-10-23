@@ -33,6 +33,8 @@ Public R_Debug As Boolean
 Public R_Stub As Boolean
 Public R_AutoDeclare As Boolean
 Public R_MsDos As Boolean
+Public R_DebugDCB As Boolean
+Public R_Paths As Boolean
 'Public R_filter As Boolean
 'Public R_DoubleBuf As Boolean
 Public R_SaveBeforeCompiling As Integer
@@ -591,7 +593,14 @@ Private Sub LoadConf()
                 
         .Section = "Run"
         
-        .Key = "FenixPath"
+        .Key = "Compiler"
+        
+        If .Value = 0 Then
+            .Key = "FenixPath"
+        Else
+            .Key = "BennuPath"
+        End If
+        
         .Default = " "
         fenixDir = .Value
         
@@ -614,6 +623,14 @@ Private Sub LoadConf()
         .Key = "MsDos"
         .Default = "0"
         R_MsDos = IIf(.Value = 1, True, False)
+        
+        .Key = "DebugDCB"
+        .Default = "1"
+        R_DebugDCB = IIf(.Value = "1", True, False)
+        
+        .Key = "Paths"
+        .Default = "1"
+        R_Paths = IIf(.Value = "1", True, False)
         
 '        .Key = "Filter"
 '        .Default = "0"

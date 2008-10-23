@@ -567,7 +567,7 @@ End Sub
 
 Private Sub cmdClearAllParam_Click()
     With grdList
-    .SelectedCol
+        '.SelectedCol
         .SelectedRow = 1
          Do While .SelectedRow < .Rows
             .RemoveRow .SelectedRow
@@ -617,7 +617,7 @@ End Sub
 
 Private Sub cmdLocalClearAll_Click()
     With grdLocal
-    .SelectedCol
+    '.SelectedCol
         .SelectedRow = 1
          Do While .SelectedRow < .Rows
             .RemoveRow .SelectedRow

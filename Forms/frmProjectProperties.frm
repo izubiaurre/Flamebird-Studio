@@ -3,17 +3,17 @@ Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbaldtab6.ocx"
 Begin VB.Form frmProjectProperties 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Project properties"
-   ClientHeight    =   5190
+   ClientHeight    =   5115
    ClientLeft      =   45
    ClientTop       =   375
-   ClientWidth     =   5670
+   ClientWidth     =   5640
    ControlBox      =   0   'False
    Icon            =   "frmProjectProperties.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5190
-   ScaleWidth      =   5670
+   ScaleHeight     =   5115
+   ScaleWidth      =   5640
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.PictureBox pic_compilation 

@@ -18,6 +18,7 @@ Begin VB.Form frmDoc
    Begin VB.ComboBox cmbBookmarkList 
       Height          =   315
       Left            =   3600
+      Style           =   2  'Dropdown List
       TabIndex        =   1
       Top             =   120
       Visible         =   0   'False

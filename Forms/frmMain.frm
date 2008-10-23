@@ -380,6 +380,8 @@ Private Sub MDITabs_TabClick(ByVal iButton As MouseButtonConstants, ByVal Hwnd A
             End Select
         End If
         Set fileMenu = Nothing
+    ElseIf iButton = vbMiddleButton Then ' close tab
+       mnuFileClose
     End If
 End Sub
 
