@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
 Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
 Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
 Begin VB.Form frmWebBrowser 
    Caption         =   "Web Broser"
    ClientHeight    =   5700
@@ -15,20 +15,14 @@ Begin VB.Form frmWebBrowser
    ScaleHeight     =   5700
    ScaleWidth      =   6615
    WindowState     =   2  'Maximized
-   Begin vbalTBar6.cReBar ReBar 
-      Left            =   3480
-      Top             =   0
-      _ExtentX        =   1720
-      _ExtentY        =   873
-   End
    Begin SHDocVwCtl.WebBrowser wb 
-      Height          =   3975
+      Height          =   4095
       Left            =   120
       TabIndex        =   1
       Top             =   600
-      Width           =   4815
-      ExtentX         =   8493
-      ExtentY         =   7011
+      Width           =   4935
+      ExtentX         =   8705
+      ExtentY         =   7223
       ViewMode        =   0
       Offline         =   0
       Silent          =   0
@@ -45,6 +39,12 @@ Begin VB.Form frmWebBrowser
       Transparent     =   0   'False
       ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
       Location        =   ""
+   End
+   Begin vbalTBar6.cReBar ReBar 
+      Left            =   3480
+      Top             =   0
+      _ExtentX        =   1720
+      _ExtentY        =   873
    End
    Begin vbalIml6.vbalImageList iml 
       Left            =   5160
@@ -142,14 +142,14 @@ Private Sub Form_Load()
         .AddButton "Go", 0, sKey:="GO"
     End With
     'Create the rebar
-    With rebar
+    With Rebar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd tbrWeb.Hwnd, , True, False
     End With
-    rebar.RebarSize
+    Rebar.RebarSize
     
     Set m_cFlat = New cFlatControl
     m_cFlat.Attach cmbURL
@@ -157,13 +157,13 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        wb.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips), Me.ScaleWidth, Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
-        rebar.RebarSize
+        wb.Move 0, ScaleY(Rebar.RebarHeight, vbPixels, vbTwips), Me.ScaleWidth, Me.ScaleHeight - ScaleY(Rebar.RebarHeight, vbPixels, vbTwips)
+        Rebar.RebarSize
     End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    rebar.RemoveAllRebarBands
+    Rebar.RemoveAllRebarBands
     Set m_cFlat = Nothing
 End Sub
 

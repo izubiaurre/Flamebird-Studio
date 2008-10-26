@@ -1466,15 +1466,15 @@ End Sub
 Public Sub mnuViewToolBarStandard()
     Dim Id As Long
     
-    Id = frmMain.cRebar.BandIndexForData("MainBar")
-    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
+    Id = frmMain.cReBar.BandIndexForData("MainBar")
+    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewToolBarEdit()
     Dim Id As Long
     
-    Id = frmMain.cRebar.BandIndexForData("EditBar")
-    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
+    Id = frmMain.cReBar.BandIndexForData("EditBar")
+    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewProjectBrowser()
@@ -1760,9 +1760,35 @@ Public Sub mnuHelpWikiToken()
             If sword <> "" Then
                 ' wiki help
                 NewWindowWeb "http://fenixworld.se32.com/fenixwiki/index.php?title=" & UCase(sword), "WIKI: " & UCase(sword), "http://fenixworld.se32.com/fenixwiki/index.php?title=Categor%C3%ADa:Referencia_del_lenguaje"
+            Else
+                mnuHelpWiki
             End If
         End If
     End If
+End Sub
+Public Sub mnuHelpBennuWiki()
+    If Not ActiveFileForm Is Nothing Then
+        If ActiveFileForm.Identify = FF_SOURCE Then
+            Set fDoc = ActiveForm
+            Dim sword As String
+            sword = fDoc.cs.CurrentWord
+            If sword <> "" Then
+                ' wiki help
+                NewWindowWeb "http://wiki.bennugd.org/index.php?title=" & UCase(sword), "WIKI: " & UCase(sword), "http://wiki.bennugd.org/index.php?title=Bennu_Wiki"
+            Else
+                NewWindowWeb "http://wiki.bennugd.org/index.php?title=Bennu_Wiki", "Bennu Wiki"
+            End If
+        End If
+    End If
+End Sub
+Public Sub mnuHelpFenixForum()
+    NewWindowWeb "http://www.divsite.net/forum/index.php", "Fenix Forum"
+End Sub
+Public Sub mnuHelpBennuForum()
+    NewWindowWeb "http://forum.bennugd.org/", "Bennu Forum"
+End Sub
+Public Sub mnuHelpProjectPage()
+    NewWindowWeb "https://sourceforge.net/projects/fbtwo/", "Flamebird Homepage"
 End Sub
 Public Sub mnuHelpAbout()
     frmAbout.Show 1
