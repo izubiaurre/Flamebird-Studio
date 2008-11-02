@@ -656,26 +656,26 @@ Private Sub CreateMenu()
         
         'MENU NAVIGATION
         iP = .IndexForKey("mnuNavigation")
-            .AddItem iP, "&Search...", "Ctrl+F", , "mnuEditSearch", , , , 13
-            .AddItem iP, "Search &next", "F3", , "mnuEditSearchNext", , , , 14
-            .AddItem iP, "Search &prev", "Shift+F3", , "mnuEditSearchPrev"
-            .AddItem iP, "Search in &files...", , , "mnuEditSearchInFiles", , , , 80
+            .AddItem iP, "&Search...", "Ctrl+F", , "mnuNavigationSearch", , , , 13
+            .AddItem iP, "Search &next", "F3", , "mnuNavigationSearchNext", , , , 14
+            .AddItem iP, "Search &prev", "Shift+F3", , "mnuNavigationSearchPrev"
+            .AddItem iP, "Search in &files...", , , "mnuNavigationSearchInFiles", , , , 80
             .AddItem iP, "-"
-            .AddItem iP, "Search next selected", "Ctrl+F3", , "mnuEditSearchNextWord", , , , 89
-            .AddItem iP, "Search prev selected", "Ctrl+Shift+F3", , "mnuEditSearchPrevWord", , , , 90
+            .AddItem iP, "Search next selected", "Ctrl+F3", , "mnuNavigationSearchNextWord", , , , 89
+            .AddItem iP, "Search prev selected", "Ctrl+Shift+F3", , "mnuNavigationSearchPrevWord", , , , 90
             .AddItem iP, "-"
-            .AddItem iP, "&Replace...", "Ctrl+H", , "mnuEditReplace", Image:=62
-            .AddItem iP, "Repla&ce in files...", , , "mnuEditReplaceInFiles"
+            .AddItem iP, "&Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
+            .AddItem iP, "Repla&ce in files...", , , "mnuNavigationReplaceInFiles"
             .AddItem iP, "-"
-            .AddItem iP, "Go to line...", "Ctrl+G", , "mnuEditGotoLine", , , , 77
-            .AddItem iP, "Go to identation", , , "mnuEditGotoIdent", , , , 81
-            .AddItem iP, "Go to matching &brace", "Ctrl+Shift+B", , "mnuEditGotoMatchBrace", , , , 85
+            .AddItem iP, "Go to line...", "Ctrl+G", , "mnuNavigationGotoLine", , , , 77
+            .AddItem iP, "Go to identation", , , "mnuNavigationGotoIdent", , , , 81
+            .AddItem iP, "Go to matching &brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
             .AddItem iP, "-"
             .AddItem iP, "Go to definition", , , "mnuNavigationGotoDefinition"
             .AddItem iP, "Last position", , , "mnuNavigationLastPosition"
             .AddItem iP, "-"
-            .AddItem iP, "Prev function/process", "Alt+Up", , "mnuEditPrevFunc", Image:=70
-            .AddItem iP, "Next function/process", "Alt+Down", , "mnuEditNextFunc", Image:=71
+            .AddItem iP, "Prev function/process", "Alt+Up", , "mnuNavigationPrevFunc", Image:=70
+            .AddItem iP, "Next function/process", "Alt+Down", , "mnuNavigationNextFunc", Image:=71
             .AddItem iP, "-"
             iP2 = .AddItem(iP, "&Bookmarks") 'Bookmarks
                 .AddItem iP2, "Bookmark &toggle", "Ctrl+F2", , "mnuBookmarkToggle", Image:=24
@@ -1011,27 +1011,6 @@ Private Sub cMenu_Click(ByVal Index As Long)
     Case "mnuEditColumnMode":               Call mnuEditColumnMode
     Case "mnuEditCodeCompletionHelp":       Call mnuEditCodeCompletionHelp
     
-    Case "mnuEditSearch":                   Call mnuEditSearch
-    Case "mnuEditSearchNext":               Call mnuEditSearchNext
-    Case "mnuEditSearchPrev":               Call mnuEditSearchPrev
-    Case "mnuEditSearchNextWord":           Call mnuEditSearchNextWord
-    Case "mnuEditSearchPrevWord":           Call mnuEditSearchPrevWord
-    Case "mnuEditReplace":                  Call mnuEditReplace
-    Case "mnuEditGotoLine":                 Call mnuEditGoToLine
-    Case "mnuEditGotoIdent":                Call mnuEditGoToIdent
-    Case "mnuEditNextFunc":                 Call mnuEditNextFunc
-    Case "mnuEditPrevFunc":                 Call mnuEditPrevFunc
-    Case "mnuNavigationLastPosition":       Call mnuNavigationLastPosition
-    Case "mnuNavigationGotoDefinition":     Call mnuNavigationGotoDefiniton
-    Case "mnuEditGotoMatchBrace":           Call mnuEditGotoMatchBrace
-    
-    Case "mnuBookmarkToggle":               Call mnuBookmarkToggle
-    Case "mnuBookmarkNext":                 Call mnuBookmarkNext
-    Case "mnuBookmarkPrev":                 Call mnuBookmarkPrev
-    Case "mnuBookmarkDel":                  Call mnuBookmarkDel
-    Case "mnuBookmarkToDo":                 Call mnuBookmarkToDo
-    Case "mnuBookmarkEdit":                 Call mnuBookmarkEdit
-    
     Case "mnuConvertBinHex":                Call mnuConvertBinHex
     Case "mnuConvertBinDec":                Call mnuConvertBinDec
     Case "mnuConvertHexBin":                Call mnuConvertHexBin
@@ -1042,7 +1021,28 @@ Private Sub cMenu_Click(ByVal Index As Long)
     Case "mnuEditDateTime":                 Call mnuEditDateTime
     Case "mnuEditInsertASCII":              Call mnuEditInsertASCII
     Case "mnuEditPreferences":              Call mnuEditPreferences
+            
+    Case "mnuNavigationSearch":             Call mnuNavigationSearch
+    Case "mnuNavigationSearchNext":         Call mnuNavigationSearchNext
+    Case "mnuNavigationSearchPrev":         Call mnuNavigationSearchPrev
+    Case "mnuNavigationSearchNextWord":     Call mnuNavigationSearchNextWord
+    Case "mnuNavigationSearchPrevWord":     Call mnuNavigationSearchPrevWord
+    Case "mnuNavigationReplace":            Call mnuNavigationReplace
+    Case "mnuNavigationGotoLine":           Call mnuNavigationGoToLine
+    Case "mnuNavigationGotoIdent":          Call mnuNavigationGoToIdent
+    Case "mnuNavigationNextFunc":           Call mnuNavigationNextFunc
+    Case "mnuNavigationPrevFunc":           Call mnuNavigationPrevFunc
+    Case "mnuNavigationLastPosition":       Call mnuNavigationLastPosition
+    Case "mnuNavigationGotoDefinition":     Call mnuNavigationGotoDefiniton
+    Case "mnuNavigationGotoMatchBrace":     Call mnuNavigationGotoMatchBrace
     
+    Case "mnuBookmarkToggle":               Call mnuBookmarkToggle
+    Case "mnuBookmarkNext":                 Call mnuBookmarkNext
+    Case "mnuBookmarkPrev":                 Call mnuBookmarkPrev
+    Case "mnuBookmarkDel":                  Call mnuBookmarkDel
+    Case "mnuBookmarkToDo":                 Call mnuBookmarkToDo
+    Case "mnuBookmarkEdit":                 Call mnuBookmarkEdit
+
     Case "mnuExecuteCompileFile":           Call mnuExecuteCompileFile
     Case "mnuExecuteRunFile":               Call mnuExecuteRunFile
     Case "mnuExecuteCompileAndRunFile":     Call mnuExecuteCompileAndRunFile
@@ -1135,9 +1135,9 @@ Dim sActive As String
         Case "Line down"
             mnuEditDownLine
         Case "Prev function"
-            mnuEditPrevFunc
+            mnuNavigationPrevFunc
         Case "Next function"
-            mnuEditNextFunc
+            mnuNavigationNextFunc
         Case "Insert ASCII"
             mnuEditInsertASCII
         Case "Select line"

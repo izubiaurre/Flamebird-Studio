@@ -42,6 +42,7 @@ Begin VB.Form frmFnt
    End
    Begin VB.PictureBox picScrollBox 
       BackColor       =   &H80000010&
+      FillStyle       =   2  'Horizontal Line
       Height          =   2895
       Left            =   0
       ScaleHeight     =   189
@@ -114,10 +115,11 @@ Attribute m_FpgsMenu.VB_VarHelpID = -1
 Private m_FilePath As String
 Private m_addToProject As Boolean
 
-Private m_sShowingString As String
-
 Public Current_Color As Long
 Public current_Char As Long
+
+'Public curChars() As Long
+Public textShow As String
 'Public zoom As Long
 'Public Alpha As Boolean
 
@@ -197,7 +199,7 @@ End Sub
 
 Private Sub Form_Load()
 
-    m_sShowingString = "0123AaBbCc!?&ñç"
+    textShow = "0123AaBbCc!?&" 'ñç"
     current_Char = 65
     
     'Configure toolbar
@@ -220,14 +222,14 @@ Private Sub Form_Load()
         '.AddButton "...", 4, , , "...", CTBDropDownArrow + CTBAutoSize, "AddToFpg"
     End With
     'Create the rebar
-    With Rebar
+    With rebar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd Me.tbrFnt.Hwnd, , True, False
     End With
-    Rebar.RebarSize
+    rebar.RebarSize
     
     m_SizeIndex = 1
     m_ShowTransparent = False
@@ -255,54 +257,16 @@ End Sub
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
         picScrollBox.Move 0, _
-                        ScaleY(Rebar.RebarHeight, vbPixels, vbTwips)
+                        ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
         picScrollBox.Width = Me.ScaleWidth
         picScrollBox.Height = Me.ScaleHeight - picScrollBox.Top
-        Rebar.RebarSize
+        rebar.RebarSize
         drawEntireImage m_ShowTransparent
     End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    Rebar.RemoveAllRebarBands 'Just for safety
-End Sub
-
-Private Sub m_FpgsMenu_Click(ByVal Index As Long)
-'    Dim values() As String
-'    Dim bError As Boolean
-'    Dim frm As Form
-'    Dim fpgForm As frmFpg
-'    Dim ff As IFileForm
-'    Dim fpg As cFpg
-'    Dim mode As Integer
-'
-'    values() = Split(m_FpgsMenu.ItemKey(index), "|")
-'
-'    'Get the fpg depending on if it is an opened file or a project file
-'    If values(0) = "OPENED" Then
-'        mode = 0
-'        For Each frm In Forms
-'            If frm.hWnd = CLng(values(1)) Then
-'                Set ff = frm
-'                Set fpgForm = frm
-'                Set fpg = fpgForm.fpg
-'            End If
-'        Next
-'    ElseIf values(0) = "PROJECT" Then
-'        mode = 1
-'        Set fpg = New cFpg
-'        If fpg.Load(makePathForProject(values(1))) <> -1 Then bError = True
-'    End If
-'
-'    If bError = False Then
-'        If addMapToFpg(fpg, getMapCopy(map)) = True Then
-'            If mode = 0 Then 'If it is an OPENED FPG, set IsDirty to true
-'                fpgForm.IsDirty = True
-'            ElseIf mode = 1 Then 'If not, save the changes
-'                fpg.Save makePathForProject(values(1))
-'            End If
-'        End If
-'    End If
+    rebar.RemoveAllRebarBands 'Just for safety
 End Sub
 
 Private Sub picFnt_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -372,9 +336,9 @@ End Sub
 
 Private Sub m_cScroll_Scroll(eBar As EFSScrollBarConstants)
    If (eBar = efsHorizontal) Then
-      picFnt.Left = -Screen.TwipsPerPixelX * m_cScroll.Value(eBar)
+      picFnt.Left = m_cScroll.Value(eBar) ' *-Screen.TwipsPerPixelX
    Else
-      picFnt.Top = -Screen.TwipsPerPixelY * m_cScroll.Value(eBar)
+      picFnt.Top = m_cScroll.Value(eBar) ' *  -Screen.TwipsPerPixelY
    End If
 End Sub
 
@@ -602,17 +566,35 @@ End Sub
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
 
 Public Sub drawEntireImage(draw_transparent As Boolean)
-    If chars(current_Char).Header.Width = 0 Or chars(current_Char).Header.Height = 0 Then
-        ' don't paint
-        Exit Sub
-    End If
+'    If chars(current_Char).Header.Width = 0 Or chars(current_Char).Header.Height = 0 Then
+'        ' don't paint
+'        Exit Sub
+'    End If
     
     Dim bChar() As Byte
     ReDim bChar(chars(current_Char).Header.Width * chars(current_Char).Header.Height)
     bChar = chars(current_Char).Data
     'ReDim Preserve bChar(chars(current_Char).Header.w_Width * chars(current_Char).Header.Height + chars(current_Char + 1).Header.w_Width * chars(current_Char + 1).Header.Height)
-
     
+    Dim fullHeight, fullWidth As Long
+    Dim i As Integer
+    Dim curH, curW As Long
+    textShow = "0123AaBbCc!?&" 'ñç"
+    Debug.Print textShow
+    
+    fullHeight = chars(Asc(Mid(textShow, 1, 1))).Header.Height
+    fullWidth = chars(Asc(Mid(textShow, 1, 1))).Header.w_Width
+    
+    For i = 2 To Len(textShow)
+        'Debug.Print i & ": " & fullWidth
+        If fullHeight < chars(Asc(Mid(textShow, i, 1))).Header.Height Then
+            fullHeight = chars(Asc(Mid(textShow, i, 1))).Header.Height
+        End If
+        fullWidth = fullWidth + chars(Asc(Mid(textShow, i, 1))).Header.w_Width
+    Next i
+
+    fullWidth = fullWidth
+        
     Dim PB As Long
     Dim FR As RECT
     Dim TP As POINTAPI
@@ -621,16 +603,20 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
     Dim c As Long
     Dim cx As Long, cy As Long
     
-    picFnt.Width = chars(current_Char).Header.Width * m_SizeIndex '* Screen.TwipsPerPixelX
-    picFnt.Height = chars(current_Char).Header.Height * m_SizeIndex '* Screen.TwipsPerPixelY
+    'picFnt.Width = chars(current_Char).Header.Width * m_SizeIndex '* Screen.TwipsPerPixelX
+    'picFnt.Height = chars(current_Char).Header.Height * m_SizeIndex '* Screen.TwipsPerPixelY
+    picFnt.Width = fullWidth * m_SizeIndex
+    picFnt.Height = fullHeight * m_SizeIndex
   
     Me.picFnt.Cls
 
     BI8.bmiHeader.biBitCount = 8
     BI8.bmiHeader.biClrImportant = 256
     BI8.bmiHeader.biClrUsed = 256
-    BI8.bmiHeader.biWidth = chars(current_Char).Header.Width ' + chars(current_Char + 1).Header.Width
+    BI8.bmiHeader.biWidth = chars(current_Char).Header.w_Width ' + chars(current_Char + 1).Header.Width
     BI8.bmiHeader.biHeight = -chars(current_Char).Header.Height
+'    BI8.bmiHeader.biWidth = fullWidth
+'    BI8.bmiHeader.biHeight = -fullHeight
     BI8.bmiHeader.biPlanes = 1
     BI8.bmiHeader.biSize = Len(BI8.bmiHeader)
 
@@ -640,13 +626,20 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
         BI8.bmiColors(c).rgbBlue = palette_entries(c).Blue
     Next
     
+    
+    
     'MsgBox "drawEntireMap " & draw_rect.Left & " " & draw_rect.Top & " " & chars(current_Char).Header.Width * CLng(m_SizeIndex) & " " & chars(current_Char).Header.Height * CLng(m_SizeIndex) & " " & chars(current_Char).Header.Width & " " & chars(current_Char).Header.Height
     If m_ShowTransparent Then
+        picFnt.BackColor = RGB(255, 255, 255)
+        
+        'drawTransBack picFnt.hdc, BI8, picFnt.Width, picFnt.Height
+        
+        
 '    If draw_transparent = True Then
         'If pic_alpha_static = 1 Then
         '   SetBrushOrgEx Me.hDC, 0, 0, TP
         'Else
-            SetBrushOrgEx Me.hdc, draw_rect.Left, draw_rect.Top, TP
+            SetBrushOrgEx Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, TP
         'End If
         SetRect FR, IIf(draw_rect.Left < 0, 0, draw_rect.Left), _
                     IIf(draw_rect.Top < 0, 0, draw_rect.Top), _
@@ -654,31 +647,66 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
                     IIf((draw_rect.Top + draw_rect.Bottom) > (Me.ScaleHeight - 17), (Me.ScaleHeight - 17), (draw_rect.Top + draw_rect.Bottom))
 '        PB = CreatePatternBrush(hBM_alpha)
         'PB = CreatePatternBrush(HatchStyle50Percent)
-        PB = GdipCreateHatchBrush(HatchStyleLargeGrid, 0, 25500, PB)
-        FillRect Me.hdc, FR, PB
+        PB = GdipCreateHatchBrush(HatchStyleLargeGrid, 0, RGB(255, 255, 255), PB)
+        FillRect Me.picFnt.hdc, FR, PB
         DeleteObject PB
        'SetBrushOrgEx cHdc, TP.X, TP.Y, TP
-        SetBrushOrgEx Me.hdc, TP.X, TP.Y, TP
+        SetBrushOrgEx Me.picFnt.hdc, 0, 0, TP
         BI8.bmiColors(0).rgbRed = 0
         BI8.bmiColors(0).rgbGreen = 0
         BI8.bmiColors(0).rgbBlue = 0
-        StretchDIBits Me.hdc, draw_rect.Left, draw_rect.Top, chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, 0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char).Data(0), BI8, 0, vbSrcPaint
+        StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
+    chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, _
+    0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char).Data(0), _
+    BI8, 0, vbSrcPaint
+
         BI8.bmiColors(0).rgbRed = 255
         BI8.bmiColors(0).rgbGreen = 255
         BI8.bmiColors(0).rgbBlue = 255
-        StretchDIBits Me.hdc, draw_rect.Left, draw_rect.Top, chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, 0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char).Data(0), BI8, 0, vbSrcAnd
+
+        StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
+    chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, _
+    0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char).Data(0), _
+    BI8, 0, vbSrcAnd
+    
+'        Dim j As Long
+'
+'        cx = picFnt.Width \ 16
+'        cy = picFnt.Height \ 16
+'
+'        For i = 0 To cx
+'            For j = 0 To cy
+'                picFnt.PaintPicture LoadPicture(App.Path & "\Resources\backmaps.bmp"), i * 16, j * 16, 16, 16, 0, 0, 16, 16, vbSrcCopy
+'            Next
+'        Next
+    Else
+        picFnt.BackColor = RGB(0, 0, 0)
     End If
-    'Else
     
-        StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, 0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char + 2).Data(0), BI8, 0, vbSrcCopy
-        'StretchDIBits Me.hDC, draw_rect.Left, draw_rect.Top, chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, 0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char).data(0), BI8, 0, vbSrcCopy
-    'End If
+    curH = 0: curW = 0
     
-'    Me.picFnt.Refresh
+    Dim curChr As Integer
+    
+    For i = 1 To Len(textShow)
+        curChr = Asc(Mid(textShow, i, 1))
+        curH = chars(curChr).Header.Height
+                
+        BI8.bmiHeader.biWidth = chars(curChr).Header.w_Width
+        BI8.bmiHeader.biHeight = -chars(curChr).Header.Height
+        BI8.bmiHeader.biSize = Len(BI8.bmiHeader)
+        
+        If chars(curChr).Header.Height <> 0 And chars(curChr).Header.w_Width <> 0 Then
+                StretchDIBits Me.picFnt.hdc, draw_rect.Left + curW * m_SizeIndex, draw_rect.Top + fullHeight - curH, _
+            chars(curChr).Header.w_Width * m_SizeIndex, chars(curChr).Header.Height * m_SizeIndex, _
+            0, 0, chars(curChr).Header.w_Width, chars(curChr).Header.Height, chars(curChr).Data(0), _
+            BI8, 0, vbSrcCopy
+                curW = curW + chars(curChr).Header.w_Width
+        End If
+    Next i
+    
     
     picFnt.Top = (picScrollBox.ScaleHeight / 2) - (picFnt.ScaleHeight / 2)
     picFnt.Left = (picScrollBox.ScaleWidth / 2) - (picFnt.ScaleWidth / 2)
-    Debug.Print m_SizeIndex & "; (" & (picScrollBox.ScaleHeight / 2) & "|" & (picScrollBox.ScaleWidth / 2) & "); (" & (picFnt.ScaleHeight / 2) & "|" & (picFnt.ScaleWidth / 2) & "); " & picFnt.Top & "|" & picFnt.Left & ")"
     
 End Sub
 
@@ -770,6 +798,44 @@ Public Function GetMedHeigth() As Long
 
     GetMedHeigth = lResult
 End Function
+
+Private Sub drawTransBack(hdc As Long, bI As BITMAPINFO8Bits, lWidth As Long, lHeight As Long)
+    Dim bmp As New cBitmap
+    Dim graphics As New cGraphics
+    Dim i As Long, j As Long
+    Dim resFile As String
+    Dim cx As Integer, cy As Integer
+    
+On Error GoTo errhandler
+    
+    'If Not FSO.FileExists(App.Path & "\Resources\backmaps.bmp") Then Exit Sub
+    bmp.LoadFromFile App.Path & "\Resources\backmaps.bmp"
+
+    'graphics.CreateFromHdc hdc
+    'graphics.Clear
+    
+    bI.bmiHeader.biHeight = bmp.Height
+    bI.bmiHeader.biWidth = bmp.Width
+    bI.bmiHeader.biSize = Len(bI.bmiHeader)
+    
+    Debug.Print "a"
+    
+    StretchDIBits hdc, 0, 0, bmp.Width, bmp.Height, _
+                0, 0, bmp.Width, bmp.Height, 160, bI, 0, vbSrcCopy
+    
+'    cx = lWidth \ bmp.Width + 1
+'    cy = lHeight \ bmp.Height + 1
+'    For i = 0 To cx
+'        For j = 0 To cy
+'            StretchDIBits hdc, 0, 0, i * bmp.Width, j * bmp.Height, _
+'                0, 0, bmp.Width, bmp.Handle, bmp.Height * bmp.Width, bI, 0, scrcopy
+'            'graphics.DrawImageRectI bmp.Handle, i * bmp.Width, j * bmp.Height, bmp.Width, bmp.Height
+'        Next
+'    Next
+    Exit Sub
+errhandler:
+    Exit Sub
+End Sub
 
 '-------------------------------------------------------------------------------------
 'FUNCTION: Load()

@@ -238,7 +238,7 @@ Private Sub Form_Load()
     With tbrPB
         .ImageSource = CTBExternalImageList
         .DrawStyle = T_Style
-        .CreateToolbar 16, False, False, True
+        .CreateToolbar 16, False, False, False
         .SetImageList iml.hIml
         
         .AddButton "Add file to project", iml.ItemIndex("ADD") - 1, , , , , "Add"

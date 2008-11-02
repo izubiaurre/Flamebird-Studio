@@ -447,7 +447,7 @@ Public Sub mnuEditDeleteWord()
     End If
 End Sub
 
-Public Sub mnuEditSearch()
+Public Sub mnuNavigationSearch()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -456,7 +456,7 @@ Public Sub mnuEditSearch()
     End If
 End Sub
 
-Public Sub mnuEditSearchNext()
+Public Sub mnuNavigationSearchNext()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -465,7 +465,7 @@ Public Sub mnuEditSearchNext()
     End If
 End Sub
 
-Public Sub mnuEditSearchPrev()
+Public Sub mnuNavigationSearchPrev()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -474,7 +474,7 @@ Public Sub mnuEditSearchPrev()
     End If
 End Sub
 
-Public Sub mnuEditSearchNextWord()
+Public Sub mnuNavigationSearchNextWord()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -483,7 +483,7 @@ Public Sub mnuEditSearchNextWord()
     End If
 End Sub
 
-Public Sub mnuEditSearchPrevWord()
+Public Sub mnuNavigationSearchPrevWord()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -492,7 +492,7 @@ Public Sub mnuEditSearchPrevWord()
     End If
 End Sub
     
-Public Sub mnuEditReplace()
+Public Sub mnuNavigationReplace()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -501,7 +501,7 @@ Public Sub mnuEditReplace()
     End If
 End Sub
 
-Public Sub mnuEditGoToLine()
+Public Sub mnuNavigationGoToLine()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -510,7 +510,7 @@ Public Sub mnuEditGoToLine()
     End If
 End Sub
 
-Public Sub mnuEditGotoMatchBrace()
+Public Sub mnuNavigationGotoMatchBrace()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -519,7 +519,7 @@ Public Sub mnuEditGotoMatchBrace()
     End If
 End Sub
 
-Public Sub mnuEditGoToIdent()
+Public Sub mnuNavigationGoToIdent()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -528,7 +528,7 @@ Public Sub mnuEditGoToIdent()
     End If
 End Sub
 
-Public Sub mnuEditNextFunc()
+Public Sub mnuNavigationNextFunc()
     Dim sLine As String
     Dim i As Long, j As Long, g As Long
     If Not ActiveFileForm Is Nothing Then
@@ -551,7 +551,7 @@ Public Sub mnuEditNextFunc()
     End If
 End Sub
 
-Public Sub mnuEditPrevFunc()
+Public Sub mnuNavigationPrevFunc()
     Dim sLine As String
     Dim i As Long, j As Long, g As Long
     If Not ActiveFileForm Is Nothing Then
@@ -1466,15 +1466,15 @@ End Sub
 Public Sub mnuViewToolBarStandard()
     Dim Id As Long
     
-    Id = frmMain.cReBar.BandIndexForData("MainBar")
-    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
+    Id = frmMain.cRebar.BandIndexForData("MainBar")
+    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewToolBarEdit()
     Dim Id As Long
     
-    Id = frmMain.cReBar.BandIndexForData("EditBar")
-    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
+    Id = frmMain.cRebar.BandIndexForData("EditBar")
+    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewProjectBrowser()

@@ -6,6 +6,18 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 31/10/2008   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Ya muestra la transparencia de nuevo.
+
+· 31/10/2008   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Mejorado el visor de fuentes. Ahora, se muestran diferentes carácteres en la ventana, pero los cambios han influído en algunas mejoras que hice: la transparencia ha quedado deshabilitada tal como lo tenía. Falta mejorar algunas cosas...
+
+· 29/10/2008   Izubiaurre                  \Forms\frmProjectBrowser.frm                      
+    Corregido un error que hacía desaparecer el toolbar del tabDock cuando se encogía.
+
+· 28/10/2008   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Añadido el menú contextual. Muestra acciones según el estado del código (ninguna selección, seleccionado -palabra, línea, líneas...-), mostrando un único menú según estas circunstancias.
+
 · 21/10/2008   Izubiaurre                  \Forms\frmPreferences.frm                         
     Ligera mejora, en la selección del compilador a nivel de aplicación. Se puede pasar de Fenix a Bennu y viceversa con sólo un click y mantener directorios de trabajo propios para cada uno.
 

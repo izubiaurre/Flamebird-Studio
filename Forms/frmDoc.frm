@@ -102,6 +102,9 @@ Public mustRefresh As Boolean
 Dim showingList As CodeSenseCtl.ICodeList 'determina si se esta mostrando la lista de autocompletado
 Dim showingToolTip As CodeSenseCtl.ICodeTip
 
+Private WithEvents m_ContextMenu As cMenus
+Attribute m_ContextMenu.VB_VarHelpID = -1
+
 ' struct to save and use the bookmark named list
 Private Type bookmarkL
     line_number As Long
@@ -557,8 +560,6 @@ Private Function getCurrentFunction() As String
     
 End Function
 
-
-
 Private Sub cs_DeleteLine(ByVal Control As CodeSenseCtl.ICodeSense, ByVal lLine As Long, ByVal lItemData As Long)
     RefreshStatusBar
     MsgBox "Delete line in CS"
@@ -719,10 +720,119 @@ Private Function Cs_KeyUp(ByVal Control As CodeSenseCtl.ICodeSense, ByVal KeyCod
 End Function
 
 Private Function Cs_MouseDown(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Button As Long, ByVal Shift As Long, ByVal X As Long, ByVal Y As Long) As Boolean
-    On Error Resume Next
+    Dim lParentIndex, iP2 As Long
+    Dim s, sl, sw, n, c As Boolean
+    ' s for selected
+    '   sl for single line selected
+    '   sw for single word selected
+    ' n for nothing selected
+    ' c for converteable selections
+
+On Error Resume Next
+
+    s = False
+    n = False
+    sl = False
+    sw = False
+    c = False
+    
+    If rangoActual.IsEmpty Then
+        n = True
+    Else
+        s = True
+        If rangoActual.StartLineNo = rangoActual.EndLineNo Then
+            If cs.SelText = cs.CurrentWord Then
+                Debug.Print cs.SelText & "..." & cs.CurrentWord
+                If isBin(cs.SelText) Or isHex(cs.SelText) Or IsNumeric(cs.SelText) Then
+                    c = True
+                End If
+                sw = True
+            Else
+                sl = True
+            End If
+        End If
+    End If
+    
     If (Button = 2) Then
-        frmMain.cMenu.PopupMenu "mnuEdit"
-        frmMain.cMenu.PopupMenu "mnuNavigation"
+        
+        Set m_ContextMenu = Nothing
+        Set m_ContextMenu = New cMenus
+        m_ContextMenu.DrawStyle = M_Style
+        Set m_ContextMenu.ImageList = frmMain.ImgList1.Object
+        m_ContextMenu.CreateFromNothing Me.Hwnd
+        
+        lParentIndex = m_ContextMenu.AddItem(0, Key:="ContextMenu")
+        With m_ContextMenu
+            If s Then
+                .AddItem lParentIndex, "C&ut", "Ctrl+X", , "mnuEditCut", , , , 5
+                .AddItem lParentIndex, "&Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
+            End If
+            If cs.CanPaste Then
+                .AddItem lParentIndex, "&Paste", "Ctrl+V", , "mnuEditPaste", , , , 6
+            End If
+            .AddItem lParentIndex, "-"
+            If n Then
+                .AddItem lParentIndex, "&Select all", "Ctrl+A", , "mnuEditSelectAll", , , , 75
+                .AddItem lParentIndex, "Select line", "Ctrl+Shift+L", , "mnuEditSelectLine", , , , 76
+                .AddItem lParentIndex, "Select word", "Ctrl+Shift+W", , "mnuEditSelectWord", , , , 86
+            Else
+                .AddItem lParentIndex, "Deselect", , , "mnuEditDeselect"
+            End If
+            If n Then
+                .AddItem lParentIndex, "-"
+                .AddItem lParentIndex, "Duplicate line", "Ctrl+D", , "mnuEditDuplicateLine", , , , 83
+                .AddItem lParentIndex, "Delete line", "Ctrl+R", , "mnuEditDeleteLine", , , , 84
+                .AddItem lParentIndex, "Clear line", , , "mnuEditClearLine"
+                .AddItem lParentIndex, "Up line      ^", "Ctrl+Shift+Up", , "mnuEditUpLine", , , , 87
+                .AddItem lParentIndex, "Down line  v", "Ctrl+Shift+Down", , "mnuEditDownLine", , , , 88
+            End If
+            .AddItem lParentIndex, "-"
+            .AddItem lParentIndex, "Shift line &left", "Tab", , "mnuEditTab", Image:=40
+            .AddItem lParentIndex, "Shift line &right", "Shift+Tab", , "mnuEditUnTab", Image:=41
+            .AddItem lParentIndex, "-"
+            .AddItem lParentIndex, "&Comment", "Ctrl+J", , "mnuEditComment", Image:=42
+            .AddItem lParentIndex, "U&nComment", "Ctrl+Shift+J", , "mnuEditUnComment", Image:=43
+            .AddItem lParentIndex, "-"
+            If s Then
+                .AddItem lParentIndex, "&UPPER CASE", "Ctrl+U", , "mnuEditUpperCase", Image:=60
+                .AddItem lParentIndex, "lo&wer case", "Ctrl+L", , "mnuEditLowerCase", Image:=61
+                .AddItem lParentIndex, "&Proper Case", , , "mnuEditFirstCase", Image:=94
+                .AddItem lParentIndex, "Sentence case.", , , "mnuEditSentenceCase", Image:=93
+                .AddItem lParentIndex, "iNVERSE cASE", , , "mnuEditChangeCase", Image:=92
+                .AddItem lParentIndex, "-"
+            End If
+            If sw Then
+                iP2 = .AddItem(lParentIndex, "&Convert") 'Conversions
+                    .AddItem iP2, "Bin -> Hex", , , "mnuConvertBinHex"
+                    .AddItem iP2, "Bin -> Dec", , , "mnuConvertBinDec"
+                    .AddItem iP2, "-"
+                    .AddItem iP2, "Hex -> Bin", , , "mnuConvertHexBin"
+                    .AddItem iP2, "Hex -> Dec", , , "mnuConvertHexDec"
+                    .AddItem iP2, "-"
+                    .AddItem iP2, "Dec -> Bin", , , "mnuConvertDecBin"
+                    .AddItem iP2, "Dec -> Hex", , , "mnuConvertDecHex"
+            End If
+            If n Then
+                .AddItem lParentIndex, "Code completion help", "Ctrl+Space", , "mnuEditCodeCompletionHelp"
+            End If
+            If n Or sw Then
+                .AddItem lParentIndex, "-"
+            End If
+            .AddItem lParentIndex, "&Search...", "Ctrl+F", , "mnuNavigationSearch", , , , 13
+            If sw Or sl Then
+                .AddItem lParentIndex, "Search next selected", "Ctrl+F3", , "mnuNavigationSearchNextWord", , , , 89
+                .AddItem lParentIndex, "Search prev selected", "Ctrl+Shift+F3", , "mnuNavigationSearchPrevWord", , , , 90
+            End If
+            .AddItem lParentIndex, "-"
+            .AddItem lParentIndex, "&Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
+            '.AddItem lParentIndex, "-"
+            '.AddItem lParentIndex, "Go to matching &brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
+        
+            .PopupMenu "ContextMenu"
+        End With
+        
+        'frmMain.cMenu.PopupMenu "mnuEdit"
+        'frmMain.cMenu.PopupMenu "mnuNavigation"
         'contextMenu.ShowPopupMenu X * Screen.TwipsPerPixelX, Y * Screen.TwipsPerPixelY
     End If
 End Function
@@ -1048,6 +1158,49 @@ Private Property Let IsDirty(ByVal newVal As Boolean)
     
     frmMain.RefreshTabs
 End Property
+
+Private Sub m_ContextMenu_Click(ByVal Index As Long)
+    Select Case m_ContextMenu.ItemKey(Index)
+        Case "mnuEditCut":                      Call mnuEditCut
+        Case "mnuEditCopy":                     Call mnuEditCopy
+        Case "mnuEditPaste":                    Call mnuEditPaste
+        Case "mnuEditSelectAll":                Call mnuEditSelectAll
+        Case "mnuEditSelectWord":               Call mnuEditSelectWord
+        Case "mnuEditSelectLine":               Call mnuEditSelectLine
+        Case "mnuEditDeselect":                 Call mnuEditDeselect
+        Case "mnuEditClearLine":                Call mnuEditClearLine
+        Case "mnuEditDuplicateLine":            Call mnuEditDuplicateLine
+        Case "mnuEditDeleteLine":               Call mnuEditDeleteLine
+        Case "mnuEditUpLine":                   Call mnuEditUpLine
+        Case "mnuEditDownLine":                 Call mnuEditDownLine
+        Case "mnuEditTab":                      Call mnuEditTab
+        Case "mnuEditUnTab":                    Call mnuEditUnTab
+        Case "mnuEditComment":                  Call mnuEditComment
+        Case "mnuEditUnComment":                Call mnuEditUnComment
+        Case "mnuEditUpperCase":                Call mnuEditUpperCase
+        Case "mnuEditLowerCase":                Call mnuEditLowerCase
+        Case "mnuEditChangeCase":               Call mnuEditChangeCase
+        Case "mnuEditFirstCase":                Call mnuEditFirstCase
+        Case "mnuEditSentenceCase":             Call mnuEditSentenceCase
+        Case "mnuEditCodeCompletionHelp":       Call mnuEditCodeCompletionHelp
+        
+        Case "mnuConvertBinHex":                Call mnuConvertBinHex
+        Case "mnuConvertBinDec":                Call mnuConvertBinDec
+        Case "mnuConvertHexBin":                Call mnuConvertHexBin
+        Case "mnuConvertHexDec":                Call mnuConvertHexDec
+        Case "mnuConvertDecBin":                Call mnuConvertDecBin
+        Case "mnuConvertDecHex":                Call mnuConvertDecHex
+            
+        Case "mnuNavigationSearch":             Call mnuNavigationSearch
+        Case "mnuNavigationSearchNext":         Call mnuNavigationSearchNext
+        Case "mnuNavigationSearchPrev":         Call mnuNavigationSearchPrev
+        Case "mnuNavigationSearchNextWord":     Call mnuNavigationSearchNextWord
+        Case "mnuNavigationSearchPrevWord":     Call mnuNavigationSearchPrevWord
+        Case "mnuNavigationReplace":            Call mnuNavigationReplace
+        Case "mnuNavigationGotoMatchBrace":     Call mnuNavigationGotoMatchBrace
+    End Select
+    
+End Sub
 
 Private Sub tbrSource_ButtonClick(ByVal lButton As Long)
     Dim sKey As String
