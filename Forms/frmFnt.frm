@@ -42,7 +42,6 @@ Begin VB.Form frmFnt
    End
    Begin VB.PictureBox picScrollBox 
       BackColor       =   &H80000010&
-      FillStyle       =   2  'Horizontal Line
       Height          =   2895
       Left            =   0
       ScaleHeight     =   189
