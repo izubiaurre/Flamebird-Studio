@@ -314,9 +314,9 @@ Public Function Compile(ByVal sFile As String) As Boolean
                 sCommand = sCommand + " -Ca"
             End If
             sCommand = sCommand & " " & Chr(34) & sFile & Chr(34) '& " > " & Chr(34) & stdoutFile & Chr(34)
-                   MsgBox sCommand
-                   Clipboard.Clear
-                   Clipboard.SetText sCommand
+                   'MsgBox sCommand
+                   'Clipboard.Clear
+                   'Clipboard.SetText sCommand
             stdout = objDOS.ExecuteCommand(sCommand)
             
             'MsgBox stdout

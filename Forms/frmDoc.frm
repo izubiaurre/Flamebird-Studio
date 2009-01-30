@@ -825,8 +825,10 @@ On Error Resume Next
             End If
             .AddItem lParentIndex, "-"
             .AddItem lParentIndex, "&Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
-            '.AddItem lParentIndex, "-"
-            '.AddItem lParentIndex, "Go to matching &brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
+            If sw And (cs.SelText = "[" Or cs.SelText = "]") Then
+                .AddItem lParentIndex, "-"
+                .AddItem lParentIndex, "Go to matching &brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
+            End If
         
             .PopupMenu "ContextMenu"
         End With

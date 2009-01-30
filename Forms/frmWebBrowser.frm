@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "shdocvw.dll"
 Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
 Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "shdocvw.dll"
 Begin VB.Form frmWebBrowser 
    Caption         =   "Web Broser"
    ClientHeight    =   5700
@@ -16,13 +16,13 @@ Begin VB.Form frmWebBrowser
    ScaleWidth      =   6615
    WindowState     =   2  'Maximized
    Begin SHDocVwCtl.WebBrowser wb 
-      Height          =   3855
-      Left            =   240
+      Height          =   3615
+      Left            =   120
       TabIndex        =   1
       Top             =   840
-      Width           =   4455
-      ExtentX         =   7858
-      ExtentY         =   6800
+      Width           =   4815
+      ExtentX         =   8493
+      ExtentY         =   6376
       ViewMode        =   0
       Offline         =   0
       Silent          =   0
@@ -142,14 +142,14 @@ Private Sub Form_Load()
         .AddButton "Go", 0, sKey:="GO"
     End With
     'Create the rebar
-    With ReBar
+    With rebar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd tbrWeb.Hwnd, , True, False
     End With
-    ReBar.RebarSize
+    rebar.RebarSize
     
     Set m_cFlat = New cFlatControl
     m_cFlat.Attach cmbURL
@@ -157,13 +157,13 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        wb.Move 0, ScaleY(ReBar.RebarHeight, vbPixels, vbTwips), Me.ScaleWidth, Me.ScaleHeight - ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
-        ReBar.RebarSize
+        wb.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips), Me.ScaleWidth, Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
+        rebar.RebarSize
     End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    ReBar.RemoveAllRebarBands
+    rebar.RemoveAllRebarBands
     Set m_cFlat = Nothing
 End Sub
 

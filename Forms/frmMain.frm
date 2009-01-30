@@ -400,6 +400,18 @@ On Error GoTo errhandler:
         file = fFileForm.FilePath
         ' Find file in PB
         frmProjectBrowser.FindAndSelect (file)
+        ' enable/disable Program inspector
+        If fFileForm.Identify = FF_SOURCE Then
+            If frmProgramInspector.Visible Then
+                frmProgramInspector.tv_program.Enabled = True
+                frmProgramInspector.tv_program.BackColor = RGB(256, 256, 256)
+            End If
+        Else
+            If frmProgramInspector.Visible Then
+                frmProgramInspector.tv_program.Enabled = False
+                frmProgramInspector.tv_program.BackColor = RGB(128, 128, 128)
+            End If
+        End If
     End If
     frmProperties.RefreshProperties
     Exit Sub

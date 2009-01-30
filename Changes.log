@@ -6,6 +6,12 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 30/01/2009   Izubiaurre                  \FBMX safe mode.cmd                               
+    Pequeña aplicación batch que se añade al proyecto para corregir posibles problemas con el recurso .manifest.
+
+· 28/01/2009   Izubiaurre                  \FBMX.vbp                                         
+    Corregido el grave error que imposibilitaba la ejecución del ejecutable FBMX.exe. 
+
 · 31/10/2008   Izubiaurre                  \Forms\frmFnt.frm                                 
     Ya muestra la transparencia de nuevo.
 
