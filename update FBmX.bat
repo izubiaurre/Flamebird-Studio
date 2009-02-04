@@ -29,6 +29,8 @@ cd..
 copy Changes.log "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"
 copy COPYING "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"
 copy FBMX.exe "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"
+copy FBMX.exe.manifest "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"
+copy FBMX safe mode.cmd "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"
 copy fmodex.dll "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"
 copy fmodexL.dll "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"
 copy fmodexp.dll "C:\Documents and Settings\Imanol Zubiaurre\Desktop\FBmX"

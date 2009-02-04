@@ -6,6 +6,36 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 02/02/2009   Izubiaurre                                                                    
+    Pequeña correción en la utilidad Heretic.
+
+· 01/02/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Ya funcionan las transparencias en todos los modos.
+
+· 01/02/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Ya se pueden utilizar las transparencias en elos gradientes lineales.
+
+· 31/01/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    También copiar al portapapeles. Aunque esto pueda desaparecer en un futuro próximo.
+
+· 31/01/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Ya se pueden exportar ficheros gráficos con los contenidos del visor.
+
+· 31/01/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Añadido las posibilidad de aplicar texturas como gradientes lineales a los cuerpos de los carácteres. Falta poder elegir los colores y los valores de opacidad. 
+
+· 31/01/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Ya se pueden ver las sombras y poder editarlas.
+
+· 31/01/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Corregido los tamaños de los fuentes al visualizarlas.
+
+· 31/01/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Rescatado una versión bastante avanzada del editor de fuentes (frmNewFont para FBMX). 
+
+· 31/01/2009   Izubiaurre                  \Tools\                                           
+    Poco a poco iré añadiendo herramientas que complementen al proyecto: FireStorm, Heretic, los compiladores...
+
 · 30/01/2009   Izubiaurre                  \FBMX safe mode.cmd                               
     Pequeña aplicación batch que se añade al proyecto para corregir posibles problemas con el recurso .manifest.
 

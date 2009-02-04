@@ -941,14 +941,14 @@ Private Sub Form_Load()
     End With
     
     'Create the rebar
-    With rebar
+    With ReBar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd tbrSource.Hwnd, , True, False
     End With
-    rebar.RebarSize
+    ReBar.RebarSize
     
     'cofigura el control de edicion
     cs.LineNumbering = True
@@ -1000,10 +1000,10 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        rebar.RebarSize
-        cs.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
+        ReBar.RebarSize
+        cs.Move 0, ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
         cs.Width = Me.ScaleWidth
-        cs.Height = Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
+        cs.Height = Me.ScaleHeight - ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
     End If
 End Sub
     
