@@ -755,7 +755,7 @@ Begin VB.Form frmPreferences
                Width           =   1455
             End
             Begin VB.OptionButton optHelpLine 
-               Caption         =   "Show line upper"
+               Caption         =   "Show line under"
                BeginProperty Font 
                   Name            =   "Arial"
                   Size            =   8.25
@@ -773,7 +773,7 @@ Begin VB.Form frmPreferences
                Width           =   1815
             End
             Begin VB.OptionButton optHelpLine 
-               Caption         =   "Show line under"
+               Caption         =   "Show line upper"
                BeginProperty Font 
                   Name            =   "Arial"
                   Size            =   8.25
@@ -2004,7 +2004,7 @@ Private Sub PlaceControls()
     Me.Width = 7440     ' 5625
     Me.Height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
-    cmdOK.Move 3120, 5400        ' 3120
+    cmdOk.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
 End Sub
 
@@ -2205,22 +2205,22 @@ Private Sub SaveConf()
 
     'File type association
     If trFiles.Nodes(1).Checked Then
-        If Not FileAssociated(".prg", "Fenix.Source") Then
-            Call RegisterType(".prg", "Fenix.Source", "Text", "Fenix/Bennu source file", App.Path + "\Icons\fenix_prg.ico")
+        If Not FileAssociated(".prg", "Bennu/Fenix.Source") Then
+            Call RegisterType(".prg", "Bennu/Fenix.Source", "Text", "Bennu/Fenix source file", App.Path + "\Icons\fenix_prg.ico")
         End If
     Else
-        If FileAssociated(".prg", "Fenix.Source") Then
-            Call DeleteType(".prg", "Fenix.Source")
+        If FileAssociated(".prg", "Bennu/Fenix.Source") Then
+            Call DeleteType(".prg", "Bennu/Fenix.Source")
         End If
     End If
 
     If trFiles.Nodes(2).Checked Then
         If Not FileAssociated(".map", "Fenix.ImageFile") Then
-            Call RegisterType(".map", "Fenix.ImageFile", "Image/Map", "Fenix/Bennu image file", App.Path + "\Icons\fenix_map.ico")
+            Call RegisterType(".map", "Bennu/Fenix.ImageFile", "Image/Map", "Bennu/Fenix image file", App.Path + "\Icons\fenix_map.ico")
         End If
     Else
-        If FileAssociated(".map", "Fenix.ImageFile") Then
-            Call DeleteType(".map", "Fenix.ImageFile")
+        If FileAssociated(".map", "Bennu/Fenix.ImageFile") Then
+            Call DeleteType(".map", "Bennu/Fenix.ImageFile")
         End If
     End If
 
@@ -2257,10 +2257,10 @@ Private Sub SaveConf()
     'DCBs
     If chkDcb.Value = 1 Then
         ' actualizamos siempre el dir de fenix
-        If FileAssociated(".dcb", "Fenix.Bin") Then
-            Call DeleteType(".dcb", "Fenix.Bin")
+        If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
+            Call DeleteType(".dcb", "Bennu/Fenix.Bin")
         End If
-        If Not FileAssociated(".dcb", "Fenix.Bin") Then
+        If Not FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
             Dim Fxi As String
             With Ini
                 .Path = App.Path & CONF_FILE
@@ -2278,14 +2278,14 @@ Private Sub SaveConf()
             End With
             If FSO.FileExists(Fxi) Then
                 Fxi = Chr(34) & Fxi & Chr(34) & " " & Chr(34) & "%1" & Chr(34)
-                Call RegisterType(".dcb", "Fenix.Bin", "Binarie", "Fenix compiled file", App.Path + "\Icons\dcb.ico", Fxi)
+                Call RegisterType(".dcb", "Bennu/Fenix.Bin", "Binarie", "Bennu/Fenix compiled file", App.Path + "\Icons\dcb.ico", Fxi)
             Else
-                MsgBox "Can't associate DCB files because the Fenix path isn't configured!!", vbCritical + vbOKOnly, "FlameBird 2"
+                MsgBox "Can't associate DCB files because the compiler path isn't configured!!", vbCritical + vbOKOnly, "FlameBirdMX"
             End If
         End If
     Else
-        If FileAssociated(".dcb", "Fenix.Bin") Then
-            Call DeleteType(".dcb", "Fenix.Bin")
+        If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
+            Call DeleteType(".dcb", "Bennu/Fenix.Bin")
         End If
     End If
 
@@ -2762,13 +2762,13 @@ Private Sub Form_Load()
     'File association
     With trFiles
         .CheckBoxes = True
-        .Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Fenix.Source")
-        .Nodes.Add(, , "map", "MAP - Fenix image files").Checked = FileAssociated(".map", "Fenix.ImageFile")
+        .Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Bennu/Fenix.Source")
+        .Nodes.Add(, , "map", "MAP - Fenix image files").Checked = FileAssociated(".map", "Bennu/Fenix.ImageFile")
         .Nodes.Add(, , "fbp", "FBP - FlameBird Project files").Checked = FileAssociated(".fbp", "FlameBird.Project")
         .Nodes.Add(, , "bmk", "BMK - Source bookmark files").Checked = FileAssociated(".bmk", "FlameBird.Bookmark")
         .Nodes.Add(, , "cpt", "CPT - Map control-point list files").Checked = FileAssociated(".cpt", "FlameBird.ControlPoint")
     End With
-    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Fenix.Bin")))
+    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 
     'TreeView
     With tv_preferences

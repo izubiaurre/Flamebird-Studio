@@ -735,9 +735,9 @@ Private Sub CheckFileAssoc()
     
     'THIS SHOULD BE CHANGED TO SOMETHING MORE GENERAL
     If FileAssociated(".fbp", "FlameBird.Project") = False _
-        Or FileAssociated(".prg", "Fenix.Source") = False _
-        Or FileAssociated(".map", "Fenix.ImageFile") = False Or _
-        FileAssociated(".dcb", "Fenix.Bin") = False Then
+        Or FileAssociated(".prg", "Bennu/Fenix.Source") = False _
+        Or FileAssociated(".map", "Bennu/Fenix.ImageFile") = False Or _
+        FileAssociated(".dcb", "Bennu/Fenix.Bin") = False Then
         With Ini
             .Path = App.Path & CONF_FILE
             .Section = "General"

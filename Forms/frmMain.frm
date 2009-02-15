@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Object = "{04609A82-EA10-423E-B61B-CACCC4ABDFCF}#1.0#0"; "tabdock.ocx"
 Object = "{4F11FEBA-BBC2-4FB6-A3D3-AA5B5BA087F4}#1.0#0"; "vbalsbar6.ocx"
 Object = "{A2FCE68E-ACA2-4A09-9C2D-F53E1195D5FC}#1.0#0"; "vbalhkct6.ocx"
@@ -684,7 +684,8 @@ Private Sub CreateMenu()
             .AddItem iP, "Go to matching &brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
             .AddItem iP, "-"
             .AddItem iP, "Go to definition", , , "mnuNavigationGotoDefinition"
-            .AddItem iP, "Last position", , , "mnuNavigationLastPosition"
+            .AddItem iP, "Previous position", , , "mnuNavigationPrevPosition"
+            .AddItem iP, "Next position", , , "mnuNavigationNextPosition"
             .AddItem iP, "-"
             .AddItem iP, "Prev function/process", "Alt+Up", , "mnuNavigationPrevFunc", Image:=70
             .AddItem iP, "Next function/process", "Alt+Down", , "mnuNavigationNextFunc", Image:=71
@@ -1044,8 +1045,9 @@ Private Sub cMenu_Click(ByVal Index As Long)
     Case "mnuNavigationGotoIdent":          Call mnuNavigationGoToIdent
     Case "mnuNavigationNextFunc":           Call mnuNavigationNextFunc
     Case "mnuNavigationPrevFunc":           Call mnuNavigationPrevFunc
-    Case "mnuNavigationLastPosition":       Call mnuNavigationLastPosition
-    Case "mnuNavigationGotoDefinition":     Call mnuNavigationGotoDefiniton
+    Case "mnuNavigationPrevPosition":       Call mnuNavigationPrevPosition
+    Case "mnuNavigationNextPosition":       Call mnuNavigationNextPosition
+    Case "mnuNavigationGotoDefinition":     Call mnuNavigationGoToDefinition
     Case "mnuNavigationGotoMatchBrace":     Call mnuNavigationGotoMatchBrace
     
     Case "mnuBookmarkToggle":               Call mnuBookmarkToggle

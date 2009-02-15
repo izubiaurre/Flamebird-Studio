@@ -152,22 +152,22 @@ Attribute VB_Exposed = False
 
 Private Sub Command1_Click()
 If trFiles.Nodes(1).Checked Then
-    If Not FileAssociated(".prg", "Fenix.Source") Then
-        Call RegisterType(".prg", "Fenix.Source", "Text", "Fenix/Bennu source file", App.Path + "\Icons\fenix_prg.ico")
+    If Not FileAssociated(".prg", "Bennu/Fenix.Source") Then
+        Call RegisterType(".prg", "Bennu/Fenix.Source", "Text", "Bennu/Fenix source file", App.Path + "\Icons\fenix_prg.ico")
     End If
 Else
-    If FileAssociated(".prg", "Fenix.Source") Then
-        Call DeleteType(".prg", "Fenix.Source")
+    If FileAssociated(".prg", "Bennu/Fenix.Source") Then
+        Call DeleteType(".prg", "Bennu/Fenix.Source")
     End If
 End If
 
 If trFiles.Nodes(2).Checked Then
-    If Not FileAssociated(".map", "Fenix.ImageFile") Then
-        Call RegisterType(".map", "Fenix.ImageFile", "Image/Map", "Fenix/Bennu image file", App.Path + "\Icons\fenix_map.ico")
+    If Not FileAssociated(".map", "Bennu/Fenix.ImageFile") Then
+        Call RegisterType(".map", "Bennu/Fenix.ImageFile", "Image/Map", "Bennu/Fenix image file", App.Path + "\Icons\fenix_map.ico")
     End If
 Else
-    If FileAssociated(".map", "Fenix.ImageFile") Then
-        Call DeleteType(".map", "Fenix.ImageFile")
+    If FileAssociated(".map", "Bennu/Fenix.ImageFile") Then
+        Call DeleteType(".map", "Bennu/Fenix.ImageFile")
     End If
 End If
 
@@ -203,10 +203,10 @@ End If
 
 
 If chkDcb.Value = 1 Then
-    If FileAssociated(".dcb", "Fenix.Bin") Then
-        Call DeleteType(".dcb", "Fenix.Bin")
+    If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
+        Call DeleteType(".dcb", "Bennu/Fenix.Bin")
     End If
-    If Not FileAssociated(".dcb", "Fenix.Bin") Then
+    If Not FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
         Dim Fxi As String
         With Ini
             .Path = App.Path & CONF_FILE
@@ -219,14 +219,14 @@ If chkDcb.Value = 1 Then
         End With
         If FSO.FileExists(Fxi) Then
             Fxi = Chr(34) & Fxi & Chr(34) & " " & Chr(34) & "%1" & Chr(34)
-            Call RegisterType(".dcb", "Fenix.Bin", "Binarie", "Fenix compiled file", App.Path + "\Icons\dcb.ico", Fxi)
+            Call RegisterType(".dcb", "Bennu/Fenix.Bin", "Binarie", "Bennu/Fenix compiled file", App.Path + "\Icons\dcb.ico", Fxi)
         Else
-            MsgBox "Can't associate DCB files becose the Fenix path isn't configured!!", vbCritical + vbOKOnly, "FlameBird 2"
+            MsgBox "Can't associate DCB files becose the Fenix path isn't configured!!", vbCritical + vbOKOnly, "FlameBirdMX"
         End If
     End If
 Else
-    If FileAssociated(".dcb", "Fenix.Bin") Then
-        Call DeleteType(".dcb", "Fenix.Bin")
+    If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
+        Call DeleteType(".dcb", "Bennu/Fenix.Bin")
     End If
 End If
 
@@ -247,14 +247,14 @@ End Sub
 Private Sub Form_Load()
 
     trFiles.CheckBoxes = True
-    trFiles.Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Fenix.Source")
-    trFiles.Nodes.Add(, , "map", "MAP - Bennu/Fenix image files").Checked = FileAssociated(".map", "Fenix.ImageFile")
+    trFiles.Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Bennu/Fenix.Source")
+    trFiles.Nodes.Add(, , "map", "MAP - Bennu/Fenix image files").Checked = FileAssociated(".map", "Bennu/Fenix.ImageFile")
     trFiles.Nodes.Add(, , "fbp", "FBP - FlameBird Project files").Checked = FileAssociated(".fbp", "FlameBird.Project")
     trFiles.Nodes.Add(, , "bmk", "BMK - FlameBird source bookmark files").Checked = FileAssociated(".bmk", "FlameBird.Source Bookmark")
-    trFiles.Nodes.Add(, , "cpt", "CPT - Bennu/Fenix image file Control Point lists").Checked = FileAssociated(".cpt", "Fenix/Bennu image file Control Point list")
+    trFiles.Nodes.Add(, , "cpt", "CPT - Bennu/Fenix image file Control Point lists").Checked = FileAssociated(".cpt", "Bennu/Fenix image file Control Point list")
     
     
-    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Fenix.Bin")))
+    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

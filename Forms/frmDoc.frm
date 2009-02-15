@@ -15,6 +15,18 @@ Begin VB.Form frmDoc
    ScaleHeight     =   3780
    ScaleWidth      =   5580
    WindowState     =   2  'Maximized
+   Begin vbalIml6.vbalImageList ilSource2 
+      Left            =   4440
+      Top             =   2640
+      _ExtentX        =   953
+      _ExtentY        =   953
+      ColourDepth     =   32
+      Size            =   12628
+      Images          =   "frmDoc.frx":2B8A
+      Version         =   131072
+      KeyCount        =   11
+      Keys            =   "ÿÿÿÿÿÿÿÿÿÿ"
+   End
    Begin VB.ComboBox cmbBookmarkList 
       Height          =   315
       Left            =   3600
@@ -37,6 +49,7 @@ Begin VB.Form frmDoc
       Width           =   1695
       _ExtentX        =   2990
       _ExtentY        =   661
+      DrawStyle       =   2
    End
    Begin vbalIml6.vbalImageList ilSource 
       Left            =   1920
@@ -44,16 +57,16 @@ Begin VB.Form frmDoc
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   16
-      Size            =   10332
-      Images          =   "frmDoc.frx":2B8A
+      Size            =   12628
+      Images          =   "frmDoc.frx":5CFE
       Version         =   131072
-      KeyCount        =   9
-      Keys            =   "ÿÿÿÿÿÿÿÿ"
+      KeyCount        =   11
+      Keys            =   "ÿÿÿÿÿÿÿÿÿÿ"
    End
    Begin CodeSenseCtl.CodeSense cs 
       Height          =   3135
       Left            =   0
-      OleObjectBlob   =   "frmDoc.frx":5406
+      OleObjectBlob   =   "frmDoc.frx":8E72
       TabIndex        =   0
       Top             =   600
       Width           =   5535
@@ -92,8 +105,12 @@ Private Const MSG_COMPILE_NOFENIXDIR = "Fenix directory has not been configured 
 Private Const MSG_COMPILE_NOTALREADYSAVED = "The file has not been saved yet. Save the file before compile"
 Private Const MSG_RUN_DBCNOTFOUND = "DCB file not found. Compile first!"
 
-Public curPosition As Long
-Public prePosition As Long
+'Public curPosition As Long
+'Public prePosition As Long
+
+Public codePosIndex As Long
+Dim codePos() As Long
+
 
 Dim selRange As CodeSenseCtl.IRange
 Private nextTipText() As String
@@ -763,6 +780,7 @@ On Error Resume Next
         
         lParentIndex = m_ContextMenu.AddItem(0, Key:="ContextMenu")
         With m_ContextMenu
+            .AddItem lParentIndex, "&Go to definition", , , "mnuNavigationGoToDefinition"
             If s Then
                 .AddItem lParentIndex, "C&ut", "Ctrl+X", , "mnuEditCut", , , , 5
                 .AddItem lParentIndex, "&Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
@@ -847,8 +865,12 @@ Private Function cs_MouseUp(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Butt
     If rangoActual Is Nothing Then
         Exit Function
     End If
-    prePosition = curPosition
-    curPosition = rangoActual.StartLineNo + 1
+'    prePosition = curPosition
+'    curPosition = rangoActual.StartLineNo + 1
+'    codePosIndex = codePosIndex + 1
+'    ReDim Preserve codePos(codePosIndex)
+'    codePos(codePosIndex) = rangoActual.StartColNo
+    setNewPos (rangoActual.StartLineNo)
 End Function
 
 Private Function Cs_RClick(ByVal Control As CodeSenseCtl.ICodeSense) As Boolean
@@ -917,8 +939,13 @@ End Sub
 Private Sub Form_Load()
     On Error GoTo errhandler:
     
-    prePosition = 1
-    curPosition = 1
+'    prePosition = 1
+'    curPosition = 1
+    
+    codePosIndex = 1
+    'ReDim Preserve codePos(2) As CodeSenseCtl.position
+    'codePos(1).LineNo = 1
+    
     
     With tbrSource
         .ImageSource = CTBExternalImageList
@@ -938,17 +965,20 @@ Private Sub Form_Load()
         .AddButton eButtonStyle:=CTBSeparator
         .AddControl cmbBookmarkList.Hwnd, , "cmbBookmarkList"
         .AddButton "Edit Bookmarks", 8, , , , CTBAutoSize, "EditBookmarks"
+        .AddButton eButtonStyle:=CTBSeparator
+        .AddButton "Previous Position", 9, , , , CTBAutoSize, "PrevPos"
+        .AddButton "Next Position", 10, , , , CTBAutoSize, "NextPos"
     End With
     
     'Create the rebar
-    With ReBar
+    With rebar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd tbrSource.Hwnd, , True, False
     End With
-    ReBar.RebarSize
+    rebar.RebarSize
     
     'cofigura el control de edicion
     cs.LineNumbering = True
@@ -1000,10 +1030,10 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        ReBar.RebarSize
-        cs.Move 0, ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
+        rebar.RebarSize
+        cs.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
         cs.Width = Me.ScaleWidth
-        cs.Height = Me.ScaleHeight - ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
+        cs.Height = Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
     End If
 End Sub
     
@@ -1060,6 +1090,7 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
        
     sFileBMK = Left(sFile, Len(sFile) - 3) & "bmk"
     ReDim bookmarkList(1)
+    ReDim codePos(1)
     If FSO.FileExists(sFileBMK) Then
         Set FSO = CreateObject("Scripting.FileSystemObject")
         Set A = FSO.OpenTextFile(sFileBMK, ForReading)
@@ -1099,6 +1130,7 @@ Private Function IFileForm_NewW(ByVal iUntitledCount As Integer) As Long
     m_addToProject = modMenuActions.NewAddToProject
     IFileForm_NewW = -1 'Succesful
     ReDim bookmarkList(1)
+    ReDim codePos(1)
 End Function
 
 Private Function IFileForm_Save(ByVal sFile As String) As Long
@@ -1163,6 +1195,7 @@ End Property
 
 Private Sub m_ContextMenu_Click(ByVal Index As Long)
     Select Case m_ContextMenu.ItemKey(Index)
+        Case "mnuNavigationGoToDefinition":     Call mnuNavigationGoToDefinition
         Case "mnuEditCut":                      Call mnuEditCut
         Case "mnuEditCopy":                     Call mnuEditCopy
         Case "mnuEditPaste":                    Call mnuEditPaste
@@ -1227,6 +1260,10 @@ Private Sub tbrSource_ButtonClick(ByVal lButton As Long)
         modMenuActions.mnuEditUnComment
     Case "EditBookmarks"
         modMenuActions.mnuBookmarkEdit
+    Case "PrevPos"
+        modMenuActions.mnuNavigationPrevPosition
+    Case "NextPos"
+        modMenuActions.mnuNavigationNextPosition
     End Select
         
 End Sub
@@ -1395,7 +1432,37 @@ Public Sub RefreshProcPos()
         Pos = rangoActual.StartLineNo
         frmProgramInspector.findCurProc (Pos + 1)
     Else
-        ' don't highñight the current proc/func
+        ' don't highlight the current proc/func
         Pos = -1
     End If
+End Sub
+
+
+Public Sub setNewPos(line As Long)
+    codePosIndex = codePosIndex + 1
+    ReDim Preserve codePos(codePosIndex) As Long
+    codePos(codePosIndex) = line
+    refreshPosList
+End Sub
+
+Public Function getPos(Index As Long) As Long ' currently returns a line number
+    getPos = codePos(codePosIndex)
+End Function
+
+Public Function uPos()
+    uPos = UBound(codePos)
+End Function
+
+Public Sub refreshPosList()
+On Error GoTo errhandler
+    Dim i As Long
+    For i = LBound(codePos) To UBound(codePos)
+        If i = codePosIndex Then
+            Debug.Print ">> " & codePos(i)
+        Else
+            Debug.Print "   " & codePos(i)
+        End If
+    Next i
+errhandler:
+    Exit Sub
 End Sub

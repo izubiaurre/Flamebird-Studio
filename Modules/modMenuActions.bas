@@ -602,16 +602,33 @@ Public Sub mnuEditCodeCompletionHelp()
     End If
 End Sub
 
-Public Sub mnuNavigationLastPosition()
+Public Sub mnuNavigationPrevPosition()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
-            fDoc.cs.ExecuteCmd cmCmdGoToLine, fDoc.prePosition
+            If fDoc.codePosIndex > 1 Then
+                fDoc.codePosIndex = fDoc.codePosIndex - 1
+                fDoc.cs.ExecuteCmd cmCmdGoToLine, fDoc.getPos(fDoc.codePosIndex)
+                frmDoc.refreshPosList
+            End If
         End If
     End If
 End Sub
 
-Public Sub mnuNavigationGotoDefiniton()
+Public Sub mnuNavigationNextPosition()
+    If Not ActiveFileForm Is Nothing Then
+        If ActiveFileForm.Identify = FF_SOURCE Then
+            Set fDoc = ActiveForm
+            If fDoc.codePosIndex < fDoc.uPos Then
+                fDoc.codePosIndex = fDoc.codePosIndex + 1
+                fDoc.cs.ExecuteCmd cmCmdGoToLine, fDoc.getPos(fDoc.codePosIndex)
+                frmDoc.refreshPosList
+            End If
+        End If
+    End If
+End Sub
+
+Public Sub mnuNavigationGoToDefinition()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -626,14 +643,10 @@ Public Sub mnuNavigationGotoDefiniton()
                 MsgBox fDoc.cs.CurrentWord & " is defined type"
 '            ElseIf isReservedFunction(fDoc.cs.CurrentWord) Then
 '                MsgBox fDoc.cs.CurrentWord & " is language reserved function"
+            ElseIf frmProgramInspector.findNode(fDoc.cs.CurrentWord) Then
+                
             Else
-            'If fDoc. (fDoc.cs.CurrentWord) Then
-                'fDoc.cs.ExecuteCmd cmCmdBeginUndo
-                    fDoc.cs.ExecuteCmd cmCmdDocumentStart
-                    fDoc.cs.ExecuteCmd cmCmdFindNextWord, fDoc.cs.CurrentWord
-                'fDoc.cs.ExecuteCmd cmCmdEndUndo
-'            Else
-'                MsgBox fDoc.cs.CurrentWord & " is no token"
+                MsgBox fDoc.cs.CurrentWord & " is no token"
             End If
         End If
     End If
@@ -1150,7 +1163,7 @@ Public Sub mnuThotMigrate()
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
-            MsgBox "Migrate old DIV/DIV2 code to Fenix/Bennu compatible"
+            MsgBox "Migrate old DIV/DIV2 code to Bennu/Fenix compatible"
         End If
     End If
 End Sub

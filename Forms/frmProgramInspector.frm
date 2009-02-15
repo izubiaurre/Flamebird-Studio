@@ -98,7 +98,7 @@ End Function
 Public Sub tv_program_NodeDblClick(node As vbalTreeViewLib6.cTreeViewNode)
     Dim nodito As staticNode
     Set nodito = includesNodes.item(node.Key)
-    
+        Debug.Print node.Key
     ' Setea la clase que lee el archivo
     Dim srcFile As New cReadFile
     Dim Filename As String
@@ -238,4 +238,29 @@ On Error GoTo errhandler
 errhandler:
     Exit Sub
 End Sub
+
+Public Function findNode(str As String) As Boolean
+    Dim i As Integer
+    Dim nodito As staticNode
+    Dim node As vbalTreeViewLib6.cTreeViewNode
+    
+'On Error GoTo errhandler
+
+    For i = 1 To tv_program.NodeCount
+        
+        Set nodito = includesNodes.item(tv_program.Nodes(i).Key)
+        If nodito.name = str Then
+            tv_program.Nodes(i).Selected = True
+            tv_program_NodeDblClick tv_program.Nodes(i)
+            findNode = True
+            Exit Function
+        End If
+        
+    Next i
+    findNode = False
+    Exit Function
+'errhandler:
+'    findNode = False
+'    Exit Function
+End Function
 

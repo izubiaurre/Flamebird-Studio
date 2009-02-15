@@ -6,6 +6,30 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 13/02/2009   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Corregido un despiste donde se confundían "upper line" y "under line".
+
+· 13/02/2009   Izubiaurre                                                                    
+    Añadido un nuevo tema para el editor de código (Nighty). Es una evolución del shadowed.
+
+· 09/02/2009   Izubiaurre                                                                    
+    Inicio una ronda de pruebas en el entorno para sacar ideas, mejoras, errores, problemas...
+
+· 07/02/2009   Izubiaurre                  \Forms\frmProgramInspector.frm                    
+    Corregido un error en las listas de posiciones. En algunos casos, la lista, se quedaba vacía, por lo que causaba una salida de la aplicación.
+
+· 07/02/2009   Izubiaurre                  \Forms\frmProgramInspector.frm                    
+    Pequeña mejora en la función findNode.
+
+· 07/02/2009   Izubiaurre                  \Forms\frmMain.frm                                
+    Añadidos los iconos que faltaban...
+
+· 07/02/2009   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Añadido la navergación de posiciones. Se guarda un historial de las posiciones en el listado del código fuente y se puede navegar entre la anterior/siguiente... 
+
+· 06/02/2009   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Ya se pueden buscar las definiciones de las variables, funciones, procesos... con sólo un click desde el listado de código fuente.
+
 · 02/02/2009   Izubiaurre                                                                    
     Pequeña correción en la utilidad Heretic.
 
