@@ -66,10 +66,10 @@ errhandler:
     If Err.Number > 0 Then ShowError ("modFileFilters.comPoseFileFilters")
 End Function
 
-Private Sub addFileFilter(Key As String, Description As String, Filter As String)
+Private Sub addFileFilter(Key As String, description As String, Filter As String)
     Dim s(1) As String
     
-    s(0) = Description
+    s(0) = description
     s(1) = Filter
     
     m_FileFilters.Add Key, s
@@ -111,10 +111,14 @@ Public Sub CreateFileFilters()
     'addFileFilter "MODULES", "All known song modules", "mod|s3m|xm|it|mid"
     'addFileFilter "STREAM", "All known audio stream files", "ogg|mp3|wav"
     addFileFilter "SOUND_FILES", "All sound files", composeExtensions("MODULES", "STREAMS")
+    
+    addFileFilter "IMP", "Module import file", "imp|import"
+    'addFileFilter "IMPORT", "Module import file", "import"
+    'addFileFilter "IMPORT_FILES", "All module import files", composeExtensions("IMP", "IMPORT")
 
     addFileFilter "READABLE_FILES", "All readable files", _
-                composeExtensions("FBP", "SOURCE", "PALETTE", "MAP", "FPG", "FNT", "MODULES", "STREAMS")
+                composeExtensions("FBP", "SOURCE", "PALETTE", "MAP", "FPG", "FNT", "MODULES", "STREAMS", "IMP")
     
     addFileFilter "COMMON_FILES", "All common files", composeExtensions("SOURCE", "PALETTE", _
-                "GRAPHIC_FILES", "GRAPHIC_COLLECTIONS", "SOUND_FILES")
+                "GRAPHIC_FILES", "GRAPHIC_COLLECTIONS", "SOUND_FILES", "IMP")
 End Sub

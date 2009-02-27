@@ -101,7 +101,7 @@ Option Base 1 'IMPORTANT!!!! TO CHECK LATER
 Private Const MSG_SAVE_FILEREADONLY = "This File is read-only. You must save to a different location."
 Private Const MSG_SAVE_ERRORSAVING = "An error occurred when trying to save the file: "
 Private Const MSG_SAVE_SUCCESS = "File saved succesfully!"
-Private Const MSG_COMPILE_NOFENIXDIR = "Fenix directory has not been configured or does not exist"
+Private Const MSG_COMPILE_NOFENIXDIR = "Compiler directory has not been configured or does not exist"
 Private Const MSG_COMPILE_NOTALREADYSAVED = "The file has not been saved yet. Save the file before compile"
 Private Const MSG_RUN_DBCNOTFOUND = "DCB file not found. Compile first!"
 
@@ -980,7 +980,7 @@ Private Sub Form_Load()
     End With
     rebar.RebarSize
     
-    'cofigura el control de edicion
+    ' configure the edition control
     cs.LineNumbering = True
     cs.LineNumberStart = 1
     cs.LineNumberStyle = cmDecimal
@@ -995,8 +995,8 @@ Private Sub Form_Load()
     cs.AutoIndentMode = cmIndentPrevLine
     LoadCSConf cs
     
-    ' registra comando para mostrar ayuda
-    ' se ejecuta en el evento Cs_RegisteredCmd
+    ' register the command to show help
+    ' execute the event Cs_RegisteredCmd
     Dim g As New CodeSenseCtl.Globals
     Dim h As New CodeSenseCtl.HotKey    'registers hotkey
     ' F1

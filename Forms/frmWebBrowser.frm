@@ -16,13 +16,13 @@ Begin VB.Form frmWebBrowser
    ScaleWidth      =   6615
    WindowState     =   2  'Maximized
    Begin SHDocVwCtl.WebBrowser wb 
-      Height          =   3615
+      Height          =   3375
       Left            =   120
       TabIndex        =   1
-      Top             =   840
-      Width           =   4815
-      ExtentX         =   8493
-      ExtentY         =   6376
+      Top             =   720
+      Width           =   3735
+      ExtentX         =   6588
+      ExtentY         =   5953
       ViewMode        =   0
       Offline         =   0
       Silent          =   0

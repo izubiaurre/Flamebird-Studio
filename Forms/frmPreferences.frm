@@ -2255,7 +2255,7 @@ Private Sub SaveConf()
     End If
 
     'DCBs
-    If chkDcb.Value = 1 Then
+    If chkDCB.Value = 1 Then
         ' actualizamos siempre el dir de fenix
         If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
             Call DeleteType(".dcb", "Bennu/Fenix.Bin")
@@ -2763,12 +2763,12 @@ Private Sub Form_Load()
     With trFiles
         .CheckBoxes = True
         .Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Bennu/Fenix.Source")
-        .Nodes.Add(, , "map", "MAP - Fenix image files").Checked = FileAssociated(".map", "Bennu/Fenix.ImageFile")
+        .Nodes.Add(, , "map", "MAP - Bennu/Fenix image files").Checked = FileAssociated(".map", "Bennu/Fenix.ImageFile")
         .Nodes.Add(, , "fbp", "FBP - FlameBird Project files").Checked = FileAssociated(".fbp", "FlameBird.Project")
         .Nodes.Add(, , "bmk", "BMK - Source bookmark files").Checked = FileAssociated(".bmk", "FlameBird.Bookmark")
         .Nodes.Add(, , "cpt", "CPT - Map control-point list files").Checked = FileAssociated(".cpt", "FlameBird.ControlPoint")
     End With
-    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
+    chkDCB.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 
     'TreeView
     With tv_preferences

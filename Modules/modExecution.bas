@@ -457,15 +457,15 @@ Public Function Run(ByVal sFile As String) As Boolean
     mFxiDir = fxiDir
     
     bResult = False
-    If FSO.FolderExists(fxiDir) Then 'Valid Fenix Dir
+    If FSO.FolderExists(fxiDir) Then 'Valid Interpreter Dir
         'Look for the DCB
         dcbFile = FSO.GetParentFolderName(sFile) & "\" & FSO.GetBaseName(sFile) & ".dcb"
         mFileDir = FSO.GetParentFolderName(sFile)
         If FSO.FileExists(dcbFile) Then
             If R_Compiler = 0 Then  ' Fenix
-                sCommand = Chr(34) & fxiDir & "\fxi.exe " & Chr(34) & " " & Chr(34) & dcbFile & Chr(34)
+                sCommand = Chr(34) & fxiDir & "\fxi.exe " & Chr(34) & IIf(R_Debug, " -d ", " ") & Chr(34) & dcbFile & Chr(34)
             Else                    ' Bennu
-                sCommand = Chr(34) & fxiDir & "\bgdi.exe " & Chr(34) & " " & Chr(34) & dcbFile & Chr(34)
+                sCommand = Chr(34) & fxiDir & "\bgdi.exe " & Chr(34) & IIf(R_Debug, " -d ", " ") & Chr(34) & dcbFile & Chr(34)
             End If
             'Params
             'If R_filter Then sCommand = sCommand & " -f "

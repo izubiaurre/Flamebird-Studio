@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
 Object = "{04609A82-EA10-423E-B61B-CACCC4ABDFCF}#1.0#0"; "tabdock.ocx"
 Object = "{4F11FEBA-BBC2-4FB6-A3D3-AA5B5BA087F4}#1.0#0"; "vbalsbar6.ocx"
 Object = "{A2FCE68E-ACA2-4A09-9C2D-F53E1195D5FC}#1.0#0"; "vbalhkct6.ocx"
@@ -354,10 +354,57 @@ Private Sub MDITabs_CloseWindow(ByVal Hwnd As Long)
     InvalidateRect 0, tr, 0 'TODO: See if we cann refresh only the part bellow the toolbar
 End Sub
 
+Private Sub MDITabs_TabBarClick(ByVal iButton As MouseButtonConstants, ByVal screenX As Long, ByVal screenY As Long)
+    Dim lParentIndex As Long
+    Dim rID As Long
+    If iButton = vbLeftButton Then
+        mnuFileNewFile
+    ElseIf iButton = vbMiddleButton Then
+        If MsgBox("Close all the opened files?", vbQuestion + vbYesNo, "Closing all opened files") = vbYes Then
+        End If
+    ElseIf iButton = vbRightButton Then
+        Set fileMenu = New cMenus
+            With fileMenu
+                .DrawStyle = M_Style
+                Set .ImageList = ImgList1.Object
+                Call .CreateFromNothing(Me.Hwnd)
+                lParentIndex = .AddItem(0, Key:="FileMenu")
+                .AddItem lParentIndex, "&File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
+                .AddItem lParentIndex, "-"
+                .AddItem lParentIndex, "&Source...", , , "mnuFileOpenSource", , , , 19
+                .AddItem lParentIndex, "&Map...", , , "mnuFileOpenMap", , , , 21
+                .AddItem lParentIndex, "Fp&g...", , , "mnuFileOpenFpg", , , , 22
+                .AddItem lParentIndex, "F&nt...", , , "mnuFileOpenFnt", , , , 91
+                .AddItem lParentIndex, "&Import...", , , "mnuFileOpenImp"
+                rID = .PopupMenu("FileMenu")
+            End With
+        
+        If (rID <> 0) Then
+            fileMenu.CurrentMenuIndex = fileMenu.IndexForID(rID)
+        
+            Select Case fileMenu.ItemKey(fileMenu.CurrentMenuIndex)
+                Case "mnuFileOpenFile"
+                    mnuFileOpenFile
+                Case "mnuFileOpenSource"
+                    mnuFileOpenSource
+                Case "mnuFileOpenMap"
+                    mnuFileOpenMap
+                Case "mnuFileOpenFpg"
+                    mnuFileOpenFpg
+                Case "mnuFileOpenFnt"
+                    mnuFIleOpenFnt
+                Case "mnuFileOpenImp"
+                    mnuFileOpenImp
+            End Select
+        End If
+        Set fileMenu = Nothing
+    End If
+End Sub
+
 Private Sub MDITabs_TabClick(ByVal iButton As MouseButtonConstants, ByVal Hwnd As Long, ByVal screenX As Long, ByVal screenY As Long)
     Dim lParentIndex As Long
     Dim rID As Long
-    If iButton = 2 Then
+    If iButton = vbRightButton Then
         Set fileMenu = New cMenus
             With fileMenu
                 .DrawStyle = M_Style
@@ -381,6 +428,7 @@ Private Sub MDITabs_TabClick(ByVal iButton As MouseButtonConstants, ByVal Hwnd A
         End If
         Set fileMenu = Nothing
     ElseIf iButton = vbMiddleButton Then ' close tab
+        MsgBox "Close!"
        mnuFileClose
     End If
 End Sub
@@ -557,6 +605,7 @@ Private Sub CreateMenu()
     Dim iP, iP2 As Long
     
     Set cMenu = New cMenus
+    
     With cMenu
         .DrawStyle = M_Style
         'Set the image list
@@ -576,6 +625,7 @@ Private Sub CreateMenu()
                 .AddItem iP2, "&Map", "Ctrl+M", , "mnuFileNewMap", , , , 21
                 .AddItem iP2, "Fp&g", , , "mnuFileNewFpg", , , , 22
                 '.AddItem iP2, "F&nt", , , "mnuFileNewFnt"
+                .AddItem iP2, "&Import", , , "mnuFileNewImp"
             iP2 = .AddItem(iP, "&Open", , , "mnuFileOpen", , , , 2)
                 .AddItem iP2, "&File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
                 .AddItem iP2, "-"
@@ -585,6 +635,7 @@ Private Sub CreateMenu()
                 .AddItem iP2, "Fp&g...", , , "mnuFileOpenFpg", , , , 22
                 .AddItem iP2, "F&nt...", , , "mnuFileOpenFnt", , , , 91
                 .AddItem iP2, "&Song...", , , "mnuFileOpenSong", , , , 53
+                .AddItem iP2, "&Import ...", , , "mnuFileOpenImp"
             .AddItem iP, "&Close", "Ctrl+W", , "mnuFileClose", , , , 33
             .AddItem iP, "Close A&ll", , , "mnuFileCloseAll", , , , 34
             .AddItem iP, "-"
@@ -981,12 +1032,14 @@ Private Sub cMenu_Click(ByVal Index As Long)
     Case "mnuFileNewSource":                Call mnuFileNewSource
     Case "mnuFileNewMap":                   Call mnuFileNewMap
     Case "mnuFileNewFpg":                   Call mnuFileNewFpg
+    Case "mnuFileNewImp":                   Call mnuFileNewImp
     Case "mnuFileOpenFile":                 Call mnuFileOpenFile
     Case "mnuFileOpenProject":              Call mnuFileOpenProject
     Case "mnuFileOpenSource":               Call mnuFileOpenSource
     Case "mnuFileOpenMap":                  Call mnuFileOpenMap
     Case "mnuFileOpenFpg":                  Call mnuFileOpenFpg
     Case "mnuFileOpenFnt":                  Call mnuFIleOpenFnt
+    Case "mnuFileOpenImp":                  Call mnuFileOpenImp
     Case "mnuFileOpenSong":                 Call mnuFileOpenSong
     Case "mnuFileClose":                    Call mnuFileClose
     Case "mnuFileCloseAll":                 Call mnuFileCloseAll
@@ -1185,20 +1238,20 @@ End Sub
 
 Private Sub TbrMain_ButtonClick(ByVal lButton As Long)
     Select Case tbrMain.ButtonKey(lButton)
-        Case "New": mnuFileNewFile
-        Case "Open":  mnuFileOpenFile
-        Case "Close": mnuFileClose
-        Case "CloseAll": mnuFileCloseAll
-        Case "Save":  mnuFileSave
-        Case "SaveAll": mnuFileSaveAll
-        Case "Undo":  mnuEditUndo
-        Case "Redo":  mnuEditRedo
-        Case "Cut":  mnuEditCut
-        Case "Copy":  mnuEditCopy
-        Case "Paste":  mnuEditPaste
-        Case "CompileAndRunFile":  mnuExecuteCompileAndRunFile
-        Case "BuildAndRun":  mnuExecuteBuildAndRun
-        Case "Preferences": frmPreferences.Show vbModeless, Me
+        Case "New":                 mnuFileNewFile
+        Case "Open":                mnuFileOpenFile
+        Case "Close":               mnuFileClose
+        Case "CloseAll":            mnuFileCloseAll
+        Case "Save":                mnuFileSave
+        Case "SaveAll":             mnuFileSaveAll
+        Case "Undo":                mnuEditUndo
+        Case "Redo":                mnuEditRedo
+        Case "Cut":                 mnuEditCut
+        Case "Copy":                mnuEditCopy
+        Case "Paste":               mnuEditPaste
+        Case "CompileAndRunFile":   mnuExecuteCompileAndRunFile
+        Case "BuildAndRun":         mnuExecuteBuildAndRun
+        Case "Preferences":         frmPreferences.Show vbModeless, Me
     End Select
 End Sub
 

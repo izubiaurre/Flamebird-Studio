@@ -6,6 +6,27 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 26/02/2009   Izubiaurre                  \Forms\frmImport.frm                              
+    Ya se pueden editar desde FBMX los archivos *.imp, *.import.
+
+· 17/02/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Por fin dibuja bien los antialias en las sombras y en el cuerpo.
+
+· 17/02/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Por fin dibuja bien los antialias en las sombras y en el cuerpo.
+
+· 17/02/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    He empezado con el guardado del fuente. Creo que me llevará tiempo terminarlo ya que hay que tener en cuenta las versiones para 8bpp, 16bpp y 32bpp.
+
+· 16/02/2009   Izubiaurre                  \Forms\frmMain.frm                                
+    Mejorado el rendimiento del pintado de los fuentes. 
+
+· 16/02/2009   Izubiaurre                  \Forms\frmMain.frm                                
+    He añadido unas nuevas funcionalidades a la barra de pestañas (tabs). Si se clicka con el botón derecho se muestra una ventana para crear nuevas pestañas, si es con el izquierdo, un menú emergente nos permite elegir entre qué tipos de archivos abrir.
+
+· 15/02/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Ya muestra el fondo transparente (cuadros blancos y grises)
+
 · 13/02/2009   Izubiaurre                  \Forms\frmPreferences.frm                         
     Corregido un despiste donde se confundían "upper line" y "under line".
 

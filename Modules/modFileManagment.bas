@@ -52,6 +52,8 @@ Public Property Get FileFormOpenFilter(ff As EFileFormConstants) As String
         sFilter = getFilter("FPG")
     Case FF_FNT
         sFilter = getFilter("FNT")
+    Case FF_IMP
+        sFilter = getFilter("IMP")
     Case Else
         MsgBox "Unknow FileFilter type (this should have never happened). Contact FBMX team"
     End Select
@@ -69,6 +71,8 @@ Public Property Get FileFormSaveFilter(ff As EFileFormConstants) As String
         sFilter = getFilter("FPG")
     Case FF_FNT
         sFilter = getFilter("FNT")
+    Case FF_IMP
+        sFilter = getFilter("IMP")
     Case Else
         MsgBox "Unknow FileFilter type (this should have never happened). Contact FBMX team"
     End Select
@@ -86,6 +90,8 @@ Public Property Get FileFormDefaultExt(ff As EFileFormConstants) As String
         sFilter = "fpg"
     Case FF_FNT
         sFilter = "fnt"
+    Case FF_IMP
+        sFilter = "import"
     Case Else
         MsgBox "Unknow FileFilter type (this should have never happened). Contact FBMX team"
     End Select
@@ -184,6 +190,7 @@ Public Sub OpenProject(ByVal sFile As String, Optional bNew As Boolean)
         openedProject.AddCategory "Movie files", "*.mpeg|*.fli|*.mpg"
         openedProject.AddCategory "Palette files", "*.pal"
         openedProject.AddCategory "Font files", "*.fnt|*.ttf"
+        openedProject.AddCategory "Import file", "*.imp|*.import"
 
         'Trackers por defecto
         openedProject.colTrackers.Add "Bugs"
@@ -329,6 +336,8 @@ Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile
         Set fFileForm = New frmFpg
     Case FF_FNT
         Set fFileForm = New frmFnt
+    Case FF_IMP
+        Set fFileForm = New frmImport
     End Select
     Set fForm = fFileForm
       
@@ -396,7 +405,7 @@ Public Sub OpenFileByExt(ByVal sFile As String)
     
     sExt = LCase(FSO.GetExtensionName(sFile))
     Select Case sExt
-    Case "prg", "txt", "inc", "h"
+    Case "prg", "txt", "inc", "h", "bmk"
         NewFileForm FF_SOURCE, sFile
     Case "map"
         NewFileForm FF_MAP, sFile
@@ -408,6 +417,8 @@ Public Sub OpenFileByExt(ByVal sFile As String)
         LoadPlayer sFile
     Case "fnt"
         NewFileForm FF_FNT, sFile
+    Case "imp", "import"
+        NewFileForm FF_IMP, sFile
     Case Else
         MsgBox "File type not recognized", vbCritical
     End Select
@@ -504,13 +515,13 @@ Public Sub NewWindowWeb(sURL As String, Optional Title As String, Optional Defau
     Dim NewBrowser As New frmWebBrowser
     
     If (Title = "") Then
-        Title = "FENIX HELP"
+        Title = "HELP"
     End If
     
     
     If FSO.GetDriveName(sURL) <> "" Then
         If FSO.FileExists(sURL) = False Then
-            NewBrowser.Caption = "FENIX HELP"
+            NewBrowser.Caption = "HELP"
             NewBrowser.URL = Default
             Exit Sub
         End If

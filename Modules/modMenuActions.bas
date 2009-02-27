@@ -42,6 +42,8 @@ Private Enum NewTypeConstants
     NT_MAP
     NT_FPG
     NT_PAL
+    NT_IMP
+    NT_FNT
 End Enum
 
 Private m_NewType As Integer
@@ -77,6 +79,10 @@ Public Property Let newType(sType As String)
             m_NewType = NT_FPG
         Case "PAL"
             m_NewType = NT_PAL
+        Case "FNT"
+            m_NewType = NT_FNT
+        Case "IMP"
+            m_NewType = NT_IMP
         Case Else
             MsgBox "Error en modMenuActions.newType"
     End Select
@@ -108,6 +114,12 @@ Public Sub mnuFileNewFile()
             Call NewFileForm(FF_MAP)
         Case NT_FPG
             Call NewFileForm(FF_FPG)
+        Case NT_IMP
+            Call NewFileForm(FF_IMP)
+'        Case NT_PAL
+'            Call NewFileForm(FF_PAL)
+'        Case NT_FNT
+'            Call NewFileForm(FF_FNT)
         Case Else
             MsgBox "Sorry. Option not available yet", vbInformation
     End Select
@@ -127,6 +139,10 @@ End Sub
 
 Public Sub mnuFileNewFpg()
     NewFileForm FF_FPG
+End Sub
+
+Public Sub mnuFileNewImp()
+    NewFileForm FF_IMP
 End Sub
 
 Public Sub mnuFileOpenFile()
@@ -155,6 +171,10 @@ End Sub
 
 Public Sub mnuFileOpenSong()
     OpenSong
+End Sub
+
+Public Sub mnuFileOpenImp()
+    OpenFileOfFileForm FF_IMP
 End Sub
 
 Public Sub mnuFileOpenProject()
@@ -1479,15 +1499,15 @@ End Sub
 Public Sub mnuViewToolBarStandard()
     Dim Id As Long
     
-    Id = frmMain.cRebar.BandIndexForData("MainBar")
-    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
+    Id = frmMain.cReBar.BandIndexForData("MainBar")
+    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewToolBarEdit()
     Dim Id As Long
     
-    Id = frmMain.cRebar.BandIndexForData("EditBar")
-    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
+    Id = frmMain.cReBar.BandIndexForData("EditBar")
+    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewProjectBrowser()
