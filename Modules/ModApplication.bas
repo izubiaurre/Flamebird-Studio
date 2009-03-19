@@ -834,7 +834,7 @@ End Sub
 'Just fot debuggin purposes
 Public Sub ShowError(str As String)
     MsgBox "Error in " & str & vbCrLf & "Description: " & Err.description _
-            & vbCrLf & "Number: " & Err.Number, vbCritical
+            & vbCrLf & "Number: " & Err.Number, vbCritical & vbCrLf & Err.Source
     Err.Clear
 End Sub
 

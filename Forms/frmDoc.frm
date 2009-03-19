@@ -172,6 +172,16 @@ Private Sub Cs_Change(ByVal Control As CodeSenseCtl.ICodeSense)
         End If
     End If
     
+    If cs.CurrentWordLength >= IS_Sensitive Then
+        Cs_CodeList Control, showingList
+        Control.ExecuteCmd cmCmdCodeList
+    Else
+        If Not showingList Is Nothing Then
+            Cs_CodeList Control, showingList
+            Control.ExecuteCmd cmCmdCodeList
+        End If
+    End If
+    
 End Sub
 
 Private Function cs_Click(ByVal Control As CodeSenseCtl.ICodeSense) As Boolean
@@ -190,38 +200,60 @@ Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Lis
         Exit Function
     End If
     
-    ' adds func/proc/vars/const... to the autocomplete list
     ListCtrl.hImageList = frmProgramInspector.programImageList.hIml
-
+    
+    ' empty the list
+'    If ListCtrl.ItemCount > 0 Then
+'        For i = 0 To ListCtrl.ItemCount
+'            ListCtrl.DeleteItem (i)
+'        Next
+'    End If
+    While ListCtrl.ItemCount > 0
+        ListCtrl.DeleteItem (0)
+    Wend
+    
+    ' adds func/proc/vars/const... to the autocomplete list
     If IS_LangDefFunc Then
         For i = 1 To UBound(functionList)
-            ListCtrl.AddItem functionList(i), 18 - 1, 1
+            If Left(functionList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem functionList(i), 18 - 1, 1
+            End If
         Next i
     End If
         
     If IS_UserDefFunc Then
         For i = 1 To UBound(userFunctionList)
-            ListCtrl.AddItem userFunctionList(i), 9 - 1, 1
+            If Left(userFunctionList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem userFunctionList(i), 9 - 1, 1
+            End If
         Next i
     End If
         
     If IS_LangDefConst Then
         For i = 1 To UBound(constList)
-            ListCtrl.AddItem constList(i), 11 - 1, 2
+            If Left(constList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem constList(i), 11 - 1, 2
+            End If
         Next i
     End If
         
     If IS_LangDefVar Then
         For i = 1 To UBound(globalList)
-            ListCtrl.AddItem globalList(i), 12 - 1, 2
+            If Left(globalList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem globalList(i), 12 - 1, 2
+            End If
         Next i
         
         For i = 1 To UBound(localList)
-            ListCtrl.AddItem localList(i), 13 - 1, 2
+            If Left(localList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem localList(i), 13 - 1, 2
+            End If
         Next i
             
         For i = 1 To UBound(globalStructList)
-            ListCtrl.AddItem globalStructList(i), 16 - 1, 2
+            If Left(globalStructList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem globalStructList(i), 16 - 1, 2
+            End If
         Next i
         
     '    For i = 1 To UBound(localStructList)
@@ -231,22 +263,30 @@ Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Lis
         
     If IS_UserDefVar Then
         For i = 1 To UBound(varList)
-            ListCtrl.AddItem varList(i), 2 - 1, 2
+            If Left(varList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem varList(i), 2 - 1, 2
+            End If
         Next i
     End If
     
     If IS_UserDefConst Then
         For i = 1 To UBound(userConstList)
-            ListCtrl.AddItem userConstList(i), 1 - 1, 2
+            If Left(userConstList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+                ListCtrl.AddItem userConstList(i), 1 - 1, 2
+            End If
         Next i
     End If
     
     For i = 1 To UBound(userTypeList)
-        ListCtrl.AddItem userTypeList(i), 8 - 1, 2
+        If Left(userTypeList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+            ListCtrl.AddItem userTypeList(i), 8 - 1, 2
+        End If
     Next i
     
     For i = 1 To UBound(typeList)
-        ListCtrl.AddItem typeList(i), 17 - 1, 2
+        If Left(typeList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+            ListCtrl.AddItem typeList(i), 17 - 1, 2
+        End If
     Next i
     
     Dim wordIndex As Long
@@ -265,11 +305,30 @@ Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Lis
     ' Enable mouse hot-tracking
     ListCtrl.EnableHotTracking
     
+'    Dim i As Long
+'    Debug.Print "Num of elements:" & ListCtrl.ItemCount
+'    For i = 0 To ListCtrl.ItemCount
+'        Debug.Print ListCtrl.GetItemText(i)
+'    Next
+'    For i = 0 To ListCtrl.ItemCount
+'        Debug.Print Left(ListCtrl.GetItemText(i), Len(Control.CurrentWord)) & "==" & Control.CurrentWord
+'        If Not Left(ListCtrl.GetItemText(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
+'            Debug.Print "   d " & ListCtrl.GetItemText(i)
+'            ListCtrl.DeleteItem (i)
+'        End If
+'    Next
+'    Debug.Print "After clear-___________-"
+'    Debug.Print "Num of elements:" & ListCtrl.ItemCount
+'    For i = 0 To ListCtrl.ItemCount
+'        Debug.Print ListCtrl.GetItemText(i)
+'    Next
     'define a la variable que contiene la lista que se esta mostrando
     Set showingList = ListCtrl
     
     ' Allow list view control to be displayed
     Cs_CodeList = True
+    
+    Control.ExecuteCmd cmCmdCodeList
     
 End Function
 
@@ -278,6 +337,7 @@ Private Function Cs_CodeListCancel(ByVal Control As CodeSenseCtl.ICodeSense, ByV
 End Function
 
 Private Function cs_CodeListChar(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList, ByVal wChar As Long, ByVal lKeyData As Long) As Boolean
+    Cs_CodeList Control, ListCtrl
     RefreshStatusBar
 End Function
 
@@ -288,6 +348,12 @@ End Sub
 Private Function Cs_CodeListSelChange(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList, ByVal lItem As Long) As String
     ' Set the tooltip text...
     'Cs_CodeListSelChange = "This is function #" & lItem + 1
+'    Dim i As Long
+'    For i = 0 To ListCtrl.ItemCount
+'        If Left(ListCtrl.GetItemText(i), Len(Control.CurrentWord)) <> Control.CurrentWord Then
+'            ListCtrl.DeleteItem (i)
+'        End If
+'    Next
 End Function
 
 Private Function Cs_CodeListSelMade(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList) As Boolean

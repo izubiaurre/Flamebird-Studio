@@ -6,6 +6,15 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 18/03/2009   Izubiaurre                  \Forms\frmDoc.frm                                 
+    El IntelliSense muestra una lista más optimizada. Ya no se ven las funciones, variables... que no coinciden con la palabra.
+
+· 17/03/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Ya están las estructuras de formato fnx de fuentes listo.
+
+· 16/03/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    He añadido un par de mejoras en el código y algunos up-down para facilitar la edición de los tamaños...
+
 · 26/02/2009   Izubiaurre                  \Forms\frmImport.frm                              
     Ya se pueden editar desde FBMX los archivos *.imp, *.import.
 

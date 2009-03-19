@@ -282,7 +282,7 @@ End Sub
 
 Private Sub MDIForm_Resize()
     If Me.WindowState <> vbMinimized Then
-        cRebar.RebarSize
+        cReBar.RebarSize
     End If
 End Sub
 
@@ -328,7 +328,7 @@ Private Sub MDIForm_OLEDragDrop(Data As DataObject, Effect As Long, Button As In
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-    cRebar.RemoveAllRebarBands 'Just for safety
+    cReBar.RemoveAllRebarBands 'Just for safety
     
     Unload frmProjectBrowser
     Unload frmProperties
@@ -864,7 +864,7 @@ Private Function CreateToolBars()
         .AddButton "Preferences", 10, , , , CTBNormal, "Preferences"
     End With
 
-    With cRebar
+    With cReBar
         ' Background bitmap
         If A_Bitmaps Then .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         
@@ -1272,7 +1272,7 @@ End Sub
 Private Sub cReBar_ChevronPushed(ByVal wID As Long, ByVal lLeft As Long, _
                         ByVal lTop As Long, ByVal lRight As Long, ByVal lBottom As Long)
     Dim v As Variant
-   v = cRebar.BandData(wID)
+   v = cReBar.BandData(wID)
    If Not IsMissing(v) Then
       Select Case v
         Case "MainBar"
@@ -1282,7 +1282,7 @@ Private Sub cReBar_ChevronPushed(ByVal wID As Long, ByVal lLeft As Long, _
 End Sub
 
 Private Sub cReBar_HeightChanged(lNewHeight As Long)
-    cRebar.RebarSize
+    cReBar.RebarSize
    If picHolder.align = 1 Or picHolder.align = 2 Then
       picHolder.Height = lNewHeight * Screen.TwipsPerPixelY
    Else
@@ -1291,11 +1291,11 @@ Private Sub cReBar_HeightChanged(lNewHeight As Long)
 End Sub
 
 Private Sub picHolder_Resize()
-    cRebar.RebarSize
+    cReBar.RebarSize
     If picHolder.align = 1 Or picHolder.align = 2 Then
-        picHolder.Height = cRebar.RebarHeight * Screen.TwipsPerPixelY
+        picHolder.Height = cReBar.RebarHeight * Screen.TwipsPerPixelY
     Else
-        picHolder.Width = cRebar.RebarHeight * Screen.TwipsPerPixelY
+        picHolder.Width = cReBar.RebarHeight * Screen.TwipsPerPixelY
     End If
 End Sub
 
