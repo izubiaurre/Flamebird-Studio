@@ -6,6 +6,9 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 21/03/2009   Izubiaurre                  \FBMX.vbp                                         
+    He actualizado dos series de iconos para futuras versiones.
+
 · 18/03/2009   Izubiaurre                  \Forms\frmDoc.frm                                 
     El IntelliSense muestra una lista más optimizada. Ya no se ven las funciones, variables... que no coinciden con la palabra.
 

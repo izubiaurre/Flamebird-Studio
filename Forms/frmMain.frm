@@ -758,6 +758,7 @@ Private Sub CreateMenu()
             .AddItem iP, "-"
             .AddItem iP, "&Add Files...", , , "mnuProjectAddFile", False, , , 23
             .AddItem iP, "&Remove current file from project", , , "mnuProjectRemoveFrom", False
+            .AddItem iP, "&Create import file", "Ctrl+Shift+I", , "mnuProjectCreateImp", False
             .AddItem iP, "-"
             .AddItem iP, "&Properties", , , "mnuProjectProperties", False, , , 18
             .AddItem iP, "-"
@@ -1124,6 +1125,7 @@ Private Sub cMenu_Click(ByVal Index As Long)
     Case "mnuProjectClose":                 Call CloseProject
     Case "mnuProjectAddFile":               Call mnuProjectAddFile
     Case "mnuProjectRemoveFrom":            Call mnuProjectRemoveFile
+    Case "mnuProjectCreateImp":             Call mnuProjectCreateImp
     
     Case "mnuToolsCalculator":              Call mnuToolsCalculator
     Case "mnuToolsIconChanger":             Call mnuToolsIconChanger

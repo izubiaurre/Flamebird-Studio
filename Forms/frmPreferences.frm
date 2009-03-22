@@ -2004,7 +2004,7 @@ Private Sub PlaceControls()
     Me.Width = 7440     ' 5625
     Me.Height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
-    cmdOk.Move 3120, 5400        ' 3120
+    cmdOK.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
 End Sub
 
@@ -2254,6 +2254,46 @@ Private Sub SaveConf()
         End If
     End If
 
+    If trFiles.Nodes(6).Checked Then
+        If Not FileAssociated(".fpg", "Bennu/Fenix.ImagePackFile") Then
+            Call RegisterType(".fpg", "Bennu/Fenix.ImagePackFile", "Image/Map", "Bennu/Fenix image pack files", App.Path + "\Icons\fenix_fpg.ico")
+        End If
+    Else
+        If FileAssociated(".fpg", "Bennu/Fenix.ImagePackFile") Then
+            Call DeleteType(".fpg", "Bennu/Fenix.ImagePackFile")
+        End If
+    End If
+    
+    If trFiles.Nodes(7).Checked Then
+        If Not FileAssociated(".imp", "Bennu/Fenix.FontFile") Then
+            Call RegisterType(".imp", "Bennu/Fenix.FontFile", "Image/Map", "Bennu/Fenix font files", App.Path + "\Icons\fenix_fnt.ico")
+        End If
+    Else
+        If FileAssociated(".imp", "Bennu/Fenix.FontFile") Then
+            Call DeleteType(".imp", "Bennu/Fenix.FontFile")
+        End If
+    End If
+    
+    If trFiles.Nodes(8).Checked Then
+        If Not FileAssociated(".fnt", "Bennu.ImportFile") Then
+            Call RegisterType(".fnt", "Bennu.ImportFile", "Image/Map", "Bennu module list files", App.Path + "\Icons\fenix_inc.ico")
+        End If
+    Else
+        If FileAssociated(".fnt", "Bennu.ImportFile") Then
+            Call DeleteType(".fnt", "Bennu.ImportFile")
+        End If
+    End If
+    
+    If trFiles.Nodes(9).Checked Then
+        If Not FileAssociated(".pal", "Bennu/Fenix.PaletteFile") Then
+            Call RegisterType(".pal", "Bennu/Fenix.PaletteFile", "Image/Palette", "Bennu/Fenix palette files", App.Path + "\Icons\fenix_inc.ico")
+        End If
+    Else
+        If FileAssociated(".pal", "Bennu/Fenix.PaletteFile") Then
+            Call DeleteType(".pal", "Bennu/Fenix.PaletteFile")
+        End If
+    End If
+    
     'DCBs
     If chkDCB.Value = 1 Then
         ' actualizamos siempre el dir de fenix
@@ -2765,8 +2805,12 @@ Private Sub Form_Load()
         .Nodes.Add(, , "prg", "PRG - Source files").Checked = FileAssociated(".prg", "Bennu/Fenix.Source")
         .Nodes.Add(, , "map", "MAP - Bennu/Fenix image files").Checked = FileAssociated(".map", "Bennu/Fenix.ImageFile")
         .Nodes.Add(, , "fbp", "FBP - FlameBird Project files").Checked = FileAssociated(".fbp", "FlameBird.Project")
-        .Nodes.Add(, , "bmk", "BMK - Source bookmark files").Checked = FileAssociated(".bmk", "FlameBird.Bookmark")
-        .Nodes.Add(, , "cpt", "CPT - Map control-point list files").Checked = FileAssociated(".cpt", "FlameBird.ControlPoint")
+        .Nodes.Add(, , "bmk", "BMK - FlameBird Source bookmark files").Checked = FileAssociated(".bmk", "FlameBird.Bookmark")
+        .Nodes.Add(, , "cpt", "CPT - FlameBird Map control-point list files").Checked = FileAssociated(".cpt", "FlameBird.ControlPoint")
+        .Nodes.Add(, , "fpg", "FPG - Bennu/Fenix image pack files").Checked = FileAssociated(".fpg", "Bennu/Fenix.ImagePackFile")
+        .Nodes.Add(, , "fnt", "FNT - Bennu/Fenix font files").Checked = FileAssociated(".fnt", "Bennu/Fenix.FontFile")
+        .Nodes.Add(, , "imp", "IMP/IMPORT - Bennu module list files").Checked = FileAssociated(".imp", "Bennu.ImportFile")
+        .Nodes.Add(, , "pal", "PAL - Bennu/Fenix palette files").Checked = FileAssociated(".pal", "Bennu/Fenix.PaletteFile")
     End With
     chkDCB.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 

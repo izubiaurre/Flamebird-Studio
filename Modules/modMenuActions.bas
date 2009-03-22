@@ -1499,15 +1499,15 @@ End Sub
 Public Sub mnuViewToolBarStandard()
     Dim Id As Long
     
-    Id = frmMain.cReBar.BandIndexForData("MainBar")
-    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
+    Id = frmMain.cRebar.BandIndexForData("MainBar")
+    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewToolBarEdit()
     Dim Id As Long
     
-    Id = frmMain.cReBar.BandIndexForData("EditBar")
-    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
+    Id = frmMain.cRebar.BandIndexForData("EditBar")
+    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewProjectBrowser()
@@ -1729,6 +1729,89 @@ Public Sub mnuProjectAddFile()
         frmProjectBrowser.RefreshTree
     End If
 End Sub
+
+Public Sub mnuProjectCreateImp()
+    Dim text        As String
+    Dim textTemp    As String       ' string where we save all the changes we made at identation
+    Dim lineText    As String
+    Dim curLine     As Long
+    Dim Pos         As Integer
+    Dim textLen     As Integer
+    Dim Char        As String
+    Dim charTemp    As String
+    Dim startLine   As Long
+    
+    If Not ActiveFileForm Is Nothing Then
+        If ActiveFileForm.Identify = FF_SOURCE Then
+            Set fDoc = ActiveForm
+            
+            frmMain.StatusBar.PanelText("MAIN") = "Creating import file - Please wait...  "
+            
+            textTemp = ""
+   
+            fDoc.cs.ExecuteCmd cmCmdSelectAll
+            text = fDoc.cs.SelText
+            startLine = 0
+            
+            If fDoc.rangoActual.EndLineNo - startLine > 1000 Then
+                MsgBox "The autoidentation process can take a long time to perform." & vbNewLine & _
+                        "If the program do not refresh or it seems to be fallen don't close, wait a bit more." & vbNewLine & _
+                        "Please be patient and wait a while", vbExclamation
+            End If
+            
+            
+            For curLine = startLine To fDoc.rangoActual.EndLineNo
+            
+                lineText = fDoc.cs.getLine(curLine)
+                
+                
+            Next
+            
+            fDoc.cs.ExecuteCmd cmCmdClearSelection
+        End If
+    End If
+    textTemp = ""
+    text = ""
+End Sub
+
+Private Function getModule(line As String) As String
+    Dim strFunc As String
+    Dim i As Long
+    
+    strFunc = getFunction(line)
+    For i = LBound(modules) To UBound(modules)
+        If module(i) = strFunc Then
+            getModule = moduleName(i)
+            Exit Function
+        End If
+    Next
+    getModule = ""
+End Function
+
+
+Private Function getFunction(line As String) As String
+    Dim curWord As String
+    Dim i As Long
+    
+    line = replace(line, Chr(vbKeyTab), "")
+    i = 1
+    While Mid(line, i, 1) = " "
+        i = i + 1
+    Wend
+    
+    If i > 1 And (Len(line) - i) > 0 Then
+        line = Right(line, Len(line) - (i - 1))
+    End If
+    
+    i = 1
+    While isChar(Mid(line, i, 1))
+        i = i + 1
+    Wend
+
+    curWord = Left(line, i - 1)
+
+    Word = LCase(curWord)
+End Function
 '-------------------------------------------------------------------------------
 'END PROJECT MENU
 '-------------------------------------------------------------------------------
