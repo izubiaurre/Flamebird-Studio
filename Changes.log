@@ -6,6 +6,9 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 06/04/2009   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Añadido botón en la sección "Misc" para limpiar la lista de las extensiones o lista de herramientas.
+
 · 06/04/2009   Izubiaurre                  \Modules\modExecution.bas                         
     Ya muestra la salida de consola en frmDebug
 

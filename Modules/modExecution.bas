@@ -108,7 +108,7 @@ Private Sub ReadFxiOutputAndErrors()
     Dim textStream As textStream
     
     
-    On Error GoTo errors:
+    'On Error GoTo errors:
     'Look for the output files in the Fenix dir and the file dir
     If FSO.FileExists(mFxiDir & "\stddebug.txt") Then
         stdoutFile = mFxiDir & "\stddebug.txt"
@@ -126,7 +126,9 @@ Private Sub ReadFxiOutputAndErrors()
     If stdoutFile <> "" Then
         Set f = FSO.GetFile(stdoutFile)
         Set textStream = f.OpenAsTextStream(ForReading, TristateFalse)
-        stdout = textStream.ReadAll()
+        If f.Size > 0 Then
+            stdout = textStream.ReadAll()
+        End If
         textStream.Close
     End If
     'Read stderr
@@ -138,7 +140,7 @@ Private Sub ReadFxiOutputAndErrors()
     End If
     
     'Set the frmDebug and frmErrors text...
-    frmDebug.txtOutput.text = stdout
+    'frmDebug.txtOutput.text = stdout
     frmErrors.txtOutput.text = stderr
     
     frmMain.StatusBar.RedrawPanel ("FXI_OUTPUT_INFO")
@@ -325,7 +327,6 @@ Public Function Compile(ByVal sFile As String) As Boolean
             'in that case, the output should be in the stdout.txt in the fenix folder
             'so we just wait for this file to be created
             If (stdout = "") Then
-                'MsgBox "a"
                 bCancel = False
                 If R_Stub Then
                     'Wait for the stdout file to be created
@@ -479,15 +480,15 @@ Public Function Run(ByVal sFile As String) As Boolean
             'If R_DoubleBuf Then sCommand = sCommand & " -b "
             
             'Delete stdout file if exists
-            stdoutFile = fxiDir & "\stddebug.txt"
-            FSO.CreateTextFile stdoutFile
+            'stdoutFile = fxiDir & "\stddebug.txt"
+            'FSO.CreateTextFile stdoutFile
 '            If FSO.FileExists(stdoutFile) = True Then
 '                FSO.DeleteFile stdoutFile
 '            Else
 '                FSO.CreateTextFile fxiDir & "\stddebug.txt"
 '            End If
             
-            sCommand = sCommand & " > " & Chr(34) & stdoutFile & Chr(34)
+            'sCommand = sCommand & " > " & Chr(34) & stdoutFile & Chr(34)
             stdout = objDOS.ExecuteCommand(sCommand)
             bResult = True 'Execution succesful
             

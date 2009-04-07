@@ -24,7 +24,7 @@ Begin VB.Form frmPreferences
       Left            =   11760
       ScaleHeight     =   4095
       ScaleWidth      =   5535
-      TabIndex        =   118
+      TabIndex        =   116
       Top             =   4080
       Width           =   5535
       Begin VB.Frame fraPATHS 
@@ -40,7 +40,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   2175
          Left            =   0
-         TabIndex        =   119
+         TabIndex        =   117
          Top             =   120
          Width           =   5415
          Begin VB.ListBox lstPATHS 
@@ -55,7 +55,7 @@ Begin VB.Form frmPreferences
             EndProperty
             Height          =   1320
             Left            =   120
-            TabIndex        =   124
+            TabIndex        =   122
             Top             =   360
             Width           =   4095
          End
@@ -68,14 +68,14 @@ Begin VB.Form frmPreferences
             Left            =   4320
             ScaleHeight     =   2535
             ScaleWidth      =   975
-            TabIndex        =   120
+            TabIndex        =   118
             Top             =   240
             Width           =   975
             Begin VB.CommandButton cmdPATHSRemoveAll 
                Caption         =   "Remove All"
                Height          =   375
                Left            =   0
-               TabIndex        =   123
+               TabIndex        =   121
                Top             =   1320
                Width           =   975
             End
@@ -83,7 +83,7 @@ Begin VB.Form frmPreferences
                Caption         =   "Remove"
                Height          =   375
                Left            =   0
-               TabIndex        =   122
+               TabIndex        =   120
                Top             =   720
                Width           =   975
             End
@@ -91,7 +91,7 @@ Begin VB.Form frmPreferences
                Caption         =   "Add"
                Height          =   375
                Left            =   0
-               TabIndex        =   121
+               TabIndex        =   119
                Top             =   120
                Width           =   975
             End
@@ -101,7 +101,7 @@ Begin VB.Form frmPreferences
    Begin vbalTreeViewLib6.vbalTreeView tv_preferences 
       Height          =   3255
       Left            =   5760
-      TabIndex        =   110
+      TabIndex        =   108
       Top             =   4920
       Width           =   1815
       _ExtentX        =   3201
@@ -137,22 +137,31 @@ Begin VB.Form frmPreferences
       TabIndex        =   102
       Top             =   12600
       Width           =   5295
-      Begin VB.CommandButton cmdClearCommandHistory 
-         Caption         =   "Clear Comand History"
+      Begin VB.CommandButton cmdClearToolList 
+         Caption         =   "Clear Tool List"
          Height          =   375
-         Left            =   3420
-         TabIndex        =   104
-         ToolTipText     =   "Clears the MS-DOS command history."
-         Top             =   720
+         Left            =   3360
+         TabIndex        =   125
+         ToolTipText     =   "Clears the Tool list"
+         Top             =   1200
          Width           =   1695
       End
       Begin VB.CommandButton cmdClearRecents 
          Caption         =   "Clear Recent List"
          Height          =   375
          Left            =   3420
-         TabIndex        =   103
+         TabIndex        =   124
          ToolTipText     =   "Clears the recently opened files list"
          Top             =   240
+         Width           =   1695
+      End
+      Begin VB.CommandButton cmdClearCommandHistory 
+         Caption         =   "Clear Comand History"
+         Height          =   375
+         Left            =   3420
+         TabIndex        =   123
+         ToolTipText     =   "Clears the MS-DOS command history."
+         Top             =   720
          Width           =   1695
       End
    End
@@ -557,7 +566,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   117
+         TabIndex        =   115
          Top             =   1440
          Width           =   4095
       End
@@ -574,7 +583,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   116
+         TabIndex        =   114
          Top             =   1200
          Width           =   4095
       End
@@ -721,7 +730,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   1215
          Left            =   2880
-         TabIndex        =   105
+         TabIndex        =   103
          Top             =   2400
          Width           =   2535
          Begin VB.PictureBox Picture3 
@@ -733,7 +742,7 @@ Begin VB.Form frmPreferences
             Left            =   120
             ScaleHeight     =   855
             ScaleWidth      =   2295
-            TabIndex        =   106
+            TabIndex        =   104
             Top             =   240
             Width           =   2295
             Begin VB.OptionButton optHelpLine 
@@ -750,7 +759,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   2
                Left            =   0
-               TabIndex        =   109
+               TabIndex        =   107
                Top             =   600
                Width           =   1455
             End
@@ -768,7 +777,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   1
                Left            =   0
-               TabIndex        =   108
+               TabIndex        =   106
                Top             =   360
                Width           =   1815
             End
@@ -786,7 +795,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   0
                Left            =   0
-               TabIndex        =   107
+               TabIndex        =   105
                Top             =   120
                Width           =   1575
             End
@@ -1346,7 +1355,7 @@ Begin VB.Form frmPreferences
                Height          =   285
                Index           =   1
                Left            =   0
-               TabIndex        =   115
+               TabIndex        =   113
                Top             =   1200
                Width           =   4455
             End
@@ -1364,7 +1373,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   1
                Left            =   4560
-               TabIndex        =   114
+               TabIndex        =   112
                Top             =   1200
                Width           =   495
             End
@@ -1381,7 +1390,7 @@ Begin VB.Form frmPreferences
                Height          =   285
                Index           =   0
                Left            =   0
-               TabIndex        =   112
+               TabIndex        =   110
                Top             =   480
                Width           =   4455
             End
@@ -1399,7 +1408,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Index           =   0
                Left            =   4560
-               TabIndex        =   111
+               TabIndex        =   109
                Top             =   480
                Width           =   495
             End
@@ -1459,7 +1468,7 @@ Begin VB.Form frmPreferences
                EndProperty
                Height          =   255
                Left            =   2880
-               TabIndex        =   113
+               TabIndex        =   111
                Top             =   0
                Width           =   1215
             End
@@ -2004,7 +2013,7 @@ Private Sub PlaceControls()
     Me.Width = 7440     ' 5625
     Me.Height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
-    cmdOK.Move 3120, 5400        ' 3120
+    cmdOk.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
 End Sub
 
@@ -2680,6 +2689,10 @@ Private Sub cmdClearRecents_Click()
     Next i
 
     'LoadRecents
+End Sub
+
+Private Sub cmdClearToolList_Click()
+    FSO.CreateTextFile App.Path & "\Conf\tools.fbconf"
 End Sub
 
 Private Sub cmdExplore_Click(Index As Integer)

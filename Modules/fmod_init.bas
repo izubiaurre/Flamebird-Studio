@@ -19,7 +19,7 @@ Public brushGreen As Long
 Public Sub initFMOD()
     'start FMOD
     Dim result As FMOD_RESULT
-    Dim Version As Long
+    Dim version As Long
     
     ' Create the brushes we will be using
     brushBlack = CreateSolidBrush(RGB(0, 0, 0))
@@ -35,11 +35,11 @@ Public Sub initFMOD()
     result = FMOD_System_Create(system)
     ERRCHECK (result)
 
-    result = FMOD_System_GetVersion(system, Version)
+    result = FMOD_System_GetVersion(system, version)
     ERRCHECK (result)
 
-    If Version <> FMOD_VERSION Then
-        MsgBox "Error!  You are using an old version of FMOD " & hex$(Version) & ". " & _
+    If version <> FMOD_VERSION Then
+        MsgBox "Error!  You are using an old version of FMOD " & hex$(version) & ". " & _
                "This program requires " & hex$(FMOD_VERSION)
     End If
 
@@ -79,21 +79,4 @@ Public Sub ERRCHECK(result As FMOD_RESULT)
         'End
         Exit Sub
     End If
-End Sub
-
-Private Sub createSpectrumBrush(startColor As Long, endColor As Long)
-'    Dim i As Integer
-'
-'    For i = 0 To 20
-'        brush(i) = CreateSolidBrush(RGB(0, 250, 200))
-'    Next i
-'    For i = 21 To 40
-'        brush(i) = CreateSolidBrush(RGB(20, 200, 180))
-'    Next i
-'    For i = 41 To 60
-'        brush(i) = CreateSolidBrush(RGB(40, 150, 160))
-'    Next i
-'    For i = 61 To 75
-'        brush(i) = CreateSolidBrush(RGB(60, 125, 140))
-'    Next i
 End Sub
