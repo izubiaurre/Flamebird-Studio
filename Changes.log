@@ -6,6 +6,12 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 06/04/2009   Izubiaurre                  \Modules\modExecution.bas                         
+    Ya muestra la salida de consola en frmDebug
+
+· 05/04/2009   Izubiaurre                  \Forms\frmMain.frm                                
+    Ahora la lista de los plugins se ve en el menú "Tools".
+
 · 21/03/2009   Izubiaurre                  \FBMX.vbp                                         
     He actualizado dos series de iconos para futuras versiones.
 

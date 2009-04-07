@@ -110,10 +110,10 @@ Private Sub ReadFxiOutputAndErrors()
     
     On Error GoTo errors:
     'Look for the output files in the Fenix dir and the file dir
-    If FSO.FileExists(mFxiDir & "\stdout.txt") Then
-        stdoutFile = mFxiDir & "\stdout.txt"
-    ElseIf FSO.FileExists(mFileDir & "\stdout.txt") Then
-        stdoutFile = mFileDir & "\stdout.txt"
+    If FSO.FileExists(mFxiDir & "\stddebug.txt") Then
+        stdoutFile = mFxiDir & "\stddebug.txt"
+    ElseIf FSO.FileExists(mFileDir & "\stddebug.txt") Then
+        stdoutFile = mFileDir & "\stddebug.txt"
     End If
     
     If FSO.FileExists(mFxiDir & "\stderr.txt") Then
@@ -377,7 +377,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
                 textStream.Close
             End If
             
-            stdout = Right(stdout, Len(stdout) - 249)
+            stdout = Right(stdout, Len(stdout) - 267)
             
             frmOutput.txtOutput.text = stdout
             'Search for the error line
@@ -443,8 +443,15 @@ End Function
 '-------------------------------------------------------------------------------------
 Public Function Run(ByVal sFile As String) As Boolean
     Dim dcbFile As String, sCommand As String
+    Dim bCancel As Boolean
     Dim bResult As Boolean
+    Dim timeStart As Long
+    Dim msgResult As VbMsgBoxResult
     Dim fxiDir As String
+    Dim stdout As String
+    Dim stdoutFile As String
+    Dim textStream As textStream
+    Dim f As file
 
     'Determine which compilation Fenix Directory to use
     fxiDir = fenixDir
@@ -470,8 +477,22 @@ Public Function Run(ByVal sFile As String) As Boolean
             'Params
             'If R_filter Then sCommand = sCommand & " -f "
             'If R_DoubleBuf Then sCommand = sCommand & " -b "
-            objDOS.ExecuteCommand sCommand
+            
+            'Delete stdout file if exists
+            stdoutFile = fxiDir & "\stddebug.txt"
+            FSO.CreateTextFile stdoutFile
+'            If FSO.FileExists(stdoutFile) = True Then
+'                FSO.DeleteFile stdoutFile
+'            Else
+'                FSO.CreateTextFile fxiDir & "\stddebug.txt"
+'            End If
+            
+            sCommand = sCommand & " > " & Chr(34) & stdoutFile & Chr(34)
+            stdout = objDOS.ExecuteCommand(sCommand)
             bResult = True 'Execution succesful
+            
+            frmDebug.txtOutput.text = ""
+            frmDebug.txtOutput.text = stdout
             
             'Start the end-running check timer
             mTimerId = SetTimer(0&, 0&, 300, AddressOf TimerProc)
