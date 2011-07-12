@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{665BF2B8-F41F-4EF4-A8D0-303FBFFC475E}#2.0#0"; "cmcs21.ocx"
 Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbaltreeview6.ocx"
 Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbaldtab6.ocx"
-Object = "{C8A61D56-D8DC-11D2-8064-9D6F06504DA8}#1.1#0"; "axcolctl.ocx"
+Object = "{C8A61D56-D8DC-11D2-8064-9D6F06504DA8}#1.1#0"; "AXCOLCTL.OCX"
 Begin VB.Form frmPreferences 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Preferences"
@@ -2013,7 +2013,7 @@ Private Sub PlaceControls()
     Me.Width = 7440     ' 5625
     Me.Height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
-    cmdOk.Move 3120, 5400        ' 3120
+    cmdOK.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
 End Sub
 
@@ -2255,7 +2255,7 @@ Private Sub SaveConf()
     
     If trFiles.Nodes(5).Checked Then
         If Not FileAssociated(".cpt", "FlameBird.ControlPoint") Then
-            Call RegisterType(".cpt", "FlameBird.ControlPoint", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
+            Call RegisterType(".cpt", "FlameBird.ControlPoint", "Text", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
         End If
     Else
         If FileAssociated(".cpt", "FlameBird.ControlPoint") Then
@@ -2274,22 +2274,22 @@ Private Sub SaveConf()
     End If
     
     If trFiles.Nodes(7).Checked Then
-        If Not FileAssociated(".imp", "Bennu/Fenix.FontFile") Then
-            Call RegisterType(".imp", "Bennu/Fenix.FontFile", "Image/Map", "Bennu/Fenix font files", App.Path + "\Icons\fenix_fnt.ico")
+        If Not FileAssociated(".fnt", "Bennu/Fenix.FontFile") Then
+            Call RegisterType(".fnt", "Bennu/Fenix.FontFile", "Image/Map", "Bennu/Fenix font files", App.Path + "\Icons\fenix_fnt.ico")
         End If
     Else
-        If FileAssociated(".imp", "Bennu/Fenix.FontFile") Then
+        If FileAssociated(".fnt", "Bennu/Fenix.FontFile") Then
             Call DeleteType(".imp", "Bennu/Fenix.FontFile")
         End If
     End If
     
     If trFiles.Nodes(8).Checked Then
-        If Not FileAssociated(".fnt", "Bennu.ImportFile") Then
-            Call RegisterType(".fnt", "Bennu.ImportFile", "Image/Map", "Bennu module list files", App.Path + "\Icons\fenix_inc.ico")
+        If Not FileAssociated(".imp", "Bennu.ImportFile") Then
+            Call RegisterType(".imp", "Bennu.ImportFile", "Text", "Bennu module list files", App.Path + "\Icons\fenix_import.ico")
         End If
     Else
-        If FileAssociated(".fnt", "Bennu.ImportFile") Then
-            Call DeleteType(".fnt", "Bennu.ImportFile")
+        If FileAssociated(".imp", "Bennu.ImportFile") Then
+            Call DeleteType(".imp", "Bennu.ImportFile")
         End If
     End If
     
@@ -2304,7 +2304,7 @@ Private Sub SaveConf()
     End If
     
     'DCBs
-    If chkDCB.Value = 1 Then
+    If chkDcb.Value = 1 Then
         ' actualizamos siempre el dir de fenix
         If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
             Call DeleteType(".dcb", "Bennu/Fenix.Bin")
@@ -2825,7 +2825,7 @@ Private Sub Form_Load()
         .Nodes.Add(, , "imp", "IMP/IMPORT - Bennu module list files").Checked = FileAssociated(".imp", "Bennu.ImportFile")
         .Nodes.Add(, , "pal", "PAL - Bennu/Fenix palette files").Checked = FileAssociated(".pal", "Bennu/Fenix.PaletteFile")
     End With
-    chkDCB.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
+    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 
     'TreeView
     With tv_preferences

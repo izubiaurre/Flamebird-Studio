@@ -6,6 +6,12 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 12/07/2011   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Corregidos uno pequeños errores en los registros de los iconos.
+
+· 07/04/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
+    Crea bien las estructuras de los fuentes.
+
 · 06/04/2009   Izubiaurre                  \Forms\frmPreferences.frm                         
     Añadido botón en la sección "Misc" para limpiar la lista de las extensiones o lista de herramientas.
 

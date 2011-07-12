@@ -594,6 +594,7 @@ Private Sub LoadConf()
         .Section = "Run"
         
         .Key = "Compiler"
+        R_Compiler = .Value
         
         If .Value = 0 Then
             .Key = "FenixPath"
@@ -603,10 +604,11 @@ Private Sub LoadConf()
         
         .Default = " "
         fenixDir = .Value
+        Debug.Print fenixDir
         
-        .Key = "Compiler"
-        .Default = "1"
-        R_Compiler = IIf(.Value = True, "0", "1")
+'        .Key = "Compiler"
+'        .Default = "1"
+'        R_Compiler = IIf(.Value = True, "0", "1")
 
         .Key = "Debug"
         .Default = "1"
@@ -786,13 +788,10 @@ Public Sub Main()
     SetSplashMessage "Initializating editor styles"
     InitStyles
     
-    'General configuration
-    'SetSplashMessage "Loading general configuration"
-    'LoadConf
-    '
-    'If A_StyleXP Then
-    '    InitCommonControlsVB
-    'End If
+'    General configuration
+'    SetSplashMessage "Loading general configuration"
+'    LoadConf
+
     
     'Init FMOD sound system
     SetSplashMessage "Initializing Audio System"
