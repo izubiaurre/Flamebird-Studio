@@ -19,6 +19,7 @@ Attribute VB_Name = "modApplication"
 Option Explicit
 
 Public Const CONF_FILE As String = "\conf\config.ini"
+Public Const EDITOR_CONF_FILE As String = "\conf\editor.ini"
 Public Const RES_FOLDER As String = "\Resources"
 
 Public Ini As New cInifile
@@ -73,7 +74,7 @@ Public globalStructList() As String
 Public localStructList() As String
 
 Public Propiedades As Globals
-Public Fenix As Language
+Public Bennu As Language
 
 'Type for storing cmColorItems info (for editor configuration)
 Public Type clrStyle
@@ -339,9 +340,9 @@ Private Sub LoadLan()
         Loop
     Close #num
     Set Propiedades = New Globals
-    Set Fenix = New Language
+    Set Bennu = New Language
     
-    With Fenix
+    With Bennu
         .TagAttributeNames = Str_data
         .TagElementNames = "//#Section:" 'usado para IDEkeywords
         .CaseSensitive = False
@@ -352,7 +353,7 @@ Private Sub LoadLan()
         .MultiLineComments1 = "/*"
         .MultiLineComments2 = "*/"
     End With
-    Propiedades.RegisterLanguage "Fenix", Fenix
+    Propiedades.RegisterLanguage "Bennu", Bennu
     
     Exit Sub
 errhandler:

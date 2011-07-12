@@ -225,13 +225,13 @@ Private Sub Form_Load()
     'Define file types
     fileTypes(0).name = "Flamebird Project"
     fileTypes(0).IconKey = "PROJECT"
-    fileTypes(1).name = "Fenix Source"
+    fileTypes(1).name = "Bennu Source"
     fileTypes(1).IconKey = "SOURCE"
-    fileTypes(2).name = "Fenix Map"
+    fileTypes(2).name = "Bennu Map"
     fileTypes(2).IconKey = "MAP"
-    fileTypes(3).name = "Fenix Fpg"
+    fileTypes(3).name = "Bennu Fpg"
     fileTypes(3).IconKey = "FPG"
-'    fileTypes(4).name = "Fenix Palette"
+'    fileTypes(4).name = "Bennu Palette"
 '    fileTypes(4).IconKey = "PAL"
     
     'Configure the list view

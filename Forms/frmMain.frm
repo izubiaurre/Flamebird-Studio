@@ -9,8 +9,8 @@ Begin VB.MDIForm frmMain
    BackColor       =   &H00808080&
    Caption         =   "Flamebird"
    ClientHeight    =   6135
-   ClientLeft      =   165
-   ClientTop       =   825
+   ClientLeft      =   210
+   ClientTop       =   810
    ClientWidth     =   9075
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
@@ -348,7 +348,7 @@ Private Sub MDITabs_CloseWindow(ByVal Hwnd As Long)
     If Not f Is Nothing Then Unload f
     
     LockWindowUpdate False
-    InvalidateRect 0, tr, 0 'TODO: See if we cann refresh only the part bellow the toolbar
+    InvalidateRect 0, tr, 0 '#TODO: See if we cann refresh only the part bellow the toolbar
 End Sub
 
 Private Sub MDITabs_TabBarClick(ByVal iButton As MouseButtonConstants, ByVal screenX As Long, ByVal screenY As Long)
@@ -732,6 +732,7 @@ Private Sub CreateMenu()
             .AddItem iP, "Go to matching &brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
             .AddItem iP, "-"
             .AddItem iP, "Go to definition", , , "mnuNavigationGotoDefinition"
+            .AddItem iP, "-"
             .AddItem iP, "Previous position", , , "mnuNavigationPrevPosition"
             .AddItem iP, "Next position", , , "mnuNavigationNextPosition"
             .AddItem iP, "-"
@@ -821,7 +822,7 @@ Private Sub CreateMenu()
         iP = .IndexForKey("mnuHelp")
             .AddItem iP, "Language Help (Spanish only)", , , "mnuHelpIndex", Image:=66
             .AddItem iP, "-"
-            .AddItem iP, "Fenix Wiki (Spanish only)", , , "mnuHelpWiki"
+            .AddItem iP, "Fenix Wiki", , , "mnuHelpWiki"
             .AddItem iP, "Fenix Forum (Spanish only)", , , "mnuHelpFenixForum"
             .AddItem iP, "-"
             .AddItem iP, "Bennu Wiki", , , "mnuHelpBennuWiki"

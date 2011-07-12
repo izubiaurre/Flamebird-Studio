@@ -145,7 +145,7 @@ Private Sub Form_Load()
     cs.EnableCRLF = True
     cs.TabSize = 2
     cs.ColorSyntax = True
-    cs.Language = "Fenix"
+    cs.Language = "Bennu"
     cs.DisplayLeftMargin = True
     cs.AutoIndentMode = cmIndentPrevLine
     LoadCSConf cs

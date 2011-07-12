@@ -910,7 +910,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Left            =   0
                TabIndex        =   96
-               Top             =   840
+               Top             =   360
                Width           =   975
             End
             Begin VB.OptionButton opIndentPrevLine 
@@ -927,7 +927,7 @@ Begin VB.Form frmPreferences
                Height          =   255
                Left            =   0
                TabIndex        =   95
-               Top             =   480
+               Top             =   600
                Width           =   1335
             End
             Begin VB.OptionButton opIndentNone 
@@ -1966,24 +1966,85 @@ Attribute mnuPreSets.VB_VarHelpID = -1
 
 'Set control values according to cs configuration
 Private Sub RefreshEditorConfigControls()
-    chkLineNumbering.Value = Abs(CInt(csPreview.LineNumbering))
-    chkBookmarkMargin.Value = Abs(CInt(csPreview.DisplayLeftMargin))
-    chkColorSintax.Value = Abs(CInt(csPreview.ColorSyntax))
-    chkNormalizeCase.Value = Abs(CInt(csPreview.NormalizeCase))
-    chkWhiteSpaces.Value = Abs(CInt(csPreview.DisplayWhitespace))
-    chkSmoothScrolling.Value = Abs(CInt(csPreview.SmoothScrolling))
-    chkConfine.Value = Abs(CInt(csPreview.SelBounds))
-    Select Case csPreview.AutoIndentMode
-        Case cmIndentOff: opIndentNone.Value = True
-        Case cmIndentPrevLine: opIndentPrevLine.Value = True
-        Case cmIndentScope: opIndentScope.Value = True
-    End Select
-    txtTabSize.text = CStr(csPreview.TabSize)
+    On Error GoTo errhandler
 
-    'Font picker
-    FixedPitchFontsToCombo GetDC(csPreview.Hwnd), cboFonts
-    cboFonts.text = csPreview.font.name
-    cboSize.text = CStr(csPreview.font.Size)
+    With Ini
+        .Path = App.Path & EDITOR_CONF_FILE
+        
+        .Key = "LineNumering"
+        .Default = "1"
+        chkLineNumbering.Value = Abs(CInt(.Value))
+        
+        .Key = "BookmarkMargin"
+        .Default = "1"
+        chkBookmarkMargin.Value = Abs(CInt(.Value))
+        
+        .Key = "ColorSyntax"
+        .Default = "1"
+        chkColorSintax.Value = Abs(CInt(.Value))
+        
+        .Key = "NormalizeCase"
+        .Default = "0"
+        chkNormalizeCase.Value = Abs(CInt(.Value))
+        
+        .Key = "DisplayWhiteSpaces"
+        .Default = "0"
+        chkWhiteSpaces.Value = Abs(CInt(.Value))
+        
+        .Key = "SmoothScrolling"
+        .Default = "1"
+        chkSmoothScrolling.Value = Abs(CInt(.Value))
+        
+        .Key = "ConfineCaretToText"
+        .Default = "1"
+        chkConfine.Value = Abs(CInt(.Value))
+        
+        .Key = "TabSize"
+        .Default = "4"
+        txtTabSize.text = .Value
+        
+        .Key = "IndentMode"
+        .Default = "1"
+        Select Case .Value
+            Case cmIndentOff: opIndentNone.Value = True
+            Case cmIndentPrevLine: opIndentPrevLine.Value = True
+            Case cmIndentScope: opIndentScope.Value = True
+        End Select
+            
+        'Font picker
+        FixedPitchFontsToCombo GetDC(csPreview.Hwnd), cboFonts
+
+        .Key = "Font"
+        .Default = "Courier New"
+        cboFonts.text = .Value
+        
+        .Key = "FontSize"
+        .Default = "10"
+        cboSize.text = CInt(.Value)
+        
+     End With
+     
+'    chkLineNumbering.Value = Abs(CInt(csPreview.LineNumbering))
+'    chkBookmarkMargin.Value = Abs(CInt(csPreview.DisplayLeftMargin))
+'    chkColorSintax.Value = Abs(CInt(csPreview.ColorSyntax))
+'    chkNormalizeCase.Value = Abs(CInt(csPreview.NormalizeCase))
+'    chkWhiteSpaces.Value = Abs(CInt(csPreview.DisplayWhitespace))
+'    chkSmoothScrolling.Value = Abs(CInt(csPreview.SmoothScrolling))
+'    chkConfine.Value = Abs(CInt(csPreview.SelBounds))
+'    Select Case csPreview.AutoIndentMode
+'        Case cmIndentOff: opIndentNone.Value = True
+'        Case cmIndentPrevLine: opIndentPrevLine.Value = True
+'        Case cmIndentScope: opIndentScope.Value = True
+'    End Select
+'    txtTabSize.text = CStr(csPreview.TabSize)
+'
+'    'Font picker
+'    FixedPitchFontsToCombo GetDC(csPreview.Hwnd), cboFonts
+'    cboFonts.text = csPreview.font.name
+'    cboSize.text = CStr(csPreview.font.Size)
+    Exit Sub
+errhandler:
+    If Err.Number > 0 Then ShowError ("frmPreferences.RefreshEditorConfigControls")
 End Sub
 'Sets FontSytle of the selected item (Bold, italic, underlined)
 Private Sub SetStyle()
@@ -2711,6 +2772,7 @@ End Sub
 
 Private Sub cmdOk_Click()
     SaveConf
+    
     Unload Me
 End Sub
 
@@ -2805,7 +2867,7 @@ Private Sub Form_Load()
 
     'Editor Conf
     ListStyles
-    csPreview.Language = "Fenix"
+    csPreview.Language = "Bennu"
     csPreview.OpenFile (App.Path & "\resources\txtPreview.txt")
     csPreview.READONLY = True
     RefreshEditorConfigControls

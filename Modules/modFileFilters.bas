@@ -3,9 +3,9 @@ Option Explicit
 
 ' DEFINITIONS:
 ' A File Type is defined by an extension an a description
-'   Example: {prg, Fenix source}
+'   Example: {prg, Bennu source}
 '            {png, Portable network graphics}
-'            {map, Old fenix bitmap}
+'            {map, Old Bennu bitmap}
 ' A FileFilter is a group of FileTypes which have something in common
 '   Example: {All known graphic formats, (map, png)
 
@@ -80,11 +80,11 @@ Public Sub CreateFileFilters()
     addFileFilter "FBP", "Flamebird MX project", "fbp"
     addFileFilter "SOURCE", "Source files", "prg|h|inc"
     
-    addFileFilter "PAL", "Fenix old palette format", "pal"
+    addFileFilter "PAL", "Bennu old palette format", "pal"
     addFileFilter "FPL", "Fenix palette", "fpl"
     addFileFilter "PALETTE", "All known palette files", "pal"
     
-    addFileFilter "MAP", "Fenix bitmap", "map"
+    addFileFilter "MAP", "Bennu bitmap", "map"
     addFileFilter "FBM", "Fenix bitmap", "fbm"
     addFileFilter "PNG", "Portable nerwork graphics", "png"
     addFileFilter "BMP", "Windows bitmap", "bmp"
@@ -93,11 +93,11 @@ Public Sub CreateFileFilters()
     addFileFilter "IMPORTABLE_GRAPHICS", "Importable graphic files", composeExtensions("PNG", "BMP", "JPG", "GIF")
     addFileFilter "GRAPHIC_FILES", "All graphic files", composeExtensions("MAP", "FBM", "PNG", "BMP", "JPG", "GIF")
     
-    addFileFilter "FPG", "Fenix graphic collection", "fpg"
+    addFileFilter "FPG", "Bennu graphic collection", "fpg"
     addFileFilter "FGC", "Fenix graphic collection", "fgc"
     addFileFilter "GRAPHIC_COLLECTIONS", "All graphic collections", composeExtensions("FPG", "FGC")
     
-    addFileFilter "FNT", "Fenix font file", "fnt"
+    addFileFilter "FNT", "Bennu font file", "fnt"
 
     addFileFilter "MOD", "Mod", "mod"
     addFileFilter "S3M", "S3m", "s3m"

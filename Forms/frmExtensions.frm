@@ -368,7 +368,7 @@ Private Sub ConfigureControls()
         .AddRow
         .cell(4, 1).text = "map"
         .cell(4, 1).TextAlign = DT_CENTER
-        .cell(4, 2).text = "FENIX PAL FILE"
+        .cell(4, 2).text = "BENNU PAL FILE"
         .cell(4, 3).text = "Map editor"
         
         .AddRow , -1

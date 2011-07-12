@@ -1544,7 +1544,7 @@ Public Sub mnuViewFullScreen()
     Static inFullScreen As Boolean
     Static oldWindowState As Integer
     
-    'TODO:
+    '#TODO:
     ' - Restore focus to the window who had focus
 
     Hwnd = frmMain.Hwnd
@@ -1865,7 +1865,7 @@ Public Sub mnuHelpIndex()
     NewWindowWeb App.Path & "\help\fenix\func.php-frame=top.htm"
 End Sub
 Public Sub mnuHelpWiki()
-    NewWindowWeb "http://fenixworld.se32.com/fenixwiki/index.php?title=Categor%C3%ADa:Referencia_del_lenguaje", "WIKI: "
+    NewWindowWeb "http://fenixdocs.com/index.php/", "WIKI: "
 End Sub
 Public Sub mnuHelpWikiToken()
     If Not ActiveFileForm Is Nothing Then
@@ -1875,7 +1875,7 @@ Public Sub mnuHelpWikiToken()
             sword = fDoc.cs.CurrentWord
             If sword <> "" Then
                 ' wiki help
-                NewWindowWeb "http://fenixworld.se32.com/fenixwiki/index.php?title=" & UCase(sword), "WIKI: " & UCase(sword), "http://fenixworld.se32.com/fenixwiki/index.php?title=Categor%C3%ADa:Referencia_del_lenguaje"
+                NewWindowWeb "http://wiki.bennugd.org/index.php?title=" & UCase(sword), "WIKI: " & UCase(sword), "http://wiki.bennugd.org/index.php?title=Bennu_Wiki"
             Else
                 mnuHelpWiki
             End If

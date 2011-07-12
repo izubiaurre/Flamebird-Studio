@@ -109,7 +109,7 @@ Private Sub ReadFxiOutputAndErrors()
     
     
     'On Error GoTo errors:
-    'Look for the output files in the Fenix dir and the file dir
+    'Look for the output files in the Bennu dir and the file dir
     If FSO.FileExists(mFxiDir & "\stddebug.txt") Then
         stdoutFile = mFxiDir & "\stddebug.txt"
     ElseIf FSO.FileExists(mFileDir & "\stddebug.txt") Then
@@ -273,7 +273,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
     
     bResult = False
     
-    'Determine which compilation Fenix Directory to use
+    'Determine which compilation Bennu Directory to use
     fxcDir = fenixDir
     If Not openedProject Is Nothing Then
         If openedProject.FileExist(sFile) And openedProject.useOtherFenix = True Then
@@ -428,7 +428,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
         Else
             MsgBox MSG_COMPILE_FILENOTFOUND, vbCritical
         End If
-    Else 'Fenix Dir Does not exist
+    Else 'Bennu Dir Does not exist
         MsgBox MSG_COMPILE_NOFENIXDIR, vbExclamation
     End If
     

@@ -200,6 +200,12 @@ Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Lis
         Exit Function
     End If
     
+    If IS_Sensitive > Control.CurrentWordLength Then
+        ListCtrl.Destroy
+        Cs_CodeList = False
+        Exit Function
+    End If
+ 
     ListCtrl.hImageList = frmProgramInspector.programImageList.hIml
     
     ' empty the list
@@ -209,6 +215,7 @@ Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Lis
 '        Next
 '    End If
     While ListCtrl.ItemCount > 0
+    
         ListCtrl.DeleteItem (0)
     Wend
     
@@ -472,7 +479,7 @@ End Sub
 
 Private Sub Cs_CodeTipUpdate(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ToolTipCtrl As CodeSenseCtl.ICodeTip)
     Dim tip As Variant
-    
+    MsgBox "update"
     Set tip = ToolTipCtrl
 
     ' Destroy the tooltip window if the caret is moved above or before
@@ -847,6 +854,7 @@ On Error Resume Next
         lParentIndex = m_ContextMenu.AddItem(0, Key:="ContextMenu")
         With m_ContextMenu
             .AddItem lParentIndex, "&Go to definition", , , "mnuNavigationGoToDefinition"
+            .AddItem lParentIndex, "-"
             If s Then
                 .AddItem lParentIndex, "C&ut", "Ctrl+X", , "mnuEditCut", , , , 5
                 .AddItem lParentIndex, "&Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
@@ -991,15 +999,20 @@ Private Sub Cs_SelChange(ByVal Control As CodeSenseCtl.ICodeSense)
 End Sub
 
 Private Sub Form_Activate()
-    ' testeando
-    If existTreeForFile(IFileForm_FilePath) = False Then
-        mustRefresh = True
-    End If
+    ' testing
+'    If existTreeForFile(IFileForm_FilePath) = False Then
+'        mustRefresh = True
+'    End If
+
+    ' If this is very slow, try copy/pasting this part in IFileForm.Load
+    mustRefresh = True
     MakeProgramIndex IFileForm_FilePath
     mustRefresh = False
+    
     cs.EnableColumnSel = False
     'ReDim Preserve bookmarkList(1)
     enableDisableBookmarks
+   
 End Sub
 
 Private Sub Form_Load()
@@ -1011,7 +1024,8 @@ Private Sub Form_Load()
     codePosIndex = 1
     'ReDim Preserve codePos(2) As CodeSenseCtl.position
     'codePos(1).LineNo = 1
-    
+    MakeProgramIndex IFileForm_FilePath
+    mustRefresh = False
     
     With tbrSource
         .ImageSource = CTBExternalImageList
@@ -1056,7 +1070,7 @@ Private Sub Form_Load()
     cs.EnableCRLF = True
     cs.TabSize = 2
     cs.ColorSyntax = True
-    cs.Language = "Fenix"
+    cs.Language = "Bennu"
     cs.DisplayLeftMargin = True
     cs.AutoIndentMode = cmIndentPrevLine
     LoadCSConf cs
@@ -1175,6 +1189,7 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
         
         refreshBookmarkList
     End If
+    
     
     IFileForm_Load = lResult
 End Function

@@ -7,6 +7,30 @@ imprecise
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
 · 12/07/2011   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Falta corregir la actualización de las lineas ayudantes por function y por process en el preferences. Lo demás parece funcionar bien.
+
+· 12/07/2011   Izubiaurre                  \Forms\frmMain.frm                                
+    Corregidos algunos textos del menú principal y del contextual
+
+· 12/07/2011   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Actualizado la dirección URL del WIKI
+
+· 12/07/2011   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Corregido el comportamiento del codeList cuando se iban borrando chars y la lista seguía ahí. Ahora, cuando el longitud de la palabra actual es menor del sensitive, desaparece como debe ser.
+
+· 12/07/2011   Izubiaurre                  Iconos                                            
+    Preparando otra forma de organización en los paquetes de iconos
+
+· 12/07/2011   Izubiaurre                  Iconos                                            
+    Añadidos iconos de Gecko al paquete
+
+· 12/07/2011   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Ya visualiza correctamente las líneas, ... del código.
+
+· 12/07/2011   Izubiaurre                  \Modules\ModApplication.bas                       
+    Corregido error problemático en LoadConf que inhabilitaba la compilación directa de los prg.
+
+· 12/07/2011   Izubiaurre                  \Forms\frmPreferences.frm                         
     Corregidos uno pequeños errores en los registros de los iconos.
 
 · 07/04/2009   Izubiaurre                  \Forms\frmNewFont.frm                             
