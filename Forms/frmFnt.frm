@@ -851,6 +851,8 @@ Public Function Load(Filename As String) As Boolean
     Dim Returned_Value As Long
     Dim Must_Destroy As Boolean
 
+    On Error GoTo errhandler
+
     ' Font header
     FileNumber = gzopen(Filename, "rb")
     If FileNumber = 0 Then GoTo FAILED
@@ -920,6 +922,8 @@ FAILED:
     gzclose FileNumber
     If Must_Destroy Then Destroy
     Load = False
+errhandler:
+    If Err.Number > 0 Then ShowError "frmFnt.Load"
 
 End Function
 

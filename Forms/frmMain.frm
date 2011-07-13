@@ -99,11 +99,11 @@ Begin VB.MDIForm frmMain
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   16
-      Size            =   109060
+      Size            =   110208
       Images          =   "frmMain.frx":AD62
       Version         =   131072
-      KeyCount        =   95
-      Keys            =   $"frmMain.frx":25786
+      KeyCount        =   96
+      Keys            =   $"frmMain.frx":25C02
    End
    Begin VB.Menu mnuFile 
       Caption         =   "&File"
@@ -780,7 +780,7 @@ Private Sub CreateMenu()
             '.AddItem iP, "&Icon changer", "Ctrl+F12", , "mnuToolsIconChanger"
             '.AddItem iP, "-"
             .AddItem iP, "&MS-DOS command", "F9", , "mnuToolsCommand", Image:=64
-            .AddItem iP, "C&all last MS-DOS command", "Ctrl+F9", , "mnuToolsLastCommand"
+            .AddItem iP, "C&all last MS-DOS command", "Ctrl+F9", , "mnuToolsLastCommand", Image:=96
             .AddItem iP, "-"
             .AddItem iP, "Pl&ugins", , , "mnuPlugins"
             .AddItem iP, "-"

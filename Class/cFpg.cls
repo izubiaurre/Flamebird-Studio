@@ -274,6 +274,8 @@ Public Function Load(sFile As String) As Long
     Dim m As cMap
     Dim lSucceded As Long, lError As Long
     
+    On Error GoTo errhandler
+    
     lFile = gzopen(sFile, "rb")
     
     If Not (lFile = 0) Then
@@ -375,6 +377,8 @@ Public Function Load(sFile As String) As Long
     End If
     
     Load = IIf(lError = 0, -1, 0)
+errhandler:
+    If Err.Number > 0 Then ShowError "cFpg.Load"
 End Function
 '-------------------------------------------------------------------------------------
 'FUNCTION: Save()

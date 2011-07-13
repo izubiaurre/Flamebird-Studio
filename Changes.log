@@ -6,6 +6,18 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 12/07/2011   Izubiaurre                  \Forms\FrmSave.frm                                
+    Actualizado las fechas
+
+· 12/07/2011   Izubiaurre                  \Forms\frmMain.frm                                
+    Nuevo icono en "Call last MS-DOS command"
+
+· 12/07/2011   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Al cargar un formato Fnt de 16 ó 32 bits, que aún no lo puede hacer, muestra un mensaje emergente. Ya no casca.
+
+· 12/07/2011   Izubiaurre                  \Class\cFpg.cls                                   
+    Al cargar un formato FPG de 32 bits, que aún no lo puede hacer, muestra un mensaje emergente. Ya no casca.
+
 · 12/07/2011   Izubiaurre                  \Forms\frmPreferences.frm                         
     Falta corregir la actualización de las lineas ayudantes por function y por process en el preferences. Lo demás parece funcionar bien.
 
