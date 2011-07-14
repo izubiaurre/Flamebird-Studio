@@ -1774,44 +1774,44 @@ Public Sub mnuProjectCreateImp()
     text = ""
 End Sub
 
-Private Function getModule(line As String) As String
-    Dim strFunc As String
-    Dim i As Long
-    
-    strFunc = getFunction(line)
-    For i = LBound(modules) To UBound(modules)
-        If module(i) = strFunc Then
-            getModule = moduleName(i)
-            Exit Function
-        End If
-    Next
-    getModule = ""
-End Function
+'Private Function getModule(line As String) As String
+'    Dim strFunc As String
+'    Dim i As Long
+'
+'    strFunc = getFunction(line)
+'    For i = LBound(modules) To UBound(modules)
+'        If module(i) = strFunc Then
+'            getModule = moduleName(i)
+'            Exit Function
+'        End If
+'    Next
+'    getModule = ""
+'End Function
 
 
-Private Function getFunction(line As String) As String
-    Dim curWord As String
-    Dim i As Long
-    
-    line = replace(line, Chr(vbKeyTab), "")
-    i = 1
-    While Mid(line, i, 1) = " "
-        i = i + 1
-    Wend
-    
-    If i > 1 And (Len(line) - i) > 0 Then
-        line = Right(line, Len(line) - (i - 1))
-    End If
-    
-    i = 1
-    While isChar(Mid(line, i, 1))
-        i = i + 1
-    Wend
-
-    curWord = Left(line, i - 1)
-
-    Word = LCase(curWord)
-End Function
+'Private Function getFunction(line As String) As String
+'    Dim curWord As String
+'    Dim i As Long
+'
+'    line = replace(line, Chr(vbKeyTab), "")
+'    i = 1
+'    While Mid(line, i, 1) = " "
+'        i = i + 1
+'    Wend
+'
+'    If i > 1 And (Len(line) - i) > 0 Then
+'        line = Right(line, Len(line) - (i - 1))
+'    End If
+'
+'    i = 1
+'    While isChar(Mid(line, i, 1))
+'        i = i + 1
+'    Wend
+'
+'    curWord = Left(line, i - 1)
+'
+'    Word = LCase(curWord)
+'End Function
 '-------------------------------------------------------------------------------
 'END PROJECT MENU
 '-------------------------------------------------------------------------------

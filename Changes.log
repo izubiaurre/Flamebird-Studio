@@ -6,6 +6,9 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 14/07/2011   Izubiaurre                  \Modules\modExecution.bas                         
+    Corregido error grave en compilación donde por un cambio en la salida del compilador no leía bien el nombre del fichero.
+
 · 12/07/2011   Izubiaurre                  \Forms\FrmSave.frm                                
     Actualizado las fechas
 

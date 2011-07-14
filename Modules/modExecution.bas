@@ -197,15 +197,28 @@ Private Function SearchErrorLine(ByVal Cstring As String, ByRef sFileError As St
 
         If InStr(1, sLine, ": error:", vbTextCompare) > 0 Then
              'Get the file where the error occurrs
-             sFileError = Trim(Left(sLine, InStr(3, sLine, ":", vbTextCompare) - 1))
+             sFileError = Trim(Left(sLine, InStr(4, sLine, ":", vbTextCompare) - 1))
+             
+             ' Delete the first char that is a problematic symbol (change of line)
+             sFileError = Right(sFileError, Len(sFileError) - 1)
                 'MsgBox sFileError
              'Get Error line number
-             searchStart = InStr(3, sLine, ":") + 1
+             searchStart = InStr(4, sLine, ":") + 1
                 'MsgBox searchStart
+                Debug.Print searchStart
              searchEnd = InStr(sLine, ": error:")
                 'MsgBox searchEnd
+                Debug.Print searchEnd
+            Debug.Print sLine
+            Debug.Print Mid(sLine, searchStart, searchEnd - searchStart)
+            Debug.Print Trim(Mid(sLine, searchStart, searchEnd - searchStart))
+            
              numLine = CInt(Trim(Mid(sLine, searchStart, searchEnd - searchStart)))
                 'MsgBox numLine
+                ''''''''''''''''''''''
+                Debug.Print "num line = " & numLine
+                'numLine = 1
+                '''''''''''''''''''''
              result = numLine
              'Get the error message
              sError = Trim(Right(sLine, Len(sLine) - (InStr(sLine, ": error") + 8)))
@@ -269,7 +282,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
     Dim f As file
     Dim fDoc As frmDoc
     
-    On Error GoTo errhandler
+    'On Error GoTo errhandler
     
     bResult = False
     
@@ -414,6 +427,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
             Else 'Show a message and go to the line where the error ocurred
                 MsgBox "Error compiling " & sFileError & " at line " & errorLine & vbCrLf & vbCrLf & sError
                 sFileError = replace(sFileError, "/", "\")
+                'MsgBox sFileError
                 Set fDoc = FindFileForm(sFileError)
                 If fDoc Is Nothing Then 'The file is not opened
                     Set fDoc = NewFileForm(FF_SOURCE, sFileError)
