@@ -6,6 +6,9 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 17/07/2011   Izubiaurre                  fdl.lan                                           
+    Actualizado la lista de palabras reservadas
+
 · 14/07/2011   Izubiaurre                  \Modules\modExecution.bas                         
     Corregido error grave en compilación donde por un cambio en la salida del compilador no leía bien el nombre del fichero.
 

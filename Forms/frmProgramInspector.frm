@@ -18,11 +18,11 @@ Begin VB.Form frmProgramInspector
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   8
-      Size            =   39032
+      Size            =   48216
       Images          =   "frmProgramInspector.frx":058A
       Version         =   131072
-      KeyCount        =   34
-      Keys            =   "ÿÿÿÿÿÿÿold funcÿÿÿÿÿÿÿÿÿold procÿÿincludeÿÿÿÿÿÿÿÿÿÿold privateÿold structÿÿÿÿ"
+      KeyCount        =   42
+      Keys            =   "ÿÿÿÿÿÿÿold funcÿÿÿÿÿÿÿÿÿold procÿÿincludeÿÿÿÿÿÿÿÿÿÿold privateÿold structÿÿÿÿÿÿÿÿÿÿÿÿ"
    End
    Begin vbalTreeViewLib6.vbalTreeView tv_program 
       Height          =   3255
