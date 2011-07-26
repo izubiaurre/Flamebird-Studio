@@ -1,16 +1,17 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Object = "{04609A82-EA10-423E-B61B-CACCC4ABDFCF}#1.0#0"; "tabdock.ocx"
-Object = "{4F11FEBA-BBC2-4FB6-A3D3-AA5B5BA087F4}#1.0#0"; "vbalsbar6.ocx"
-Object = "{A2FCE68E-ACA2-4A09-9C2D-F53E1195D5FC}#1.0#0"; "vbalhkct6.ocx"
+Object = "{4F11FEBA-BBC2-4FB6-A3D3-AA5B5BA087F4}#1.0#0"; "vbalSbar6.ocx"
+Object = "{A2FCE68E-ACA2-4A09-9C2D-F53E1195D5FC}#1.0#0"; "vbalHkCt6.ocx"
 Begin VB.MDIForm frmMain 
+   Appearance      =   0  'Flat
    AutoShowChildren=   0   'False
-   BackColor       =   &H00808080&
+   BackColor       =   &H00404040&
    Caption         =   "Flamebird"
    ClientHeight    =   6135
-   ClientLeft      =   210
-   ClientTop       =   810
+   ClientLeft      =   225
+   ClientTop       =   855
    ClientWidth     =   9075
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
@@ -25,7 +26,10 @@ Begin VB.MDIForm frmMain
    End
    Begin VB.PictureBox picHolder 
       Align           =   1  'Align Top
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000015&
       BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
       Height          =   495
       Left            =   0
       ScaleHeight     =   495
@@ -40,6 +44,7 @@ Begin VB.MDIForm frmMain
          Width           =   2055
          _ExtentX        =   3625
          _ExtentY        =   661
+         DrawStyle       =   1
       End
    End
    Begin vbalTBar6.cReBar cReBar 
@@ -72,10 +77,10 @@ Begin VB.MDIForm frmMain
       _ExtentX        =   16007
       _ExtentY        =   450
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
-         Size            =   8.25
+         Name            =   "Segoe UI Semibold"
+         Size            =   9
          Charset         =   0
-         Weight          =   400
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -89,9 +94,12 @@ Begin VB.MDIForm frmMain
       _ExtentX        =   847
       _ExtentY        =   847
       AutoShowCollapseCaptions=   0   'False
+      BorderStyle     =   11
+      CaptionStyle    =   15
       AutoExpand      =   0   'False
       CollapseInterval=   0
       Gradient1       =   0
+      Gradient2       =   14737632
    End
    Begin vbalIml6.vbalImageList ImgList1 
       Left            =   6960
@@ -605,6 +613,9 @@ Private Sub CreateMenu()
     
     With cMenu
         .DrawStyle = M_Style
+        .BackColor = &H404040
+        .ForeColor = RGB(150, 150, 150)
+        .font = "segoe ui"
         'Set the image list
         Set .ImageList = ImgList1.Object
         Call .CreateFromForm(Me)
@@ -623,6 +634,7 @@ Private Sub CreateMenu()
                 .AddItem iP2, "Fp&g", , , "mnuFileNewFpg", , , , 22
                 '.AddItem iP2, "F&nt", , , "mnuFileNewFnt"
                 .AddItem iP2, "&Import", , , "mnuFileNewImp"
+            .AddItem iP, "-"
             iP2 = .AddItem(iP, "&Open", , , "mnuFileOpen", , , , 2)
                 .AddItem iP2, "&File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
                 .AddItem iP2, "-"
@@ -633,9 +645,11 @@ Private Sub CreateMenu()
                 .AddItem iP2, "F&nt...", , , "mnuFileOpenFnt", , , , 91
                 .AddItem iP2, "&Song...", , , "mnuFileOpenSong", , , , 53
                 .AddItem iP2, "&Import ...", , , "mnuFileOpenImp"
+            .AddItem iP, "Recent &Files", , , "mnuFileRecentFiles"
+            .AddItem iP, "&Recent Projects", , , "mnuFileRecentProjects"
+            .AddItem iP, "-"
             .AddItem iP, "&Close", "Ctrl+W", , "mnuFileClose", , , , 33
             .AddItem iP, "Close A&ll", , , "mnuFileCloseAll", , , , 34
-            .AddItem iP, "-"
             .AddItem iP, "Close pro&ject", , , "mnuFileCloseProject", False, , , 12
             .AddItem iP, "-"
             .AddItem iP, "&Save", "Ctrl+S", , "mnuFileSave", , , , 3
@@ -643,9 +657,6 @@ Private Sub CreateMenu()
             .AddItem iP, "Save &All", "Ctrl+Shift+S", , "mnuFileSaveAll", , , , 31
             .AddItem iP, "-"
             .AddItem iP, "&Print...", "Ctrl+P", , "mnuFilePrint", Image:=67
-            .AddItem iP, "-"
-            .AddItem iP, "Recent &Files", , , "mnuFileRecentFiles"
-            .AddItem iP, "&Recent Projects", , , "mnuFileRecentProjects"
             .AddItem iP, "-"
             .AddItem iP, "Preferences...", "F10", , "mnuEditPreferences", Image:=11
             .AddItem iP, "-"
@@ -733,8 +744,8 @@ Private Sub CreateMenu()
             .AddItem iP, "-"
             .AddItem iP, "Go to definition", , , "mnuNavigationGotoDefinition"
             .AddItem iP, "-"
-            .AddItem iP, "Previous position", , , "mnuNavigationPrevPosition"
-            .AddItem iP, "Next position", , , "mnuNavigationNextPosition"
+            .AddItem iP, "Previous position", "Alt+Left", , "mnuNavigationPrevPosition"
+            .AddItem iP, "Next position", "Alt+Right", , "mnuNavigationNextPosition"
             .AddItem iP, "-"
             .AddItem iP, "Prev function/process", "Alt+Up", , "mnuNavigationPrevFunc", Image:=70
             .AddItem iP, "Next function/process", "Alt+Down", , "mnuNavigationNextFunc", Image:=71
@@ -1216,6 +1227,7 @@ Dim sActive As String
             mnuHelpWikiToken
    End Select
 End Sub
+
 
 Private Sub StatusBar_DrawItem(ByVal lHdc As Long, ByVal iPanel As Long, ByVal lLeftPixels As Long, ByVal lTopPixels As Long, ByVal lRightPixels As Long, ByVal lBottomPixels As Long)
     Dim tr As RECT

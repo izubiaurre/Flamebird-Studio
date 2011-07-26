@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbaldtab6.ocx"
+Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbalDTab6.ocx"
 Begin VB.Form frmTrackerManager 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Tracker Manager"
@@ -673,9 +673,10 @@ Begin VB.Form frmTrackerManager
       Width           =   750
    End
    Begin VB.Image Image1 
+      Appearance      =   0  'Flat
       Height          =   765
       Left            =   0
-      Picture         =   "frmEditTracker.frx":1FB6
+      Stretch         =   -1  'True
       Top             =   0
       Width           =   8835
    End
@@ -703,7 +704,7 @@ Attribute VB_Exposed = False
 'GNU General Public License for more details.
 
 Option Explicit
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
 Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
 
@@ -908,6 +909,9 @@ Private Sub cmdOk_Click()
 End Sub
 
 Private Sub Form_Load()
+
+    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+
     Set f = frmTodoList
     'Set colTrackers = f.colTrackers.Copy
     'Set colOriginal = f.colTrackers
@@ -956,12 +960,12 @@ Private Sub picIcons_Click()
     AT.IconIndex = n 'Change
 End Sub
 
-Private Sub picIcons_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    clickX = X
-    clickY = Y
+Private Sub picIcons_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+    clickX = x
+    clickY = y
 End Sub
 
-Private Sub tabConfig_TabClick(theTab As vbalDTab6.cTab, ByVal iButton As MouseButtonConstants, ByVal Shift As ShiftConstants, ByVal X As Single, ByVal Y As Single)
+Private Sub tabConfig_TabClick(theTab As vbalDTab6.cTab, ByVal iButton As MouseButtonConstants, ByVal Shift As ShiftConstants, ByVal x As Single, ByVal y As Single)
     grbGeneral.Visible = False
     grbBehavior.Visible = False
     grbColumns.Visible = False

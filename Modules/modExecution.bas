@@ -437,6 +437,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
                     errorLine = IIf(errorLine = 0, 0, errorLine - 1)
                     fDoc.cs.ExecuteCmd cmCmdGoToLine, CInt(errorLine)
                     fDoc.cs.HighlightedLine = CInt(errorLine)
+                    fDoc.SetFocus
                 End If
             End If
         Else

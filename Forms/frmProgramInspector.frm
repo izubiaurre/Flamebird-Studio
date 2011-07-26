@@ -1,7 +1,9 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbaltreeview6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbalTreeView6.ocx"
 Begin VB.Form frmProgramInspector 
+   Appearance      =   0  'Flat
+   BackColor       =   &H80000005&
    Caption         =   "Program inspector"
    ClientHeight    =   4815
    ClientLeft      =   60
@@ -18,11 +20,11 @@ Begin VB.Form frmProgramInspector
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   8
-      Size            =   48216
+      Size            =   57400
       Images          =   "frmProgramInspector.frx":058A
       Version         =   131072
-      KeyCount        =   42
-      Keys            =   "ÿÿÿÿÿÿÿold funcÿÿÿÿÿÿÿÿÿold procÿÿincludeÿÿÿÿÿÿÿÿÿÿold privateÿold structÿÿÿÿÿÿÿÿÿÿÿÿ"
+      KeyCount        =   50
+      Keys            =   "ÿÿÿÿÿÿÿold funcÿÿÿÿÿÿÿÿÿÿÿincludeÿÿÿÿÿÿold procÿÿÿÿÿÿold privateÿold structÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ"
    End
    Begin vbalTreeViewLib6.vbalTreeView tv_program 
       Height          =   3255
@@ -32,6 +34,7 @@ Begin VB.Form frmProgramInspector
       Width           =   4695
       _ExtentX        =   8281
       _ExtentY        =   5741
+      BorderStyle     =   0
       NoCustomDraw    =   0   'False
       HistoryStyle    =   -1  'True
       FullRowSelect   =   -1  'True
@@ -39,8 +42,8 @@ Begin VB.Form frmProgramInspector
       SingleSel       =   -1  'True
       Style           =   1
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
-         Size            =   8.25
+         Name            =   "Segoe UI"
+         Size            =   9
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False

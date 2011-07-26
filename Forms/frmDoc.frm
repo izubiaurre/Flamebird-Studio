@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{665BF2B8-F41F-4EF4-A8D0-303FBFFC475E}#2.0#0"; "cmcs21.ocx"
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Begin VB.Form frmDoc 
    Caption         =   "Form1"
    ClientHeight    =   3780
@@ -49,7 +49,6 @@ Begin VB.Form frmDoc
       Width           =   1695
       _ExtentX        =   2990
       _ExtentY        =   661
-      DrawStyle       =   2
    End
    Begin vbalIml6.vbalImageList ilSource 
       Left            =   1920
@@ -1051,14 +1050,14 @@ Private Sub Form_Load()
     End With
     
     'Create the rebar
-    With ReBar
+    With rebar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd tbrSource.Hwnd, , True, False
     End With
-    ReBar.RebarSize
+    rebar.RebarSize
     
     ' configure the edition control
     cs.LineNumbering = True
@@ -1110,10 +1109,10 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        ReBar.RebarSize
-        cs.Move 0, ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
+        rebar.RebarSize
+        cs.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
         cs.Width = Me.ScaleWidth
-        cs.Height = Me.ScaleHeight - ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
+        cs.Height = Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
     End If
 End Sub
     

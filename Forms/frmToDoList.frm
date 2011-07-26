@@ -1,22 +1,55 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalsgrid6.ocx"
-Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbaldtab6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
+Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalSGrid6.ocx"
+Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbalDTab6.ocx"
 Begin VB.Form frmTodoList 
-   Caption         =   "Fire Tracker"
+   Caption         =   "Flame Tracker"
    ClientHeight    =   3930
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   7050
    ControlBox      =   0   'False
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmToDoList.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   3930
    ScaleWidth      =   7050
    WindowState     =   2  'Maximized
+   Begin vbalTBar6.cToolbar tbrToDo 
+      Height          =   375
+      Left            =   2760
+      Top             =   3240
+      Width           =   4095
+      _ExtentX        =   7223
+      _ExtentY        =   661
+   End
+   Begin vbalTBar6.cReBar cReBar 
+      Left            =   5640
+      Top             =   720
+      _ExtentX        =   2355
+      _ExtentY        =   661
+   End
    Begin VB.Frame grbNoTrackers 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   855
       Left            =   240
       TabIndex        =   2
@@ -81,11 +114,12 @@ Begin VB.Form frmTodoList
          Width           =   2565
       End
    End
-   Begin vbalIml6.vbalImageList ilstMenus 
+   Begin vbalIml6.vbalImageList ilToDo 
       Left            =   4800
       Top             =   2280
       _ExtentX        =   953
       _ExtentY        =   953
+      ColourDepth     =   8
       Size            =   3444
       Images          =   "frmToDoList.frx":06F6
       Version         =   131072
@@ -108,7 +142,7 @@ Begin VB.Form frmTodoList
       Height          =   2295
       Left            =   2280
       TabIndex        =   1
-      Top             =   0
+      Top             =   600
       Width           =   2055
       _ExtentX        =   3625
       _ExtentY        =   4048
@@ -122,7 +156,7 @@ Begin VB.Form frmTodoList
       GridFillLineColor=   14074812
       HighlightBackColor=   15523803
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -131,7 +165,7 @@ Begin VB.Form frmTodoList
          Strikethrough   =   0   'False
       EndProperty
       HeaderFlat      =   -1  'True
-      BorderStyle     =   2
+      BorderStyle     =   0
       ScrollBarStyle  =   2
       DisableIcons    =   -1  'True
       SelectionAlphaBlend=   -1  'True
@@ -141,12 +175,12 @@ Begin VB.Form frmTodoList
       Height          =   2325
       Left            =   0
       TabIndex        =   0
-      Top             =   0
+      Top             =   600
       Width           =   2055
       _ExtentX        =   3625
       _ExtentY        =   4101
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -155,7 +189,7 @@ Begin VB.Form frmTodoList
          Strikethrough   =   0   'False
       EndProperty
       BeginProperty SelectedFont {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -171,11 +205,11 @@ Begin VB.Form frmTodoList
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   24
-      Size            =   10332
+      Size            =   11480
       Images          =   "frmToDoList.frx":1D996
       Version         =   131072
-      KeyCount        =   9
-      Keys            =   "ÿÿÿÿÿÿÿÿ"
+      KeyCount        =   10
+      Keys            =   "ÿÿÿÿÿÿÿÿÿ"
    End
 End
 Attribute VB_Name = "frmTodoList"
@@ -208,19 +242,26 @@ Private Const CLR_OLDDATE = &H1B11CC
 Private Const CLR_GRIDLINES = &HC0C0C0 '&HBDBDBD
 Private Const CLR_BACKGRID = &HF0F0EC '&HD6C3BC
 
+'Private Const CLR_HIGHEST = &HB80000
+'Private Const CLR_HIGH = &HE57300
+'Private Const CLR_MEDIUM = &HFFF266
+'Private Const CLR_LOW = &HE8FF68
+'Private Const CLR_LOWEST = &H74A402
+
+
 'Constantes de posición de columnas
 Private Const COL_CHECKBOX = 1
 Private Const COL_ICONS = 2
-Private Const COL_SUMMARY = 3
-Private Const COL_CATEGORY = 4
-Private Const COL_MODULE = 5
-Private Const COL_ASSIGNEDTO = 6
-Private Const COL_COMPLETED = 7
-Private Const COL_PRIORITY = 8
-Private Const COL_DATECREATED = 9
-Private Const COL_DATEMODIFIED = 10
-Private Const COL_DATECLOSING = 11
-Private Const COL_SUBMITTEDBY = 12
+Private Const COL_PRIORITY = 3
+Private Const COL_SUMMARY = 4
+Private Const COL_COMPLETED = 5
+Private Const COL_CATEGORY = 6
+Private Const COL_MODULE = 7
+Private Const COL_DATECREATED = 8
+Private Const COL_DATEMODIFIED = 9
+Private Const COL_SUBMITTEDBY = 10
+Private Const COL_ASSIGNEDTO = 11
+Private Const COL_DATECLOSING = 12
 Private Const COL_DETAILEDDESC = 13
 
 'Constantes de iconos
@@ -457,6 +498,7 @@ On Error Resume Next
         lblLinkTM.Move lblNT2.Left + lblNT2.Width, lblNT2.Top
         lblNT1.Move (.Width - lblNT1.Width) / 2, lblNT2.Top - lblNT2.Height - 100
     End With
+    'grdTracker.Move 0, 200, Me.ScaleWidth, Me.ScaleHeight
 End Sub
 
 Private Sub grdTracker_GotFocus()
@@ -586,35 +628,35 @@ Private Sub CreateGrid()
         .AddColumn "Status", , , ICD_STATUS, 35, , True, , True, , , CCLSortExtraIcon
         .ColumnTag(COL_ICONS) = tcIcons
         
+        .AddColumn "Priority", , ecgHdrTextALignCentre, ICD_PRIORITY, 25, , True, eSortType:=CCLSortNumeric
+        .ColumnTag(COL_PRIORITY) = tcPriority
+        
         .AddColumn "Summary", "Summary", , , 250
         .ColumnTag(COL_SUMMARY) = tcSummary
+        
+        .AddColumn "Progress", "Progress", ecgHdrTextALignCentre, , 100, eSortType:=CCLSortNumeric
+        .ColumnTag(COL_COMPLETED) = tcCompleted
         
         .AddColumn "Category", "Category"
         .ColumnTag(COL_CATEGORY) = tcCategory
         
         .AddColumn "Module", "Module"
         .ColumnTag(COL_MODULE) = tcModule
-        
-        .AddColumn "Assigned To", "Assigned To", , , 100
-        .ColumnTag(COL_ASSIGNEDTO) = tcAssignedTo
-        
-        .AddColumn "Progress", "Progress", ecgHdrTextALignCentre, , 100, eSortType:=CCLSortNumeric
-        .ColumnTag(COL_COMPLETED) = tcCompleted
-        
-        .AddColumn "Priority", , ecgHdrTextALignCentre, ICD_PRIORITY, 25, , True, eSortType:=CCLSortNumeric
-        .ColumnTag(COL_PRIORITY) = tcPriority
-        
+
         .AddColumn "Created", "Created", ecgHdrTextALignRight, , 70, sFmtString:="Short Date", eSortType:=CCLSortDate
         .ColumnTag(COL_DATECREATED) = tcCreated
         
         .AddColumn "Modified", "Modified", ecgHdrTextALignRight, , 70, sFmtString:="Short Date", eSortType:=CCLSortDate
         .ColumnTag(COL_DATEMODIFIED) = tcModified
         
-        .AddColumn "Closed", "Closed", ecgHdrTextALignRight, , 70, sFmtString:="Short Date", eSortType:=CCLSortDate
-        .ColumnTag(COL_DATECLOSING) = tcDateclosing
-        
         .AddColumn "Submitted by", "Submitted By", , , 100
         .ColumnTag(COL_SUBMITTEDBY) = tcSubmittedBy
+        
+        .AddColumn "Assigned To", "Assigned To", , , 100
+        .ColumnTag(COL_ASSIGNEDTO) = tcAssignedTo
+        
+        .AddColumn "Closed", "Closed", ecgHdrTextALignRight, , 70, sFmtString:="Short Date", eSortType:=CCLSortDate
+        .ColumnTag(COL_DATECLOSING) = tcDateclosing
         
         .AddColumn "Detailed Description", "Detailed Description", , , 96 + 256 + 96 + 96, , , , , , True
         .ColumnTag(COL_DETAILEDDESC) = tcDetailedDesc
@@ -715,7 +757,54 @@ Private Sub FillGrid(tracker As cTracker)
         If tracker.ColorItemsByPriority Then 'COLOR BY PRIORITY
             'Establece el color de fondo de la fila en funcion de la prioridad
             For i = 1 To .Columns - 1
-                .CellBackColor(.Rows, i) = RGB(222, 227 - it.Priority * 8, 230 - it.Priority * 8)
+                ' old style soft reds
+                '.CellBackColor(.Rows, i) = RGB(222, 227 - it.Priority * 8, 230 - it.Priority * 8)
+                Select Case it.Priority
+                    ' red to green
+'                    Case 1
+'                        .CellBackColor(.Rows, i) = RGB(163, 190, 127)
+'                    Case 2
+'                        .CellBackColor(.Rows, i) = RGB(252, 253, 143)
+'                    Case 3
+'                        .CellBackColor(.Rows, i) = RGB(243, 200, 127)
+'                    Case 4
+'                        .CellBackColor(.Rows, i) = RGB(211, 131, 92)
+'                    Case 5
+'                        .CellBackColor(.Rows, i) = RGB(165, 101, 101)
+                    ' red to yellow gradient
+                    Case 1
+                        .CellBackColor(.Rows, i) = RGB(253, 248, 190)
+                    Case 2
+                        .CellBackColor(.Rows, i) = RGB(253, 245, 167)
+                    Case 3
+                        .CellBackColor(.Rows, i) = RGB(243, 200, 127)
+                    Case 4
+                        .CellBackColor(.Rows, i) = RGB(211, 131, 92)
+                    Case 5
+                        .CellBackColor(.Rows, i) = RGB(175, 87, 69)
+                    ' green to yellow gradient
+'                    Case 1
+'                        .CellBackColor(.Rows, i) = RGB(248, 253, 190)
+'                    Case 2
+'                        .CellBackColor(.Rows, i) = RGB(245, 253, 167)
+'                    Case 3
+'                        .CellBackColor(.Rows, i) = RGB(200, 243, 127)
+'                    Case 4
+'                        .CellBackColor(.Rows, i) = RGB(131, 211, 92)
+'                    Case 5
+'                        .CellBackColor(.Rows, i) = RGB(87, 175, 69)
+                    ' blue to yellow
+'                    Case 1
+'                        .CellBackColor(.Rows, i) = RGB(190, 248, 253)
+'                    Case 2
+'                        .CellBackColor(.Rows, i) = RGB(167, 245, 253)
+'                    Case 3
+'                        .CellBackColor(.Rows, i) = RGB(127, 200, 243)
+'                    Case 4
+'                        .CellBackColor(.Rows, i) = RGB(92, 131, 211)
+'                    Case 5
+'                        .CellBackColor(.Rows, i) = RGB(69, 87, 175)
+                End Select
                 .cell(.Rows, i).ForeColor = CLR_GRIDTEXT
             Next
         End If
@@ -734,6 +823,32 @@ Private Sub FillGrid(tracker As cTracker)
 End Sub
 
 Private Sub Form_Load()
+
+    'Configure toolbar
+    With tbrToDo
+        .ImageSource = CTBExternalImageList
+        .DrawStyle = T_Style
+        .SetImageList ilToDo.hIml, CTBImageListNormal
+        .CreateToolbar 16, True, True, True
+        .AddButton "Add item", 1, , , "Add", CTBAutoSize, "AddItem"
+        .AddButton "Delete item", 2, , , "Delete", CTBAutoSize, "DelItem"
+        .AddButton "Edit item", 3, , , "Edit", CTBAutoSize, "EditItem"
+'        .AddButton , , , , , CTBSeparator
+'        .AddButton "Visible columns", 4, , , "Columns", CTBAutoSize, "VisibleCols"
+'        .AddButton "Show hidden items", 5, , , "Show hidden", CTBCheck, "ShowHidden"
+'        .AddButton , , , , , CTBSeparator
+'        .AddButton "Trackr Manager", 6, , , "Tracker Manager", CTBAutoSize, "TrackerManager"
+        
+    End With
+    'Create the rebar
+    With cRebar
+        If A_Bitmaps Then
+            .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
+        End If
+        .CreateRebar Me.Hwnd
+        .AddBandByHwnd tbrToDo.Hwnd, , True, False
+    End With
+    
     tabTracker.ImageList = ilstTabs 'Image list del tab
     CreateGrid 'Columnas y disposición del grid
     grdTracker.OwnerDrawImpl = Me 'La interfaz IOwnerdraw está implementada aquí
@@ -848,7 +963,7 @@ Private Sub CreatePopupMenu(sKey As String)
     Dim mnu As cMenus, lIndex As Long
     
     Set mnu = New cMenus
-    Set mnu.ImageList = ilstMenus
+    Set mnu.ImageList = ilToDo
     
     With mnu
         .DrawStyle = M_Style
@@ -940,3 +1055,20 @@ End Sub
 ''        lblNT1.Move (.Width - lblNT1.Width) / 2, lblNT2.Top - lblNT2.Height - 100
 ''    End With
 'End Function
+Private Sub tbrToDo_ButtonClick(ByVal lButton As Long)
+    Dim sKey As String
+    
+    sKey = tbrToDo.ButtonKey(lButton)
+    Select Case sKey
+    Case "AddItem"
+        modMenuActions.mnuBookmarkToggle
+    Case "DelItem"
+        modMenuActions.mnuBookmarkNext
+    Case "EditItem"
+        modMenuActions.mnuBookmarkPrev
+    End Select
+End Sub
+
+Private Sub tbrToDo_CustomiseBegin()
+    MsgBox ""
+End Sub

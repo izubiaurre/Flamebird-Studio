@@ -18,9 +18,9 @@ Attribute VB_Name = "modApplication"
 
 Option Explicit
 
-Public Const CONF_FILE As String = "\conf\config.ini"
-Public Const EDITOR_CONF_FILE As String = "\conf\editor.ini"
-Public Const RES_FOLDER As String = "\Resources"
+Public Const CONF_FILE As String = "/conf/config.ini"
+Public Const EDITOR_CONF_FILE As String = "/conf/editor.ini"
+Public Const RES_FOLDER As String = "/Resources"
 
 Public Ini As New cInifile
 
@@ -119,7 +119,7 @@ Public lastCommandEnabled As Boolean
 Private Sub RegisterAppComponents()
     Dim fileString As String
     Dim result As Variant
-    fileString = Dir(App.Path & "\Related\")
+    fileString = Dir(App.Path & "/Related/")
     fileString = LCase(fileString)
     Do Until fileString = ""
         If Right(fileString, 4) = ".dll" Or _
@@ -129,7 +129,7 @@ Private Sub RegisterAppComponents()
             SetSplashMessage "Registering " & fileString
             
             DoEvents
-            result = Register(App.Path & "\Related\" & fileString)
+            result = Register(App.Path & "/Related/" & fileString)
             
             Select Case result
                 Case 1: MsgBox "File Could Not Be Loaded Into Memory Space "
@@ -171,9 +171,9 @@ Private Sub LoadLan()
     Seccion = -2
     num = FreeFile
     
-    If FSO.FileExists(App.Path & "\Help\fdl.lan") = False Then
-        MsgBox App.Path & "\Help\fdl.lan" & " is missing!. Applicatio termited.", vbCritical, "Fatal error"
-        End
+    If FSO.FileExists(App.Path & "/Help/fdl.lan") = False Then
+        MsgBox App.Path & "/Help/fdl.lan" & " is missing!. ", vbCritical, "Fatal error"
+        'End
     End If
     
     'Clear types and operators lists
@@ -197,7 +197,7 @@ Private Sub LoadLan()
     cntGlobalStructs = 0
     cntLocalStructs = 0
 
-    Open App.Path & "\Help\fdl.lan" For Input As #num
+    Open App.Path & "/Help/fdl.lan" For Input As #num
         Do Until EOF(num)
             ' reads a line
             Line Input #num, linea
@@ -414,7 +414,7 @@ Public Sub LoadCSConf(cs As Object, Optional ByVal sConfFile As String)
     Dim i As Integer
 
     With Ini
-        .Path = App.Path & "\Conf\editor.ini"
+        .Path = App.Path & "/Conf/editor.ini"
         If sConfFile <> "" Then
             If FSO.FileExists(sConfFile) Then
                 .Path = sConfFile
@@ -463,7 +463,7 @@ End Sub
 Public Sub SaveCSConf(cs As Object, Optional sConfFile As String)
     Dim i As Integer
     With Ini
-        .Path = App.Path & "\Conf\editor.ini"
+        .Path = App.Path & "/Conf/editor.ini"
         If sConfFile <> "" Then
             .Path = sConfFile
         End If
@@ -534,7 +534,7 @@ Public Sub loadCommandHistory()
     On Error GoTo errhandler:
     
        With Ini
-        .Path = App.Path & "\Conf\command.ini"
+        .Path = App.Path & "/Conf/command.ini"
         .Section = "General"
         .Key = "lastCommand"
         callList.lastCommandIndex = .Value
@@ -775,7 +775,7 @@ Public Sub Main()
     frmSplash.Show
     
     'Register dlls and ocx of the related dir
-    RegisterAppComponents
+    'RegisterAppComponents
     
     'Language definition
     SetSplashMessage "Loading languaje definition"

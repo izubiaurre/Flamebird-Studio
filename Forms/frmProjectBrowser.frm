@@ -1,13 +1,22 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
-Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbaltreeview6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
+Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbalTreeView6.ocx"
 Begin VB.Form frmProjectBrowser 
    Caption         =   "Project Browser"
    ClientHeight    =   3195
    ClientLeft      =   60
    ClientTop       =   390
    ClientWidth     =   4680
+   BeginProperty Font 
+      Name            =   "Segoe UI Semi Light"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmProjectBrowser.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   3195
@@ -51,9 +60,10 @@ Begin VB.Form frmProjectBrowser
       Width           =   2295
       _ExtentX        =   4048
       _ExtentY        =   4048
+      BorderStyle     =   0
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
-         Size            =   8.25
+         Name            =   "Segoe UI"
+         Size            =   9
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
