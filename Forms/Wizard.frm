@@ -25,6 +25,7 @@ Begin VB.Form frmCodeWizard
    ScaleHeight     =   5850
    ScaleWidth      =   7155
    ShowInTaskbar   =   0   'False
+   StartUpPosition =   2  'CenterScreen
    Tag             =   "10"
    Begin VB.Frame fraStep 
       BorderStyle     =   0  'None

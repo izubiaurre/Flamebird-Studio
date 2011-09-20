@@ -14,6 +14,7 @@ Begin VB.Form frmTrackerManager
    ScaleHeight     =   10185
    ScaleWidth      =   8520
    ShowInTaskbar   =   0   'False
+   StartUpPosition =   2  'CenterScreen
    Begin VB.Frame grbColumns 
       BorderStyle     =   0  'None
       Height          =   2295
@@ -704,7 +705,7 @@ Attribute VB_Exposed = False
 'GNU General Public License for more details.
 
 Option Explicit
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
 Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
 
@@ -960,12 +961,12 @@ Private Sub picIcons_Click()
     AT.IconIndex = n 'Change
 End Sub
 
-Private Sub picIcons_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-    clickX = x
-    clickY = y
+Private Sub picIcons_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clickX = X
+    clickY = Y
 End Sub
 
-Private Sub tabConfig_TabClick(theTab As vbalDTab6.cTab, ByVal iButton As MouseButtonConstants, ByVal Shift As ShiftConstants, ByVal x As Single, ByVal y As Single)
+Private Sub tabConfig_TabClick(theTab As vbalDTab6.cTab, ByVal iButton As MouseButtonConstants, ByVal Shift As ShiftConstants, ByVal X As Single, ByVal Y As Single)
     grbGeneral.Visible = False
     grbBehavior.Visible = False
     grbColumns.Visible = False

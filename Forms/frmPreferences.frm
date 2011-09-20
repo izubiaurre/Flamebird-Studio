@@ -1,25 +1,68 @@
 VERSION 5.00
 Object = "{665BF2B8-F41F-4EF4-A8D0-303FBFFC475E}#2.0#0"; "cmcs21.ocx"
-Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbaltreeview6.ocx"
-Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbaldtab6.ocx"
+Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbalTreeView6.ocx"
+Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbalDTab6.ocx"
 Object = "{C8A61D56-D8DC-11D2-8064-9D6F06504DA8}#1.1#0"; "AXCOLCTL.OCX"
 Begin VB.Form frmPreferences 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Preferences"
-   ClientHeight    =   17550
+   ClientHeight    =   15810
    ClientLeft      =   3150
    ClientTop       =   1005
-   ClientWidth     =   17910
+   ClientWidth     =   24030
    ControlBox      =   0   'False
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   17550
-   ScaleWidth      =   17910
+   ScaleHeight     =   15810
+   ScaleWidth      =   24030
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox picMacros 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00666666&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   4215
+      Left            =   17760
+      ScaleHeight     =   4215
+      ScaleWidth      =   5535
+      TabIndex        =   139
+      Top             =   600
+      Width           =   5535
+      Begin VB.TextBox txtMacro 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00333333&
+         BorderStyle     =   0  'None
+         ForeColor       =   &H00BDBDBD&
+         Height          =   3975
+         Left            =   120
+         MultiLine       =   -1  'True
+         TabIndex        =   140
+         Top             =   120
+         Width           =   5295
+      End
+   End
    Begin VB.PictureBox picCompilerPaths 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   4095
       Left            =   11760
       ScaleHeight     =   4095
@@ -27,8 +70,69 @@ Begin VB.Form frmPreferences
       TabIndex        =   116
       Top             =   4080
       Width           =   5535
+      Begin VB.Frame fraFiles 
+         Caption         =   "Files to include"
+         Enabled         =   0   'False
+         Height          =   2175
+         Left            =   0
+         TabIndex        =   132
+         Top             =   1920
+         Width           =   5535
+         Begin VB.ListBox lstFilesToDcb 
+            Appearance      =   0  'Flat
+            BackColor       =   &H00666666&
+            ForeColor       =   &H00BDBDBD&
+            Height          =   1830
+            Left            =   120
+            Style           =   1  'Checkbox
+            TabIndex        =   137
+            Top             =   240
+            Width           =   4095
+         End
+         Begin VB.PictureBox Picture5 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000004&
+            BorderStyle     =   0  'None
+            ForeColor       =   &H80000008&
+            Height          =   1815
+            Left            =   4320
+            ScaleHeight     =   1815
+            ScaleWidth      =   1095
+            TabIndex        =   133
+            Top             =   240
+            Width           =   1095
+            Begin VB.CommandButton cmdFileDelAll 
+               Appearance      =   0  'Flat
+               Caption         =   "Remove All"
+               Height          =   375
+               Left            =   0
+               TabIndex        =   136
+               Top             =   960
+               Width           =   1095
+            End
+            Begin VB.CommandButton cmdFileDel 
+               Appearance      =   0  'Flat
+               Caption         =   "Remove"
+               Height          =   375
+               Left            =   0
+               TabIndex        =   135
+               Top             =   480
+               Width           =   1095
+            End
+            Begin VB.CommandButton cmdFileAdd 
+               Appearance      =   0  'Flat
+               Caption         =   "Add"
+               Height          =   375
+               Left            =   0
+               TabIndex        =   134
+               Top             =   0
+               Width           =   1095
+            End
+         End
+      End
       Begin VB.Frame fraPATHS 
          Caption         =   "Compiler PATHS"
+         Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   8.25
@@ -38,11 +142,11 @@ Begin VB.Form frmPreferences
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   2175
+         Height          =   1815
          Left            =   0
          TabIndex        =   117
          Top             =   120
-         Width           =   5415
+         Width           =   5535
          Begin VB.ListBox lstPATHS 
             BeginProperty Font 
                Name            =   "Arial"
@@ -53,47 +157,86 @@ Begin VB.Form frmPreferences
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            Height          =   1320
+            Height          =   1500
+            ItemData        =   "frmPreferences.frx":0000
             Left            =   120
+            List            =   "frmPreferences.frx":0002
+            Style           =   1  'Checkbox
             TabIndex        =   122
-            Top             =   360
+            Top             =   240
             Width           =   4095
          End
          Begin VB.PictureBox Picture4 
             Appearance      =   0  'Flat
             BorderStyle     =   0  'None
             FillStyle       =   2  'Horizontal Line
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             ForeColor       =   &H80000008&
-            Height          =   2535
+            Height          =   1455
             Left            =   4320
-            ScaleHeight     =   2535
-            ScaleWidth      =   975
+            ScaleHeight     =   1455
+            ScaleWidth      =   1095
             TabIndex        =   118
             Top             =   240
-            Width           =   975
+            Width           =   1095
             Begin VB.CommandButton cmdPATHSRemoveAll 
                Caption         =   "Remove All"
+               BeginProperty Font 
+                  Name            =   "MS Sans Serif"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
                Height          =   375
                Left            =   0
                TabIndex        =   121
-               Top             =   1320
-               Width           =   975
+               Top             =   960
+               Width           =   1095
             End
             Begin VB.CommandButton cmdPATHSRemove 
                Caption         =   "Remove"
+               BeginProperty Font 
+                  Name            =   "MS Sans Serif"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
                Height          =   375
                Left            =   0
                TabIndex        =   120
-               Top             =   720
-               Width           =   975
+               Top             =   480
+               Width           =   1095
             End
             Begin VB.CommandButton cmdPATHSAdd 
                Caption         =   "Add"
+               BeginProperty Font 
+                  Name            =   "MS Sans Serif"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
                Height          =   375
                Left            =   0
                TabIndex        =   119
-               Top             =   120
-               Width           =   975
+               Top             =   0
+               Width           =   1095
             End
          End
       End
@@ -107,19 +250,26 @@ Begin VB.Form frmPreferences
       _ExtentX        =   3201
       _ExtentY        =   5741
       PathSeparator   =   "/"
-      BackColor       =   -2147483647
+      BackColor       =   3355443
       BorderStyle     =   0
-      ForeColor       =   -2147483633
+      NoCustomDraw    =   0   'False
+      ForeColor       =   12434877
       LineColor       =   -2147483643
-      SelectedForeColor=   -2147483648
-      SelectedForeColor=   -2147483648
-      SelectedForeColor=   -2147483648
-      SelectedForeColor=   -2147483648
+      LineStyle       =   0
+      Style           =   0
+      SelectedBackColor=   12434877
+      SelectedForeColor=   3355443
+      SelectedBackColor=   12434877
+      SelectedForeColor=   3355443
+      SelectedBackColor=   12434877
+      SelectedForeColor=   3355443
+      SelectedBackColor=   12434877
+      SelectedForeColor=   3355443
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
-         Size            =   8.25
+         Name            =   "Segoe UI Semibold"
+         Size            =   9
          Charset         =   0
-         Weight          =   400
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -128,6 +278,15 @@ Begin VB.Form frmPreferences
    Begin VB.PictureBox picMisc 
       Appearance      =   0  'Flat
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H80000008&
       Height          =   4515
       Left            =   11340
@@ -139,8 +298,17 @@ Begin VB.Form frmPreferences
       Width           =   5295
       Begin VB.CommandButton cmdClearToolList 
          Caption         =   "Clear Tool List"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
-         Left            =   3360
+         Left            =   3420
          TabIndex        =   125
          ToolTipText     =   "Clears the Tool list"
          Top             =   1200
@@ -148,6 +316,15 @@ Begin VB.Form frmPreferences
       End
       Begin VB.CommandButton cmdClearRecents 
          Caption         =   "Clear Recent List"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   3420
          TabIndex        =   124
@@ -157,6 +334,15 @@ Begin VB.Form frmPreferences
       End
       Begin VB.CommandButton cmdClearCommandHistory 
          Caption         =   "Clear Comand History"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   3420
          TabIndex        =   123
@@ -168,6 +354,15 @@ Begin VB.Form frmPreferences
    Begin VB.PictureBox picProgramInspector 
       Appearance      =   0  'Flat
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H80000008&
       Height          =   4395
       Left            =   5580
@@ -188,9 +383,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   2940
+         Left            =   3060
          TabIndex        =   88
-         Top             =   1020
+         Top             =   1500
          Width           =   2295
       End
       Begin VB.CheckBox chkPIOnlyConsHeader 
@@ -205,9 +400,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   2940
+         Left            =   3060
          TabIndex        =   86
-         Top             =   180
+         Top             =   660
          Width           =   2175
       End
       Begin VB.CheckBox chkPIShowPrivates 
@@ -222,9 +417,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   180
+         Left            =   300
          TabIndex        =   85
-         Top             =   1440
+         Top             =   1920
          Width           =   2235
       End
       Begin VB.CheckBox chkPILocals 
@@ -239,9 +434,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   180
+         Left            =   300
          TabIndex        =   84
-         Top             =   1020
+         Top             =   1500
          Width           =   2235
       End
       Begin VB.CheckBox chkPIShowGlobals 
@@ -256,9 +451,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   180
+         Left            =   300
          TabIndex        =   83
-         Top             =   600
+         Top             =   1080
          Width           =   2235
       End
       Begin VB.CheckBox chkPIShowCons 
@@ -273,9 +468,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   180
+         Left            =   300
          TabIndex        =   82
-         Top             =   180
+         Top             =   660
          Width           =   2115
       End
       Begin VB.CheckBox chkPIOnlyGlobalHeader 
@@ -290,15 +485,42 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   2940
+         Left            =   3060
          TabIndex        =   87
-         Top             =   600
+         Top             =   1080
          Width           =   2235
+      End
+      Begin VB.CheckBox chkPIActive 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
+         Caption         =   "Active Program Inspector"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   720
+         TabIndex        =   141
+         Top             =   240
+         Value           =   1  'Checked
+         Width           =   2415
+      End
+      Begin VB.Line Line2 
+         X1              =   240
+         X2              =   5160
+         Y1              =   360
+         Y2              =   360
       End
    End
    Begin VB.PictureBox picIntelliSense 
       Appearance      =   0  'Flat
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H80000008&
       Height          =   4335
       Left            =   120
@@ -546,13 +768,108 @@ Begin VB.Form frmPreferences
    End
    Begin VB.PictureBox picCompilerOptions 
       BorderStyle     =   0  'None
-      Height          =   3375
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   3615
       Left            =   120
-      ScaleHeight     =   3375
+      ScaleHeight     =   3615
       ScaleWidth      =   5295
       TabIndex        =   52
       Top             =   4440
       Width           =   5295
+      Begin VB.CommandButton cmdGoMacros 
+         Appearance      =   0  'Flat
+         Caption         =   ">"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   2040
+         TabIndex        =   144
+         Top             =   2400
+         Width           =   255
+      End
+      Begin VB.CommandButton cmdGoFiles 
+         Appearance      =   0  'Flat
+         Caption         =   ">"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   2640
+         TabIndex        =   143
+         Top             =   2160
+         Width           =   255
+      End
+      Begin VB.CommandButton cmdGoPaths 
+         Appearance      =   0  'Flat
+         Caption         =   ">"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   3000
+         TabIndex        =   142
+         Top             =   1440
+         Width           =   255
+      End
+      Begin VB.CheckBox chkMacros 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
+         Caption         =   "Set macros (-D):"
+         ForeColor       =   &H80000008&
+         Height          =   195
+         Left            =   240
+         TabIndex        =   138
+         Top             =   2450
+         Width           =   1695
+      End
+      Begin VB.CheckBox chkFilesToDCB 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000004&
+         Caption         =   "Add files to the DCB (-f):"
+         ForeColor       =   &H80000008&
+         Height          =   195
+         Left            =   240
+         TabIndex        =   131
+         Top             =   2220
+         Width           =   2295
+      End
+      Begin VB.CheckBox chkAllToDCB 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000004&
+         Caption         =   "Add all files to the DCB (-a):"
+         ForeColor       =   &H80000008&
+         Height          =   195
+         Left            =   240
+         TabIndex        =   130
+         Top             =   1980
+         Width           =   2535
+      End
+      Begin VB.TextBox txtDCBName 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00333333&
+         BorderStyle     =   0  'None
+         Enabled         =   0   'False
+         ForeColor       =   &H00BDBDBD&
+         Height          =   285
+         Left            =   2640
+         TabIndex        =   127
+         Top             =   1680
+         Width           =   2535
+      End
+      Begin VB.CheckBox chkDcbName 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000004&
+         Caption         =   "Output DCB file name (-o):"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   126
+         Top             =   1680
+         Width           =   2415
+      End
       Begin VB.CheckBox chkDirs 
          Caption         =   "Add directories to the PATH (-i):"
          BeginProperty Font 
@@ -568,7 +885,7 @@ Begin VB.Form frmPreferences
          Left            =   240
          TabIndex        =   115
          Top             =   1440
-         Width           =   4095
+         Width           =   2655
       End
       Begin VB.CheckBox chkDebugDCB 
          Caption         =   "Store debugging information at the DCB (-g)"
@@ -584,7 +901,7 @@ Begin VB.Form frmPreferences
          Height          =   255
          Left            =   240
          TabIndex        =   114
-         Top             =   1200
+         Top             =   480
          Width           =   4095
       End
       Begin VB.TextBox txtParams 
@@ -598,11 +915,11 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   525
-         Left            =   240
+         Left            =   120
          MultiLine       =   -1  'True
          TabIndex        =   59
-         Top             =   2760
-         Width           =   4695
+         Top             =   3000
+         Width           =   5055
       End
       Begin VB.CheckBox chkMSDOS 
          Caption         =   "File uses the MS-DOS character set (-c)"
@@ -652,7 +969,7 @@ Begin VB.Form frmPreferences
          Height          =   255
          Left            =   240
          TabIndex        =   54
-         Top             =   480
+         Top             =   1200
          Width           =   3615
       End
       Begin VB.CheckBox chkDebug 
@@ -685,9 +1002,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   240
+         Left            =   120
          TabIndex        =   58
-         Top             =   2520
+         Top             =   2760
          Width           =   2175
       End
       Begin VB.Label lblCompiler 
@@ -710,6 +1027,15 @@ Begin VB.Form frmPreferences
    End
    Begin VB.PictureBox picEditor 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   4095
       Left            =   5640
       ScaleHeight     =   4095
@@ -737,6 +1063,15 @@ Begin VB.Form frmPreferences
             Appearance      =   0  'Flat
             BackColor       =   &H80000004&
             BorderStyle     =   0  'None
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             ForeColor       =   &H80000008&
             Height          =   855
             Left            =   120
@@ -888,6 +1223,15 @@ Begin VB.Form frmPreferences
          Begin VB.PictureBox picIndent 
             Appearance      =   0  'Flat
             BorderStyle     =   0  'None
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             ForeColor       =   &H80000008&
             Height          =   1095
             Left            =   120
@@ -1038,6 +1382,15 @@ Begin VB.Form frmPreferences
    End
    Begin VB.PictureBox picFileAsoc 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   3975
       Left            =   11400
       ScaleHeight     =   3975
@@ -1064,6 +1417,15 @@ Begin VB.Form frmPreferences
          Width           =   3435
       End
       Begin VB.Frame fraFiletypes 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   3015
          Left            =   120
          TabIndex        =   28
@@ -1144,6 +1506,15 @@ Begin VB.Form frmPreferences
    End
    Begin VB.PictureBox picUserTools 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   3975
       Index           =   0
       Left            =   11640
@@ -1154,6 +1525,15 @@ Begin VB.Form frmPreferences
       Visible         =   0   'False
       Width           =   5295
       Begin VB.Frame fraToolData 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2295
          Index           =   0
          Left            =   120
@@ -1161,6 +1541,15 @@ Begin VB.Form frmPreferences
          Top             =   1680
          Width           =   5175
          Begin VB.TextBox txtName 
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   285
             Index           =   0
             Left            =   720
@@ -1169,6 +1558,15 @@ Begin VB.Form frmPreferences
             Width           =   4335
          End
          Begin VB.TextBox txtPath 
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   285
             Index           =   0
             Left            =   720
@@ -1178,6 +1576,15 @@ Begin VB.Form frmPreferences
          End
          Begin VB.CommandButton cmdAddTool 
             Caption         =   "&Add"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Index           =   0
             Left            =   3840
@@ -1188,6 +1595,15 @@ Begin VB.Form frmPreferences
          End
          Begin VB.CommandButton cmdClear 
             Caption         =   "C&lear"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   20
@@ -1196,6 +1612,15 @@ Begin VB.Form frmPreferences
          End
          Begin VB.CommandButton cmdToolExplore 
             Caption         =   "..."
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   315
             Left            =   4560
             TabIndex        =   19
@@ -1203,6 +1628,15 @@ Begin VB.Form frmPreferences
             Width           =   495
          End
          Begin VB.TextBox txtParms 
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   285
             Left            =   720
             MultiLine       =   -1  'True
@@ -1213,6 +1647,15 @@ Begin VB.Form frmPreferences
          End
          Begin VB.Label lblName 
             Caption         =   "Name:"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   120
             TabIndex        =   26
@@ -1221,6 +1664,15 @@ Begin VB.Form frmPreferences
          End
          Begin VB.Label lblPath 
             Caption         =   "Path:"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   120
             TabIndex        =   25
@@ -1229,6 +1681,15 @@ Begin VB.Form frmPreferences
          End
          Begin VB.Label lblParms 
             Caption         =   "Command-line parameters:"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   120
             TabIndex        =   24
@@ -1237,22 +1698,49 @@ Begin VB.Form frmPreferences
          End
       End
       Begin VB.Frame fraTools 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   1575
          Left            =   120
          TabIndex        =   13
          Top             =   0
          Width           =   5175
          Begin VB.ListBox lstUserTools 
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   1230
-            ItemData        =   "frmPreferences.frx":0000
+            ItemData        =   "frmPreferences.frx":0004
             Left            =   120
-            List            =   "frmPreferences.frx":0002
+            List            =   "frmPreferences.frx":0006
             TabIndex        =   16
             Top             =   240
             Width           =   3615
          End
          Begin VB.CommandButton cmdRemoveTool 
             Caption         =   "R&emove"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   3840
             TabIndex        =   15
@@ -1262,6 +1750,15 @@ Begin VB.Form frmPreferences
          End
          Begin VB.CommandButton cmdRemoveAll 
             Caption         =   "Remove all"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   3840
             TabIndex        =   14
@@ -1308,6 +1805,15 @@ Begin VB.Form frmPreferences
    End
    Begin VB.PictureBox picCompilation 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   4095
       Left            =   120
       ScaleHeight     =   4095
@@ -1334,6 +1840,15 @@ Begin VB.Form frmPreferences
          Begin VB.PictureBox Picture1 
             Appearance      =   0  'Flat
             BorderStyle     =   0  'None
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             ForeColor       =   &H80000008&
             Height          =   1815
             Left            =   120
@@ -1494,6 +2009,15 @@ Begin VB.Form frmPreferences
       Begin VB.Frame grbSaveBeforeCompiling 
          BorderStyle     =   0  'None
          Caption         =   "Frame2"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   1095
          Left            =   240
          TabIndex        =   48
@@ -1503,6 +2027,15 @@ Begin VB.Form frmPreferences
             Appearance      =   0  'Flat
             BorderStyle     =   0  'None
             FillStyle       =   0  'Solid
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             ForeColor       =   &H80000008&
             Height          =   975
             Left            =   0
@@ -1567,6 +2100,15 @@ Begin VB.Form frmPreferences
    End
    Begin VB.PictureBox picAppearance 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   3135
       Left            =   120
       ScaleHeight     =   3135
@@ -1574,11 +2116,21 @@ Begin VB.Form frmPreferences
       TabIndex        =   3
       Top             =   960
       Width           =   5295
-      Begin VB.ComboBox cmbColor 
+      Begin VB.ComboBox cmbFlametrackerColor 
+         Appearance      =   0  'Flat
          Height          =   315
-         ItemData        =   "frmPreferences.frx":0004
          Left            =   2520
-         List            =   "frmPreferences.frx":0006
+         Style           =   2  'Dropdown List
+         TabIndex        =   129
+         Top             =   1080
+         Width           =   1695
+      End
+      Begin VB.ComboBox cmbColor 
+         Enabled         =   0   'False
+         Height          =   315
+         ItemData        =   "frmPreferences.frx":0008
+         Left            =   2520
+         List            =   "frmPreferences.frx":000A
          Style           =   2  'Dropdown List
          TabIndex        =   51
          Top             =   720
@@ -1621,6 +2173,14 @@ Begin VB.Form frmPreferences
          Top             =   720
          Width           =   2655
       End
+      Begin VB.Label lblFlametrackerColor 
+         Caption         =   "Flametracker color style:"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   128
+         Top             =   1080
+         Width           =   2175
+      End
       Begin VB.Label lblWarning 
          Caption         =   "Note: Using the XP Style in Windows 9x / Me IS NOT recommended."
          BeginProperty Font 
@@ -1642,6 +2202,15 @@ Begin VB.Form frmPreferences
    End
    Begin VB.PictureBox picColors 
       BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   4095
       Left            =   5640
       ScaleHeight     =   4095
@@ -1651,9 +2220,18 @@ Begin VB.Form frmPreferences
       Width           =   5535
       Begin VB.PictureBox picPredefSets 
          BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   310
          Left            =   120
-         Picture         =   "frmPreferences.frx":0008
+         Picture         =   "frmPreferences.frx":000C
          ScaleHeight     =   370.588
          ScaleMode       =   0  'User
          ScaleWidth      =   315
@@ -1673,9 +2251,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   330
-         ItemData        =   "frmPreferences.frx":0151
+         ItemData        =   "frmPreferences.frx":0155
          Left            =   4680
-         List            =   "frmPreferences.frx":0173
+         List            =   "frmPreferences.frx":0177
          TabIndex        =   43
          Top             =   120
          Width           =   750
@@ -1838,9 +2416,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   330
-         ItemData        =   "frmPreferences.frx":019B
+         ItemData        =   "frmPreferences.frx":019F
          Left            =   2160
-         List            =   "frmPreferences.frx":019D
+         List            =   "frmPreferences.frx":01A1
          Style           =   2  'Dropdown List
          TabIndex        =   34
          Top             =   120
@@ -1849,7 +2427,7 @@ Begin VB.Form frmPreferences
       Begin CodeSenseCtl.CodeSense csPreview 
          Height          =   1815
          Left            =   120
-         OleObjectBlob   =   "frmPreferences.frx":019F
+         OleObjectBlob   =   "frmPreferences.frx":01A3
          TabIndex        =   11
          Top             =   2160
          Width           =   5295
@@ -2074,13 +2652,15 @@ Private Sub PlaceControls()
     Me.Width = 7440     ' 5625
     Me.Height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
-    cmdOK.Move 3120, 5400        ' 3120
+    cmdOk.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
 End Sub
 
 'Saves configuration
 Private Sub SaveConf()
     On Error GoTo errhandler
+    
+    Dim i As Integer
 
     With Ini
         .Path = App.Path & CONF_FILE
@@ -2107,6 +2687,11 @@ Private Sub SaveConf()
         .Key = "Color"
         .Default = "1"
         .Value = cmbColor.ListIndex
+        
+        .Key = "Flametracker"
+        .Default = "1"
+        .Value = cmbFlametrackerColor.ListIndex
+        A_Flametracker = .Value
 
         .Section = "Run"            ' ----------- RUN ----------------------
         
@@ -2152,6 +2737,40 @@ Private Sub SaveConf()
         .Default = "0"
         .Value = IIf(chkDirs.Value = 1, "1", "0")
         R_Paths = IIf(chkDirs.Value = 1, True, False)
+        For i = 0 To (lstPATHS.ListCount - 1)
+            If lstPATHS.Selected(i) Then
+                R_PathsList = R_PathsList & " " & lstPATHS.List(i)
+            End If
+        Next i
+        
+        .Key = "Output"
+        .Default = "0"
+        .Value = IIf(chkDCB, True, False)
+        
+        .Key = "OutputName"
+        .Default = ""
+        .Value = txtDCBName.text
+        
+        .Key = "AllFiles"
+        .Default = "0"
+        .Value = IIf(chkAllToDCB, True, False)
+        
+        .Key = "Files"
+        .Default = "0"
+        .Value = IIf(chkFilesToDCB, True, False)
+         For i = 0 To (lstFilesToDcb.ListCount - 1)
+            If lstFilesToDcb.Selected(i) Then
+                R_PathsList = R_PathsList & " " & lstFilesToDcb.List(i)
+            End If
+        Next i
+        
+        .Key = "Macros"
+        .Default = "0"
+        .Value = IIf(chkMacros, True, False)
+        
+        .Key = "MacrosText"
+        .Default = ""
+        .Value = txtMacro.text
         
 '        .Key = "Filter"
 '        .Default = "0"
@@ -2232,6 +2851,11 @@ Private Sub SaveConf()
         'End If
         
         .Section = "ProgramInspector"   ' ----------- PROGRAMINSPECTOR ---------
+        
+        .Key = "Active"
+        .Default = "1"
+        .Value = IIf(chkPIActive.Value = "1", "1", "0")
+        PI_Active = IIf(chkPIActive.Value = "1", True, False)
         
         .Key = "ShowConsts"
         .Default = "1"
@@ -2365,7 +2989,7 @@ Private Sub SaveConf()
     End If
     
     'DCBs
-    If chkDcb.Value = 1 Then
+    If chkDCB.Value = 1 Then
         ' actualizamos siempre el dir de fenix
         If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
             Call DeleteType(".dcb", "Bennu/Fenix.Bin")
@@ -2461,6 +3085,10 @@ Private Sub LoadConf()
         .Key = "Color"
         .Default = "1"
         cmbColor.ListIndex = IIf(.Value = "1" Or .Value = "2" Or .Value = "3" Or .Value = "4" Or .Value = "5" Or .Value = "6" Or .Value = "7" Or .Value = "8" Or .Value = "9" Or .Value = "0", .Value, 1)
+        
+        .Key = "Flametracker"
+        .Default = "9"
+        cmbFlametrackerColor.ListIndex = IIf(.Value = "1" Or .Value = "2" Or .Value = "3" Or .Value = "4" Or .Value = "5" Or .Value = "6" Or .Value = "7" Or .Value = "8" Or .Value = "9" Or .Value = "10" Or .Value = "11" Or .Value = "12" Or .Value = "13" Or .Value = "0", .Value, 9)
 
         .Section = "Run"            ' ----------- RUN ----------------------
 
@@ -2564,6 +3192,12 @@ Private Sub LoadConf()
 
         .Section = "ProgramInspector"   ' ----------- PROGRAMINSPECTOR ---------
 
+        
+        .Key = "Active"
+        .Default = "1"
+        chkPIActive.Value = IIf(.Value = 1, 1, 0)
+        
+        
         .Key = "ShowConsts"
         .Default = "1"
         chkPIShowCons.Value = IIf(.Value = 1, 1, 0)
@@ -2627,8 +3261,16 @@ Private Sub cboSize_Validate(Cancel As Boolean)
     End If
 End Sub
 
+Private Sub chkAllToDCB_Click()
+    printParams
+End Sub
+
 Private Sub chkAutoDeclare_Click()
     printParams
+End Sub
+
+Private Sub chkBitmap_Click()
+    cmbColor.Enabled = chkBitmap.Value
 End Sub
 
 Private Sub chkBold_Click()
@@ -2647,6 +3289,11 @@ Private Sub chkConfine_Click()
     csPreview.SelBounds = IIf(chkConfine.Value = 1, True, False)
 End Sub
 
+Private Sub chkDcbName_Click()
+    txtDCBName.Enabled = chkDcbName.Value
+    printParams
+End Sub
+
 Private Sub chkDebug_Click()
     printParams
 End Sub
@@ -2656,14 +3303,14 @@ Private Sub chkDebugDCB_Click()
 End Sub
 
 Private Sub chkDirs_Click()
-    If chkDirs.Value Then    ' go to compilation dirs tab
-        tabCategories.Tabs.item("PATHS").Selected = True
-        tv_preferences.Nodes(9).Selected = True
-        fraPATHS.Enabled = True
-    Else
-        ' disable paths
-        fraPATHS.Enabled = False
-    End If
+    cmdGoPaths.Enabled = chkDirs.Value
+    fraPATHS.Enabled = chkDirs.Value
+    printParams
+End Sub
+
+Private Sub chkFilesToDCB_Click()
+    fraFiles.Enabled = chkFilesToDCB.Value
+    cmdGoFiles.Enabled = chkFilesToDCB.Value
     printParams
 End Sub
 
@@ -2675,12 +3322,38 @@ Private Sub chkLineNumbering_Click()
     csPreview.LineNumbering = IIf(chkLineNumbering.Value = 1, True, False)
 End Sub
 
+Private Sub chkMacros_Click()
+    txtMacro.Enabled = chkMacros
+    cmdGoMacros.Enabled = chkMacros
+    printParams
+End Sub
+
 Private Sub chkMSDOS_Click()
     printParams
 End Sub
 
 Private Sub chkNormalizeCase_Click()
     csPreview.NormalizeCase = IIf(chkNormalizeCase.Value = 1, True, False)
+End Sub
+
+Private Sub chkPIActive_Click()
+    If chkPIActive.Value Then
+        chkPILocals.Enabled = True
+        chkPIOnlyConsHeader.Enabled = True
+        chkPIOnlyGlobalHeader.Enabled = True
+        chkPIOnlyLocalHeader.Enabled = True
+        chkPIShowCons.Enabled = True
+        chkPIShowGlobals.Enabled = True
+        chkPIShowPrivates.Enabled = True
+    Else
+        chkPILocals.Enabled = False
+        chkPIOnlyConsHeader.Enabled = False
+        chkPIOnlyGlobalHeader.Enabled = False
+        chkPIOnlyLocalHeader.Enabled = False
+        chkPIShowCons.Enabled = False
+        chkPIShowGlobals.Enabled = False
+        chkPIShowPrivates.Enabled = False
+    End If
 End Sub
 
 Private Sub chkPIOnlyConsHeader_Click()
@@ -2770,6 +3443,47 @@ Private Sub cmdExplore_Click(Index As Integer)
     End If
 End Sub
 
+Private Sub cmdFileAdd_Click()
+    Dim sFiles() As String
+    Dim fileCount As Integer
+    Dim i As Integer
+
+    fileCount = ShowOpenDialog(sFiles, getFilter("COMMON_FILES"), True, True)
+    If fileCount > 0 Then
+        For i = LBound(sFiles) To UBound(sFiles)
+            lstFilesToDcb.AddItem (sFiles(i))
+        Next
+    End If
+End Sub
+
+Private Sub cmdFileDel_Click()
+    Dim i As Integer
+    For i = (lstFilesToDcb.ListCount - 1) To 0 Step -1
+        If lstFilesToDcb.Selected(i) Then
+            lstFilesToDcb.RemoveItem i
+        End If
+    Next
+End Sub
+
+Private Sub cmdFileDelAll_Click()
+    lstFilesToDcb.Clear
+End Sub
+
+Private Sub cmdGoFiles_Click()
+        tabCategories.Tabs.item("PATHS").Selected = True
+        tv_preferences.Nodes(9).Selected = True
+End Sub
+
+Private Sub cmdGoMacros_Click()
+        tabCategories.Tabs.item("MACROS").Selected = True
+        tv_preferences.Nodes(10).Selected = True
+End Sub
+
+Private Sub cmdGoPaths_Click()
+        tabCategories.Tabs.item("PATHS").Selected = True
+        tv_preferences.Nodes(9).Selected = True
+End Sub
+
 Private Sub cmdOk_Click()
     SaveConf
     
@@ -2792,6 +3506,12 @@ End Sub
 
 Private Sub cmdPATHSRemoveAll_Click()
     lstPATHS.Clear
+End Sub
+
+
+Private Sub cmnGoFiles_Click()
+    tabCategories.Tabs.item("PATHS").Selected = True
+    tv_preferences.Nodes(9).Selected = True
 End Sub
 
 Private Sub cp1_ColorChanged()
@@ -2827,6 +3547,22 @@ Private Sub Form_Load()
     cmbColor.AddItem "Onyx"
     cmbColor.AddItem "Night"
     cmbColor.AddItem "Emerald"
+    
+    
+    cmbFlametrackerColor.AddItem "Standard"
+    cmbFlametrackerColor.AddItem "Iron"
+    cmbFlametrackerColor.AddItem "Ocean"
+    cmbFlametrackerColor.AddItem "Lake"
+    cmbFlametrackerColor.AddItem "Turquese"
+    cmbFlametrackerColor.AddItem "Emerald"
+    cmbFlametrackerColor.AddItem "Olive"
+    cmbFlametrackerColor.AddItem "Spring"
+    cmbFlametrackerColor.AddItem "Sand"
+    cmbFlametrackerColor.AddItem "Flame"
+    cmbFlametrackerColor.AddItem "Bloom"
+    cmbFlametrackerColor.AddItem "Earth"
+    cmbFlametrackerColor.AddItem "Rose"
+    cmbFlametrackerColor.AddItem "Lavande"
 
     Set c = New cBrowseForFolder
 '    PlaceControls
@@ -2863,6 +3599,8 @@ Private Sub Form_Load()
         nTab.Panel = picIntelliSense
         Set nTab = .Tabs.Add("MISC", , "Misc")
         nTab.Panel = picMisc
+        Set nTab = .Tabs.Add("MACROS", , "CompilerMacros")
+        nTab.Panel = picMacros
     End With
 
     'Editor Conf
@@ -2887,27 +3625,28 @@ Private Sub Form_Load()
         .Nodes.Add(, , "imp", "IMP/IMPORT - Bennu module list files").Checked = FileAssociated(".imp", "Bennu.ImportFile")
         .Nodes.Add(, , "pal", "PAL - Bennu/Fenix palette files").Checked = FileAssociated(".pal", "Bennu/Fenix.PaletteFile")
     End With
-    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
+    chkDCB.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 
     'TreeView
     With tv_preferences
-        .Nodes.Add , etvwFirst, "Global", "Global"
+        .Nodes.Add , etvwFirst, "Global", " Global"
             tv_preferences.Nodes(1).AddChildNode "GlobalFile", "File"
             tv_preferences.Nodes(1).AddChildNode "GlobalMisc", "Misc"
             tv_preferences.Nodes(1).ShowPlusMinus = True
             tv_preferences.Nodes(1).expanded = True
-        .Nodes.Add , etvwNext, "Editor", "Editor"
+        .Nodes.Add , etvwNext, "Editor", " Editor"
             tv_preferences.Nodes(4).AddChildNode "EditorColors", "Colors"
             tv_preferences.Nodes(4).AddChildNode "EditorIntelliSense", "IntelliSense"
             tv_preferences.Nodes(4).ShowPlusMinus = True
             tv_preferences.Nodes(4).expanded = True
-        .Nodes.Add , etvwNext, "Compiler", "Compiler"
+        .Nodes.Add , etvwNext, "Compiler", " Compiler"
             tv_preferences.Nodes(7).AddChildNode "CompilerOptions", "Options"
-            tv_preferences.Nodes(7).AddChildNode "CompilerPaths", "Paths"
+            tv_preferences.Nodes(7).AddChildNode "CompilerPaths", "Paths & Files"
+            tv_preferences.Nodes(7).AddChildNode "CompilerMacros", "Macros"
             tv_preferences.Nodes(7).ShowPlusMinus = True
             tv_preferences.Nodes(7).expanded = True
-        .Nodes.Add , etvwNext, "ProgramInspector", "Program Inspector"
-        .Style = etvwTreelinesPlusMinusPictureText
+        .Nodes.Add , etvwNext, "ProgramInspector", " Program Inspector"
+        .Style = etvwTextOnly
         .LineStyle = etvwRootLines
     End With
     
@@ -3074,11 +3813,30 @@ Private Sub tv_preferences_NodeClick(node As vbalTreeViewLib6.cTreeViewNode)
         tabCategories.Tabs.item("COMPILATION").Selected = True
         Case "CompilerOptions":
             tabCategories.Tabs.item("OPTIONS").Selected = True
+            printParams
         Case "CompilerPaths":
             tabCategories.Tabs.item("PATHS").Selected = True
+        Case "CompilerMacros":
+            tabCategories.Tabs.item("MACROS").Selected = True
     Case "ProgramInspector":
         tabCategories.Tabs.item("PI").Selected = True
     End Select
+End Sub
+
+Private Sub txtDCBName_LostFocus()
+    Dim sFileExt As String
+    
+    If Len(txtDCBName.text) < 5 Then
+        MsgBox "Invalid Dcb output name", vbCritical
+        txtDCBName.SetFocus
+    Else
+        sFileExt = Right(txtDCBName.text, 4)
+        If Not sFileExt = ".bin" And Not sFileExt = ".dcb" And Not sFileExt = ".dat" Then
+            MsgBox "Invalid output extension. Extension must be .dat, .bin or .dcb", vbCritical
+            txtDCBName.SetFocus
+        End If
+    End If
+    
 End Sub
 
 Private Sub txtIntelliSenseSensitive_Validate(Cancel As Boolean)
@@ -3107,6 +3865,7 @@ End Sub
 
 Private Sub printParams()
     Dim sText As String
+    Dim i As Integer
     
     If chkDebug.Value Then
         sText = sText & " -d"
@@ -3128,8 +3887,29 @@ Private Sub printParams()
             sText = sText & " -g"
         End If
         If chkDirs.Value Then
-            sText = sText & " -i"
-            ' and all that comes after...
+            sText = sText & " -i" '& Dirs
+            For i = 0 To (lstPATHS.ListCount - 1)
+                If lstPATHS.Selected(i) Then
+                    sText = sText & " " & lstPATHS.List(i)
+                End If
+            Next i
+        End If
+        If chkAllToDCB Then
+            sText = sText & " -a"
+        End If
+        If chkDcbName Then
+            sText = sText & " -o " & txtDCBName.text
+        End If
+        If chkFilesToDCB Then
+            sText = sText & " -f " '& Files
+            For i = 0 To (lstFilesToDcb.ListCount - 1)
+                If lstFilesToDcb.Selected(i) Then
+                    sText = sText & " " & lstFilesToDcb.List(i)
+                End If
+            Next i
+        End If
+        If chkMacros Then
+            sText = sText & " -D " & txtMacro.text
         End If
     End If
     txtParams.text = sText

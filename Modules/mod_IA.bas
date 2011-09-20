@@ -369,7 +369,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
 
     On Error GoTo Termina
     
-    If analyzingSource Then Exit Sub
+    If analyzingSource Or Not PI_Active Then Exit Sub
     
     ' si hay un proyecto abierto con mainsource definido
     ' directamente mandamos a hacer ese achivo, es lo logico, no?

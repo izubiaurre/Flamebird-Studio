@@ -3,28 +3,32 @@ Begin VB.Form frmSplash
    Appearance      =   0  'Flat
    BorderStyle     =   0  'None
    Caption         =   "Loading"
-   ClientHeight    =   3330
+   ClientHeight    =   4980
    ClientLeft      =   0
    ClientTop       =   30
-   ClientWidth     =   6360
+   ClientWidth     =   8805
    Icon            =   "frmSplash.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3330
-   ScaleWidth      =   6360
+   ScaleHeight     =   4980
+   ScaleWidth      =   8805
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox Picture1 
+      Appearance      =   0  'Flat
+      AutoSize        =   -1  'True
+      BackColor       =   &H80000005&
       BorderStyle     =   0  'None
-      Height          =   3375
+      ForeColor       =   &H80000008&
+      Height          =   4965
       Left            =   0
       Picture         =   "frmSplash.frx":23D2
-      ScaleHeight     =   3375
-      ScaleWidth      =   6375
+      ScaleHeight     =   4965
+      ScaleWidth      =   8805
       TabIndex        =   0
       Top             =   0
-      Width           =   6375
+      Width           =   8805
       Begin VB.Label lblMessage 
          Alignment       =   1  'Right Justify
          BackStyle       =   0  'Transparent
@@ -39,9 +43,9 @@ Begin VB.Form frmSplash
          EndProperty
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   1800
+         Left            =   3480
          TabIndex        =   1
-         Top             =   3060
+         Top             =   4560
          Width           =   4455
       End
    End

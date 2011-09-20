@@ -1,24 +1,126 @@
 VERSION 5.00
-Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbaldtab6.ocx"
+Object = "{9DC93C3A-4153-440A-88A7-A10AEDA3BAAA}#3.5#0"; "vbalDTab6.ocx"
 Begin VB.Form frmProjectProperties 
-   BorderStyle     =   3  'Fixed Dialog
+   Appearance      =   0  'Flat
+   BackColor       =   &H80000005&
+   BorderStyle     =   1  'Fixed Single
    Caption         =   "Project properties"
-   ClientHeight    =   5115
+   ClientHeight    =   11520
    ClientLeft      =   45
    ClientTop       =   375
-   ClientWidth     =   5640
+   ClientWidth     =   17505
    ControlBox      =   0   'False
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmProjectProperties.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5115
-   ScaleWidth      =   5640
-   ShowInTaskbar   =   0   'False
-   StartUpPosition =   1  'CenterOwner
+   ScaleHeight     =   11520
+   ScaleWidth      =   17505
+   StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdExeFile 
+      Caption         =   "..."
+      Height          =   255
+      Left            =   12360
+      TabIndex        =   26
+      Top             =   3240
+      Width           =   255
+   End
+   Begin VB.TextBox txtIExeFile 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00666666&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H00BDBDBD&
+      Height          =   285
+      Left            =   7800
+      TabIndex        =   25
+      Top             =   3240
+      Width           =   4455
+   End
+   Begin VB.PictureBox pic_SelIcon 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   3615
+      Left            =   7680
+      ScaleHeight     =   3615
+      ScaleWidth      =   5175
+      TabIndex        =   20
+      Top             =   720
+      Width           =   5175
+      Begin VB.CommandButton cmdApplyIcon 
+         Caption         =   "Apply"
+         Height          =   375
+         Left            =   1560
+         TabIndex        =   27
+         Top             =   3240
+         Width           =   1215
+      End
+      Begin VB.CommandButton cmdIconFile 
+         Caption         =   "..."
+         Height          =   255
+         Left            =   4680
+         TabIndex        =   23
+         Top             =   1800
+         Width           =   255
+      End
+      Begin VB.TextBox txtIconFile 
+         BackColor       =   &H00666666&
+         BorderStyle     =   0  'None
+         ForeColor       =   &H00BDBDBD&
+         Height          =   285
+         Left            =   120
+         TabIndex        =   22
+         Top             =   1800
+         Width           =   4455
+      End
+      Begin VB.Image imgIcon 
+         Appearance      =   0  'Flat
+         BorderStyle     =   1  'Fixed Single
+         Height          =   1215
+         Left            =   120
+         Stretch         =   -1  'True
+         Top             =   120
+         Width           =   1215
+      End
+      Begin VB.Label Label7 
+         Caption         =   "Exe file:"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   24
+         Top             =   2280
+         Width           =   1215
+      End
+      Begin VB.Label Label4 
+         Caption         =   "Icon file:"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   21
+         Top             =   1560
+         Width           =   2655
+      End
+   End
    Begin VB.PictureBox pic_compilation 
       BorderStyle     =   0  'None
       DrawStyle       =   5  'Transparent
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   3375
       Left            =   0
       ScaleHeight     =   3375
@@ -270,6 +372,15 @@ Begin VB.Form frmProjectProperties
    Begin VB.PictureBox pic_general 
       BorderStyle     =   0  'None
       DrawStyle       =   5  'Transparent
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   1815
       Left            =   120
       ScaleHeight     =   1815
@@ -402,8 +513,37 @@ Private Sub chkEspecificFenix_Click()
     frmFenixPath.Enabled = CBool(chkEspecificFenix.Value)
 End Sub
 
+Private Sub cmdApplyIcon_Click()
+    Dim errorN As Long
+    erroN = InsertIcons(txtIconFile, txtIExeFile)
+    
+    If erroN > 0 Then ShowError ("ApplyIcon"): Resume Next
+    
+End Sub
+
 Private Sub cmdCompilationDir_Click()
     BrowseFolders txtCompilationDir
+End Sub
+
+Private Sub cmdExeFile_Click()
+    Dim sFiles() As String
+    
+    If ShowOpenDialog(sFiles(), getFilter("EXE"), True, False) > 0 Then
+        txtIExeFile = openedProject.makePathRelative(sFiles(0))
+    End If
+End Sub
+
+Private Sub cmdIconFile_Click()
+    On Error GoTo errhandler:
+    Dim sFiles() As String
+    
+    If ShowOpenDialog(sFiles(), getFilter("ICON"), True, False) > 0 Then
+        txtIconFile = openedProject.makePathRelative(sFiles(0))
+        imgIcon.Picture = LoadPicture(txtIconFile)
+    End If
+    Exit Sub
+errhandler:
+    MsgBox "Could not display icon properly", vbCritical
 End Sub
 
 Private Sub cmdMainSource_Click()
@@ -443,6 +583,7 @@ End Sub
 
 Private Sub Form_Load()
     Set browseDir = New cBrowseForFolder
+    Set cdialog = New cCommonDialog
     
     Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
     
@@ -453,6 +594,8 @@ Private Sub Form_Load()
         nTab.Panel = pic_general
         Set nTab = .Tabs.Add("COMPILATION", , "Compilation")
         nTab.Panel = pic_compilation
+        Set nTab = .Tabs.Add("ICON", , "Icon")
+        nTab.Panel = pic_SelIcon
     End With
 End Sub
 Public Sub SaveConf()
@@ -479,3 +622,4 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     Set browseDir = Nothing
 End Sub
+

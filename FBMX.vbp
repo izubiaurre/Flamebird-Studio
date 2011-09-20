@@ -103,6 +103,7 @@ Module=fmod_init; Modules\fmod_init.bas
 Form=Forms\frmMSDOSCommand.frm
 Form=Forms\frmThotAdd.frm
 Form=Forms\frmFnt.frm
+Module=modIconChanger; Modules\modIconChanger2.bas
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

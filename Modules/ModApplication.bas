@@ -36,13 +36,25 @@ Public R_AutoDeclare As Boolean
 Public R_MsDos As Boolean
 Public R_DebugDCB As Boolean
 Public R_Paths As Boolean
+Public R_PathsList As String
+Public R_Dcb As Boolean
+Public R_DcbName As String
+Public R_AllFiles As Boolean
+Public R_Files As Boolean
+Public R_FilesList As String
+Public R_Macros As Boolean
+Public R_MAcrosText As String
 'Public R_filter As Boolean
 'Public R_DoubleBuf As Boolean
 Public R_SaveBeforeCompiling As Integer
+
 Public A_StyleXP As Boolean 'Use XP menu and toolbars look
 Public A_Bitmaps As Boolean
 Public A_Color As Integer
+Public A_Flametracker As Integer
+
 Public M_Style As Variant 'Menu style
+
 Public T_Style As Variant 'Toolbar style
 
 Public IS_Show As Boolean
@@ -55,6 +67,7 @@ Public IS_UserDefVar As Boolean
 Public IS_UserDefFunc As Boolean
 Public IS_UserDefProc As Boolean
 
+Public PI_Active As Boolean
 Public PI_ShowConsts As Boolean
 Public PI_ShowGlobals As Boolean
 Public PI_ShowLocals As Boolean
@@ -591,6 +604,10 @@ Private Sub LoadConf()
         .Key = "Color"
         .Default = "1"
         A_Color = IIf(.Value = "1" Or .Value = "2" Or .Value = "3" Or .Value = "4" Or .Value = "5" Or .Value = "6" Or .Value = "7" Or .Value = "8" Or .Value = "9" Or .Value = "0", .Value, 1)
+        
+        .Key = "Flametracker"
+        .Default = "9"
+        A_Flametracker = IIf(.Value = "1" Or .Value = "2" Or .Value = "3" Or .Value = "4" Or .Value = "5" Or .Value = "6" Or .Value = "7" Or .Value = "8" Or .Value = "9" Or .Value = "10" Or .Value = "11" Or .Value = "12" Or .Value = "13" Or .Value = "0", .Value, 9)
                 
         .Section = "Run"
         
@@ -690,6 +707,10 @@ Private Sub LoadConf()
         'End If
 
         .Section = "ProgramInspector"
+        
+        .Key = "Active"
+        .Default = "1"
+        PI_Active = IIf(.Value = 1, True, False)
 
         .Key = "ShowConsts"
         .Default = "1"

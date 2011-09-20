@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{665BF2B8-F41F-4EF4-A8D0-303FBFFC475E}#2.0#0"; "cmcs21.ocx"
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Begin VB.Form frmImport 
    Caption         =   "Import"
    ClientHeight    =   3555
@@ -86,6 +86,10 @@ Private Const FAST_SCROLL_STEPS As Integer = 12 'desplazamiento con Shift
 Private m_IsDirty As Boolean 'This should never be set directly. Use the IsDirty property instead
 Private m_Title
 
+Public rangoActual As CodeSense.range
+Private WithEvents m_ContextMenu As cMenus
+Attribute m_ContextMenu.VB_VarHelpID = -1
+
 Private WithEvents m_cScroll As cScrollBars
 Attribute m_cScroll.VB_VarHelpID = -1
 Private WithEvents m_ImportMenu As cMenus
@@ -144,7 +148,7 @@ Private Sub Form_Load()
     cs.EnableDragDrop = True
     cs.EnableCRLF = True
     cs.TabSize = 2
-    cs.ColorSyntax = True
+    cs.ColorSyntax = False
     cs.Language = "Bennu"
     cs.DisplayLeftMargin = True
     cs.AutoIndentMode = cmIndentPrevLine
@@ -298,6 +302,115 @@ errhandler:
     If Err.Number > 0 Then lResult = -1: Resume Next
     
 End Function
+
+
+Private Sub Cs_SelChange(ByVal Control As CodeSenseCtl.ICodeSense)
+    On Error Resume Next
+    
+    cs.HighlightedLine = -1
+    
+    Dim rangoTemp As CodeSense.range
+    Set rangoTemp = cs.GetSel(True)
+    
+    If Not rangoActual Is Nothing Then
+        'detectamos cambio de linea
+        If rangoTemp.StartLineNo <> rangoActual.StartLineNo Then
+            ' si se estaba mostrando el tooltip lo eliminamos
+'            If Not showingToolTip Is Nothing Then
+'                showingToolTip.Destroy
+'                Set showingToolTip = Nothing
+'            End If
+        End If
+    End If
+    
+    Set rangoActual = cs.GetSel(True) 'ubica la posicion actual y la guarda en una var de alcance modular
+End Sub
+
+Private Function Cs_MouseDown(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Button As Long, ByVal Shift As Long, ByVal X As Long, ByVal Y As Long) As Boolean
+    Dim lParentIndex, iP2 As Long
+    Dim s, sl, sw, n, c As Boolean
+    ' s for selected
+    '   sl for single line selected
+    '   sw for single word selected
+    ' n for nothing selected
+    ' c for converteable selections
+
+On Error Resume Next
+
+    s = False
+    n = False
+    sl = False
+    sw = False
+    c = False
+    
+    If rangoActual.IsEmpty Then
+        n = True
+    Else
+        s = True
+        If rangoActual.StartLineNo = rangoActual.EndLineNo Then
+            If cs.SelText = cs.CurrentWord Then
+                Debug.Print cs.SelText & "..." & cs.CurrentWord
+                If isBin(cs.SelText) Or isHex(cs.SelText) Or IsNumeric(cs.SelText) Then
+                    c = True
+                End If
+                sw = True
+            Else
+                sl = True
+            End If
+        End If
+    End If
+    
+    If (Button = 2) Then
+        
+        Set m_ContextMenu = Nothing
+        Set m_ContextMenu = New cMenus
+        m_ContextMenu.DrawStyle = M_Style
+        Set m_ContextMenu.ImageList = frmMain.ImgList1.Object
+        m_ContextMenu.CreateFromNothing Me.Hwnd
+        
+        lParentIndex = m_ContextMenu.AddItem(0, Key:="ContextMenu")
+        With m_ContextMenu
+            If s Then
+                .AddItem lParentIndex, "C&ut", "Ctrl+X", , "mnuEditCut", , , , 5
+                .AddItem lParentIndex, "&Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
+            End If
+            If cs.CanPaste Then
+                .AddItem lParentIndex, "&Paste", "Ctrl+V", , "mnuEditPaste", , , , 6
+            End If
+            .AddItem lParentIndex, "-"
+            If n Then
+                .AddItem lParentIndex, "&Select all", "Ctrl+A", , "mnuEditSelectAll", , , , 75
+                .AddItem lParentIndex, "Select line", "Ctrl+Shift+L", , "mnuEditSelectLine", , , , 76
+                .AddItem lParentIndex, "Select word", "Ctrl+Shift+W", , "mnuEditSelectWord", , , , 86
+            Else
+                .AddItem lParentIndex, "Deselect", , , "mnuEditDeselect"
+            End If
+            If n Then
+                .AddItem lParentIndex, "-"
+                .AddItem lParentIndex, "Duplicate line", "Ctrl+D", , "mnuEditDuplicateLine", , , , 83
+                .AddItem lParentIndex, "Delete line", "Ctrl+R", , "mnuEditDeleteLine", , , , 84
+                .AddItem lParentIndex, "Clear line", , , "mnuEditClearLine"
+                .AddItem lParentIndex, "Up line      ^", "Ctrl+Shift+Up", , "mnuEditUpLine", , , , 87
+                .AddItem lParentIndex, "Down line  v", "Ctrl+Shift+Down", , "mnuEditDownLine", , , , 88
+            End If
+
+            If n Or sw Then
+                .AddItem lParentIndex, "-"
+            End If
+            .AddItem lParentIndex, "&Search...", "Ctrl+F", , "mnuNavigationSearch", , , , 13
+            If sw Or sl Then
+                .AddItem lParentIndex, "Search next selected", "Ctrl+F3", , "mnuNavigationSearchNextWord", , , , 89
+                .AddItem lParentIndex, "Search prev selected", "Ctrl+Shift+F3", , "mnuNavigationSearchPrevWord", , , , 90
+            End If
+            .AddItem lParentIndex, "-"
+            .AddItem lParentIndex, "&Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
+        
+            .PopupMenu "ContextMenu"
+        End With
+        
+
+    End If
+End Function
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
 'END INTERFACE IFILEFORM
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
@@ -310,7 +423,75 @@ Private Property Let IsDirty(ByVal newVal As Boolean)
     
     frmMain.RefreshTabs
 End Property
+Private Sub m_ContextMenu_Click(ByVal Index As Long)
+    MsgBox m_ContextMenu.ItemKey(Index)
+    Select Case m_ContextMenu.ItemKey(Index)
+        Case "mnuEditCut":                      Call mnuEditCut
+        Case "mnuEditCopy":                     Call mnuEditCopy
+        Case "mnuEditPaste":                    Call mnuEditPaste
+        Case "mnuEditSelectAll":                Call mnuEditSelectAll
+        Case "mnuEditSelectWord":               Call mnuEditSelectWord
+        Case "mnuEditSelectLine":               Call mnuEditSelectLine
+        Case "mnuEditDeselect":                 Call mnuEditDeselect
+        Case "mnuEditClearLine":                Call mnuEditClearLine
+        Case "mnuEditDuplicateLine":            Call mnuEditDuplicateLine
+        Case "mnuEditDeleteLine":               Call mnuEditDeleteLine
+        Case "mnuEditUpLine":                   Call mnuEditUpLine
+        Case "mnuEditDownLine":                 Call mnuEditDownLine
+            
+        Case "mnuNavigationSearch":             Call mnuNavigationSearch
+        Case "mnuNavigationSearchNext":         Call mnuNavigationSearchNext
+        Case "mnuNavigationSearchPrev":         Call mnuNavigationSearchPrev
+        Case "mnuNavigationSearchNextWord":     Call mnuNavigationSearchNextWord
+        Case "mnuNavigationSearchPrevWord":     Call mnuNavigationSearchPrevWord
+        Case "mnuNavigationReplace":            Call mnuNavigationReplace
+    End Select
+    
+End Sub
 
+Private Sub tbrImport_ButtonClick(ByVal lButton As Long)
+    Dim sKey As String
+    
+    sKey = tbrImport.ButtonKey(lButton)
+    Select Case sKey
+    Case "ToogleBookmark"
+        modMenuActions.mnuBookmarkToggle
+    Case "NextBookmark"
+        modMenuActions.mnuBookmarkNext
+    Case "PreviousBookmark"
+        modMenuActions.mnuBookmarkPrev
+    Case "DeleteBookmarks"
+        modMenuActions.mnuBookmarkDel
+    Case "ShiftRight"
+        modMenuActions.mnuEditTab
+    Case "ShiftLeft"
+        modMenuActions.mnuEditUnTab
+    Case "Comment"
+        modMenuActions.mnuEditComment
+    Case "Uncomment"
+        modMenuActions.mnuEditUnComment
+    Case "EditBookmarks"
+        modMenuActions.mnuBookmarkEdit
+    Case "PrevPos"
+        modMenuActions.mnuNavigationPrevPosition
+    Case "NextPos"
+        modMenuActions.mnuNavigationNextPosition
+    End Select
+        
+End Sub
+
+Private Sub tbrImport_DropDownPress(ByVal lButton As Long)
+'    Dim X As Long, Y As Long
+'    Dim lIndex As Long
+'    tbrMap.GetDropDownPosition lButton, X, Y
+'
+'    Select Case tbrMap.ButtonKey(lButton)
+'        Case "AddToFpg":
+'            createFpgsMenu
+'            Call m_FpgsMenu.PopupMenu("FpgsMenu", _
+'                Me.ScaleX(Me.Left + X, vbTwips, vbPixels), Me.ScaleY(Y, vbTwips, vbPixels) + rebar.RebarHeight * 1.5, TPM_VERNEGANIMATION + TPM_LEFTALIGN)
+'    End Select
+End Sub
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
 'INTERFACE IPROPERTIESFORM
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
@@ -329,41 +510,6 @@ End Function
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
 'END INTERFACE IPROPERTIESFORM
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
-
-Private Sub tbrImport_ButtonClick(ByVal lButton As Long)
-'    Select Case tbrFnt.ButtonKey(lButton)
-'    Case "ZoomIn"
-'        ZoomFnt 0.5
-'    Case "ZoomOut"
-'        ZoomFnt -0.5
-'    Case "ZoomRestore"
-'        SizeIndex = 1
-'        frmMain.setStatusMessage (GetMedWidth & "," & GetMedHeigth & " @ " & m_SizeIndex * 100 & "%")
-'        'frmMain.StatusBar.PanelText("MAIN") = map.Width & "," & map.Height & " @ " & m_SizeIndex * 100 & "% - BPP" & map.Depth
-'    Case "ToogleTrans"
-'        ToggleTransparency
-'        tbrFnt.ButtonChecked("ToogleTrans") = ShowTransparent
-'    Case "EditPalette"
-'        EditPalette
-'    Case "WriteTextToMap"
-'        'WriteTextToMap
-'    Case "ExportFont"
-'        'ExportMap
-'    End Select
-End Sub
-
-Private Sub tbrImport_DropDownPress(ByVal lButton As Long)
-'    Dim X As Long, Y As Long
-'    Dim lIndex As Long
-'    tbrMap.GetDropDownPosition lButton, X, Y
-'
-'    Select Case tbrMap.ButtonKey(lButton)
-'        Case "AddToFpg":
-'            createFpgsMenu
-'            Call m_FpgsMenu.PopupMenu("FpgsMenu", _
-'                Me.ScaleX(Me.Left + X, vbTwips, vbPixels), Me.ScaleY(Y, vbTwips, vbPixels) + rebar.RebarHeight * 1.5, TPM_VERNEGANIMATION + TPM_LEFTALIGN)
-'    End Select
-End Sub
 
 '-------------------------------------------------------------------------------------
 'FUNCTION: Save()

@@ -6,6 +6,21 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 28/07/2011   Izubiaurre                  \Forms\frmMain.frm                                
+    Vuelta a quitar la entrada plugins de Tools porque daba problemas.
+
+· 28/07/2011   Izubiaurre                  \Class\cProject.cls                               
+    Añadido a los ficheros #conf, la entrada flametracker para cargar con el proyecto el tracker.
+
+· 28/07/2011   Izubiaurre                  \Forms\frmToDoList.frm                            
+    Ya muestra los temas.
+
+· 28/07/2011   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Añadido la opción de desactivar Program Inspector, ya que a veces casca la aplicación y es mejor así.
+
+· 27/07/2011   Izubiaurre                  \Forms\frmPreferences.frm                         
+    Ampliando las preferencias: Añadidos un montón de opciones para el compilador (macro, paths, files...); Añadido opción para seleccionar tema para Flametracker.
+
 · 17/07/2011   Izubiaurre                  fdl.lan                                           
     Actualizado la lista de palabras reservadas
 

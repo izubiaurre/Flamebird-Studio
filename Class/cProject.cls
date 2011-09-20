@@ -276,6 +276,8 @@ If confFileName <> "" Then
         If Not frmMain.ActiveFileForm Is Nothing Then
             .Value = frmMain.ActiveFileForm.Filename
         End If
+        .Key = "Flametracker"
+        .Value = IIf(frmMain.cMenu.ItemChecked(frmMain.cMenu.IndexForKey("mnuProjectTracker")), "1", "0")
     End With
 End If
 End Sub
@@ -297,6 +299,12 @@ Public Sub LoadIdeStatus()
             lista = .Value
             .Key = "activeform"
             activo = .Value
+            .Key = "Flametracker"
+            .Default = "0"
+            If .Value = "1" Then
+                mnuProjectTracker
+            End If
+            'frmMain.cMenu.ItemChecked(frmMain.cMenu.IndexForKey("mnuProjectTracker")) = IIf(.Value = "1", True, False)
         End With
     
         If cant > 0 Then 'Había formularios abiertos

@@ -201,24 +201,14 @@ Private Function SearchErrorLine(ByVal Cstring As String, ByRef sFileError As St
              
              ' Delete the first char that is a problematic symbol (change of line)
              sFileError = Right(sFileError, Len(sFileError) - 1)
-                'MsgBox sFileError
+
              'Get Error line number
              searchStart = InStr(4, sLine, ":") + 1
-                'MsgBox searchStart
-                Debug.Print searchStart
              searchEnd = InStr(sLine, ": error:")
-                'MsgBox searchEnd
-                Debug.Print searchEnd
-            Debug.Print sLine
-            Debug.Print Mid(sLine, searchStart, searchEnd - searchStart)
-            Debug.Print Trim(Mid(sLine, searchStart, searchEnd - searchStart))
+
             
              numLine = CInt(Trim(Mid(sLine, searchStart, searchEnd - searchStart)))
-                'MsgBox numLine
-                ''''''''''''''''''''''
-                Debug.Print "num line = " & numLine
-                'numLine = 1
-                '''''''''''''''''''''
+
              result = numLine
              'Get the error message
              sError = Trim(Right(sLine, Len(sLine) - (InStr(sLine, ": error") + 8)))
@@ -263,9 +253,9 @@ Public Function RunFFSource(ff As IFileForm)
     RunFFSource = bResult
 End Function
 '-------------------------------------------------------------------------------------
-'FUNCTION: Compile()
-'DESCRIPTION: Executes FXC for the specified sFile
-'RETURNS: true if no error, otherwise false.
+'FUNCTION:      Compile()
+'DESCRIPTION:   Executes FXC for the specified sFile
+'RETURNS:       true if no error, otherwise false.
 '-------------------------------------------------------------------------------------
 Public Function Compile(ByVal sFile As String) As Boolean
     Dim bResult As Boolean
@@ -328,7 +318,24 @@ Public Function Compile(ByVal sFile As String) As Boolean
             If R_AutoDeclare Then
                 sCommand = sCommand + " -Ca"
             End If
+            If R_Paths Then
+                sCommand = sCommand + " -i " ' & Dirs
+            End If
+            If R_Dcb Then
+                sCommand = sCommand + " -o " & R_DcbName
+            End If
+            If R_AllFiles Then
+                sCommand = sCommand + " -a"
+            End If
+            If R_Files Then
+                sCommand = sCommand + " -f " ' & files
+            End If
+            If R_Macros Then
+                sCommand = sCommand + " -D " & R_MAcrosText
+            End If
+            
             sCommand = sCommand & " " & Chr(34) & sFile & Chr(34) '& " > " & Chr(34) & stdoutFile & Chr(34)
+            
             Debug.Print "R_Compiler = " & R_Compiler
             Debug.Print sCommand
                    'MsgBox sCommand

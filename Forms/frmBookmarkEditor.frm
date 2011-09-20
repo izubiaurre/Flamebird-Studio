@@ -14,6 +14,7 @@ Begin VB.Form frmBookmarkEditor
    ScaleHeight     =   3690
    ScaleWidth      =   4680
    ShowInTaskbar   =   0   'False
+   StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdCancel 
       Cancel          =   -1  'True
       Caption         =   "Cancel"

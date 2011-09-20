@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalsgrid6.ocx"
+Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalSGrid6.ocx"
 Begin VB.Form frmInsertASCII 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Insert ASCII"
@@ -14,7 +14,7 @@ Begin VB.Form frmInsertASCII
    ScaleHeight     =   5475
    ScaleWidth      =   7485
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   1  'CenterOwner
+   StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdCancel 
       Caption         =   "Cancel"
       Height          =   375

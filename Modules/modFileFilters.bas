@@ -112,6 +112,10 @@ Public Sub CreateFileFilters()
     'addFileFilter "STREAM", "All known audio stream files", "ogg|mp3|wav"
     addFileFilter "SOUND_FILES", "All sound files", composeExtensions("MODULES", "STREAMS")
     
+    addFileFilter "ICON", "Icon file", "ico"
+    
+    addFileFilter "EXE", "Executable file", "exe"
+    
     addFileFilter "IMP", "Module import file", "imp|import"
     'addFileFilter "IMPORT", "Module import file", "import"
     'addFileFilter "IMPORT_FILES", "All module import files", composeExtensions("IMP", "IMPORT")

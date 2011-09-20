@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbaltreeview6.ocx"
+Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbalTreeView6.ocx"
 Begin VB.Form frmSave 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Save all documents"
@@ -14,7 +14,7 @@ Begin VB.Form frmSave
    ScaleHeight     =   2880
    ScaleWidth      =   5430
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   1  'CenterOwner
+   StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdCancel 
       Cancel          =   -1  'True
       Caption         =   "Cancel"

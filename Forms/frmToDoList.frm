@@ -27,8 +27,8 @@ Begin VB.Form frmTodoList
    WindowState     =   2  'Maximized
    Begin vbalTBar6.cToolbar tbrToDo 
       Height          =   375
-      Left            =   2760
-      Top             =   3240
+      Left            =   0
+      Top             =   0
       Width           =   4095
       _ExtentX        =   7223
       _ExtentY        =   661
@@ -242,13 +242,6 @@ Private Const CLR_OLDDATE = &H1B11CC
 Private Const CLR_GRIDLINES = &HC0C0C0 '&HBDBDBD
 Private Const CLR_BACKGRID = &HF0F0EC '&HD6C3BC
 
-'Private Const CLR_HIGHEST = &HB80000
-'Private Const CLR_HIGH = &HE57300
-'Private Const CLR_MEDIUM = &HFFF266
-'Private Const CLR_LOW = &HE8FF68
-'Private Const CLR_LOWEST = &H74A402
-
-
 'Constantes de posición de columnas
 Private Const COL_CHECKBOX = 1
 Private Const COL_ICONS = 2
@@ -286,6 +279,12 @@ Private Const ICD_QUESTIONS = 2
 Public colTrackers As cTrackerCollection
 Public AT As cTracker 'Active tracker
 Public ai As cTrackerItem 'Active item
+
+Private clr_highest As Long
+Private clr_high As Long
+Private clr_medium As Long
+Private clr_low As Long
+Private clr_lowest As Long
 
 Private bNoTrackers As Boolean 'Store if there isn't any tracker
 Private devcol As cDeveloperCollection
@@ -759,51 +758,18 @@ Private Sub FillGrid(tracker As cTracker)
             For i = 1 To .Columns - 1
                 ' old style soft reds
                 '.CellBackColor(.Rows, i) = RGB(222, 227 - it.Priority * 8, 230 - it.Priority * 8)
+                setTrackerColors
                 Select Case it.Priority
-                    ' red to green
-'                    Case 1
-'                        .CellBackColor(.Rows, i) = RGB(163, 190, 127)
-'                    Case 2
-'                        .CellBackColor(.Rows, i) = RGB(252, 253, 143)
-'                    Case 3
-'                        .CellBackColor(.Rows, i) = RGB(243, 200, 127)
-'                    Case 4
-'                        .CellBackColor(.Rows, i) = RGB(211, 131, 92)
-'                    Case 5
-'                        .CellBackColor(.Rows, i) = RGB(165, 101, 101)
-                    ' red to yellow gradient
-                    Case 1
-                        .CellBackColor(.Rows, i) = RGB(253, 248, 190)
-                    Case 2
-                        .CellBackColor(.Rows, i) = RGB(253, 245, 167)
-                    Case 3
-                        .CellBackColor(.Rows, i) = RGB(243, 200, 127)
-                    Case 4
-                        .CellBackColor(.Rows, i) = RGB(211, 131, 92)
-                    Case 5
-                        .CellBackColor(.Rows, i) = RGB(175, 87, 69)
-                    ' green to yellow gradient
-'                    Case 1
-'                        .CellBackColor(.Rows, i) = RGB(248, 253, 190)
-'                    Case 2
-'                        .CellBackColor(.Rows, i) = RGB(245, 253, 167)
-'                    Case 3
-'                        .CellBackColor(.Rows, i) = RGB(200, 243, 127)
-'                    Case 4
-'                        .CellBackColor(.Rows, i) = RGB(131, 211, 92)
-'                    Case 5
-'                        .CellBackColor(.Rows, i) = RGB(87, 175, 69)
-                    ' blue to yellow
-'                    Case 1
-'                        .CellBackColor(.Rows, i) = RGB(190, 248, 253)
-'                    Case 2
-'                        .CellBackColor(.Rows, i) = RGB(167, 245, 253)
-'                    Case 3
-'                        .CellBackColor(.Rows, i) = RGB(127, 200, 243)
-'                    Case 4
-'                        .CellBackColor(.Rows, i) = RGB(92, 131, 211)
-'                    Case 5
-'                        .CellBackColor(.Rows, i) = RGB(69, 87, 175)
+                    Case 1:
+                        .CellBackColor(.Rows, i) = clr_lowest
+                    Case 2:
+                        .CellBackColor(.Rows, i) = clr_low
+                    Case 3:
+                        .CellBackColor(.Rows, i) = clr_medium
+                    Case 4:
+                        .CellBackColor(.Rows, i) = clr_high
+                    Case 5:
+                        .CellBackColor(.Rows, i) = clr_highest
                 End Select
                 .cell(.Rows, i).ForeColor = CLR_GRIDTEXT
             Next
@@ -821,6 +787,96 @@ Private Sub FillGrid(tracker As cTracker)
     Set boldfnt = Nothing
     
 End Sub
+Private Sub setTrackerColors()
+    Select Case A_Flametracker
+        Case 0:     ' stndard
+            clr_highest = RGB(222, 187, 191)
+            clr_high = RGB(222, 195, 198)
+            clr_medium = RGB(222, 203, 205)
+            clr_low = RGB(222, 211, 215)
+            clr_lowest = RGB(222, 219, 222)
+        Case 1:     ' iron
+            clr_highest = RGB(70, 70, 70)
+            clr_high = RGB(95, 95, 95)
+            clr_medium = RGB(120, 120, 120)
+            clr_low = RGB(170, 170, 170)
+            clr_lowest = RGB(220, 220, 200)
+        Case 2:     ' lake
+            clr_highest = RGB(10, 59, 118)
+            clr_high = RGB(39, 105, 164)
+            clr_medium = RGB(67, 149, 209)
+            clr_low = RGB(110, 183, 222)
+            clr_lowest = RGB(153, 217, 234)
+        Case 3:     ' ocean
+            clr_highest = RGB(13, 79, 107)
+            clr_high = RGB(7, 99, 135)
+            clr_medium = RGB(0, 118, 163)
+            clr_low = RGB(74, 154, 199)
+            clr_lowest = RGB(148, 190, 234)
+        Case 4:     ' turquese
+            clr_highest = RGB(13, 104, 107)
+            clr_high = RGB(7, 137, 132)
+            clr_medium = RGB(0, 169, 157)
+            clr_low = RGB(61, 187, 179)
+            clr_lowest = RGB(122, 204, 200)
+        Case 5:     ' emerald
+            clr_highest = RGB(85, 120, 1)
+            clr_high = RGB(101, 142, 2)
+            clr_medium = RGB(116, 164, 2)
+            clr_low = RGB(135, 191, 3)
+            clr_lowest = RGB(154, 218, 3)
+        Case 6:     ' olive
+            clr_highest = RGB(132, 135, 28)
+            clr_high = RGB(175, 174, 70)
+            clr_medium = RGB(217, 213, 111)
+            clr_low = RGB(236, 229, 108)
+            clr_lowest = RGB(255, 244, 104)
+        Case 7:     ' spring
+            clr_lowest = RGB(248, 253, 190)
+            clr_low = RGB(245, 253, 167)
+            clr_medium = RGB(200, 243, 127)
+            clr_high = RGB(131, 211, 92)
+            clr_highest = RGB(87, 175, 69)
+        Case 8:     ' sand
+            clr_highest = RGB(255, 194, 14)
+            clr_high = RGB(255, 219, 59)
+            clr_medium = RGB(255, 244, 104)
+            clr_low = RGB(255, 246, 129)
+            clr_lowest = RGB(255, 247, 153)
+        Case 9:     ' flame
+            clr_highest = RGB(175, 87, 69)
+            clr_high = RGB(211, 131, 92)
+            clr_medium = RGB(243, 200, 127)
+            clr_low = RGB(253, 245, 167)
+            clr_lowest = RGB(253, 248, 190)
+        Case 10:     ' bloom
+            clr_highest = RGB(165, 101, 101)
+            clr_high = RGB(211, 131, 92)
+            clr_medium = RGB(243, 200, 127)
+            clr_low = RGB(252, 253, 143)
+            clr_lowest = RGB(163, 190, 127)
+        Case 11:    ' earth
+            clr_highest = RGB(140, 98, 57)
+            clr_high = RGB(149, 103, 70)
+            clr_medium = RGB(158, 107, 82)
+            clr_low = RGB(179, 143, 117)
+            clr_lowest = RGB(199, 178, 153)
+        Case 12:     ' rose
+            clr_highest = RGB(184, 40, 50)
+            clr_high = RGB(200, 61, 82)
+            clr_medium = RGB(216, 81, 113)
+            clr_low = RGB(235, 152, 175)
+            clr_lowest = RGB(254, 223, 236)
+        Case 13:     ' lavande
+            clr_highest = RGB(86, 63, 127)
+            clr_high = RGB(124, 99, 159)
+            clr_medium = RGB(161, 134, 190)
+            clr_low = RGB(189, 171, 205)
+            clr_lowest = RGB(217, 207, 229)
+    End Select
+    Debug.Print "ft: " & A_Flametracker & " -- " & clr_highest & "," & clr_high & "," & clr_medium & "," & "," & clr_low & "," & clr_lowest
+End Sub
+
 
 Private Sub Form_Load()
 
@@ -833,11 +889,11 @@ Private Sub Form_Load()
         .AddButton "Add item", 1, , , "Add", CTBAutoSize, "AddItem"
         .AddButton "Delete item", 2, , , "Delete", CTBAutoSize, "DelItem"
         .AddButton "Edit item", 3, , , "Edit", CTBAutoSize, "EditItem"
-'        .AddButton , , , , , CTBSeparator
-'        .AddButton "Visible columns", 4, , , "Columns", CTBAutoSize, "VisibleCols"
-'        .AddButton "Show hidden items", 5, , , "Show hidden", CTBCheck, "ShowHidden"
-'        .AddButton , , , , , CTBSeparator
-'        .AddButton "Trackr Manager", 6, , , "Tracker Manager", CTBAutoSize, "TrackerManager"
+        .AddButton , , , , , CTBSeparator
+        .AddButton "Visible columns", 4, , , "Columns", CTBAutoSize, "VisibleCols"
+        .AddButton "Show hidden items", 5, , , "Show hidden", CTBCheck, "ShowHidden"
+        .AddButton , , , , , CTBSeparator
+        .AddButton "Trackr Manager", 6, , , "Tracker Manager", CTBAutoSize, "TrackerManager"
         
     End With
     'Create the rebar

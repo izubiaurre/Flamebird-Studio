@@ -667,7 +667,7 @@ Private Function Cs_KeyPress(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Key
 On Error Resume Next
     
     Dim i As Integer
-
+    
     RefreshStatusBar
     Dim token As CodeSenseCtl.cmTokenType
  
