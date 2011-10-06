@@ -50,8 +50,8 @@ End Function
 
 
 '*****************************************************************
-'** crea los nodos de los includes sin leer de los archivos     **
-'** usando un buffer creado la primera vez que se abre un archivo*
+'** create include-nodes without reading the files              **
+'** using the buffer builded at the first reading of the file   **
 '*****************************************************************
 Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boolean)
 
@@ -64,11 +64,11 @@ Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boole
     Dim fatherNode As String
     Dim indice As Integer
     
-    ' si se trata del archivo principal setea a cero
+    ' if it's the main prg, set to cero
     If Not isInclude Then
         frmProgramInspector.tv_program.Visible = False
         frmProgramInspector.tv_program.Nodes.Clear
-        ' arma el array de funciones con las funciones basicas
+        ' build the function array with the language functions
         Dim tempList() As String
         
         With Ini
@@ -82,7 +82,7 @@ Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boole
             Next i
         End With
         
-        ' reseteamos todo a cero
+        ' reset everything to cero
         ReDim varList(0) As String
         ReDim parameters(0) As String
         ReDim userTypeList(0) As String
@@ -101,8 +101,6 @@ Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boole
                 
                 If frmProgramInspector.tv_program.Nodes.Exists(nodito.Key) = False Then
 
-                    Debug.Print nodito.name & "-" & nodito.varType & "-" & nodito.varAmbient
-                    
                     If fatherNode <> "" Then
                         'If nodito.varType <> "struct" Then
                             frmProgramInspector.tv_program.Nodes.Add frmProgramInspector.tv_program.Nodes.item(fatherNode), etvwChild, nodito.Key, nodito.name, nodito.Icon
@@ -121,7 +119,7 @@ Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boole
                     End If
                     
                     If (nodito.varType = "var" And nodito.father = "") Or nodito.varType = "type" Or nodito.varType = "struct" Then
-                        ' agrega el nombre de la funcion recien creada a la lista para autocompletado
+                        ' add user-variable name for the code list
                         If nodito.varType <> "private" And nodito.varAmbient <> "const" Then
                             ReDim Preserve varList(UBound(varList) + 1) As String
                             varList(UBound(varList)) = nodito.name
@@ -129,22 +127,23 @@ Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boole
                     End If
                                             
                     If nodito.varAmbient = "const" And nodito.father = "" Then
-                        ' agrega el nombre de la funcion recien creada a la lista para autocompletado
+                        ' add user-constant name for the code list
                         ReDim Preserve userConstList(UBound(userConstList) + 1) As String
                         userConstList(UBound(userConstList)) = nodito.name
                     End If
                     
                     If isInclude And (nodito.varType = "type" Or nodito.varType = "struct") Then
+                        ' add user-struct name for the code list
                         ReDim Preserve userTypeList(UBound(userTypeList) + 1) As String
                         userTypeList(UBound(userTypeList)) = LCase(nodito.name)
                     End If
                     
                     If nodito.varType = "function" Or nodito.varType = "process" Then
-                        ' agrega el nombre de la funcion recien creada a la lista para autocompletado
+                        ' add user-function name for the code list
                         ReDim Preserve userFunctionList(UBound(userFunctionList) + 1) As String
                         userFunctionList(UBound(userFunctionList)) = nodito.name
                         
-                        ' toma sus parametros para mostrarlos en el tip
+                        ' take it's params for the help tip
                         ReDim Preserve parameters(UBound(parameters) + 1) As String
                         parameters(UBound(parameters)) = nodito.parameters
                     End If
@@ -164,8 +163,7 @@ Termina:
 
 End Sub
 ' **************************************************************
-' *** Devuelve true si la linea en cuestion esta dentro de *****
-' *** una zona de declaración. *********************************
+' *** Returns true if the line is in a declaration zone ********
 ' **************************************************************
 Public Function inDeclarationZone(lineaNum As Integer) As Boolean
 
@@ -191,10 +189,10 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
         importantLine = False
         
         '*******************************************
-        '*********** OPTIMIZACION DE LA LINEA ******
+        '*********** Line optimization *************
         '*******************************************
             
-        'reemplaza los caracteres no visibles por espacios
+        ' replace not visible chars with spaces
         linea = replace(linea, Chr(9), " ")
         linea = replace(linea, vbNewLine, " ")
         linea = replace(linea, vbCrLf, " ")
@@ -205,7 +203,7 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
         linea = replace(linea, vbFormFeed, " ")
         linea = replace(linea, vbVerticalTab, " ")
         
-        'le saca los espacios
+        ' delete spaces
         linea = Trim(linea)
         
         num = 0
@@ -259,14 +257,14 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
             nextLineCommented = False
         End If
         '*******************************************
-        '*********** ANALISIS DE CODIGO ************
+        '*********** code analization **************
         '*******************************************
         
         While Len(linea) > 0
             palabra = getWordRev(linea)
                     
             Select Case LCase(palabra)
-                'casos FALSE
+                ' FALSE cases
                 Case "end":
                     inDeclarationZone = False
                     Exit Function
@@ -290,7 +288,7 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
                 Case "program":
                     inDeclarationZone = False
                     Exit Function
-                'casos TRUE
+                '  TRUE cases
                 Case "local":
                     inDeclarationZone = True
                     Exit Function
@@ -320,28 +318,26 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
 End Function
 
 ' **************************************************************
-'
-'    EXTRAE LA LISTA DE PARAMETROS DE UNA FUNCION O PROCESO
-'
+'    takes the parameter list of a function or a process
 ' **************************************************************
 
 Private Function getParameters(linea As String)
     On Error Resume Next
     Dim pStart As Integer
     Dim pEnd As Integer
-    Dim resultado As String
+    Dim strResult As String
     
-    resultado = " "
+    strResult = " "
     
     pStart = InStr(linea, "(")
     If pStart > 0 Then
         pEnd = InStr(pStart, linea, ")")
         If pEnd > 0 Then
-           resultado = Mid(linea, pStart + 1, pEnd - 1 - pStart)
+           strResult = Mid(linea, pStart + 1, pEnd - 1 - pStart)
         End If
     End If
     
-    getParameters = resultado
+    getParameters = strResult
 End Function
 
 Public Function existTreeForFile(ByVal Filename) As Boolean
@@ -359,10 +355,8 @@ Public Function existTreeForFile(ByVal Filename) As Boolean
 End Function
 
 ' **************************************************************
-'
-'        ARMA EL ARBOL CON LA DECLARACIONES DEL PROGRAMA
-'         AHORA SOLO EN BUFFER
-'
+'        Builds the declaration-tree of fucntions of the prg
+'        now only in buffer
 ' **************************************************************
 
 Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Boolean)
@@ -1029,6 +1023,10 @@ Esquiva6:
                                         'Else
                                             'MsgBox tempNode.name
 '                                        End If
+                                        Debug.Print tempNode.name
+                                        If tempNode.name = "s_rune" Then
+                                            Debug.Print "Achtung!"
+                                        End If
 Esquiva7:
     'On Error GoTo Termina
         
@@ -1055,20 +1053,18 @@ Termina:
 End Sub
 
 ' **************************************************************
-'
-'          TOMA UNA SOLA PALABRA DE LA LINEA DEL PROYECTO
-'
+'          get only one word from the line
 ' **************************************************************
 
 
-Public Function getWord(ByRef linea As String) As String
+Public Function getWord(ByRef line As String) As String
     Dim num() As Variant
     Dim num2 As Variant
     Dim num3 As Variant
     Dim operatorsList() As String
     Dim returnValue As String
     
-    'lista de operadores usados en la declaración
+    ' list of operators used in declaration
     ReDim operatorsList(LBound(operatorList) To (UBound(operatorList) + 1))
     
     Dim i As Long
@@ -1084,11 +1080,11 @@ Public Function getWord(ByRef linea As String) As String
     
     
     For i = LBound(operatorsList) To UBound(operatorsList)
-        num(i) = InStr(linea, operatorsList(i))
+        num(i) = InStr(line, operatorsList(i))
     Next i
     
     num3 = 0
-    num2 = Len(linea)
+    num2 = Len(line)
     For i = LBound(num) To UBound(num)
         If num(i) > 0 And num(i) <= num2 Then
             num2 = num(i)
@@ -1096,22 +1092,22 @@ Public Function getWord(ByRef linea As String) As String
         End If
     Next i
             
-    'buscar el num mas chico
+    ' search the smallest num
     
     If num3 > 0 Then
-        'si la longitud es 1, entonces es un operador
+        ' if long is 1, it's an operator
         If num3 = 1 Then
-            returnValue = Trim(Mid(linea, 1, num3))
-            linea = Trim(Mid(linea, num3 + 1))
+            returnValue = Trim(Mid(line, 1, num3))
+            line = Trim(Mid(line, num3 + 1))
         Else
-        'si no es una palabra, y le eliminamos el operador
-            returnValue = Trim(Mid(linea, 1, num3 - 1))
-            linea = Trim(Mid(linea, num3))
+        ' if it's not a word, we delete the operator
+            returnValue = Trim(Mid(line, 1, num3 - 1))
+            line = Trim(Mid(line, num3))
         End If
     Else
-    'si no hay mas terminación de palabra es que termino la linea, asi que devolvemos la palabra como la linea
-        returnValue = Trim(linea)
-        linea = ""
+    ' if there are no more word endings, the line is finished, so we return the word as line
+        returnValue = Trim(line)
+        line = ""
     End If
     
     If InStr(returnValue, Chr(9)) = 1 Then
@@ -1129,10 +1125,8 @@ Public Function getWord(ByRef linea As String) As String
 End Function
 
 ' **************************************************************
-'
-'       TOMA UNA SOLA PALABRA DE LA LINEA DEL PROYECTO
-'                Desde atras para adelante
-'
+'       Gets only one word from de line
+'       From right to left (reverse)
 ' **************************************************************
 
 
@@ -1144,10 +1138,10 @@ Public Function getWordRev(ByRef linea As String) As String
     Dim returnValue As String
     Dim i As Integer
     
-    ' elimina caracteres indeseados
+    ' delete not useful chars
     linea = Trim(replace(linea, Chr(9), " "))
     
-    'lista de operadores usados en la declaración
+    ' list of operators used in declaration
     ReDim operatorsList(LBound(operatorList) To (UBound(operatorList) + 1))
     
     For i = LBound(operatorList) To UBound(operatorList)
@@ -1165,7 +1159,7 @@ Public Function getWordRev(ByRef linea As String) As String
         num(i) = InStrRev(linea, operatorsList(i))
     Next i
     
-    'buscar el num mas grande
+    ' search the biggest num
     num3 = 0
     num2 = 0
     For i = LBound(num) To UBound(num)
@@ -1177,8 +1171,7 @@ Public Function getWordRev(ByRef linea As String) As String
     
     
     If num3 > 0 Then
-        'si la la ocorrencia es igual a la longitud de la linea, entonces es un operador
-        
+        ' if the case is as long as the line, then it's an operator
         If num3 = Len(linea) Then
             returnValue = Right(linea, 1)
             linea = Trim(Mid(linea, 1, num3 - 1))
@@ -1187,7 +1180,7 @@ Public Function getWordRev(ByRef linea As String) As String
             linea = Trim(Mid(linea, 1, num3))
         End If
     Else
-    'si no hay mas terminación de palabra es que termino la linea, asi que devolvemos la palabra como la linea
+    ' if there are no more word endings, the line is finished, so we return the word as line
         returnValue = Trim(linea)
         linea = ""
     End If
@@ -1197,7 +1190,7 @@ End Function
 
 Public Function isUserDefinedType(ByVal palabra As String) As Boolean
     isUserDefinedType = False
-    'si no es un tipo definido por el usuario
+    ' if it's not an user defined type
     If Not IsEmpty(LBound(userTypeList)) Then
         Dim i As Long
         For i = LBound(userTypeList) To UBound(userTypeList)
@@ -1222,15 +1215,14 @@ Public Function isDefinedType(ByVal palabra As String) As Boolean
     Next num
 End Function
 
-' se fija en el fdl.lan por los operadores y si la palabra es uno de ellos
-
-Public Function isOperator(ByVal palabra As String) As Boolean
+' looks in fdl.lan for the operators by the giving word
+Public Function isOperator(ByVal sword As String) As Boolean
 Dim num As Double
 
 isOperator = False
 
 For num = LBound(operatorList) To UBound(operatorList)
-    If LCase(palabra) = LCase(operatorList(num)) Then
+    If LCase(sword) = LCase(operatorList(num)) Then
         isOperator = True
         Exit Function
     End If
@@ -1239,7 +1231,7 @@ End Function
 
 ' returns true if the word passed as parameter is lenguage reserved word
 Public Function isReservedWord(ByVal palabra As String) As Boolean
-    Dim linea As String
+    Dim line As String
     Dim num As Double
     
     num = FreeFile()
@@ -1252,10 +1244,10 @@ Public Function isReservedWord(ByVal palabra As String) As Boolean
     Open App.Path & "\Help\fdl.lan" For Input As #num
         Do Until EOF(num)
             ' reads a line
-            Line Input #num, linea
+            Line Input #num, line
             ' jumps comments
-            If InStr(linea, "//#") <> 1 And linea <> "" Then
-                If LCase(palabra) = LCase(Trim(linea)) Then
+            If InStr(line, "//#") <> 1 And line <> "" Then
+                If LCase(palabra) = LCase(Trim(line)) Then
                     isReservedWord = True
                     Close #num
                     Exit Function

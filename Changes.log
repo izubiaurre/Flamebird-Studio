@@ -6,6 +6,18 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 29/09/2011   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Ahora, después de insertar una función a través del codelist, muestra su codetip pertinente. 
+
+· 26/09/2011   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Corregido error que mostraba la lista de constantes, funciones... dentro de un comentario
+
+· 23/09/2011   Izubiaurre                  \Forms\frmMain.frm                                
+    Por mejorar la lectura de los menús, se han deshabilitado los atajos de teclado (internos a cada entrada de menú) que subrayaban las entradas. 
+
+· 20/09/2011   Izubiaurre                  \Modules\modMenuActions.bas                       
+    Añadidos varias funciones de edición (Copy, Paste, Cut, ...)
+
 · 28/07/2011   Izubiaurre                  \Forms\frmMain.frm                                
     Vuelta a quitar la entrada plugins de Tools porque daba problemas.
 

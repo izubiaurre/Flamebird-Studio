@@ -177,7 +177,7 @@ Private Sub LoadLan()
     Dim cntPreprocesses As Integer, cntConsts As Integer, cntGlobals As Integer
     Dim cntLocals As Integer, cntGlobalStructs As Integer, cntLocalStructs As Integer
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     Str_func = ""
     Str_keyw = ""
@@ -214,7 +214,7 @@ Private Sub LoadLan()
         Do Until EOF(num)
             ' reads a line
             Line Input #num, linea
-            If InStr(linea, "//#") <> 1 And linea <> "" Then 'si no es una palabra de seccion
+            If InStr(linea, "//#") <> 1 And linea <> "" Then ' if it's not a section word
                 linea = Trim(linea)
                 Select Case Seccion
                 Case "SENTENCE"
@@ -310,7 +310,7 @@ Private Sub LoadLan()
 
 
 '                Case "SENTENS", "PREPROCESS", "DATATYPE": 'keywords
-'                    'la agrega a la lista de palabras reservadas
+'                    ' adds ot reserved word list
 '                    If Str_keyw = "" Then
 '                        Str_keyw = linea
 '                    Else
@@ -323,20 +323,20 @@ Private Sub LoadLan()
 '                        cntTypes = cntTypes + 1
 '                    End If
 '
-'                Case "SIMBOLS": 'operadores
+'                Case "SIMBOLS": ' operators
 '                    ReDim Preserve operatorList(cntOperators) As String
 '                    operatorList(cntOperators) = linea
 '                    cntOperators = cntOperators + 1
 '
-'                    'la agrega a la lista de palabras reservadas
+'                    ' adds ot reserved word list
 '                    If Str_op = "" Then
 '                        Str_op = linea
 '                    Else
 '                        Str_op = Str_op & Chr(10) & linea
 '                    End If
-'                Case "MISC": 'locales, globales y constantes
+'                Case "MISC": ' locals, globals & constants
 '
-'                    'la agrega a la lista de palabras reservadas
+'                    ' adds ot reserved word list
 '                    If Str_data = "" Then
 '                        Str_data = linea
 '                    Else
@@ -357,7 +357,7 @@ Private Sub LoadLan()
     
     With Bennu
         .TagAttributeNames = Str_data
-        .TagElementNames = "//#Section:" 'usado para IDEkeywords
+        .TagElementNames = "//#Section:" ' used for IDEkeywords
         .CaseSensitive = False
         .StringDelims = Chr(34)
         .Keywords = Str_keyw
@@ -369,7 +369,7 @@ Private Sub LoadLan()
     Propiedades.RegisterLanguage "Bennu", Bennu
     
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("LoadLan"): Resume Next
 End Sub
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
@@ -544,7 +544,7 @@ Public Sub loadCommandHistory()
     Dim sCommands As String, sPaths As String
     Dim i As Integer
     
-    On Error GoTo errhandler:
+    On Error GoTo ErrHandler:
     
        With Ini
         .Path = App.Path & "/Conf/command.ini"
@@ -577,11 +577,11 @@ Public Sub loadCommandHistory()
     End With
     
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("loadCommandHistory")
 End Sub
 
-'Loads the configuration file Config.ini
+' Loads the configuration file Config.ini
 Private Sub LoadConf()
     With Ini
         .Path = App.Path & CONF_FILE
@@ -784,7 +784,7 @@ End Sub
 
 'APPLICATION ENTRY POINT
 Public Sub Main()
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     LoadConf
     
@@ -848,11 +848,11 @@ Public Sub Main()
     
     Exit Sub
     
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("Main"): Resume Next
 End Sub
 
-'Just fot debuggin purposes
+'Just fot debugging purposes
 Public Sub ShowError(str As String)
     MsgBox "Error in " & str & vbCrLf & "Description: " & Err.description _
             & vbCrLf & "Number: " & Err.Number, vbCritical '& vbCrLf & Err.Source

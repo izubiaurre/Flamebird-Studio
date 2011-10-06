@@ -5,10 +5,19 @@ Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Begin VB.Form frmImport 
    Caption         =   "Import"
    ClientHeight    =   3555
-   ClientLeft      =   60
-   ClientTop       =   345
+   ClientLeft      =   0
+   ClientTop       =   240
    ClientWidth     =   4275
    ControlBox      =   0   'False
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   9
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmImport.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
@@ -16,13 +25,13 @@ Begin VB.Form frmImport
    ScaleWidth      =   4275
    WindowState     =   2  'Maximized
    Begin vbalIml6.vbalImageList ilFnt 
-      Left            =   3480
-      Top             =   1320
+      Left            =   2640
+      Top             =   1440
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   24
       Size            =   10332
-      Images          =   "frmImport.frx":2B8A
+      Images          =   "frmImport.frx":08CA
       Version         =   131072
       KeyCount        =   9
       Keys            =   "ÿÿÿÿÿÿÿÿ"
@@ -30,7 +39,7 @@ Begin VB.Form frmImport
    Begin CodeSenseCtl.CodeSense cs 
       Height          =   3135
       Left            =   0
-      OleObjectBlob   =   "frmImport.frx":5406
+      OleObjectBlob   =   "frmImport.frx":3146
       TabIndex        =   0
       Top             =   360
       Width           =   4215
@@ -81,7 +90,7 @@ Private Const MSG_SAVE_SUCCESS = "File saved succesfully!"
 'Private Const MSG_PAINTMAP_ERRORPAINTING = "An error occurred when trying to paint the fnt: "
 'Private Const MSG_LOAD_ERRORLOADING = "An error occurred loading the fnt: "
 
-Private Const FAST_SCROLL_STEPS As Integer = 12 'desplazamiento con Shift
+Private Const FAST_SCROLL_STEPS As Integer = 12 ' movement with Shift
 
 Private m_IsDirty As Boolean 'This should never be set directly. Use the IsDirty property instead
 Private m_Title
@@ -99,6 +108,10 @@ Private m_addToProject As Boolean
 
 Implements IFileForm
 Implements IPropertiesForm
+
+Private Sub Cs_Change(ByVal Control As CodeSenseCtl.ICodeSense)
+    IsDirty = True
+End Sub
 
 Private Sub Form_Activate()
     frmMain.setStatusMessage ("Import file")
@@ -215,7 +228,7 @@ Private Property Get IFileForm_FilePath() As String
 End Property
 
 Private Function IFileForm_Identify() As EFileFormConstants
-    IFileForm_Identify = FF_MAP
+    IFileForm_Identify = FF_IMP
 End Function
 
 Private Property Get IFileForm_IsDirty() As Boolean
@@ -279,7 +292,7 @@ Private Function IFileForm_Save(ByVal sFile As String) As Long
     
     If FSO.FileExists(sFile) Then Kill sFile 'Delete the file if exists
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     cs.SaveFile sFile, False 'Save the file
     
 
@@ -298,7 +311,7 @@ Private Function IFileForm_Save(ByVal sFile As String) As Long
         MsgBox MSG_SAVE_ERRORSAVING, vbCritical
     End If
 
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then lResult = -1: Resume Next
     
 End Function
@@ -313,17 +326,12 @@ Private Sub Cs_SelChange(ByVal Control As CodeSenseCtl.ICodeSense)
     Set rangoTemp = cs.GetSel(True)
     
     If Not rangoActual Is Nothing Then
-        'detectamos cambio de linea
+        ' check line changing
         If rangoTemp.StartLineNo <> rangoActual.StartLineNo Then
-            ' si se estaba mostrando el tooltip lo eliminamos
-'            If Not showingToolTip Is Nothing Then
-'                showingToolTip.Destroy
-'                Set showingToolTip = Nothing
-'            End If
         End If
     End If
     
-    Set rangoActual = cs.GetSel(True) 'ubica la posicion actual y la guarda en una var de alcance modular
+    Set rangoActual = cs.GetSel(True)
 End Sub
 
 Private Function Cs_MouseDown(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Button As Long, ByVal Shift As Long, ByVal X As Long, ByVal Y As Long) As Boolean
@@ -371,17 +379,18 @@ On Error Resume Next
         lParentIndex = m_ContextMenu.AddItem(0, Key:="ContextMenu")
         With m_ContextMenu
             If s Then
-                .AddItem lParentIndex, "C&ut", "Ctrl+X", , "mnuEditCut", , , , 5
-                .AddItem lParentIndex, "&Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
+                .AddItem lParentIndex, "Cut", "Ctrl+X", , "mnuEditCut", , , , 5
+                .AddItem lParentIndex, "Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
             End If
             If cs.CanPaste Then
-                .AddItem lParentIndex, "&Paste", "Ctrl+V", , "mnuEditPaste", , , , 6
+                .AddItem lParentIndex, "Paste", "Ctrl+V", , "mnuEditPaste", , , , 6
             End If
-            .AddItem lParentIndex, "-"
+            If s Or cs.CanPaste Then
+                .AddItem lParentIndex, "-"
+            End If
             If n Then
-                .AddItem lParentIndex, "&Select all", "Ctrl+A", , "mnuEditSelectAll", , , , 75
+                .AddItem lParentIndex, "Select all", "Ctrl+A", , "mnuEditSelectAll", , , , 75
                 .AddItem lParentIndex, "Select line", "Ctrl+Shift+L", , "mnuEditSelectLine", , , , 76
-                .AddItem lParentIndex, "Select word", "Ctrl+Shift+W", , "mnuEditSelectWord", , , , 86
             Else
                 .AddItem lParentIndex, "Deselect", , , "mnuEditDeselect"
             End If
@@ -397,13 +406,13 @@ On Error Resume Next
             If n Or sw Then
                 .AddItem lParentIndex, "-"
             End If
-            .AddItem lParentIndex, "&Search...", "Ctrl+F", , "mnuNavigationSearch", , , , 13
+            .AddItem lParentIndex, "Search...", "Ctrl+F", , "mnuNavigationSearch", , , , 13
             If sw Or sl Then
                 .AddItem lParentIndex, "Search next selected", "Ctrl+F3", , "mnuNavigationSearchNextWord", , , , 89
                 .AddItem lParentIndex, "Search prev selected", "Ctrl+Shift+F3", , "mnuNavigationSearchPrevWord", , , , 90
             End If
             .AddItem lParentIndex, "-"
-            .AddItem lParentIndex, "&Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
+            .AddItem lParentIndex, "Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
         
             .PopupMenu "ContextMenu"
         End With
@@ -424,13 +433,12 @@ Private Property Let IsDirty(ByVal newVal As Boolean)
     frmMain.RefreshTabs
 End Property
 Private Sub m_ContextMenu_Click(ByVal Index As Long)
-    MsgBox m_ContextMenu.ItemKey(Index)
+    
     Select Case m_ContextMenu.ItemKey(Index)
         Case "mnuEditCut":                      Call mnuEditCut
         Case "mnuEditCopy":                     Call mnuEditCopy
         Case "mnuEditPaste":                    Call mnuEditPaste
         Case "mnuEditSelectAll":                Call mnuEditSelectAll
-        Case "mnuEditSelectWord":               Call mnuEditSelectWord
         Case "mnuEditSelectLine":               Call mnuEditSelectLine
         Case "mnuEditDeselect":                 Call mnuEditDeselect
         Case "mnuEditClearLine":                Call mnuEditClearLine
@@ -455,27 +463,27 @@ Private Sub tbrImport_ButtonClick(ByVal lButton As Long)
     sKey = tbrImport.ButtonKey(lButton)
     Select Case sKey
     Case "ToogleBookmark"
-        modMenuActions.mnuBookmarkToggle
+        mnuBookmarkToggle
     Case "NextBookmark"
-        modMenuActions.mnuBookmarkNext
+        mnuBookmarkNext
     Case "PreviousBookmark"
-        modMenuActions.mnuBookmarkPrev
+        mnuBookmarkPrev
     Case "DeleteBookmarks"
-        modMenuActions.mnuBookmarkDel
+        mnuBookmarkDel
     Case "ShiftRight"
-        modMenuActions.mnuEditTab
+        mnuEditTab
     Case "ShiftLeft"
-        modMenuActions.mnuEditUnTab
+        mnuEditUnTab
     Case "Comment"
-        modMenuActions.mnuEditComment
+        mnuEditComment
     Case "Uncomment"
-        modMenuActions.mnuEditUnComment
+        mnuEditUnComment
     Case "EditBookmarks"
-        modMenuActions.mnuBookmarkEdit
+        mnuBookmarkEdit
     Case "PrevPos"
-        modMenuActions.mnuNavigationPrevPosition
+        mnuNavigationPrevPosition
     Case "NextPos"
-        modMenuActions.mnuNavigationNextPosition
+        mnuNavigationNextPosition
     End Select
         
 End Sub

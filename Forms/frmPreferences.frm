@@ -2544,7 +2544,7 @@ Attribute mnuPreSets.VB_VarHelpID = -1
 
 'Set control values according to cs configuration
 Private Sub RefreshEditorConfigControls()
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
 
     With Ini
         .Path = App.Path & EDITOR_CONF_FILE
@@ -2621,7 +2621,7 @@ Private Sub RefreshEditorConfigControls()
 '    cboFonts.text = csPreview.font.name
 '    cboSize.text = CStr(csPreview.font.Size)
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("frmPreferences.RefreshEditorConfigControls")
 End Sub
 'Sets FontSytle of the selected item (Bold, italic, underlined)
@@ -2658,7 +2658,7 @@ End Sub
 
 'Saves configuration
 Private Sub SaveConf()
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     Dim i As Integer
 
@@ -2745,7 +2745,7 @@ Private Sub SaveConf()
         
         .Key = "Output"
         .Default = "0"
-        .Value = IIf(chkDCB, True, False)
+        .Value = IIf(chkDcb, True, False)
         
         .Key = "OutputName"
         .Default = ""
@@ -2900,7 +2900,7 @@ Private Sub SaveConf()
     'File type association
     If trFiles.Nodes(1).Checked Then
         If Not FileAssociated(".prg", "Bennu/Fenix.Source") Then
-            Call RegisterType(".prg", "Bennu/Fenix.Source", "Text", "Bennu/Fenix source file", App.Path + "\Icons\fenix_prg.ico")
+            Call RegisterType(".prg", "Bennu/Fenix.Source", "Text", "Bennu/Fenix source file", App.Path + "\Icons\Metro black\prg.ico")
         End If
     Else
         If FileAssociated(".prg", "Bennu/Fenix.Source") Then
@@ -2910,7 +2910,7 @@ Private Sub SaveConf()
 
     If trFiles.Nodes(2).Checked Then
         If Not FileAssociated(".map", "Fenix.ImageFile") Then
-            Call RegisterType(".map", "Bennu/Fenix.ImageFile", "Image/Map", "Bennu/Fenix image file", App.Path + "\Icons\fenix_map.ico")
+            Call RegisterType(".map", "Bennu/Fenix.ImageFile", "Image/Map", "Bennu/Fenix image file", App.Path + "\Icons\Metro black\map.ico")
         End If
     Else
         If FileAssociated(".map", "Bennu/Fenix.ImageFile") Then
@@ -2920,7 +2920,7 @@ Private Sub SaveConf()
 
     If trFiles.Nodes(3).Checked Then
         If Not FileAssociated(".fbp", "FlameBird.Project") Then
-            Call RegisterType(".fbp", "FlameBird.Project", "Text", "FlameBird project", App.Path + "\Icons\fbp.ico")
+            Call RegisterType(".fbp", "FlameBird.Project", "Text", "FlameBird project", App.Path + "\Icons\Metro black\fbp.ico")
         End If
     Else
         If FileAssociated(".fbp", "FlameBird.Project") Then
@@ -2930,7 +2930,7 @@ Private Sub SaveConf()
     
     If trFiles.Nodes(4).Checked Then
         If Not FileAssociated(".bmk", "FlameBird.Bookmark") Then
-            Call RegisterType(".bmk", "FlameBird.Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\FBMX_bmk.ico")
+            Call RegisterType(".bmk", "FlameBird.Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\Metro black\bmk.ico")
         End If
     Else
         If FileAssociated(".bmk", "FlameBird.Bookmark") Then
@@ -2940,7 +2940,7 @@ Private Sub SaveConf()
     
     If trFiles.Nodes(5).Checked Then
         If Not FileAssociated(".cpt", "FlameBird.ControlPoint") Then
-            Call RegisterType(".cpt", "FlameBird.ControlPoint", "Text", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
+            Call RegisterType(".cpt", "FlameBird.ControlPoint", "Text", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\Metro black\cpt.ico")
         End If
     Else
         If FileAssociated(".cpt", "FlameBird.ControlPoint") Then
@@ -2950,7 +2950,7 @@ Private Sub SaveConf()
 
     If trFiles.Nodes(6).Checked Then
         If Not FileAssociated(".fpg", "Bennu/Fenix.ImagePackFile") Then
-            Call RegisterType(".fpg", "Bennu/Fenix.ImagePackFile", "Image/Map", "Bennu/Fenix image pack files", App.Path + "\Icons\fenix_fpg.ico")
+            Call RegisterType(".fpg", "Bennu/Fenix.ImagePackFile", "Image/Map", "Bennu/Fenix image pack files", App.Path + "\Icons\Metro black\fpg.ico")
         End If
     Else
         If FileAssociated(".fpg", "Bennu/Fenix.ImagePackFile") Then
@@ -2960,17 +2960,17 @@ Private Sub SaveConf()
     
     If trFiles.Nodes(7).Checked Then
         If Not FileAssociated(".fnt", "Bennu/Fenix.FontFile") Then
-            Call RegisterType(".fnt", "Bennu/Fenix.FontFile", "Image/Map", "Bennu/Fenix font files", App.Path + "\Icons\fenix_fnt.ico")
+            Call RegisterType(".fnt", "Bennu/Fenix.FontFile", "Image/Map", "Bennu/Fenix font files", App.Path + "\Icons\Metro black\fnt.ico")
         End If
     Else
         If FileAssociated(".fnt", "Bennu/Fenix.FontFile") Then
-            Call DeleteType(".imp", "Bennu/Fenix.FontFile")
+            Call DeleteType(".fnt", "Bennu/Fenix.FontFile")
         End If
     End If
     
     If trFiles.Nodes(8).Checked Then
         If Not FileAssociated(".imp", "Bennu.ImportFile") Then
-            Call RegisterType(".imp", "Bennu.ImportFile", "Text", "Bennu module list files", App.Path + "\Icons\fenix_import.ico")
+            Call RegisterType(".imp", "Bennu.ImportFile", "Text", "Bennu module list files", App.Path + "\Icons\Metro black\import.ico")
         End If
     Else
         If FileAssociated(".imp", "Bennu.ImportFile") Then
@@ -2980,7 +2980,7 @@ Private Sub SaveConf()
     
     If trFiles.Nodes(9).Checked Then
         If Not FileAssociated(".pal", "Bennu/Fenix.PaletteFile") Then
-            Call RegisterType(".pal", "Bennu/Fenix.PaletteFile", "Image/Palette", "Bennu/Fenix palette files", App.Path + "\Icons\fenix_inc.ico")
+            Call RegisterType(".pal", "Bennu/Fenix.PaletteFile", "Image/Palette", "Bennu/Fenix palette files", App.Path + "\Icons\Metro black\inc.ico")
         End If
     Else
         If FileAssociated(".pal", "Bennu/Fenix.PaletteFile") Then
@@ -2989,8 +2989,8 @@ Private Sub SaveConf()
     End If
     
     'DCBs
-    If chkDCB.Value = 1 Then
-        ' actualizamos siempre el dir de fenix
+    If chkDcb.Value = 1 Then
+        ' always refresh the compiler's path
         If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
             Call DeleteType(".dcb", "Bennu/Fenix.Bin")
         End If
@@ -3012,7 +3012,7 @@ Private Sub SaveConf()
             End With
             If FSO.FileExists(Fxi) Then
                 Fxi = Chr(34) & Fxi & Chr(34) & " " & Chr(34) & "%1" & Chr(34)
-                Call RegisterType(".dcb", "Bennu/Fenix.Bin", "Binarie", "Bennu/Fenix compiled file", App.Path + "\Icons\dcb.ico", Fxi)
+                Call RegisterType(".dcb", "Bennu/Fenix.Bin", "Binarie", "Bennu/Fenix compiled file", App.Path + "\Icons\Metro black\dcb.ico", Fxi)
             Else
                 MsgBox "Can't associate DCB files because the compiler path isn't configured!!", vbCritical + vbOKOnly, "FlameBirdMX"
             End If
@@ -3023,7 +3023,7 @@ Private Sub SaveConf()
         End If
     End If
 
-    'Fenix Directory
+    ' Compiler Directory
     If R_Compiler = 0 Then
         fenixDir = txtCompilerPath(0).text
     Else
@@ -3045,13 +3045,13 @@ Private Sub SaveConf()
     Next
 
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("frmPreferences.SaveConf")
 End Sub
 
 'Load configuration from ini file
 Private Sub LoadConf()
-    On Error GoTo errhandler:
+    On Error GoTo ErrHandler:
 
     With Ini 'Read INI data
         .Path = App.Path & CONF_FILE
@@ -3231,7 +3231,7 @@ Private Sub LoadConf()
     LoadCSConf csPreview
 
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("frmPreferences.LoadConf")
 End Sub
 
@@ -3533,7 +3533,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 End Sub
 
 Private Sub Form_Load()
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
     
@@ -3625,7 +3625,7 @@ Private Sub Form_Load()
         .Nodes.Add(, , "imp", "IMP/IMPORT - Bennu module list files").Checked = FileAssociated(".imp", "Bennu.ImportFile")
         .Nodes.Add(, , "pal", "PAL - Bennu/Fenix palette files").Checked = FileAssociated(".pal", "Bennu/Fenix.PaletteFile")
     End With
-    chkDCB.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
+    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 
     'TreeView
     With tv_preferences
@@ -3657,7 +3657,7 @@ Private Sub Form_Load()
     tabCategories.Tabs.item("GLOBAL").Selected = True
     
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("frmPreferences.Form_Load")
 End Sub
 

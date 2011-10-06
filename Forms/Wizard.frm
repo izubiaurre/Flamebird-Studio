@@ -979,7 +979,7 @@ Const WIZARD_NAME = "WizardTemplate"
 Const CONFIRM_KEY = "ConfirmScreen"
 
 
-'variables a nivel de módulo
+' module level vars
 Dim mnCurStep       As Integer
 Dim mbHelpStarted   As Boolean
 
@@ -1274,22 +1274,20 @@ Private Sub cmdNav_Click(Index As Integer)
             frmNewFile.Show
           
         Case BTN_BACK
-            'colocar aquí casos especiales para saltar
-            'a pasos alternativos
             nAltStep = mnCurStep - 1
             SetStep nAltStep, DIR_BACK
           
         Case BTN_NEXT
-            'colocar aquí casos especiales para saltar
+
             If mnCurStep = STEP_2 Then
                 If checkIntroAndLogo = -1 Then Exit Sub
             End If
-            'a pasos alternativos
+
             nAltStep = mnCurStep + 1
             SetStep nAltStep, DIR_NEXT
           
         Case BTN_FINISH
-            'el código de creación de asistentes va aquí
+
             Unload Me
             NewFileForm FF_SOURCE
 
@@ -1483,18 +1481,10 @@ Private Sub SetCaption(nStep As Integer)
 
 End Sub
 
-'=========================================================
-'esta subrutina muestra un mensaje de error cuando el
-'usuario no ha escrito suficientes datos para continuar
-'=========================================================
 Sub IncompleteData(nIndex As Integer)
     On Error Resume Next
     Dim sTmp As String
-      
-    'obtener el mensaje de error de base
-    'sTmp = LoadResString(RES_ERROR_MSG)
-    'obtener el mensaje específico
-    'sTmp = sTmp & vbCrLf & LoadResString(RES_ERROR_MSG + nIndex)
+
     Beep
     MsgBox sTmp, vbInformation
 End Sub
@@ -1502,7 +1492,7 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     On Error Resume Next
     Dim rc As Long
-    'ver si hay que guardar la configuración
+    ' it's necesary to save the conf
     If chkSaveSettings.Value = vbChecked Then
       
 '        SaveSetting APP_CATEGORY, WIZARD_NAME, "OptionName", Option Value
@@ -1510,11 +1500,6 @@ Private Sub Form_Unload(Cancel As Integer)
     End If
   
     'If mbHelpStarted Then rc = WinHelp(Me.hwnd, HELP_FILE, HELP_QUIT, 0)
-End Sub
-
-Private Sub lstIntroList_DblClick()
-    'lstIntroList.text = InputBox("Title")
-    'lstIntroList.ItemData(lstIntroList.ListIndex) = InputBox("Title")
 End Sub
 
 Private Sub txtCompany_GotFocus()

@@ -1,14 +1,25 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
-Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalsgrid6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
+Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalSGrid6.ocx"
 Begin VB.Form frmFpg 
+   Appearance      =   0  'Flat
+   BackColor       =   &H80000005&
    Caption         =   "Fpg editor"
    ClientHeight    =   3195
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   4680
    ControlBox      =   0   'False
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   9
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmFpg.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
@@ -223,7 +234,7 @@ Private Sub Form_Load()
         .AddButton "Delete selected map", 2, , , "Delete", CTBAutoSize, "DeleteMap"
     End With
     'Create the rebar
-    With cReBar
+    With cRebar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
@@ -250,21 +261,21 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        Me.grd.Move 0, ScaleY(cReBar.RebarHeight, vbPixels, vbTwips), Me.ScaleWidth, Me.ScaleHeight
+        Me.grd.Move 0, ScaleY(cRebar.RebarHeight, vbPixels, vbTwips), Me.ScaleWidth, Me.ScaleHeight
         CalculateGrid
-        cReBar.RebarSize
+        cRebar.RebarSize
     End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    cReBar.RemoveAllRebarBands 'Just for safety
+    cRebar.RemoveAllRebarBands 'Just for safety
 End Sub
 
 Private Sub grd_SelectionChange(ByVal lRow As Long, ByVal lCol As Long)
     'Avoid selecting empty cells
     Dim i As Long
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     If Not m_Fpg Is Nothing Then
         If (lCol + grd.Columns * (lRow - 1)) > m_Fpg.MapCount Then
@@ -287,7 +298,7 @@ Private Sub grd_SelectionChange(ByVal lRow As Long, ByVal lCol As Long)
     
     Exit Sub
     
-errhandler:
+ErrHandler:
     Resume Next
 End Sub
 
@@ -300,7 +311,7 @@ Private Sub addMap()
     Dim i As Integer, fileCount As Integer
     Dim sFiles() As String
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     fileCount = ShowOpenDialog(sFiles, getFilter("MAP"), False, True)
     If fileCount > 0 Then
@@ -332,7 +343,7 @@ Private Sub addMap()
     
     Exit Sub
     
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError "frmFpg.AddMap"
 End Sub
 

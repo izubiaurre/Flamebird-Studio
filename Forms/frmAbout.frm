@@ -643,7 +643,7 @@ End Sub
 Private Sub Form_Load()
     Me.Caption = "About " & App.Title
     lblVersion.Caption = App.Major & "." & App.Minor & "." & App.Revision
-    Picture = LoadPicture(App.Path & "\Resources\frmAbout.jpg")
+    Picture = LoadPicture(App.Path & "/Resources/frmAbout.jpg")
 End Sub
 
 Private Sub Image1_Click()

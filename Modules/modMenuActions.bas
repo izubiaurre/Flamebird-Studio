@@ -33,7 +33,7 @@ Private Const GWL_STYLE As Long = -16
 
 Private Const MSG_MNUACTIONS_MAINSOURCENOTDEFINED As String = "Main source of the project has not been defined yet"
 
-Private fDoc As frmDoc, fMap As frmMap
+Private fDoc As frmDoc, fMap As frmMap, fImp As frmImport
 
 Private Enum NewTypeConstants
     NT_NONE
@@ -44,6 +44,7 @@ Private Enum NewTypeConstants
     NT_PAL
     NT_IMP
     NT_FNT
+    NT_LIST
 End Enum
 
 Private m_NewType As Integer
@@ -83,6 +84,8 @@ Public Property Let newType(sType As String)
             m_NewType = NT_FNT
         Case "IMP"
             m_NewType = NT_IMP
+        Case "LIST"
+            m_NewType = NT_LIST
         Case Else
             MsgBox "Error en modMenuActions.newType"
     End Select
@@ -266,6 +269,13 @@ Public Sub mnuEditUndo()
             If fDoc.cs.CanUndo Then
                 fDoc.cs.Undo
             End If
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            If fImp.cs.CanUndo Then
+                fImp.cs.Undo
+            End If
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+            'Set fList = ActiveForm
         End If
     End If
 End Sub
@@ -277,6 +287,13 @@ Public Sub mnuEditRedo()
             If fDoc.cs.CanRedo Then
                 fDoc.cs.Redo
             End If
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            If fImp.cs.CanRedo Then
+                fImp.cs.Redo
+            End If
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+            'Set fList = ActiveForm
         End If
     End If
 End Sub
@@ -288,6 +305,13 @@ Public Sub mnuEditCut()
             If fDoc.cs.CanCut Then
                 fDoc.cs.Cut
             End If
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            If fImp.cs.CanCut Then
+                fImp.cs.Cut
+            End If
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+            'Set fList = ActiveForm
         End If
     End If
 End Sub
@@ -299,6 +323,13 @@ Public Sub mnuEditCopy()
             If fDoc.cs.CanCopy Then
                 fDoc.cs.Copy
             End If
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            If fImp.cs.CanCopy Then
+                fImp.cs.Copy
+            End If
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+            'Set fList = ActiveForm
         End If
     End If
 End Sub
@@ -310,6 +341,13 @@ Public Sub mnuEditPaste()
             If fDoc.cs.CanPaste Then
                 fDoc.cs.Paste
             End If
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            If fImp.cs.CanPaste Then
+                fImp.cs.Paste
+            End If
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+            'Set fList = ActiveForm
         End If
     End If
 End Sub
@@ -345,6 +383,12 @@ Public Sub mnuEditSelectAll()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdSelectAll
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdSelectAll
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdSelectAll
         End If
     End If
 End Sub
@@ -364,6 +408,12 @@ Public Sub mnuEditSelectLine()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdSelectLine
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdSelectLine
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdSelectLine
         End If
     End If
 End Sub
@@ -379,8 +429,29 @@ Public Sub mnuEditDuplicateLine()
                 fDoc.cs.ExecuteCmd cmCmdPaste
                 fDoc.cs.ExecuteCmd cmCmdLineDown
                 fDoc.cs.ExecuteCmd cmCmdPaste
-                'fDoc.cs.ExecuteCmd cmCmdLineDelete
             fDoc.cs.ExecuteCmd cmCmdEndUndo
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdBeginUndo
+                fImp.cs.ExecuteCmd cmCmdSelectLine
+                fImp.cs.ExecuteCmd cmCmdCopy
+                fImp.cs.ExecuteCmd cmCmdNewLine
+                fImp.cs.ExecuteCmd cmCmdLineUp
+                fImp.cs.ExecuteCmd cmCmdPaste
+                fImp.cs.ExecuteCmd cmCmdLineDown
+                fImp.cs.ExecuteCmd cmCmdPaste
+            fImp.cs.ExecuteCmd cmCmdEndUndo
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdBeginUndo
+'                fDoc.cs.ExecuteCmd cmCmdSelectLine
+'                fDoc.cs.ExecuteCmd cmCmdCopy
+'                fDoc.cs.ExecuteCmd cmCmdNewLine
+'                fDoc.cs.ExecuteCmd cmCmdLineUp
+'                fDoc.cs.ExecuteCmd cmCmdPaste
+'                fDoc.cs.ExecuteCmd cmCmdLineDown
+'                fDoc.cs.ExecuteCmd cmCmdPaste
+'            fDoc.cs.ExecuteCmd cmCmdEndUndo
         End If
     End If
 End Sub
@@ -394,6 +465,12 @@ Public Sub mnuEditDeselect()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdClearSelection
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdClearSelection
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdClearSelection
         End If
     End If
 End Sub
@@ -407,6 +484,12 @@ Public Sub mnuEditDeleteLine()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdLineDelete
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdLineDelete
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdLineDelete
         End If
     End If
 End Sub
@@ -424,6 +507,20 @@ Public Sub mnuEditClearLine()
                 fDoc.cs.ExecuteCmd cmCmdLineDeleteToEnd
                 fDoc.cs.ExecuteCmd cmCmdLineDeleteToStart
             fDoc.cs.ExecuteCmd cmCmdEndUndo
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdBeginUndo
+                fImp.cs.ExecuteCmd cmCmdSelectLine
+                fImp.cs.ExecuteCmd cmCmdLineDeleteToEnd
+                fImp.cs.ExecuteCmd cmCmdLineDeleteToStart
+            fImp.cs.ExecuteCmd cmCmdEndUndo
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdBeginUndo
+'                fDoc.cs.ExecuteCmd cmCmdSelectLine
+'                fDoc.cs.ExecuteCmd cmCmdLineDeleteToEnd
+'                fDoc.cs.ExecuteCmd cmCmdLineDeleteToStart
+'            fDoc.cs.ExecuteCmd cmCmdEndUndo
         End If
     End If
 End Sub
@@ -434,6 +531,14 @@ Public Sub mnuEditUpLine()
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdLineTranspose
             fDoc.cs.ExecuteCmd cmCmdLineUp
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdLineTranspose
+            fImp.cs.ExecuteCmd cmCmdLineUp
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdLineTranspose
+'            fDoc.cs.ExecuteCmd cmCmdLineUp
         End If
     End If
 End Sub
@@ -444,6 +549,14 @@ Public Sub mnuEditDownLine()
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdLineDown
             fDoc.cs.ExecuteCmd cmCmdLineTranspose
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdLineDown
+            fImp.cs.ExecuteCmd cmCmdLineTranspose
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdLineDown
+'            fDoc.cs.ExecuteCmd cmCmdLineTranspose
         End If
     End If
 End Sub
@@ -1499,15 +1612,15 @@ End Sub
 Public Sub mnuViewToolBarStandard()
     Dim Id As Long
     
-    Id = frmMain.cRebar.BandIndexForData("MainBar")
-    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
+    Id = frmMain.cReBar.BandIndexForData("MainBar")
+    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewToolBarEdit()
     Dim Id As Long
     
-    Id = frmMain.cRebar.BandIndexForData("EditBar")
-    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
+    Id = frmMain.cReBar.BandIndexForData("EditBar")
+    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewProjectBrowser()
@@ -1772,6 +1885,10 @@ Public Sub mnuProjectCreateImp()
     End If
     textTemp = ""
     text = ""
+End Sub
+
+Public Sub mnuProjectBuild()
+    frmMain.StatusBar.PanelText("MAIN") = "Building project"
 End Sub
 
 'Private Function getModule(line As String) As String

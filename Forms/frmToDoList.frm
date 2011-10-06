@@ -874,7 +874,7 @@ Private Sub setTrackerColors()
             clr_low = RGB(189, 171, 205)
             clr_lowest = RGB(217, 207, 229)
     End Select
-    Debug.Print "ft: " & A_Flametracker & " -- " & clr_highest & "," & clr_high & "," & clr_medium & "," & "," & clr_low & "," & clr_lowest
+    
 End Sub
 
 

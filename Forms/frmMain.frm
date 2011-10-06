@@ -62,7 +62,7 @@ Begin VB.MDIForm frmMain
       IconSizeY       =   32
       ColourDepth     =   8
       Size            =   17648
-      Images          =   "frmMain.frx":6852
+      Images          =   "frmMain.frx":1CFA
       Version         =   131072
       KeyCount        =   4
       Keys            =   "PRGÿMAPÿFBPÿFPG"
@@ -108,37 +108,38 @@ Begin VB.MDIForm frmMain
       _ExtentY        =   953
       ColourDepth     =   16
       Size            =   110208
-      Images          =   "frmMain.frx":AD62
+      Images          =   "frmMain.frx":620A
       Version         =   131072
       KeyCount        =   96
-      Keys            =   $"frmMain.frx":25C02
+      Keys            =   $"frmMain.frx":210AA
    End
    Begin VB.Menu mnuFile 
-      Caption         =   "&File"
+      Caption         =   "File"
+      NegotiatePosition=   1  'Left
    End
    Begin VB.Menu mnuEdit 
-      Caption         =   "&Edit"
+      Caption         =   "Edit"
    End
    Begin VB.Menu mnuNavigation 
-      Caption         =   "&Navigation"
+      Caption         =   "Navigation"
    End
    Begin VB.Menu mnuProject 
-      Caption         =   "&Project"
+      Caption         =   "Project"
    End
    Begin VB.Menu mnuExecute 
-      Caption         =   "&Run"
+      Caption         =   "Run"
    End
    Begin VB.Menu mnuTools 
-      Caption         =   "&Tools"
+      Caption         =   "Tools"
    End
    Begin VB.Menu mnuPlugins 
       Caption         =   "Plugins"
    End
    Begin VB.Menu mnuView 
-      Caption         =   "&View"
+      Caption         =   "View"
    End
    Begin VB.Menu mnuHelp 
-      Caption         =   "&Help"
+      Caption         =   "Help"
       NegotiatePosition=   3  'Right
    End
 End
@@ -378,13 +379,13 @@ Private Sub MDITabs_TabBarClick(ByVal iButton As MouseButtonConstants, ByVal scr
                 Set .ImageList = ImgList1.Object
                 Call .CreateFromNothing(Me.Hwnd)
                 lParentIndex = .AddItem(0, Key:="FileMenu")
-                .AddItem lParentIndex, "&File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
+                .AddItem lParentIndex, "File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
                 .AddItem lParentIndex, "-"
-                .AddItem lParentIndex, "&Source...", , , "mnuFileOpenSource", , , , 19
-                .AddItem lParentIndex, "&Map...", , , "mnuFileOpenMap", , , , 21
-                .AddItem lParentIndex, "Fp&g...", , , "mnuFileOpenFpg", , , , 22
-                .AddItem lParentIndex, "F&nt...", , , "mnuFileOpenFnt", , , , 91
-                .AddItem lParentIndex, "&Import...", , , "mnuFileOpenImp"
+                .AddItem lParentIndex, "Source...", , , "mnuFileOpenSource", , , , 19
+                .AddItem lParentIndex, "Map...", , , "mnuFileOpenMap", , , , 21
+                .AddItem lParentIndex, "Fpg...", , , "mnuFileOpenFpg", , , , 22
+                .AddItem lParentIndex, "Fnt...", , , "mnuFileOpenFnt", , , , 91
+                .AddItem lParentIndex, "Import...", , , "mnuFileOpenImp"
                 rID = .PopupMenu("FileMenu")
             End With
         
@@ -443,7 +444,7 @@ Private Sub MDITabs_TabClick(ByVal iButton As MouseButtonConstants, ByVal Hwnd A
 End Sub
 
 Private Sub MDITabs_WindowChanged(ByVal Hwnd As Long)
-On Error GoTo errhandler:
+On Error GoTo ErrHandler:
     Dim f As Form
     Dim fFileForm As IFileForm
     Dim file As String
@@ -472,7 +473,7 @@ On Error GoTo errhandler:
     End If
     frmProperties.RefreshProperties
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("TabClick"): Resume Next
 End Sub
 
@@ -596,12 +597,12 @@ Public Sub CreateMenuFromStrMatrix(oMenu As cMenus, ParentKey As String, _
                 baseKey As String, StrMatrix() As String)
     Dim i As Integer, mnuKey As String
     With oMenu
-        'Recorremos los elementos del array y los añadimos al menu
+        ' Add each element of the array to the menu
         For i = LBound(StrMatrix) To UBound(StrMatrix)
             If StrMatrix(i) <> "" Then
                 mnuKey = baseKey & CStr(i)
                 If CBool(.IndexForKey(mnuKey)) Then
-                    .ItemCaption(.IndexForKey(CStr(mnuKey))) = StrMatrix(i) 'Cambiamos el nombre
+                    .ItemCaption(.IndexForKey(CStr(mnuKey))) = StrMatrix(i) ' Vhange the name
                 Else
                     .AddItem .IndexForKey(ParentKey), StrMatrix(i), , , CStr(mnuKey)
                 End If
@@ -629,53 +630,53 @@ Private Sub CreateMenu()
         
         'MENU FILE
         iP = .IndexForKey("mnuFile")
-            iP2 = .AddItem(iP, "&New", , , "mnuFileNew")
-                .AddItem iP2, "&File...", , , "mnuFileNewFile", , , , 1
+            iP2 = .AddItem(iP, "New", , , "mnuFileNew")
+                .AddItem iP2, "File...", , , "mnuFileNewFile", , , , 1
                 .AddItem iP2, "-"
-                .AddItem iP2, "&Project...", , , "mnuFileNewProject", , , , 20
-                .AddItem iP2, "&Source", "Ctrl+N", , "mnuFileNewSource", , , , 19
-                .AddItem iP2, "&Map", "Ctrl+M", , "mnuFileNewMap", , , , 21
-                .AddItem iP2, "Fp&g", , , "mnuFileNewFpg", , , , 22
-                '.AddItem iP2, "F&nt", , , "mnuFileNewFnt"
-                .AddItem iP2, "&Import", , , "mnuFileNewImp"
+                .AddItem iP2, "Project...", , , "mnuFileNewProject", , , , 20
+                .AddItem iP2, "Source", "Ctrl+N", , "mnuFileNewSource", , , , 19
+                .AddItem iP2, "Map", "Ctrl+M", , "mnuFileNewMap", , , , 21
+                .AddItem iP2, "Fpg", , , "mnuFileNewFpg", , , , 22
+                '.AddItem iP2, "Fnt", , , "mnuFileNewFnt"
+                .AddItem iP2, "Import", , , "mnuFileNewImp"
             .AddItem iP, "-"
-            iP2 = .AddItem(iP, "&Open", , , "mnuFileOpen", , , , 2)
-                .AddItem iP2, "&File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
+            iP2 = .AddItem(iP, "Open", , , "mnuFileOpen", , , , 2)
+                .AddItem iP2, "File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
                 .AddItem iP2, "-"
-                .AddItem iP2, "&Project...", , , "mnuFileOpenProject", , , , 20
-                .AddItem iP2, "&Source...", , , "mnuFileOpenSource", , , , 19
-                .AddItem iP2, "&Map...", , , "mnuFileOpenMap", , , , 21
-                .AddItem iP2, "Fp&g...", , , "mnuFileOpenFpg", , , , 22
-                .AddItem iP2, "F&nt...", , , "mnuFileOpenFnt", , , , 91
-                .AddItem iP2, "&Song...", , , "mnuFileOpenSong", , , , 53
-                .AddItem iP2, "&Import ...", , , "mnuFileOpenImp"
-            .AddItem iP, "Recent &Files", , , "mnuFileRecentFiles"
-            .AddItem iP, "&Recent Projects", , , "mnuFileRecentProjects"
+                .AddItem iP2, "Project...", , , "mnuFileOpenProject", , , , 20
+                .AddItem iP2, "Source...", , , "mnuFileOpenSource", , , , 19
+                .AddItem iP2, "Map...", , , "mnuFileOpenMap", , , , 21
+                .AddItem iP2, "Fpg...", , , "mnuFileOpenFpg", , , , 22
+                .AddItem iP2, "Fnt...", , , "mnuFileOpenFnt", , , , 91
+                .AddItem iP2, "Song...", , , "mnuFileOpenSong", , , , 53
+                .AddItem iP2, "Import ...", , , "mnuFileOpenImp"
+            .AddItem iP, "Recent Files", , , "mnuFileRecentFiles"
+            .AddItem iP, "Recent Projects", , , "mnuFileRecentProjects"
             .AddItem iP, "-"
-            .AddItem iP, "&Close", "Ctrl+W", , "mnuFileClose", , , , 33
-            .AddItem iP, "Close A&ll", , , "mnuFileCloseAll", , , , 34
-            .AddItem iP, "Close pro&ject", , , "mnuFileCloseProject", False, , , 12
+            .AddItem iP, "Close", "Ctrl+W", , "mnuFileClose", , , , 33
+            .AddItem iP, "Close All", , , "mnuFileCloseAll", , , , 34
+            .AddItem iP, "Close project", , , "mnuFileCloseProject", False, , , 12
             .AddItem iP, "-"
-            .AddItem iP, "&Save", "Ctrl+S", , "mnuFileSave", , , , 3
-            .AddItem iP, "Save &as...", , , "mnuFileSaveAs", , , , 73
-            .AddItem iP, "Save &All", "Ctrl+Shift+S", , "mnuFileSaveAll", , , , 31
+            .AddItem iP, "Save", "Ctrl+S", , "mnuFileSave", , , , 3
+            .AddItem iP, "Save as...", , , "mnuFileSaveAs", , , , 73
+            .AddItem iP, "Save All", "Ctrl+Shift+S", , "mnuFileSaveAll", , , , 31
             .AddItem iP, "-"
-            .AddItem iP, "&Print...", "Ctrl+P", , "mnuFilePrint", Image:=67
+            .AddItem iP, "Print...", "Ctrl+P", , "mnuFilePrint", Image:=67
             .AddItem iP, "-"
             .AddItem iP, "Preferences...", "F10", , "mnuEditPreferences", Image:=11
             .AddItem iP, "-"
-            .AddItem iP, "&Exit", "Ctrl+Q", , "mnuFileExit", , , , 32
+            .AddItem iP, "Exit", "Ctrl+Q", , "mnuFileExit", , , , 32
 
         'MENU EDIT
         iP = .IndexForKey("mnuEdit")
             .AddItem iP, "Undo", "Ctrl+Z", , "mnuEditUndo", , , , 7
             .AddItem iP, "Redo", "Ctrl+Y", , "mnuEditRedo", , , , 8
             .AddItem iP, "-"
-            .AddItem iP, "C&ut", "Ctrl+X", , "mnuEditCut", , , , 5
-            .AddItem iP, "&Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
-            .AddItem iP, "&Paste", "Ctrl+V", , "mnuEditPaste", , , , 6
+            .AddItem iP, "Cut", "Ctrl+X", , "mnuEditCut", , , , 5
+            .AddItem iP, "Copy", "Ctrl+C", , "mnuEditCopy", , , , 4
+            .AddItem iP, "Paste", "Ctrl+V", , "mnuEditPaste", , , , 6
             .AddItem iP, "-"
-            .AddItem iP, "&Select all", "Ctrl+A", , "mnuEditSelectAll", , , , 75
+            .AddItem iP, "Select all", "Ctrl+A", , "mnuEditSelectAll", , , , 75
             .AddItem iP, "Select line", "Ctrl+Shift+L", , "mnuEditSelectLine", , , , 76
             .AddItem iP, "Select word", "Ctrl+Shift+W", , "mnuEditSelectWord", , , , 86
             .AddItem iP, "Deselect", , , "mnuEditDeselect"
@@ -689,20 +690,20 @@ Private Sub CreateMenu()
 '            .AddItem iP, "Delete word from cursor pos", "Ctrl+Del", , "mnuEditDeleteWordFromCursor", , , , 79
 '            .AddItem iP, "Delete word", "Ctrl+Alt+Del", , "mnuEditDeleteWord"
 '            .AddItem iP, "-"
-            .AddItem iP, "Shift line &left", "Tab", , "mnuEditTab", Image:=40
-            .AddItem iP, "Shift line &right", "Shift+Tab", , "mnuEditUnTab", Image:=41
+            .AddItem iP, "Shift line left", "Tab", , "mnuEditTab", Image:=40
+            .AddItem iP, "Shift line right", "Shift+Tab", , "mnuEditUnTab", Image:=41
             .AddItem iP, "-"
-            .AddItem iP, "&Comment", "Ctrl+J", , "mnuEditComment", Image:=42
-            .AddItem iP, "U&nComment", "Ctrl+Shift+J", , "mnuEditUnComment", Image:=43
+            .AddItem iP, "Comment", "Ctrl+J", , "mnuEditComment", Image:=42
+            .AddItem iP, "UnComment", "Ctrl+Shift+J", , "mnuEditUnComment", Image:=43
             .AddItem iP, "-"
-            .AddItem iP, "&UPPER CASE", "Ctrl+U", , "mnuEditUpperCase", Image:=60
-            .AddItem iP, "lo&wer case", "Ctrl+L", , "mnuEditLowerCase", Image:=61
-            .AddItem iP, "&Proper Case", , , "mnuEditFirstCase", Image:=94
+            .AddItem iP, "UPPER CASE", "Ctrl+U", , "mnuEditUpperCase", Image:=60
+            .AddItem iP, "lower case", "Ctrl+L", , "mnuEditLowerCase", Image:=61
+            .AddItem iP, "Proper Case", , , "mnuEditFirstCase", Image:=94
             .AddItem iP, "Sentence case.", , , "mnuEditSentenceCase", Image:=93
             .AddItem iP, "iNVERSE cASE", , , "mnuEditChangeCase", Image:=92
             .AddItem iP, "-"
             
-            iP2 = .AddItem(iP, "&Convert") 'Conversions
+            iP2 = .AddItem(iP, "Convert") 'Conversions
                 .AddItem iP2, "Bin -> Hex", , , "mnuConvertBinHex"
                 .AddItem iP2, "Bin -> Dec", , , "mnuConvertBinDec"
                 .AddItem iP2, "-"
@@ -713,14 +714,14 @@ Private Sub CreateMenu()
                 .AddItem iP2, "Dec -> Hex", , , "mnuConvertDecHex"
                 
             .AddItem iP, "-"
-            iP2 = .AddItem(iP, "&Insert")   ' Insert
-                .AddItem iP2, "Insert &Date/Time", , , "mnuEditDateTime", Image:=69
-                .AddItem iP2, "Insert &ASCII", "Ctrl+Insert", , "mnuEditInsertASCII", Image:=65
+            iP2 = .AddItem(iP, "Insert")   ' Insert
+                .AddItem iP2, "Insert Date/Time", , , "mnuEditDateTime", Image:=69
+                .AddItem iP2, "Insert ASCII", "Ctrl+Insert", , "mnuEditInsertASCII", Image:=65
                 
             .AddItem iP, "-"
-            iP2 = .AddItem(iP, "&Advanced")
-                .AddItem iP2, "Auto &indent", "Ctrl+I", , "mnuThotIndent", Image:=68
-                .AddItem iP2, "Unitify folder &backslashes", , , "mnuThotUnitifyBackslashes", , , , 72
+            iP2 = .AddItem(iP, "Advanced")
+                .AddItem iP2, "Auto indent", "Ctrl+I", , "mnuThotIndent", Image:=68
+                .AddItem iP2, "Unitify folder backslashes", , , "mnuThotUnitifyBackslashes", , , , 72
                 
             .AddItem iP, "-"
             .AddItem iP, "Column mode", "Ctrl+K", , "mnuEditColumnMode", , , , 78
@@ -731,20 +732,20 @@ Private Sub CreateMenu()
         
         'MENU NAVIGATION
         iP = .IndexForKey("mnuNavigation")
-            .AddItem iP, "&Search...", "Ctrl+F", , "mnuNavigationSearch", , , , 13
-            .AddItem iP, "Search &next", "F3", , "mnuNavigationSearchNext", , , , 14
-            .AddItem iP, "Search &prev", "Shift+F3", , "mnuNavigationSearchPrev"
-            .AddItem iP, "Search in &files...", , , "mnuNavigationSearchInFiles", , , , 80
+            .AddItem iP, "Search...", "Ctrl+F", , "mnuNavigationSearch", , , , 13
+            .AddItem iP, "Search next", "F3", , "mnuNavigationSearchNext", , , , 14
+            .AddItem iP, "Search prev", "Shift+F3", , "mnuNavigationSearchPrev"
+            .AddItem iP, "Search in files...", , , "mnuNavigationSearchInFiles", , , , 80
             .AddItem iP, "-"
             .AddItem iP, "Search next selected", "Ctrl+F3", , "mnuNavigationSearchNextWord", , , , 89
             .AddItem iP, "Search prev selected", "Ctrl+Shift+F3", , "mnuNavigationSearchPrevWord", , , , 90
             .AddItem iP, "-"
-            .AddItem iP, "&Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
-            .AddItem iP, "Repla&ce in files...", , , "mnuNavigationReplaceInFiles"
+            .AddItem iP, "Replace...", "Ctrl+H", , "mnuNavigationReplace", Image:=62
+            .AddItem iP, "Replace in files...", , , "mnuNavigationReplaceInFiles"
             .AddItem iP, "-"
             .AddItem iP, "Go to line...", "Ctrl+G", , "mnuNavigationGotoLine", , , , 77
             .AddItem iP, "Go to identation", , , "mnuNavigationGotoIdent", , , , 81
-            .AddItem iP, "Go to matching &brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
+            .AddItem iP, "Go to matching brace", "Ctrl+Shift+B", , "mnuNavigationGotoMatchBrace", , , , 85
             .AddItem iP, "-"
             .AddItem iP, "Go to definition", , , "mnuNavigationGotoDefinition"
             .AddItem iP, "-"
@@ -754,71 +755,72 @@ Private Sub CreateMenu()
             .AddItem iP, "Prev function/process", "Alt+Up", , "mnuNavigationPrevFunc", Image:=70
             .AddItem iP, "Next function/process", "Alt+Down", , "mnuNavigationNextFunc", Image:=71
             .AddItem iP, "-"
-            iP2 = .AddItem(iP, "&Bookmarks") 'Bookmarks
-                .AddItem iP2, "Bookmark &toggle", "Ctrl+F2", , "mnuBookmarkToggle", Image:=24
-                .AddItem iP2, "Bookmark &Next", "F2", , "mnuBookmarkNext", Image:=25
-                .AddItem iP2, "Bookmark &Prev", "Shift+F2", , "mnuBookmarkPrev", Image:=26
-                .AddItem iP2, "&Delete all", , , "mnuBookmarkDel", Image:=27
+            iP2 = .AddItem(iP, "Bookmarks") 'Bookmarks
+                .AddItem iP2, "Bookmark toggle", "Ctrl+F2", , "mnuBookmarkToggle", Image:=24
+                .AddItem iP2, "Bookmark Next", "F2", , "mnuBookmarkNext", Image:=25
+                .AddItem iP2, "Bookmark Prev", "Shift+F2", , "mnuBookmarkPrev", Image:=26
+                .AddItem iP2, "Delete all", , , "mnuBookmarkDel", Image:=27
                 .AddItem iP2, "-"
-                .AddItem iP2, "&Edit Bookmarks", , , "mnuBookmarkEdit", Image:=95
+                .AddItem iP2, "Edit Bookmarks", , , "mnuBookmarkEdit", Image:=95
                 .AddItem iP2, "-"
-                .AddItem iP2, "&Add this To Do", , , "mnuBookmarkToDo", Image:=29
+                .AddItem iP2, "Add this To Do", , , "mnuBookmarkToDo", Image:=29
             
         'MENU PROJECT
         iP = .IndexForKey("mnuProject")
-            .AddItem iP, "&Set the active source as main", , , "mnuProjectSetAsMainSource", False, , , 1
-            .AddItem iP, "C&lose", , , "mnuProjectClose", False, , , 12
+            .AddItem iP, "Set the active source as main", , , "mnuProjectSetAsMainSource", False, , , 1
+            .AddItem iP, "Close", , , "mnuProjectClose", False, , , 12
             .AddItem iP, "-"
-            .AddItem iP, "&Add Files...", , , "mnuProjectAddFile", False, , , 23
-            .AddItem iP, "&Remove current file from project", , , "mnuProjectRemoveFrom", False
-            .AddItem iP, "&Create import file", "Ctrl+Shift+I", , "mnuProjectCreateImp", False
+            .AddItem iP, "Add Files...", , , "mnuProjectAddFile", False, , , 23
+            .AddItem iP, "Remove current file from project", , , "mnuProjectRemoveFrom", False
+            .AddItem iP, "Create import file", "Ctrl+Shift+I", , "mnuProjectCreateImp", False
+            .AddItem iP, "Build project", "Ctrl+Shift+F12", , "mnuProjectBuild", False
             .AddItem iP, "-"
-            .AddItem iP, "&Properties", , , "mnuProjectProperties", False, , , 18
+            .AddItem iP, "Properties", , , "mnuProjectProperties", False, , , 18
             .AddItem iP, "-"
-            .AddItem iP, "Show/Hide &Tracker", , , "mnuProjectTracker", False, False, mcs_Icon, 29
-            .AddItem iP, "&Developer List", , , "mnuProjectDevList", False, , , 28
+            .AddItem iP, "Show/Hide Tracker", , , "mnuProjectTracker", False, False, mcs_Icon, 29
+            .AddItem iP, "Developer List", , , "mnuProjectDevList", False, , , 28
       
         'MENU EXECUTE
         iP = .IndexForKey("mnuExecute")
-            .AddItem iP, "&Compile this file", "F5", , "mnuExecuteCompileFile", , , , 35
-            .AddItem iP, "R&un this file", "Shift+F5", , "mnuExecuteRunFile", , , , 10
-            .AddItem iP, "Compile and run this &file", "F6", , "mnuExecuteCompileAndRunFile", , , , 38
+            .AddItem iP, "Compile this file", "F5", , "mnuExecuteCompileFile", , , , 35
+            .AddItem iP, "Run this file", "Shift+F5", , "mnuExecuteRunFile", , , , 10
+            .AddItem iP, "Compile and run this file", "F6", , "mnuExecuteCompileAndRunFile", , , , 38
             .AddItem iP, "-"
-            .AddItem iP, "Compile pro&ject", "F7", , "mnuExecuteBuild", , , , 36
-            .AddItem iP, "&Run project", "Shift+F7", , "mnuExecuteRun", , , , 39
-            .AddItem iP, "Compile and run &project", "F8", , "mnuExecuteBuildAndRun", , , , 37
+            .AddItem iP, "Compile project", "F7", , "mnuExecuteBuild", , , , 36
+            .AddItem iP, "Run project", "Shift+F7", , "mnuExecuteRun", , , , 39
+            .AddItem iP, "Compile and run project", "F8", , "mnuExecuteBuildAndRun", , , , 37
             
         'MENU TOOLS
         iP = .IndexForKey("mnuTools")
-            .AddItem iP, "&Calculator", "F12", , "mnuToolsCalculator", , , , 58
+            .AddItem iP, "Calculator", "F12", , "mnuToolsCalculator", , , , 58
             .AddItem iP, "-"
-            '.AddItem iP, "&Icon changer", "Ctrl+F12", , "mnuToolsIconChanger"
+            '.AddItem iP, "Icon changer", "Ctrl+F12", , "mnuToolsIconChanger"
             '.AddItem iP, "-"
-            .AddItem iP, "&MS-DOS command", "F9", , "mnuToolsCommand", Image:=64
-            .AddItem iP, "C&all last MS-DOS command", "Ctrl+F9", , "mnuToolsLastCommand", Image:=96
+            .AddItem iP, "MS-DOS command", "F9", , "mnuToolsCommand", Image:=64
+            .AddItem iP, "Call last MS-DOS command", "Ctrl+F9", , "mnuToolsLastCommand", Image:=96
 '            .AddItem iP, "-"
-'            .AddItem iP, "Pl&ugins", , , "mnuPlugins"
+'            .AddItem iP, "Plugins", , , "mnuPlugins"
             .AddItem iP, "-"
-            .AddItem iP, "Configure &Tools", , , "mnuToolsConfigureTools", , , , 59
+            .AddItem iP, "Configure Tools", , , "mnuToolsConfigureTools", , , , 59
             
          'MENU PLUGINS
          
             
 '        'MENU THOT
 '        iP = .IndexForKey("mnuThot")
-'            .AddItem iP, "Auto &indent", "Ctrl+I", , "mnuThotIndent", Image:=68
-'            .AddItem iP, "Auto &declare functions", , , "mnuThotDeclareFunctions"
+'            .AddItem iP, "Auto indent", "Ctrl+I", , "mnuThotIndent", Image:=68
+'            .AddItem iP, "Auto declare functions", , , "mnuThotDeclareFunctions"
 '            .AddItem iP, "-"
-'            .AddItem iP, "Unitify folder &backslashes", , , "mnuThotUnitifyBackslashes", , , , 72
-'            .AddItem iP, "&Unitify files", , , "mnuThotUnitifyFiles"
+'            .AddItem iP, "Unitify folder backslashes", , , "mnuThotUnitifyBackslashes", , , , 72
+'            .AddItem iP, "Unitify files", , , "mnuThotUnitifyFiles"
 '            .AddItem iP, "-"
-'            .AddItem iP, "File &truster", , , "mnuThotFileTruster"
+'            .AddItem iP, "File truster", , , "mnuThotFileTruster"
 '            .AddItem iP, "-"
-'            .AddItem iP, "&Migrate from old sources", , , "mnuThotMigrate"
+'            .AddItem iP, "Migrate from old sources", , , "mnuThotMigrate"
 '            .AddItem iP, "-"
-'            .AddItem iP, "Add &process", , , "mnuThotAddProcess"
-'            .AddItem iP, "Add &function", , , "mnuThotAddFunction"
-'            .AddItem iP, "Add &struct", , , "mnuThotAddStruct"
+'            .AddItem iP, "Add process", , , "mnuThotAddProcess"
+'            .AddItem iP, "Add function", , , "mnuThotAddFunction"
+'            .AddItem iP, "Add struct", , , "mnuThotAddStruct"
             
                 
         'MENU VIEW
@@ -848,7 +850,7 @@ Private Sub CreateMenu()
             .AddItem iP, "-"
             .AddItem iP, "FBMX project page", , , "mnuHelpProjectPage"
             .AddItem iP, "-"
-            .AddItem iP, "&About FBMX...", , , "mnuHelpAbout", Image:=82
+            .AddItem iP, "About FBMX...", , , "mnuHelpAbout", Image:=82
     End With
     
     CreateToolsMenu
@@ -1143,6 +1145,7 @@ Private Sub cMenu_Click(ByVal Index As Long)
     Case "mnuProjectAddFile":               Call mnuProjectAddFile
     Case "mnuProjectRemoveFrom":            Call mnuProjectRemoveFile
     Case "mnuProjectCreateImp":             Call mnuProjectCreateImp
+    Case "mnuProjectBuild":                 Call mnuProjectBuild
     
     Case "mnuToolsCalculator":              Call mnuToolsCalculator
     Case "mnuToolsIconChanger":             Call mnuToolsIconChanger
@@ -1178,13 +1181,13 @@ Private Sub cMenu_Click(ByVal Index As Long)
     Case "mnuHelpAbout":                    Call mnuHelpAbout
     
     Case Else
-        'Recents (se pone al final porque puede darse el caso de que algun menu empiece por mnuRec)
+        'Recents (at the end, cause there's a possibility that an entry starts with mnuRec)
         If cMenu.ItemKey(Index) Like "mnuRec*#" Then
             mnuFileRecentOpen cMenu.ItemCaption(Index)
         ElseIf cMenu.ItemKey(Index) Like "TOOL*" Then
             mnuToolsRunTool CInt(Right(cMenu.ItemKey(Index), Len(cMenu.ItemKey(Index)) - 4))
         Else
-            ' si es un plugin
+            ' plugins
             If cMenu.ItemParentID(Index) = cMenu.IndexForKey("mnuPlugins") Then
                 RunPlugin (cMenu.ItemKey(Index))
             End If

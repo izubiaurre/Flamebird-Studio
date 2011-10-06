@@ -72,7 +72,7 @@ Private Const SHCNE_ASSOCCHANGED = &H8000000
 'ASSOCIATES A FILETYPE WITH YOUR PROGRAM. IT USES THE COMMAND, " %1", TO LOAD FILE IN YOUR PROGRAM
 Public Sub RegisterType(ByVal sExt As String, ByVal sName As String, ByVal sConType As String, ByVal sDescription As String, ByVal Icon As String, Optional Executable As String)
     If Executable = "" Then
-        Executable = App.Path & "\" & App.EXEName & ".exe %1"
+        Executable = App.Path & "/" & App.EXEName & ".exe %1"
     End If
     
     If Left(sExt, 1) <> "." Then sExt = "." & sExt

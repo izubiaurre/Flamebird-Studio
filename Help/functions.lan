@@ -12,6 +12,10 @@
 QOfPrototipes = 1
 Prototipe     = say ( string MESSAGE )
 
+[sayfast]
+QOfPrototipes = 1
+Prototipe     = sayfast ( string MESSAGE )
+
 ** MATEMATICAS **********************************************************************************************************************************
 
 [rand]
@@ -24,7 +28,7 @@ Prototipe     = rand_seed ( int SEED )
 
 [abs]
 QOfPrototipes = 1
-Prototipe     = int abs ( int NUMBER )
+Prototipe     = int abs ( float NUMBER )
 
 [pow]
 QOfPrototipes = 1
@@ -55,28 +59,51 @@ QOfPrototipes = 1
 Prototipe     = float sqrt ( float NUMBER )
 
 [cos]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = float cos ( float ANGLE )
+Prototipe2   = float cos ( int ANGLE )
 
 [sin]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = float sin ( float ANGLE )
+Prototipe2     = float sin ( int ANGLE )
 
 [tan]
-QOfPrototipes=1
-Prototipe=float TAN ( float ANGLE )
+QOfPrototipes=2
+Prototipe	= float tan ( float ANGLE )
+Prototipe2	= float tan ( int ANGLE )
 
 [acos]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = float acos ( float NUMBER )
+Prototipe2     = float acos ( int NUMBER )
 
 [asin]
 QOfPrototipes = 1
 Prototipe     = float asin ( float NUMBER )
+Prototipe2     = float asin ( int NUMBER )
 
 [atan]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = float atan ( float NUMBER )
+Prototipe2     = float atan ( int NUMBER )
+
+[atan2]
+QOfPrototipes = 2
+Prototipe     = float atan2 ( float NUMBER, float NUMBER )
+Prototipe2     = float atan2 ( int NUMBER , int NUMBER )
+
+[isinf]
+QOfPrototipes = 1
+Prototipe 	= int isinf ( float NUMBER )
+
+[isnan]
+QOfPrototipes = 1
+Prototipe 	= int isnan ( float NUMBER )
+
+[finite]
+QOfPrototipes = 1
+Prototipe 	= int finite ( float NUMBER )
 
 ** INTERACCIÓN ENTRE PROCESOS *******************************************************************************************************************
 
@@ -107,17 +134,28 @@ Prototipe2    = int collision ( int ID )
 
 [signal]
 QOfPrototipes = 1
-Prototipe     = signal ( int PROCESS, int SIGNAL )
+Prototipe     = int signal ( int PROCESS, int SIGNAL )
 
 [let_me_alone]
 QOfPrototipes = 1
-Prototipe     = let_me_alone ( )
+Prototipe     =  int let_me_alone ( )
 
 [exit]
 QOfPrototipes = 3
-Prototipe     = exit ( string TEXT, int NUMBER )
-Prototipe2    = exit ( string TEXT )
-Prototipe3    = exit ( )
+Prototipe     = int exit ( string TEXT, int NUMBER )
+Prototipe2    = int exit ( string TEXT )
+Prototipe3    = int exit ( )
+
+[get_status]
+QOfPrototipes = 1
+Prototipe     = int get_status ( int PROCESS )
+
+[signal_action]
+QOfPrototipes = 3
+Prototipe     = int signal_action ( int SIGNAL, int ACTION )
+Prototipe2     = int signal_action ( int ID, int SIGNAL, int ACTION )
+Prototipe3     = int signal_action ( int TYPE, int SIGNAL, int ACTION )
+
 
 ** ENTRADA/SALIDA *******************************************************************************************************************************
 
@@ -126,12 +164,14 @@ QOfPrototipes = 1
 Prototipe     = int key ( int KEY )
 
 [get_joy_button]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = int get_joy_button ( int BUTTON )
+Prototipe2     = int get_joy_button ( int BUTTON, int BUTTON2 )
 
 [get_joy_position]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = int get_joy_position ( int AXIS )
+Prototipe2     = int get_joy_position ( int AXIS, int NUMBER )
 
 [select_joy]
 QOfPrototipes = 1
@@ -146,9 +186,9 @@ Prototipe     = int select_joy ( )
 [set_mode]
 QOfPrototipes = 4
 Prototipe     = set_mode ( int MODE )
-Prototipe2    = set_mode ( int WIDE, int HIGH )
-Prototipe3    = set_mode ( int WIDE, int HIGH, int BPP )
-Prototipe4    = set_mode ( int WIDE, int HIGH, int BPP, int FLAGS )
+Prototipe2    = set_mode ( int WIDTH, int HEIGHT )
+Prototipe3    = set_mode ( int WIDTH, int HEIGHT, int BPP )
+Prototipe4    = set_mode ( int WIDTH, int HEIGHT, int BPP, int FLAGS )
 
 [set_fps]
 QOfPrototipes = 1
@@ -197,37 +237,65 @@ Prototipe     = set_point ( int LIBRARY, int GRAPHIC, int POINT, int X, int Y)
 QOfPrototipes = 1
 Prototipe     = set_center ( int LIBRARY, int GRAPHIC, int X, int Y )
 
+[point_get]
+QOfPrototipes = 1
+Prototipe     = point_get ( int LIBRARY, int GRAPHIC, int POINT, pointer X, pointer Y )
+
+[point_set]
+QOfPrototipes = 1
+Prototipe     = set_point ( int LIBRARY, int GRAPHIC, int POINT, int X, int Y)
+
+[center_set]
+QOfPrototipes = 1
+Prototipe     = center_set ( int LIBRARY, int GRAPHIC, int X, int Y )
+
 ** REGIONES *************************************************************************************************************************************
 
 [define_region]
 QOfPrototipes = 1
-Prototipe     = define_region ( int REGION, int X, int Y, int WIDE, int HIGH )
+Prototipe     = int define_region ( int REGION, int X, int Y, int WIDTH, int HEIGHT )
+
+[region_define]
+QOfPrototipes = 1
+Prototipe     = int define_region ( int REGION, int X, int Y, int WIDTH, int HEIGHT )
 
 [out_region]
 QOfPrototipes = 1
 Prototipe     = int out_region (int PROCESS, int REGION)
 
+[region_out]
+QOfPrototipes = 1
+Prototipe     = int region_out (int PROCESS, int REGION)
+
 ** FONDO DE PANTALLA ****************************************************************************************************************************
 
 [put]
 QOfPrototipes = 1
-Prototipe     = put ( int LIBRARY, int GRAPHIC, int X, int Y )
+Prototipe     = int put ( int LIBRARY, int GRAPHIC, int X, int Y )
 
 [xput]
 QOfPrototipes = 1
-Prototipe     = xput ( int LIBRARY, int GRAPHIC, int X, int Y, int ANGLE, int SIZE, int FRLAGS, int REGION )
+Prototipe     = int xput ( int LIBRARY, int GRAPHIC, int X, int Y, int ANGLE, int SIZE, int FLAGS, int REGION )
 
 [put_pixel]
 QOfPrototipes = 1
-Prototipe     = put_pixel ( int X, int Y, int COLOR )
+Prototipe     = int put_pixel ( int X, int Y, int COLOR )
 
 [put_screen]
 QOfPrototipes = 1
-Prototipe     = put_screen ( int LIBRERY, int GRAPHIC )
+Prototipe     = int put_screen ( int LIBRARY, int GRAPHIC )
+
+[screen_put]
+QOfPrototipes = 1
+Prototipe     = int screen_put ( int LIBRARY, int GRAPHIC )
 
 [clear_screen]
 QOfPrototipes = 1
-Prototipe     = clear_screen ( )
+Prototipe     = int clear_screen ( )
+
+[screen_clear]
+QOfPrototipes = 1
+Prototipe     = int screen_clear ( )
 
 [get_pixel]
 QOfPrototipes = 1
@@ -237,7 +305,7 @@ Prototipe     = int get_pixel ( int X, int Y )
 
 [map_block_copy]
 QOfPrototipes = 1
-Prototipe     = map_block_copy ( int LIBRARY, int TARGET, int TX, int TY, int SOURCE, int SX, int SY, int WIDE, int HIGH )
+Prototipe     = int map_block_copy ( int LIBRARY, int TARGET, int TX, int TY, int SOURCE, int SX, int SY, int WIDTH, int HEIGHT )
 
 [map_get_pixel]
 QOfPrototipes = 1
@@ -245,19 +313,40 @@ Prototipe     = int map_get_pixell ( int LIBRARY, int GRAPHIC, int X, int Y )
 
 [map_put]
 QOfPrototipes = 1
-Prototipe     = map_put ( int LIBRARY, int GRAPHIC_1, int GRAPHIC_2, int X, int Y )
+Prototipe     = int map_put ( int LIBRARY, int GRAPHIC_1, int GRAPHIC_2, int X, int Y )
 
 [map_xput]
 QOfPrototipes = 1
-Prototipe     = map_xput ( int LIBRARY, int GRAPHIC_1, int GRAPHIC_2, int X, int Y, int ANGLE, int SIZE, int FLAGS, int REGION )
+Prototipe     = int map_xput ( int LIBRARY, int GRAPHIC_1, int GRAPHIC_2, int X, int Y, int ANGLE, int SIZE, int FLAGS, int REGION )
 
 [map_put_pixel]
 QOfPrototipes = 1
-Prototipe     = map_put_pixel ( int LIBRARY, int GRAPHIC, int X, int Y, int COLOR )
+Prototipe     = int map_put_pixel ( int LIBRARY, int GRAPHIC, int X, int Y, int COLOR )
 
 [new_map]
 QOfPrototipes = 1
-Prototipe     = int new_map ( int WIDE, int HIGH, int BPP)
+Prototipe     = int new_map ( int WIDTH, int HEIGHT, int BPP)
+
+[map_new]
+QOfPrototipes = 2
+Prototipe     = int map_new ( int WIDTH, int HEIGHT, int BPP)
+Prototipe     = int map_new ( int WIDTH, int HEIGHT, int BPP, int FLAGS)
+
+[map_del]
+QOfPrototipes = 1
+Prototipe     = int map_get_pixell ( int LIBRARY, int GRAPHIC )
+
+[map_unload]
+QOfPrototipes = 1
+Prototipe     = int map_get_pixell ( int LIBRARY, int GRAPHIC )
+
+[map_load]
+QOfPrototipes = 1
+Prototipe     = int map_get_pixell ( string FILE )
+
+[map_save]
+QOfPrototipes = 1
+Prototipe     = int map_get_pixell ( int LIBRARY, int GRAPHIC, string FILE )
 
 [map_clear]
 QOfPrototipes = 1
@@ -269,15 +358,27 @@ Prototipe     = int map_clone (int LIBRARY, int GRAPHIC)
 
 [map_name]
 QOfPrototipes = 1
-Prototipe     = map_name ( )
+Prototipe     = string map_name ( INT LIBRARY, int GRAPHIC )
 
 [map_set_name]
 QOfPrototipes = 1
-Prototipe     = map_set_name (int LIBRARY, int GRAPHIC, string NAME )
+Prototipe     = int map_set_name (int LIBRARY, int GRAPHIC, string NAME )
 
 [map_exists]
 QOfPrototipes = 1
 Prototipe     = int map_exists ( int LIBRARY, int GRAPHIC )
+
+[map_info_set]
+QOfPrototipes = 1
+Prototipe     = int map_exists ( int LIBRARY, int GRAPHIC, int UNKNOWN, int UNKNOWN )
+
+[map_info_get]
+QOfPrototipes = 1
+Prototipe     = int map_exists ( int LIBRARY, int GRAPHIC, int UNKNOWN )
+
+[map_info]
+QOfPrototipes = 1
+Prototipe     = int map_exists ( int LIBRARY, int GRAPHIC, int INFO )
 
 [map_xputnp]
 QOfPrototipes = 1
@@ -287,19 +388,36 @@ Prototipe     = int map_xputnp (int FILE_TRG, int GRAPH_TRG, int FILE_SRC, int G
 QOfPrototipes = 1
 Prototipe     = int fpg_exists ( int LIBRARY )
 
+[fpg_load]
+QOfPrototipes = 2
+Prototipe     = int fpg_load ( string FILE )
+Prototipe     = int fpg_load ( string FILE, pointer LIBRARY)
+
+[fpg_save]
+QOfPrototipes = 1
+Prototipe     = int fpg_save ( int LIBRARY, string FILE )
+
+[fpg_del]
+QOfPrototipes = 1
+Prototipe     = int fpg_del ( int LIBRARY )
+
+[fpg_unload]
+QOfPrototipes = 1
+Prototipe     = int fpg_unload ( int LIBRARY )
+
 ** FPG ******************************************************************************************************************************************
 
 [fpg_add]
 QOfPrototipes = 1
-Prototipe     = fpg_add ( int LIBRARY, int GRAPHIC, int SRC_LIBRARY, int SRC_GRAPHIC )
+Prototipe     = int fpg_add ( int LIBRARY, int GRAPHIC, int SRC_LIBRARY, int SRC_GRAPHIC )
 
 [new_fpg]
 QOfPrototipes = 1
-Prototipe     = new_fpg ( )
+Prototipe     = int new_fpg ( )
 
 [fpg_new]
 QOfPrototipes = 1
-Prototipe     = fpg_new ( )
+Prototipe     =  int fpg_new ( )
 
 ** TEXTOS ***************************************************************************************************************************************
 
@@ -309,7 +427,7 @@ Prototipe     = int load_fnt ( string FILE )
 
 [unload_fnt]
 QOfPrototipes = 1
-Prototipe     = unload_fnt ( int FONT )
+Prototipe     = int unload_fnt ( int FONT )
 
 [write]
 QOfPrototipes = 1
@@ -321,15 +439,15 @@ Prototipe     = int write_int ( int FONT, int X, int Y, int TYPE, pointer VAR )
 
 [move_text]
 QOfPrototipes = 1
-Prototipe     = move_text ( int MOVE, intX, int Y )
+Prototipe     = int move_text ( int MOVE, int X, int Y )
 
 [delete_text]
 QOfPrototipes = 1
-Prototipe     = delete_text ( int TEXT )
+Prototipe     = int delete_text ( int TEXT )
 
 [write_in_map]
 QOfPrototipes = 1
-Prototipe     = int write_in_map (int FONT, int TYPE, string TEXT)
+Prototipe     = int write_in_map (int FONT, string TEXT, int TYPE)
 
 [text_width]
 QOfPrototipes = 1
@@ -341,11 +459,41 @@ Prototipe     = int text_height ( int FONT, string TEXT )
 
 [save_fnt]
 QOfPrototipes = 1
-Prototipe     = save_fnt ( int FONT, string FILE )
+Prototipe     = int save_fnt ( int FONT, string FILE )
 
 [load_bdf]
 QOfPrototipes = 1
-Prototipe     = load_bdf ( string FILE )
+Prototipe     = int load_bdf ( string FILE )
+
+[fnt_load]
+QOfPrototipes = 1
+Prototipe     = int fnt_load ( string FILE )
+
+[fnt_unload]
+QOfPrototipes = 1
+Prototipe     = int fnt_unload ( int FONT )
+
+[fnt_save]
+QOfPrototipes = 1
+Prototipe     = int fnt_save ( int FONT, string FILE )
+
+[fnt_new]
+QOfPrototipes = 3
+Prototipe     = int fnt_new ( int BPP )
+Prototipe2     = int fnt_new ( int CHARSET, int BPP )
+Prototipe3     = int fnt_new ( int LIBRARY, int GRAPHIC, int CHARSET, int WIDTH, int HEIGHT, int FIRST, int LAST, int FLAGS )
+
+[bdf_load]
+QOfPrototipes = 1
+Prototipe     = int bdf_load ( string FILE )
+
+[glyph_get]
+QOfPrototipes = 1
+Prototipe     = int glyph_get ( int FONT, int GLYPH )
+
+[glyph_set]
+QOfPrototipes = 1
+Prototipe     = int glyph_set (  int FONT, int GLYPH, int LIBRARY, int GRAPHIC )
 
 ** FECHA ****************************************************************************************************************************************
 
@@ -356,6 +504,10 @@ Prototipe    = int time ( )
 [ftime]
 QOfPrototipes = 1
 Prototipe     = string ftime ( string FORMAT, int TIME )
+
+[get_timer]
+QOfPrototipes= 1
+Prototipe    = int get_timer ( )
 
 ** FICHEROS *************************************************************************************************************************************
 
@@ -373,15 +525,17 @@ Prototipe     = int fopen ( string FILE, int TYPE )
 
 [fclose]
 QOfPrototipes = 1
-Prototipe     = fclose ( int FILE )
+Prototipe     = int fclose ( int FILE )
 
 [fread]
-QOfPrototipes = 1
-Prototipe     = int fread ( int FILE, varspace VAR)
+QOfPrototipes = 2
+Prototipe     = int fread ( int FILE, varspace VAR )
+Prototipe2 	= int fread ( int FILE, int NUMBER, int NUMBER )
 
 [fwrite]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = int fwrite ( int FILE, varspace VAR)
+Prototipe2     = int fwrite ( int FILE, int NUMBER, int NUMBER )
 
 [fseek]
 QOfPrototipes = 1
@@ -411,21 +565,60 @@ Prototipe     = int feof ( int FILE )
 QOfPrototipes = 1
 Prototipe     = string file ( string FILE )
 
+[freewind]
+QOfPrototipes = 1
+Prototipe     =  freewind ( int UNKNOWN )
+
+[fflush]
+QOfPrototipes = 1
+Prototipe     = int fflush ( int FILE )
+
+[flush]
+QOfPrototipes = 1
+Prototipe     = int flush ( int FILE )
+
+[fexists]
+QOfPrototipes = 1
+Prototipe     = int fexists ( int FILE )
+
+[file_exists]
+QOfPrototipes = 1
+Prototipe     = int file_exists ( int FILE )
+
+[fremove]
+QOfPrototipes = 1
+Prototipe     = int fremove ( int FILE )
+
+[fmove]
+QOfPrototipes = 1
+Prototipe     = int fmove ( int FILE )
+
 ** MODO7 ****************************************************************************************************************************************
 
 [start_mode7]
-QOfPrototipes = 1
-Prototipe     = start_mode7 ( int NUMBER, int LIBRARY, int GFX_INT, int GFX_EXT, int REGION, int HORIZON )
+QOfPrototipes = 2
+Prototipe     = int start_mode7 ( int NUMBER, int LIBRARY, int GFX_INT, int GFX_EXT, int REGION, int HORIZON )
+Prototipe2     = int start_mode7 ( int NUMBER, int LIBRARY, int GFX_INT, int GFX_EXT, int REGION, int HORIZON, int DEST_LIBRARY, int DEST_MAP )
 
 [stop_mode7]
 QOfPrototipes = 1
-Prototipe     = stop_mode7 ( int NUMBER )
+Prototipe     = int stop_mode7 ( int NUMBER )
+
+[mode7_start]
+QOfPrototipes = 2
+Prototipe     = int mode7_start ( int NUMBER, int LIBRARY, int GFX_INT, int GFX_EXT, int REGION, int HORIZON )
+Prototipe2     = int mode7_start ( int NUMBER, int LIBRARY, int GFX_INT, int GFX_EXT, int REGION, int HORIZON, int DEST_LIBRARY, int DEST_MAP )
+
+[mode7_stop]
+QOfPrototipes = 1
+Prototipe     = int mode7_stop ( int NUMBER )
 
 ** SCROLL ***************************************************************************************************************************************
 
 [start_scroll]
-QOfPrototipes = 1
-Prototipe     = start_scroll ( int NUMBER, int LIBRERY, int GRAPHIC, int BACKGROUND, int REGION, int FLAGS )
+QOfPrototipes = 2
+Prototipe     = start_scroll ( int NUMBER, int LIBRARY, int GRAPHIC, int BACKGROUND, int REGION, int FLAGS )
+Prototipe2     = start_scroll ( int NUMBER, int LIBRARY, int GRAPHIC, int BACKGROUND, int REGION, int FLAGS, int DEST_LIBRARY, int DEST_MAP )
 
 [stop_scroll]
 QOfPrototipes = 1
@@ -443,7 +636,7 @@ Prototipe     = int start_fli ( string NAME, int X, int Y )
 
 [end_fli]
 QOfPrototipes = 1
-Prototipe     = end_fli ( )
+Prototipe     = int end_fli ( )
 
 [frame_fli]
 QOfPrototipes = 1
@@ -499,7 +692,11 @@ Prototipe     = byte asc ( string STRING )
 
 [chr]
 QOfPrototipes = 1
-Prototipe     = string chr ( byte NUMBER )
+Prototipe     = string chr ( int NUMBER )
+
+[strlen]
+QOfPrototipes = 1
+Prototipe     = int strlen ( string STRING )
 
 ** EXTENSIONES ADICIONALES **********************************************************************************************************************
 
@@ -516,12 +713,14 @@ QOfPrototipes = 1
 Prototipe     = pointer map_buffer ( int LIBRARY, int GRAPHIC )
 
 [set_colors]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = set_colors ( int FIRST, int NUMBER, pointer COLOR )
+Prototipe2   = set_colors ( int FIRST, int NUMBER, int UNKNOWN, pointer COLOR )
 
 [get_colors]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = get_colors ( int FIRST, int NUMBER, pointer PAL )
+Prototipe2     = get_colors ( int FIRST, int NUMBER, int UNKNOWN, pointer PAL )
 
 [alloc]
 QOfPrototipes = 1 
@@ -529,7 +728,7 @@ Prototipe     = pointer alloc ( int BYTES )
 
 [free]
 QOfPrototipes = 1
-Prototipe     = free ( pointer MEM )
+Prototipe     = int free ( pointer MEM )
 
 [realloc]
 QOfPrototipes = 1
@@ -547,51 +746,119 @@ Prototipe     = memset ( pointer MEM, byte NUMBER, int BYTES )
 QOfPrototipes = 1
 Prototipe     = memsetw ( pointer MEM, word NUMBER, int WORDS )
 
+[memseti]
+QOfPrototipes = 1
+Prototipe     = memset ( pointer MEM, int NUMBER, int BYTES )
+
 [memcopy]
 QOfPrototipes = 1
 Prototipe     = memcopy ( pointer TARGET, pointer SOURCE, int BYTES )
 
 [memory_total]
 QOfPrototipes = 1
-Prototipe     = float memory_total ( )
+Prototipe     = int memory_total ( )
 
 [memory_free]
 QOfPrototipes = 1
 Prototipe     = int memory_free ( )
 
+[mem_calloc]
+QOfPrototipes = 1
+Prototipe     = pointer mem_calloc ( int UNKNOWN, int UNKNOWN )
+
+[mem_alloc]
+QOfPrototipes = 1
+Prototipe     = pointer mem_alloc (  int UNKNOWN )
+
+[mem_free]
+QOfPrototipes = 1
+Prototipe     = int mem_free ( pointer UNKNOWN)
+
+[mem_realloc]
+QOfPrototipes = 1
+Prototipe     = pointer mem_realloc ( pointer UNKNOWN,  int UNKNOWN )
+
+[mem_cmp]
+QOfPrototipes = 1
+Prototipe     = int mem_cmp ( pointer UNKNOWN,  pointer UNKNOWN,  int UNKNOWN )
+
+[mem_set]
+QOfPrototipes = 1
+Prototipe     = int mem_set ( pointer UNKNOWN, byte UNKNOWN,  int UNKNOWN )
+
+[mem_setw]
+QOfPrototipes = 1
+Prototipe     = int mem_setw ( pointer UNKNOWN, word UNKNOWN,  int UNKNOWN )
+
+[mem_seti]
+QOfPrototipes = 1
+Prototipe     = int mem_seti ( pointer UNKNOWN, int UNKNOWN,  int UNKNOWN )
+
+[mem_copy]
+QOfPrototipes = 1
+Prototipe     = int mem_copy ( pointer UNKNOWN, pointer UNKNOWN, int UNKNOWN )
+
+[mem_move]
+QOfPrototipes = 1
+Prototipe     = int mem_move ( pointer UNKNOWN, pointer UNKNOWN, int UNKNOWN )
+
+[mem_avalaible]
+QOfPrototipes = 1
+Prototipe     = int mem_avalaible ( )
+
+[mem_total]
+QOfPrototipes = 1
+Prototipe     = int mem_total ( )
+
+[calloc]
+QOfPrototipes = 1
+Prototipe     = pointer calloc ( int UNKNOWN, int UNKNOWN )
+
+[memcmp]
+QOfPrototipes = 1
+Prototipe     = int memcmp ( pointer UNKNOWN, pointer UNKNOWN, int UNKNOWN )
+
+[memcopy]
+QOfPrototipes = 1
+Prototipe     = int memcopy ( pointer UNKNOWN, pointer UNKNOWN, int UNKNOWN )
+
+[memmove]
+QOfPrototipes = 1
+Prototipe     = int memmove ( pointer UNKNOWN, pointer UNKNOWN, int UNKNOWN )
+
 ** FUNCIONES DE PRIMITIVAS **********************************************************************************************************************
 
 [drawing_map]
 QOfPrototipes = 1
-Prototipe     = drawing_map ( int LIBRARY, int GRAPHIC )
+Prototipe     = int drawing_map ( int LIBRARY, int GRAPHIC )
 
 [drawing_color]
 QOfPrototipes = 1
-Prototipe     = drawing_color ( int COLOR )
+Prototipe     = int drawing_color ( int COLOR )
 
 [draw_line]
 QOfPrototipes = 1
-Prototipe     = draw_line ( int X1, int Y1, int X2, int Y2 )
+Prototipe     = int draw_line ( int X1, int Y1, int X2, int Y2 )
 
 [draw_rect]
 QOfPrototipes = 1
-Prototipe     = draw_rect (int X1, int Y1, int X2, int Y2)
+Prototipe     = int draw_rect (int X1, int Y1, int X2, int Y2)
 
 [draw_box]
 QOfPrototipes = 1
-Prototipe     = draw_box (int X1, int Y1, int X2, int Y2)
+Prototipe     = int draw_box (int X1, int Y1, int X2, int Y2)
 
 [draw_circle]
 QOfPrototipes = 1
-Prototipe     = draw_circle (int X, int Y, int RADIO)
+Prototipe     = int draw_circle (int X, int Y, int RADIO)
   
 [draw_fcircle]
 QOfPrototipes = 1
-Prototipe     = draw_fcircle (int X, int Y, int RADIO)
+Prototipe     = int draw_fcircle (int X, int Y, int RADIO)
 
 [set_text_color]
 QOfPrototipes = 1
-Prototipe     = set_text_color ( int COLOR )
+Prototipe     = int set_text_color ( int COLOR )
 
 ** BUSQUEDA DE CAMINOS **************************************************************************************************************************
 
@@ -615,49 +882,65 @@ Prototipe     = int blendop_new ( )
 
 [blendop_identity]
 QOfPrototipes = 1
-Prototipe     = blendop_identity ( int BLENDOP )
+Prototipe     = int blendop_identity ( int BLENDOP )
 
 [blendop_tint]
 QOfPrototipes = 1
-Prototipe     = blendop_tint ( int BLENDOP, float AMOUNT, byte R, byte G, byte B )
+Prototipe     = int blendop_tint ( int BLENDOP, float AMOUNT, byte R, byte G, byte B )
 
 [blendop_translucency]
 QOfPrototipes = 1
-Prototipe     = blendop_translucency ( int BLENDOP, float AMOUNT )
+Prototipe     = int blendop_translucency ( int BLENDOP, float AMOUNT )
 
 [blendop_intensity]
 QOfPrototipes = 1
-Prototipe     = blendop_intensity ( int BLENDOP, float AMOUNT )
+Prototipe     = int blendop_intensity ( int BLENDOP, float AMOUNT )
 
 [blendop_swap]
 QOfPrototipes = 1
-Prototipe     = blendop_swap ( int BLENDOP )
+Prototipe     = int blendop_swap ( int BLENDOP )
 
 [blendop_assign]
 QOfPrototipes = 1
-Prototipe     = blendop_assign ( int LIBRERY, int GRAPHIC, int BLENDOP )
+Prototipe     = int blendop_assign ( int LIBRARY, int GRAPHIC, int BLENDOP )
 
 [blendop_apply]
 QOfPrototipes = 1
-Prototipe     = blendop_apply ( int LIBRERY, int GRAPHIC, int BLENDOP )
+Prototipe     = int blendop_apply ( int LIBRARY, int GRAPHIC, int BLENDOP )
 
 [blendop_free]
 QOfPrototipes = 1
-Prototipe     = blendop_free ( int BLENDOP )
+Prototipe     = int blendop_free ( int BLENDOP )
 
 [blendop_grayscale]
 QOfPrototipes = 1
-Prototipe     = blendop_grayscale ( int BLENDOP , int METOD)
+Prototipe     = int blendop_grayscale ( int BLENDOP , int METOD)
 
 ** WM *******************************************************************************************************************************************
 
 [set_title]
 QOfPrototipes = 1
-Prototipe     = set_title ( string TITLE )
+Prototipe     = int set_title ( string TITLE )
 
 [set_icon]
 QOfPrototipes = 1
-Prototipe     = set_icon ( int FPG, int GRAPHIC )
+Prototipe     = int set_icon ( int LIBRARY, int GRAPHIC )
+
+[set_window_pos]
+QOfPrototipes = 1
+Prototipe     = int set_window_pos ( int X, int Y )
+
+[get_window_pos]
+QOfPrototipes = 1
+Prototipe     = int get_window_pos ( pointer X, pointer Y )
+
+[get_window_size]
+QOfPrototipes = 1
+Prototipe     = int get_window_size ( pointer WINDOW_WIDTH, pointer WINDOW_HEIGHT, pointer CLIENT_WIDTH, pointer CLIENT_HEIGHT )
+
+[get_desktop_size]
+QOfPrototipes = 1
+Prototipe     = int get_desktop_size ( pointer WIDTH, pointer HEIGHT )
 
 ** EXTENDED WRITE *******************************************************************************************************************************
 
@@ -677,7 +960,7 @@ Prototipe     = int write_string ( int FONT, int X, int Y, int TYPE, pointer STR
 
 [load_song]
 QOfPrototipes = 1
-Prototipe     = load_song ( string FILE )
+Prototipe     = int load_song ( string FILE )
 
 [play_song]
 QOfPrototipes = 1
@@ -685,23 +968,23 @@ Prototipe     = int play_song ( int SONG, int LOOP )
 
 [unload_song]
 QOfPrototipes = 1
-Prototipe     = unload_song ( int SONG )
+Prototipe     = int unload_song ( int SONG )
 
 [stop_song]
 QOfPrototipes = 1
-Prototipe     = stop_song ( )
+Prototipe     = int stop_song ( )
 
 [pause_song]
 QOfPrototipes = 1
-Prototipe     = pause_song ( )
+Prototipe     = int pause_song ( )
 
 [resume_song]
 QOfPrototipes = 1
-Prototipe     = resume_song ( )
+Prototipe     = int resume_song ( )
 
 [set_song_volume]
 QOfPrototipes = 1
-Prototipe     = set_song_volume ( int VOLUME )
+Prototipe     = int set_song_volume ( int VOLUME )
 
 [is_playing_song]
 QOfPrototipes = 1
@@ -712,52 +995,78 @@ QOfPrototipes = 1
 Prototipe     = int load_wav ( string FILE )
 
 [play_wav]
-QOfPrototipes = 1
-Prototipe     = play_wav ( int WAV, int LOOP )
+QOfPrototipes = 2
+Prototipe     = int play_wav ( int WAV, int LOOP )
+Prototipe2    = int play_wav ( int WAV, int LOOP, int CHANNEL )
 
 [unload_wav]
 QOfPrototipes = 1
-Prototipe     = unload_wav ( int WAV )
+Prototipe     = int unload_wav ( int WAV )
 
 [pause_wav]
 QOfPrototipes = 1
-Prototipe     = pause_wav ( int WAV )
+Prototipe     = int pause_wav ( int WAV )
 
 [resume_wav]
 QOfPrototipes = 1
-Prototipe     = resume_wav ( int WAV )
+Prototipe     = int resume_wav ( int WAV )
 
 [is_playing_wav]
 QOfPrototipes = 1
-Prototipe     = is_playing_wav ( int WAV )
+Prototipe     = int is_playing_wav ( int WAV )
 
 [set_wav_volume]
 QOfPrototipes = 1
-Prototipe     = set_wav_volume ( int WAV, int VOLUME )
+Prototipe     = int set_wav_volume ( int WAV, int VOLUME )
 
 [fade_music_in]
 QOfPrototipes = 1
-Prototipe     = fade_music_in ( int SONG, int LOOP, int TIME )
+Prototipe     = int fade_music_in ( int SONG, int LOOP, int TIME )
 
 [fade_music_off]
 QOfPrototipes = 1
-Prototipe     = fade_music_off ( int TIME )
+Prototipe     = int fade_music_off ( int TIME )
 
 [set_panning]
 QOfPrototipes = 1
-Prototipe     = set_panning ( int WAV, int LEFT, int RIGHT )
+Prototipe     = int set_panning ( int WAV, int LEFT, int RIGHT )
 
 [set_position]
 QOfPrototipes = 1
-Prototipe     = set_position ( int WAV, int ANGLE, int DISTANCE )
+Prototipe     = int set_position ( int WAV, int ANGLE, int DISTANCE )
 
 [set_distance]
 QOfPrototipes = 1
-Prototipe     = set_distance ( int WAV, int DISTANCE )
+Prototipe     = int set_distance ( int WAV, int DISTANCE )
 
 [reverse_stereo]
 QOfPrototipes = 1
-Prototipe     = reverse_stereo ( int WAV, int FLIP )
+Prototipe     = int reverse_stereo ( int WAV, int FLIP )
+
+[sound_init]
+QOfPrototipes = 1
+Prototipe     = int sound_init ( )
+
+[sound_close]
+QOfPrototipes = 1
+Prototipe     = int sound_close ( )
+
+[stop_wav]
+QOfPrototipes = 1
+Prototipe     = int stop_wav ( int WAV )
+
+[reserve_channels]
+QOfPrototipes = 1
+Prototipe     = int reserve_channels ( int CHANNELS )
+
+[set_music_position]
+QOfPrototipes = 1
+Prototipe     = int set_music_position ( float TIME)
+
+[unload_song]
+QOfPrototipes = 1
+Prototipe     = int unload_song ( pointer  SONG )
+
 
 ** FUNCIONES DE MAQ *****************************************************************************************************************************
 
@@ -781,43 +1090,164 @@ Prototipe     = filter ( int LIBRARY, int GRAPHIC, pointer ARRAY )
 QOfPrototipes = 1
 Prototipe     = quicksort ( pointer ARRAY, int SIZE, int NUMBER, int OFFSET, byte SIZE_O, byte TYPE )
 
+[sort]
+QOfPrototipes = 2
+Prototipe     = int sort ( varspace VAR )
+Prototipe2     = int sort ( varspace VAR , int NUM_ELEM)
+
+** ANIMACIONES FLI **********************************************************************************************************************************
+
+[fli_start]
+QOfPrototipes = 2
+Prototipe     = int fli_start ( string FILE, int START, int END )
+Prototipe2     = int fli_start ( string FILE, int START, int END, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN )
+
+[fli_end]
+QOfPrototipes = 1
+Prototipe     = int fli_end ( int FLI )
+
+[fli_frame]
+QOfPrototipes = 1
+Prototipe     = int fli_frame ( int FLI )
+
+[fli_reset]
+QOfPrototipes = 1
+Prototipe     = int fli_reset ( int FLI )
+
+[fli_params]
+QOfPrototipes = 1
+Prototipe     = int fli_params ( int FLI, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN )
+
+[fli_move]
+QOfPrototipes = 1
+Prototipe     = int fli_move ( int FLI, int X, int Y )
+
+[fli_angle]
+QOfPrototipes = 1
+Prototipe     = int fli_angle ( int FLI, int ANGLE )
+
+[fli_size]
+QOfPrototipes = 1
+Prototipe     = int fli_end ( int FLI, int SIZE )
+
+[fli_flags]
+QOfPrototipes = 1
+Prototipe     = int fli_flags ( int FLI, int FLAGS )
+
+[fli_z]
+QOfPrototipes = 1
+Prototipe     = int fli_z ( int FLI, int Z )
+
+[fli_getinfo]
+QOfPrototipes = 1
+Prototipe     = int fli_getinfo ( int FLI, pointer UNKNOWN, pointer UNKNOWN, pointer UNKNOWN, pointer UNKNOWN, pointer UNKNOWN, pointer UNKNOWN, pointer UNKNOWN, pointer UNKNOWN, pointer UNKNOWN )
+
+** ENCRIPTADO/DESENCRIPTADO *********************************************************************************************************************
+
+[crypt_new]
+QOfPrototipes = 1
+Prototipe     = pointer crypt_new ( int METHOD, pointer KEY )
+
+[crypt_del]
+QOfPrototipes = 1
+Prototipe     = int crypt_del ( pointer CRYPT )
+
+[crypt_encrypt]
+QOfPrototipes = 2
+Prototipe     = int crypt_encrypt ( pointer CRYPT, pointer IN, pointer OUT, int BLOCKS )
+Prototipe2     = int crypt_encrypt ( int METHOD, pointer CRYPT, pointer IN, pointer OUT, int BLOCKS )
+
+[crypt_decrypt]
+QOfPrototipes = 2
+Prototipe     = int crypt_decrypt ( pointer CRYPT, pointer IN, pointer OUT, int BLOCKS )
+Prototipe2     = int crypt_decrypt ( int METHOD, pointer CRYPT, pointer IN, pointer OUT, int BLOCKS )
+
+
+
+** FUNCIONES JOYSTIC *****************************************************************************************************************************
+
+
 ** PALETAS DE COLORES ***************************************************************************************************************************
 
 [load_pal]
 QOfPrototipes = 1
-Prototipe     = load_pal ( string FILE )
+Prototipe     = int load_pal ( string FILE )
+
+[new_pal]
+QOfPrototipes = 1
+Prototipe     = int new_pal ( )
+
+[unload_pal]
+QOfPrototipes = 1
+Prototipe     = int load_pal ( int PAL )
 
 [fade]
 QOfPrototipes = 1
-Prototipe     = fade ( int R, int G, int B, int SPEED, int DIR )
+Prototipe     = int fade ( int R, int G, int B, int SPEED )
 
 [fade_on]
 QOfPrototipes = 1
-Prototipe     = fade_on ( )
+Prototipe     = int fade_on ( )
 
 [fade_off]
 QOfPrototipes = 1
-Prototipe     = fade_off ( )
+Prototipe     = int fade_off ( )
 
 [roll_palette]
 QOfPrototipes = 1
-Prototipe     = roll_palette ( int FIRST, int NUMBER, int DES )
+Prototipe     = int roll_palette ( int FIRST, int NUMBER, int DES )
 
 [convert_palette]
 QOfPrototipes = 1
-Prototipe     = convert_palette ( int LIBRARY, int GRAPHIC, pointer ARRAY )
+Prototipe     = int convert_palette ( int LIBRARY, int GRAPHIC, pointer ARRAY )
 
 [find_color]
 QOfPrototipes = 1
 Prototipe     = int find_color ( int R, int G, int B )
 
-[rgb]
+[color_find]
 QOfPrototipes = 1
+Prototipe     = int color_find ( byte R, byte G, byte B )
+
+[rgb]
+QOfPrototipes = 2
 Prototipe     = int rgb ( int R, int G, int B )
+Prototipe2     = int rgb ( int R, int G, int B, int UNKNOWN)
 
 [get_rgb]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = get_rgb ( int COLOR, pointer R, pointer G, pointer B )
+Prototipe2     = get_rgb ( int COLOR, pointer R, pointer G, pointer B, int UNKNOWN )
+
+[get_rgba]
+QOfPrototipes = 2
+Prototipe     = get_rgba ( int COLOR, pointer R, pointer G, pointer B, pointer A )
+Prototipe2     = get_rgba ( int COLOR, pointer R, pointer G, pointer B, pointer A, int UNKNOWN )
+
+[rgb_get]
+QOfPrototipes = 2
+Prototipe     = get_rgb ( int COLOR, pointer R, pointer G, pointer B )
+Prototipe2     = get_rgb ( int COLOR, pointer R, pointer G, pointer B, int UNKNOWN )
+
+[rgba_get]
+QOfPrototipes = 2
+Prototipe     = get_rgb ( int COLOR, pointer R, pointer G, pointer B, pointer A )
+Prototipe2     = get_rgb ( int COLOR, pointer R, pointer G, pointer B, pointer A, int UNKNOWN )
+
+[rgba]
+QOfPrototipes = 2
+Prototipe     = get_rgb ( byte UNKNOWN, byte UNKNOWN, byte UNKNOWN, byte UNKNOWN )
+Prototipe2     = get_rgb ( byte UNKNOWN, byte UNKNOWN, byte UNKNOWN, byte UNKNOWN, int UNKNOWN )
+
+[colors_set]
+QOfPrototipes = 2
+Prototipe     = int colors_set ( int UNKNOWN, int UNKNOWN, pointer UNKNOWN )
+Prototipe2     = int colors_set ( int UNKNOWN, int UNKNOWN, int UNKNOWN, pointer UNKNOWN )
+
+[colors_get]
+QOfPrototipes = 2
+Prototipe     = int colors_get ( int UNKNOWN, int UNKNOWN, pointer UNKNOWN )
+Prototipe2     = int colors_get ( int UNKNOWN, int UNKNOWN, int UNKNOWN, pointer UNKNOWN )
 
 ** NUEVAS FUNICONES EN LA 0.83 ******************************************************************************************************************
 
@@ -825,15 +1255,19 @@ Prototipe     = get_rgb ( int COLOR, pointer R, pointer G, pointer B )
 QOfPrototipes = 1
 Prototipe     = int get_screen ( )
 
+[screen_get]
+QOfPrototipes = 1
+Prototipe     = int screen_get ( )
+
 [trim]
 QOfPrototipes = 1
-Prototipe     = stirng trim ( string STRING )
+Prototipe     = string trim ( string STRING )
 
 [format]
 QOfPrototipes = 3
-Prototipe     = stirng trim ( int NUMBER )
-Prototipe2    = stirng trim ( float NUMBER )
-Prototipe3    = stirng trim ( float NUBER, int DECIMALS )
+Prototipe     = string trim ( int NUMBER )
+Prototipe2    = string trim ( float NUMBER )
+Prototipe3    = string trim ( float NUMBER, int DECIMALS )
 
 [strrev]
 QOfPrototipes = 1
@@ -853,7 +1287,27 @@ Prototipe     = int strcasecmp ( string STRING1, string STRING2 )
 
 [save_png]
 QOfPrototipes = 1
-Prototipe     = save_png ( int LIBRARY, int GRAPHIC, string FILE )
+Prototipe     = int save_png ( int LIBRARY, int GRAPHIC, string FILE )
+
+[save_map]
+QOfPrototipes = 1
+Prototipe     = int save_map ( int LIBRARY, int GRAPHIC, string FILE )
+
+[save_fpg]
+QOfPrototipes = 1
+Prototipe     = int save_fpg ( int LIBRARY, string FILE )
+
+[png_save]
+QOfPrototipes = 1
+Prototipe     = int png_save ( int LIBRARY, int GRAPHIC, string FILE )
+
+[png_load]
+QOfPrototipes = 1
+Prototipe     = int png_load ( string FILE )
+
+[pcx_load]
+QOfPrototipes = 1
+Prototipe     = int pcx_load ( string FILE )
 
 [regex]
 QOfPrototipes = 1
@@ -869,7 +1323,7 @@ Prototipe     = int regex_replace ( string EXPRESION, string STRING , pointer AR
 
 [join]
 QOfPrototipes = 1
-Prototipe     = join ( string SEPARATOR, pointer ARRAY , int SIZE )
+Prototipe     = int join ( string SEPARATOR, pointer ARRAY , int SIZE )
 
 [draw_curve]
 QOfPrototipes = 1
@@ -877,19 +1331,19 @@ Prototipe     = int draw_curve ( int X1, int Y1, int X2, int Y2, int X3, int Y3,
 
 [drawing_z]
 QOfPrototipes = 1
-Prototipe     = drawing_z ( int NUMBER )
+Prototipe     = int drawing_z ( int NUMBER )
 
 [delete_draw] 
 QOfPrototipes = 1
-Prototipe     = delete_draw ( int DRAW )
+Prototipe     = int delete_draw ( int DRAW )
 
 [move_draw]
 QOfPrototipes = 1
-Prototipe     = move_draw ( int DRAW , int X, int Y )
+Prototipe     = int move_draw ( int DRAW , int X, int Y )
 
 [drawing_alpha]
 QOfPrototipes = 1
-Prototipe     = drawing_alpha ( int NUMBER )
+Prototipe     = int drawing_alpha ( int NUMBER )
 
 ** NUEVAS FUNCIONES EN LA 0.84 ******************************************************************************************************************
 
@@ -914,17 +1368,35 @@ Prototipe     = int rmdir ( string DIR )
 QOfPrototipes = 1
 Prototipe     = int file_exists ( string FILE )
 
+[rm]
+QOfPrototipes = 1
+Prototipe     = int rm ( string FILE )
+
+[diropen]
+QOfPrototipes = 1
+Prototipe     = int diropen ( string DIR )
+
+[dirclose]
+QOfPrototipes = 1
+Prototipe     = int dirclose ( int DIRHANDLE )
+
+[dirread]
+QOfPrototipes = 1
+Prototipe     = string dirread ( int DIRHANDLE )
+
 [glob]
 QOfPrototipes = 1
-Prototipe     = string file_exists ( string SEARCH )
+Prototipe     = string glob ( string CRITERIA )
 
 [get_text_color]
 QOfPrototipes = 1
 Prototipe     = int get_text_color ( )
 
 [new_fnt]
-QOfPrototipes = 1
+QOfPrototipes = 3
 Prototipe     = int new_fnt ( int BPP )
+Prototipe2     = int new_fnt ( int BPP, int UNKNOWN )
+Prototipe3    = int new_fnt ( int BPP, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN, int UNKNOWN )
 
 [fnt_new]
 QOfPrototipes = 1
@@ -943,27 +1415,11 @@ QOfPrototipes = 1
 Prototipe     = drawing_stipple ( int KIND )
 
 [save_pal]
-QOfPrototipes = 1
-Prototipe     = int save_pal ( int FILE )
+QOfPrototipes = 2
+Prototipe     = int save_pal ( string FILE )
+Prototipe2     = int save_pal ( string FILE, int UNKNOWN )
 
 ** NUEVAS FUNCIONES EN LA 0.85 ******************************************************************************************************************
-
-[load_fbm]
-QOfPrototipes = 1
-Prototipe     = int load_fbm ( string FILE )
-
-[save_fbm]
-QOfPrototipes = 1
-Prototipe     = int load_fbm ( int LIBRARY, int GRAPHIC, string FILE )
-
-[load_fgc]
-QOfPrototipes = 2
-Prototipe     = int load_fgc ( string FILE )
-Prototipe2    = int load_fgc ( string FILE , pointer RETURN )
-
-[save_fgc]
-QOfPrototipes = 1
-Prototipe     = int save_fgc ( int LIBRARY, string FILE )
 
 [cd_drives]
 QOfPrototipes = 1
@@ -983,32 +1439,32 @@ Prototipe     = int cd_getinfo ( int ID )
 
 [cd_play]
 QOfPrototipes = 2
-Prototipe     = int cd_getinfo ( int ID )
-Prototipe2    = int cd_getinfo ( int ID , int TRACKS )
+Prototipe     = int cd_getinfo ( int ID, int UNKNOWN )
+Prototipe2    = int cd_getinfo ( int ID , int TRACKS, int UNKNOWN )
 
 [cd_stop]
 QOfPrototipes = 1
-Prototipe     = cd_stop ( int ID )
+Prototipe     = int cd_stop ( int ID )
 
 [cd_pause]
 QOfPrototipes = 1
-Prototipe     = cd_pause ( int ID )
+Prototipe     = int cd_pause ( int ID )
 
 [cd_resume]
 QOfPrototipes = 1
-Prototipe     = cd_resume ( int ID )
+Prototipe     = int cd_resume ( int ID )
 
 [cd_eject]
 QOfPrototipes = 1
-Prototipe     = cd_eject ( int ID )
+Prototipe     = int cd_eject ( int ID )
 
 [minimize]
 QOfPrototipes = 1
-Prototipe     = minimize ( )
+Prototipe     = int minimize ( )
 
 [move_window]
 QOfPrototipes = 1
-Prototipe     = move_window ( int X, int Y )
+Prototipe     = int move_window ( int X, int Y )
 
 [ksort]
 QOfPrototipes = 2
@@ -1020,24 +1476,48 @@ QOfPrototipes = 2
 Prototipe     = int sort ( varspace VAR, int NUMBER )
 Prototipe2    = int sort ( varspace VAR )
 
-[save_fpl]
-QOfPrototipes = 1
-Prototipe     = save_fpl ( string FILE )
-
 [set_channel_volume]
 QOfPrototipes = 1
-Prototipe     = set_channel_volume ( int WAV, int VOLUME )
+Prototipe     = int set_channel_volume ( int WAV, int VOLUME )
 
 [joy_name]
 QOfPrototipes = 1
 Prototipe     = string joy_name ( int ID )
 
 [joy_buttons]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = int joy_buttons ( )
+Prototipe2     = int joy_buttons ( int UNKNOWN )
 
 [joy_axes]
-QOfPrototipes = 1
+QOfPrototipes = 2
 Prototipe     = int joy_axes ( )
+Prototipe2     = int joy_axes (  int UNKNOWN )
+
+[collision_box]
+QOfPrototipes = 2
+Prototipe     = int collision_box ( int ID )
+Prototipe2     = int collision_box ( int TYPE )
+
+[collision_circle]
+QOfPrototipes = 2
+Prototipe     = int collision_circle ( int ID )
+Prototipe2     = int collision_circle ( int TYPE )
+
+[get_modes]
+QOfPrototipes = 1
+Prototipe     = pointer get_modes ( int BPP, int FLAGS )
+
+[mode_is_ok]
+QOfPrototipes = 1
+Prototipe     = int mode_is_ok ( int WIDTH, int HEIGHT, int BPP, int FLAGS )
+
+[exec]
+QOfPrototipes = 1
+Prototipe     = int exec ( int MODE, string FILE, int ARGC , pointer ARGV)
+
+[getenv]
+QOfPrototipes = 1
+Prototipe     = string getenv ( string VARNAME )
 
 *************************************************************************************************************************************************

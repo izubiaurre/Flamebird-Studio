@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalsgrid6.ocx"
+Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalSGrid6.ocx"
 Begin VB.Form frmDevelopersList 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Developer List"
@@ -207,7 +207,7 @@ Private RowDefaultDev As Long
 
 Implements IGridCellOwnerDraw
 
-'Dibuja un frame del tamaño de las columnas y escribe el texto centrado
+'Draws a frame with the size of the columns and writes the text centered
 Private Sub DrawNewDevFrame(lHdc As Long, lLeft As Long, lTop As Long, lBottom As Long)
     Dim hBr As Long, tr As RECT
     Dim lW As Long
@@ -234,10 +234,10 @@ Private Sub cmdDefaultDev_Click()
     Dim i As Integer, j As Integer
     With grdDev
     If .SelectedRow > 0 Then
-        If .RowItemData(.SelectedRow) <> -1 Then  'Fila válida
+        If .RowItemData(.SelectedRow) <> -1 Then  ' valid row
             For i = 1 To .Rows - 1
                 For j = 1 To .Columns
-                    'Pintamos la fila seleccionada de un color y el resto de otro
+                    ' paint the selected row with one color and the rest with other
                     .CellBackColor(i, j) = IIf(i = .SelectedRow, CLR_DEFAULTDEV, vbWhite)
                 Next
             Next
@@ -255,7 +255,7 @@ Private Sub cmdOk_Click()
 End Sub
 
 Private Sub grdDev_KeyUp(KeyCode As Integer, Shift As Integer)
-    If KeyCode = 46 And Not grdDev.RowItemData(grdDev.SelectedRow) = -1 Then 'Suprimir
+    If KeyCode = 46 And Not grdDev.RowItemData(grdDev.SelectedRow) = -1 Then ' delete
         grdDev.RemoveRow grdDev.SelectedRow
     End If
 End Sub
@@ -263,13 +263,13 @@ End Sub
 Private Sub grdDev_SelectionChange(ByVal lRow As Long, ByVal lCol As Long)
     Dim str As String, i As Integer, cnt As Integer
     With grdDev
-        If lRow = .Rows Then 'Si es la celda Nuevo Desarrollador agregamos uno
-            'Obtenemos un nombre válido
+        If lRow = .Rows Then ' If it's "new developer" cell, add one
+            ' get a valid name
             cnt = 1
             Do
                 str = "New Developer " & CStr(cnt)
                 For i = 1 To .Rows - 1
-                    If .CellText(i, 1) = str Then 'Existe el developer
+                    If .CellText(i, 1) = str Then 'Exists the developer
                         str = ""
                         cnt = cnt + 1
                     End If
@@ -324,7 +324,7 @@ Private Sub ConfigureGrid()
         .SelectionAlphaBlend = True
         .OwnerDrawImpl = Me
       
-        'Fuente Link
+        ' Link font
         Set fntLink = .font
         fntLink.Underline = True
         
@@ -340,7 +340,7 @@ Private Sub LoadDevelopers(devs As cDeveloperCollection)
     Dim dev As cDeveloper
     Dim i As Integer
     With grdDev
-        'Añade los desarrolladores
+        ' Add the developers
         For Each dev In devs
             
             .AddRow
@@ -348,7 +348,7 @@ Private Sub LoadDevelopers(devs As cDeveloperCollection)
             .CellDetails .Rows, 2, dev.RealName
             .CellDetails .Rows, 3, dev.Mail, oFont:=fntLink, oForecolor:=vbBlue
         Next
-        'Establece el Default Developer
+        ' set the default developer
         If devs.defaultDev <> "" Then
             For i = 1 To .Rows
                 If .CellText(i, 1) = devs.defaultDev Then
@@ -367,7 +367,7 @@ Private Sub SaveDevelopers(devs As cDeveloperCollection)
         For i = 1 To .Rows - 1
             devs.Add .CellText(i, 1), .CellText(i, 2), .CellText(i, 3)
         Next
-        'Asignamos el DefaultDev en caso de que haya
+        ' asign the default developer in the cas that exists
         If RowDefaultDev > 0 And RowDefaultDev <= .Rows Then
             devcol.defaultDev = IIf(.CellBackColor(RowDefaultDev, 1) = CLR_DEFAULTDEV, .CellText(RowDefaultDev, 1), "")
         End If
@@ -383,10 +383,10 @@ Private Sub Form_Load()
         .StretchLastColumnToFit = True
     End With
     
-    ConfigureGrid 'configuración
+    ConfigureGrid ' configuration
     Set devcol = openedProject.devcol
     
-    LoadDevelopers devcol  'Cargamos la lista en el grid
+    LoadDevelopers devcol  ' load the list on the grid
     addNewDeveloperRow
     cmdDefaultDev_Click
 End Sub
@@ -398,12 +398,12 @@ End Sub
 Private Sub grdDev_PreCancelEdit(ByVal lRow As Long, ByVal lCol As Long, newValue As Variant, bStayInEditMode As Boolean)
     Dim i As Long
     With grdDev
-        If .RowItemData(lRow) <> -1 Then 'No es la fila Nuevo Desarollador
-            If lCol = 1 And txtEdit = "" Then 'Developer name no puede estar vacio
+        If .RowItemData(lRow) <> -1 Then ' Its not "new developer" row
+            If lCol = 1 And txtEdit = "" Then 'Developer name can't be empty
                 MsgBox "The 'Developer Name' field can't be empty", vbExclamation, "Developer List"
                 txtEdit = .CellText(lRow, lCol)
             End If
-            If lCol = 1 Then 'Si es el Dev Name, comprobamos que no esté repetido
+            If lCol = 1 Then ' If it's row Dev Name, check it's not repeated
                 For i = 1 To .Rows - 1
                     If txtEdit = .CellText(i, 1) And i <> lRow Then
                         MsgBox "There is another developer using this name", vbExclamation, "Developer List"
@@ -411,7 +411,7 @@ Private Sub grdDev_PreCancelEdit(ByVal lRow As Long, ByVal lCol As Long, newValu
                     End If
                 Next
             End If
-            .CellText(lRow, lCol) = txtEdit 'Actualiza el texto de la celda
+            .CellText(lRow, lCol) = txtEdit ' Update cell text
         End If
     End With
 End Sub
@@ -419,10 +419,10 @@ End Sub
 Private Sub grdDev_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iKeyAscii As Integer, bCancel As Boolean)
     Dim lLeft As Long, lHeight As Long, lTop As Long, lWidth As Long
     With grdDev
-        If .RowItemData(lRow) = -1 Then 'Fila nuevo desarrollador
+        If .RowItemData(lRow) = -1 Then ' New developer row
             bCancel = True
-        Else 'Fila normal
-            'Muestra el textbox donde sea necesário
+        Else ' Normal row
+            ' show textbos where it's necessary
             .CellBoundary lRow, lCol, lLeft, lTop, lWidth, lHeight
             txtEdit.text = .CellText(lRow, lCol)
             txtEdit.Move .Left + Screen.TwipsPerPixelX + lLeft, .Top + 2 * Screen.TwipsPerPixelY + lTop + (.RowHeight(lRow) * Screen.TwipsPerPixelY - txtEdit.Height) \ 2, lWidth - 2 * Screen.TwipsPerPixelX

@@ -440,7 +440,7 @@ End Sub
 
 Private Sub Form_Load()
 
-    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+    Image1.Picture = LoadPicture(App.Path & "/Resources/frmHeader.jpg")
     
     ConfigureControls
     

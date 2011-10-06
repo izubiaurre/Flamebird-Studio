@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Begin VB.Form frmFnt 
    Caption         =   "Fnt"
    ClientHeight    =   3555
@@ -8,6 +8,15 @@ Begin VB.Form frmFnt
    ClientTop       =   345
    ClientWidth     =   4275
    ControlBox      =   0   'False
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   9
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmFnt.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
@@ -35,13 +44,22 @@ Begin VB.Form frmFnt
       _ExtentY        =   953
       ColourDepth     =   24
       Size            =   10332
-      Images          =   "frmFnt.frx":2B8A
+      Images          =   "frmFnt.frx":038A
       Version         =   131072
       KeyCount        =   9
       Keys            =   "ÿÿÿÿÿÿÿÿ"
    End
    Begin VB.PictureBox picScrollBox 
       BackColor       =   &H80000010&
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   2895
       Left            =   0
       ScaleHeight     =   189
@@ -56,6 +74,15 @@ Begin VB.Form frmFnt
          AutoSize        =   -1  'True
          BackColor       =   &H80000005&
          BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   1215
          Left            =   720
@@ -99,7 +126,7 @@ Private Const MSG_SAVE_SUCCESS = "Map saved succesfully!"
 Private Const MSG_PAINTMAP_ERRORPAINTING = "An error occurred when trying to paint the fnt: "
 Private Const MSG_LOAD_ERRORLOADING = "An error occurred loading the fnt: "
 
-Private Const FAST_SCROLL_STEPS As Integer = 12 'desplazamiento con Shift
+Private Const FAST_SCROLL_STEPS As Integer = 12 ' Shift move
 
 Private m_ShowTransparent As Boolean
 Private m_SizeIndex As Single
@@ -320,7 +347,7 @@ Private Sub m_cScroll_MouseWheel(eBar As EFSScrollBarConstants, lAmount As Long,
         eBar = efsHorizontal 'Desplaz horizontal
     End If
     If (efsVKShift And VKPressed) Then 'Flag shift
-        'Desplazamiento rápido inteligente
+        ' Fast smart move
         If eBar = efsHorizontal Then
             lAmount = chars(current_Char).Header.Height * m_SizeIndex \ FAST_SCROLL_STEPS * Sgn(lAmount)
         Else
@@ -805,7 +832,7 @@ Private Sub drawTransBack(hdc As Long, bI As BITMAPINFO8Bits, lWidth As Long, lH
     Dim resFile As String
     Dim cx As Integer, cy As Integer
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     
     'If Not FSO.FileExists(App.Path & "\Resources\backmaps.bmp") Then Exit Sub
     bmp.LoadFromFile App.Path & "\Resources\backmaps.bmp"
@@ -832,7 +859,7 @@ On Error GoTo errhandler
 '        Next
 '    Next
     Exit Sub
-errhandler:
+ErrHandler:
     Exit Sub
 End Sub
 
@@ -851,7 +878,7 @@ Public Function Load(Filename As String) As Boolean
     Dim Returned_Value As Long
     Dim Must_Destroy As Boolean
 
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
 
     ' Font header
     FileNumber = gzopen(Filename, "rb")
@@ -880,7 +907,7 @@ Public Function Load(Filename As String) As Boolean
     Returned_Value = gzread(FileNumber, t_palette.UnusedBytes(0), 576)
     If Returned_Value = 0 Then GoTo FAILED
 
-    For c = 0 To 255        ' change into fenix format
+    For c = 0 To 255        ' change into bennu format
         palette_entries(c).Red = t_palette.Entries(c).Red * 4
         palette_entries(c).Green = t_palette.Entries(c).Green * 4
         palette_entries(c).Blue = t_palette.Entries(c).Blue * 4
@@ -922,7 +949,7 @@ FAILED:
     gzclose FileNumber
     If Must_Destroy Then Destroy
     Load = False
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError "frmFnt.Load"
 
 End Function

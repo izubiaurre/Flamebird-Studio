@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbaltreeview6.ocx"
+Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbalTreeView6.ocx"
 Begin VB.Form frmRegisterFiletypes 
    BorderStyle     =   4  'Fixed ToolWindow
    ClientHeight    =   3585
@@ -153,7 +153,7 @@ Attribute VB_Exposed = False
 Private Sub Command1_Click()
 If trFiles.Nodes(1).Checked Then
     If Not FileAssociated(".prg", "Bennu/Fenix.Source") Then
-        Call RegisterType(".prg", "Bennu/Fenix.Source", "Text", "Bennu/Fenix source file", App.Path + "\Icons\fenix_prg.ico")
+        Call RegisterType(".prg", "Bennu/Fenix.Source", "Text", "Bennu/Fenix source file", App.Path + "\Icons\Metro black\prg.ico")
     End If
 Else
     If FileAssociated(".prg", "Bennu/Fenix.Source") Then
@@ -163,7 +163,7 @@ End If
 
 If trFiles.Nodes(2).Checked Then
     If Not FileAssociated(".map", "Bennu/Fenix.ImageFile") Then
-        Call RegisterType(".map", "Bennu/Fenix.ImageFile", "Image/Map", "Bennu/Fenix image file", App.Path + "\Icons\fenix_map.ico")
+        Call RegisterType(".map", "Bennu/Fenix.ImageFile", "Image/Map", "Bennu/Fenix image file", App.Path + "\Icons\Metro black\map.ico")
     End If
 Else
     If FileAssociated(".map", "Bennu/Fenix.ImageFile") Then
@@ -173,7 +173,7 @@ End If
 
 If trFiles.Nodes(3).Checked Then
     If Not FileAssociated(".fbp", "FlameBird.Project") Then
-        Call RegisterType(".fbp", "FlameBird.Project", "Text", "FlameBird project", App.Path + "\Icons\fbp.ico")
+        Call RegisterType(".fbp", "FlameBird.Project", "Text", "FlameBird project", App.Path + "\Icons\Metro black\fbp.ico")
     End If
 Else
     If FileAssociated(".fbp", "FlameBird.Project") Then
@@ -183,7 +183,7 @@ End If
 
 If trFiles.Nodes(4).Checked Then
     If Not FileAssociated(".bmk", "FlameBird.Bookmark") Then
-        Call RegisterType(".bmk", "FlameBird.Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\FBMX_bmk.ico")
+        Call RegisterType(".bmk", "FlameBird.Bookmark", "Text", "FlameBird source bookmark files", App.Path + "\Icons\Metro black\bmk.ico")
     End If
 Else
     If FileAssociated(".bmk", "FlameBird.Bookmark") Then
@@ -193,7 +193,7 @@ End If
 
 If trFiles.Nodes(5).Checked Then
     If Not FileAssociated(".cpt", "FlameBird.ControlPoint") Then
-        Call RegisterType(".cpt", "FlameBird.ControlPoint", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\FBMX_cpt.ico")
+        Call RegisterType(".cpt", "FlameBird.ControlPoint", "Image/Map", "Bennu/Fenix image file Control Point lists", App.Path + "\Icons\Metro black\cpt.ico")
     End If
 Else
     If FileAssociated(".cpt", "FlameBird.ControlPoint") Then
@@ -203,7 +203,7 @@ End If
 
 If trFiles.Nodes(6).Checked Then
     If Not FileAssociated(".fpg", "Bennu/Fenix.ImagePackFile") Then
-        Call RegisterType(".fpg", "Bennu/Fenix.ImagePackFile", "Image/Map", "Bennu/Fenix image pack files", App.Path + "\Icons\fenix_fpg.ico")
+        Call RegisterType(".fpg", "Bennu/Fenix.ImagePackFile", "Image/Map", "Bennu/Fenix image pack files", App.Path + "\Icons\Metro black\fpg.ico")
     End If
 Else
     If FileAssociated(".fpg", "Bennu/Fenix.ImagePackFile") Then
@@ -213,7 +213,7 @@ End If
 
 If trFiles.Nodes(7).Checked Then
     If Not FileAssociated(".imp", "Bennu/Fenix.FontFile") Then
-        Call RegisterType(".imp", "Bennu/Fenix.FontFile", "Image/Map", "Bennu/Fenix font files", App.Path + "\Icons\fenix_fnt.ico")
+        Call RegisterType(".imp", "Bennu/Fenix.FontFile", "Image/Map", "Bennu/Fenix font files", App.Path + "\Icons\Metro black\fnt.ico")
     End If
 Else
     If FileAssociated(".imp", "Bennu/Fenix.FontFile") Then
@@ -223,7 +223,7 @@ End If
 
 If trFiles.Nodes(8).Checked Then
     If Not FileAssociated(".fnt", "Bennu.ImportFile") Then
-        Call RegisterType(".fnt", "Bennu.ImportFile", "Image/Map", "Bennu module list files", App.Path + "\Icons\fenix_inc.ico")
+        Call RegisterType(".fnt", "Bennu.ImportFile", "Image/Map", "Bennu module list files", App.Path + "\Icons\Metro black\inc.ico")
     End If
 Else
     If FileAssociated(".fnt", "Bennu.ImportFile") Then
@@ -233,7 +233,7 @@ End If
 
 If trFiles.Nodes(9).Checked Then
     If Not FileAssociated(".pal", "Bennu/Fenix.PaletteFile") Then
-        Call RegisterType(".pal", "Bennu/Fenix.PaletteFile", "Image/Palette", "Bennu/Fenix palette files", App.Path + "\Icons\fenix_inc.ico")
+        Call RegisterType(".pal", "Bennu/Fenix.PaletteFile", "Image/Palette", "Bennu/Fenix palette files", App.Path + "\Icons\Metro black\inc.ico")
     End If
 Else
     If FileAssociated(".pal", "Bennu/Fenix.PaletteFile") Then
@@ -242,7 +242,7 @@ Else
 End If
 
 
-If chkDCB.Value = 1 Then
+If chkDcb.Value = 1 Then
     If FileAssociated(".dcb", "Bennu/Fenix.Bin") Then
         Call DeleteType(".dcb", "Bennu/Fenix.Bin")
     End If
@@ -259,7 +259,7 @@ If chkDCB.Value = 1 Then
         End With
         If FSO.FileExists(Fxi) Then
             Fxi = Chr(34) & Fxi & Chr(34) & " " & Chr(34) & "%1" & Chr(34)
-            Call RegisterType(".dcb", "Bennu/Fenix.Bin", "Binarie", "Bennu/Fenix compiled file", App.Path + "\Icons\dcb.ico", Fxi)
+            Call RegisterType(".dcb", "Bennu/Fenix.Bin", "Binarie", "Bennu/Fenix compiled file", App.Path + "\Icons\Metro black\dcb.ico", Fxi)
         Else
             MsgBox "Can't associate DCB files becose the Fenix path isn't configured!!", vbCritical + vbOKOnly, "FlameBirdMX"
         End If
@@ -297,10 +297,10 @@ Private Sub Form_Load()
         trFiles.Nodes.Add(, , "imp", "IMP/IMPORT - Bennu module list files").Checked = FileAssociated(".imp", "Bennu.ImportFile")
         trFiles.Nodes.Add(, , "pal", "PAL - Bennu/Fenix palette files").Checked = FileAssociated(".pal", "Bennu/Fenix.PaletteFile")
     
-    chkDCB.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
+    chkDcb.Value = Abs(CInt(FileAssociated(".dcb", "Bennu/Fenix.Bin")))
 End Sub
 
-Private Sub Form_Unload(Cancel As Integer)
+Private Sub Form_Unload(cancel As Integer)
     If chkDontAsk.Value = 1 Then
         With Ini
             .Path = App.Path & CONF_FILE

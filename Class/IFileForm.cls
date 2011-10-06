@@ -34,6 +34,7 @@ Public Enum EFileFormConstants
     FF_FPG
     FF_FNT
     FF_IMP
+    FF_LIST
 End Enum
 Public Property Get IsDirty() As Boolean
 End Property

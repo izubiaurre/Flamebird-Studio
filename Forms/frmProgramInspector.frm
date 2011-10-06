@@ -215,7 +215,7 @@ Public Sub findCurProc(lineNum As Long)
     Dim sel As Integer
     Dim node As vbalTreeViewLib6.cTreeViewNode
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
 
     For i = 1 To tv_program.NodeCount
         
@@ -238,7 +238,7 @@ On Error GoTo errhandler
         End If
     Next i
     Exit Sub
-errhandler:
+ErrHandler:
     Exit Sub
 End Sub
 
