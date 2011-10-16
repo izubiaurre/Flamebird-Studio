@@ -1,4 +1,21 @@
 Attribute VB_Name = "mWindowsHook"
+'Flamebird MX
+'Copyright (C) 2003-2007 Flamebird Team
+'Contact:
+'   JaViS:      javisarias@ gmail.com            (JaViS)
+'   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
+'
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the GNU General Public License as published by
+'the Free Software Foundation; either version 2 of the License, or
+'(at your option) any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'GNU General Public License for more details.
+
 Option Explicit
 
 ' ===========================================================================
@@ -38,7 +55,7 @@ End Enum
 'End Type
 
 Public Type Msg '{     /* msg */
-   hWnd As Long     '\\ The window whose Winproc will receive the message
+   Hwnd As Long     '\\ The window whose Winproc will receive the message
    Message As Long  '\\ The message number
    wParam As Long
    lParam As Long
@@ -49,7 +66,7 @@ End Type
 
 Public Type MOUSEHOOKSTRUCT '{ // ms
     pt As POINTAPI
-    hWnd As Long
+    Hwnd As Long
     wHitTestCode As Long
     dwExtraInfo As Long
 End Type
@@ -58,7 +75,7 @@ Public Type CWPSTRUCT
    lParam As Long
    wParam As Long
    Message As Long
-   hWnd As Long
+   Hwnd As Long
 End Type
 
 Public Type CWPRETSTRUCT
@@ -66,7 +83,7 @@ Public Type CWPRETSTRUCT
     lParam As Long
     wParam As Long
     Message As Long
-    hWnd As Long
+    Hwnd As Long
 End Type
 
 Public Const HC_ACTION = 0
@@ -76,7 +93,7 @@ Public Const HC_SKIP = 2
 Public Const HC_SYSMODALOFF = 5
 Public Const HC_SYSMODALON = 4
 
-Declare Function ScreenToClient Lib "user32" (ByVal hWnd As Long, lpPoint As POINTAPI) As Long
+Declare Function ScreenToClient Lib "user32" (ByVal Hwnd As Long, lpPoint As POINTAPI) As Long
 
 ' To Report API errors:
 Private Const FORMAT_MESSAGE_ALLOCATE_BUFFER = &H100

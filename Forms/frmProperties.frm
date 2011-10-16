@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalsgrid6.ocx"
+Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalSGrid6.ocx"
 Object = "{5ABC9E42-2956-4D74-82BD-044D57BB671A}#1.0#0"; "cssplit.ocx"
 Begin VB.Form frmProperties 
    Caption         =   "Properties"
@@ -246,13 +246,13 @@ Option Explicit
 Private Const CLR_FLAT_BUTTON As Long = &HD6C3BC
 Private Const CLR_FLAT_BUTTON_PRESSED As Long = &HB59386
 Private Const MIN_PICDESC_HEIGHT As Integer = 555
-Private Const FORM_SPLIT_DIST As Integer = 100 'Mínima separación entre el form y el splitter
+Private Const FORM_SPLIT_DIST As Integer = 100 ' Min separation between form and splitter
 
 Implements ITDockMoveEvents
 
-Private CurHeight As Integer 'La altura fijada por el usuario
-                             'Para que al aumentar el tamaño del form
-                             'no se sobrepase
+Private CurHeight As Integer ' The height set by the user
+                             ' To that increasing the size of the form
+                             ' is not exceeded
 Private props As cProperties
 Private m_cFlat As cFlatControl
 
@@ -285,30 +285,30 @@ Private Sub Form_Load()
     Set props = New cProperties
     Set m_cFlat = New cFlatControl
 
-    'Establece la apariencia especial del picProperties
+    ' Sets special apparence of picProperties
     Dim PictureStyle As Long
-    PictureStyle = GetWindowLong(PICDESC.Hwnd, GWL_EXSTYLE)
+    PictureStyle = GetWindowLong(picDesc.Hwnd, GWL_EXSTYLE)
     PictureStyle = PictureStyle Or WS_EX_STATICEDGE
-    SetWindowLong PICDESC.Hwnd, GWL_EXSTYLE, PictureStyle
-    PICDESC.Refresh
+    SetWindowLong picDesc.Hwnd, GWL_EXSTYLE, PictureStyle
+    picDesc.Refresh
     
-    'conecta los controles con el splitter
+    ' Conects the controls with the splitter
     CurHeight = 800
     lblPropName.Caption = ""
     lblDesc.Caption = ""
     
     With grdProp
         .AddColumn: .AddColumn
-        .DefaultRowHeight = ScaleY(cboOption.Height, 1, 3) 'La altura ha de ser la del combo,
-                                                           'ya que ésta no se puede modificar
+        .DefaultRowHeight = ScaleY(cboOption.Height, 1, 3) ' The height must be of the combo
+                                                           ' cause this can¡t be modified
         .StretchLastColumnToFit = True
         .Editable = True
-        .RowMode = True 'Selección por filas
+        .RowMode = True     ' Selection by rows
         .HighlightBackColor = QBColor(7)
         .HighlightForeColor = QBColor(0)
     End With
 
-    m_cFlat.OnFocusedRectColor = grdProp.GridLineColor  'Para que quede bien
+    m_cFlat.OnFocusedRectColor = grdProp.GridLineColor  ' To be ok
     
     RefreshGrid
 End Sub
@@ -317,14 +317,14 @@ Private Sub RefreshGrid()
     Dim Prop As Variant
     Dim cnt As Integer
     cnt = 1
-    grdProp.Clear False 'Borramos las filas
-    For Each Prop In props 'para cada propiedad en la colección
+    grdProp.Clear False     ' Delete the rows
+    For Each Prop In props  ' For each property in the collection
         With grdProp
             .AddRow
             .CellText(cnt, 1) = Prop.name
             If Prop.TypeOfProp <> ptCombo Then
                 .CellText(cnt, 2) = Prop.Value
-            Else ' Si es un combo, value señala al ínidice, no al texto
+            Else ' If it's a combo, value points to index, not to the text
                 .CellText(cnt, 2) = Prop.OptionItem(Prop.Value)
             End If
             cnt = cnt + 1
@@ -366,24 +366,24 @@ Private Sub grdProp_PreCancelEdit(ByVal lRow As Long, ByVal lCol As Long, newVal
     Select Case .TypeOfProp
     Case ptCombo
         newValue = CInt(cboOption.ListIndex)
-        'Llamamos a la función CallBack, pasándole el nuevo índice y el texto asociado
+        ' We call the function callback, giving the new index and the associated text
         If (CallByName(.CallingObject, .CallBackFunction, VbMethod, newValue)) Then   ', .OptionItem(newValue))
             grdProp.CellText(lRow, lCol) = .OptionItem(newValue)
             .Value = newValue
         End If
     Case ptLink
-        'Este tipo de propiedad no hace nada, el trabajo es gestionado
-        'Por la función enlazada a la proiedad.
+        ' This proptery-type makes nothing, the work is managed
+        ' by the function linked to the property
         Call CallByName(.CallingObject, .CallBackFunction, VbMethod, newValue)
     Case Else
-        If .CanBeEmpty = False And Len(txtEditBox) = 0 Then 'Texto=""
+        If .CanBeEmpty = False And Len(txtEditBox) = 0 Then 'Text=""
             MsgBox "'" & .name & "' can't be empty", vbCritical
             GoTo canceledit
         ElseIf .CanBeEmpty = True Or Len(txtEditBox) <> 0 Then
-            'Validación de los datos
-            If .TypeOfProp = ptNumeric Or .TypeOfProp = ptInteger Then 'Es número
+            ' Data validation
+            If .TypeOfProp = ptNumeric Or .TypeOfProp = ptInteger Then ' It's number
                 If IsNumeric(txtEditBox) Then
-                    'Valores límites
+                    ' Limit values
                     If .IsLimited Then
                         If txtEditBox > .max Or txtEditBox < .min Then
                             MsgBox "'" & .name & "' must be between '" & .min & "' and '" & .max & "'", vbCritical
@@ -397,8 +397,8 @@ Private Sub grdProp_PreCancelEdit(ByVal lRow As Long, ByVal lCol As Long, newVal
             End If
         End If
         newValue = txtEditBox
-        If .TypeOfProp = ptInteger And newValue <> "" Then newValue = CInt(txtEditBox) 'Si es entero, lo convierte
-        'llamamos a la función callback, pasándole el nuevo valor
+        If .TypeOfProp = ptInteger And newValue <> "" Then newValue = CInt(txtEditBox) ' If it is integer, converts it
+        ' Call function callback, giving the new value
         If CallByName(.CallingObject, .CallBackFunction, VbMethod, newValue) Then
             grdProp.CellText(lRow, lCol) = newValue
             .Value = newValue
@@ -416,17 +416,17 @@ End Sub
 
 Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iKeyAscii As Integer, bCancel As Boolean)
     
-    If props(lRow).Editable = False Or lCol <> 2 Then bCancel = True: Exit Sub 'No se puede editar
+    If props(lRow).Editable = False Or lCol <> 2 Then bCancel = True: Exit Sub ' Can't be edited
 
-    'Obtiene el tamaño de la celda
+    ' gets the cell size
     Dim lLeft As Long, lTop As Long, lWidth As Long, lHeight As Long
     grdProp.CellBoundary lRow, lCol, lLeft, lTop, lWidth, lHeight
     
     Select Case props(lRow).TypeOfProp
     Case ptCombo 'Combo
-        m_cFlat.Attach cboOption 'Estilo flat
+        m_cFlat.Attach cboOption ' Flat style
         With cboOption
-            ' Establece el color de fondo para el combobox
+            ' Set background color for the combobox
             Set .font = grdProp.CellFont(lRow, lCol)
             If grdProp.CellBackColor(lRow, lCol) = -1 Then
                 .BackColor = grdProp.BackColor
@@ -434,10 +434,10 @@ Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iK
                 .BackColor = grdProp.CellBackColor(lRow, lCol)
             End If
         
-            'Posiciona el combo
+            ' Position of the combo
             .Move lLeft + grdProp.Left - 10, lTop + grdProp.Top + Screen.TwipsPerPixelY, lWidth
         
-            'lo rellena, lo muestra y le pasa el foco
+            ' fills it, shows and gets the focus
             Dim opt As Variant
             .Clear
             For Each opt In props(lRow)
@@ -450,7 +450,7 @@ Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iK
     
     Case ptLink
         With cmdLink
-            'posiciona el botón
+            ' Button position
             lblCaption = props(lRow).Value
             .Move lLeft + grdProp.Left, lTop + grdProp.Top + Screen.TwipsPerPixelY + 8, lWidth - 10, lHeight - 30
             .Visible = True
@@ -458,14 +458,14 @@ Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iK
         
     Case Else 'ptText, ptInteger y ptNumeric
         With txtEditBox
-            'Si es tipo texto, y tiene limitación de caracteres, limitamos el textbox
+            ' if it is text type, and has char limits, limit the textbox
             If props(lRow).TypeOfProp = ptText And props(lRow).IsLimited = True Then
                 .MaxLength = props(lRow).max
             Else
                 .MaxLength = 0
             End If
             
-            ' Establece el color de fondo para el textbox y su contendeor
+            ' Set background color for the textbox and its container
             Set .font = grdProp.CellFont(lRow, lCol)
             If grdProp.CellBackColor(lRow, lCol) = -1 Then
                 .BackColor = grdProp.BackColor
@@ -475,25 +475,25 @@ Private Sub grdProp_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iK
                 picEditBox.BackColor = .BackColor
             End If
             
-            'Posiciona el textbox (su contenedor)
+            ' Set textbox position (its container)
             picEditBox.Move lLeft + grdProp.Left, lTop + grdProp.Top + Screen.TwipsPerPixelY + 8, lWidth - 10, lHeight - 30
             
-            'lo muestra, lo rellena, le da el foco y selecciona el texto
+            ' Shows it, fills it, focuses it and selectes the text
             picEditBox.Visible = True
             picEditBox.ZOrder
-            .text = props(lRow).Value 'texto inicial
+            .text = props(lRow).Value ' Initial text
             .SetFocus
             .SelStart = 0
             .SelLength = Len(.text)
         End With
     End Select
     
-    'si se ha presionado alguna tecla, la enviamos
+    ' If is a key pressed, we send it
     If iKeyAscii <> 0 Then SendKeys (Chr(iKeyAscii))
 End Sub
 
 Private Sub grdProp_SelectionChange(ByVal lRow As Long, ByVal lCol As Long)
-    'Pone la descripción
+    ' put the description
     lblPropName.Caption = props(lRow).name
     lblDesc.Caption = props(lRow).description
 End Sub
@@ -502,37 +502,37 @@ Private Sub HSplitter_EndMoving()
     Dim ITop As Long, FTop As Long, IHeight As Long, FHeight As Long
     
     FHeight = HSplitter.Top - grdProp.Top
-    If FHeight < 0 Then 'Hemos subido mucho el splitter
+    If FHeight < 0 Then ' We have move up too much the splitter
         HSplitter.Top = grdProp.Top + FORM_SPLIT_DIST
         HSplitter_EndMoving
         Exit Sub
     End If
     grdProp.Height = FHeight
 
-    ITop = PICDESC.Top
-    IHeight = PICDESC.Height
+    ITop = picDesc.Top
+    IHeight = picDesc.Height
     FTop = HSplitter.Top + HSplitter.Height
     FHeight = (ITop - FTop) + IHeight
-    If FHeight < MIN_PICDESC_HEIGHT Then 'hemos bajado demasiado el splitter
+    If FHeight < MIN_PICDESC_HEIGHT Then ' We have move down too much the splitter
         HSplitter.Top = (ITop - HSplitter.Height) + IHeight - MIN_PICDESC_HEIGHT
         HSplitter_EndMoving
         Exit Sub
     End If
-    PICDESC.Top = FTop
-    PICDESC.Height = FHeight
+    picDesc.Top = FTop
+    picDesc.Height = FHeight
     CurHeight = FHeight
 End Sub
 
 Private Sub lblLink_Click()
-    grdProp.canceledit  'Cancelamos la edición
-    'Función callback
+    grdProp.canceledit  ' Cancel the edition
+    'Function callback
     CallByName props(grdProp.SelectedRow).CallingObject, props(grdProp.SelectedRow).CallBackFunction, VbMethod
 End Sub
 
 Private Sub picDesc_Resize()
-    'Ajusta el tamaño del lblDescription
-    lblDesc.Width = PICDESC.ScaleWidth - lblDesc.Left - 10
-    lblDesc.Height = PICDESC.ScaleHeight - lblDesc.Top
+    ' Fixes lblDescription size
+    lblDesc.Width = picDesc.ScaleWidth - lblDesc.Left - 10
+    lblDesc.Height = picDesc.ScaleHeight - lblDesc.Top
 End Sub
 
 Private Sub picEditBox_Resize()
@@ -554,7 +554,7 @@ End Sub
 Private Sub cmdLink_Resize()
     With cmdLink
         Dim h As Long
-        h = .Height '- 20 'Altura del botón
+        h = .Height '- 20 ' button height
         picLink.Move .Width - h, (.Height - h) / 2, h, h
         lblCaption.Move 65, (.Height - lblCaption.Height) / 2 - 25
     End With
@@ -566,15 +566,15 @@ End Function
 
 Private Function ITDockMoveEvents_Move(Left As Integer, Top As Integer, Bottom As Integer, Right As Integer)
 On Error Resume Next
-    'Si el formulario es muy pequeño, no resizeamos los controles (para que
-    'picDesc no quede por debajo de su tamaño mínimo;
+    ' If the form is very little, don't resize the controls
+    ' (picDesc can't be smaller than than its minimun size)
     If (Bottom - Top) < (MIN_PICDESC_HEIGHT + FORM_SPLIT_DIST) Then
-        PICDESC.Left = Left: PICDESC.Width = Right: grdProp.Left = Left
+        picDesc.Left = Left: picDesc.Width = Right: grdProp.Left = Left
         grdProp.Width = Right: HSplitter.Left = Left: HSplitter.Width = Width
     Else
         If (Bottom - Top) < CurHeight Then CurHeight = Bottom - Top - FORM_SPLIT_DIST
-        PICDESC.Move Left, Bottom - CurHeight + Top, Right, CurHeight
-        HSplitter.Move Left, PICDESC.Top - HSplitter.Height, Right
+        picDesc.Move Left, Bottom - CurHeight + Top, Right, CurHeight
+        HSplitter.Move Left, picDesc.Top - HSplitter.Height, Right
         grdProp.Move Left, Top, Right, HSplitter.Top
     End If
 End Function

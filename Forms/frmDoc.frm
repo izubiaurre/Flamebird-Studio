@@ -118,8 +118,8 @@ Public mustRefresh As Boolean
 Dim showingList As CodeSenseCtl.ICodeList ' intellisense list
 Dim showingToolTip As CodeSenseCtl.ICodeTip
 
-Dim codeListType As Boolean
-Dim argID As String
+Dim argID As String             ' Id of the parameter, the name
+Dim codeListType As Boolean     ' Show codelist type: function, vars, process, ... list or param const list, global var const values, ...
 
 Private WithEvents m_ContextMenu As cMenus
 Attribute m_ContextMenu.VB_VarHelpID = -1
@@ -135,8 +135,8 @@ Private numLines As Long
 
 
 Private m_FilePath As String
-Private m_IsDirty As Boolean 'This should be never set directly (use the IsDirty property)
-Private m_Title As String 'Basicaly the caption of the form
+Private m_IsDirty As Boolean    'This should be never set directly (use the IsDirty property)
+Private m_Title As String       'Basicly the caption of the form
 Private m_addToProject As Boolean
 
 Implements IFileForm
@@ -177,11 +177,14 @@ Private Sub Cs_Change(ByVal Control As CodeSenseCtl.ICodeSense)
     If cs.CurrentWordLength >= IS_Sensitive Then
         Cs_CodeList Control, showingList
         Control.ExecuteCmd cmCmdCodeList
-    Else
-        If Not showingList Is Nothing Then
-            Cs_CodeList Control, showingList
-            Control.ExecuteCmd cmCmdCodeList
-        End If
+'    Else
+'        'If Not showingList Is Nothing Then
+'        If Not showingToolTip Is Nothing Then
+'        ' show the cmbParam
+'        fillParamCmb
+''            Cs_CodeList Control, showingList
+''            Control.ExecuteCmd cmCmdCodeList
+'        End If
     End If
     
 End Sub
@@ -194,6 +197,7 @@ End Function
 Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList) As Boolean
     Dim i As Long
     Dim token As CodeSenseCtl.cmTokenType
+    Dim curWord As String
 
     ' We don't want to display a tip inside quoted or commented-out lines...
     token = Control.CurrentToken
@@ -206,157 +210,149 @@ Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Lis
         Exit Function
     End If
     
-    If codeListType Then     ' standard codeList (Func, procs, vars...)
-        If IS_Sensitive > Control.CurrentWordLength Then
-            ListCtrl.Destroy
-            Cs_CodeList = False
-            Exit Function
-        End If
-     
-        ListCtrl.hImageList = frmProgramInspector.programImageList.hIml
-        
-        ' empty the list
-    '    If ListCtrl.ItemCount > 0 Then
-    '        For i = 0 To ListCtrl.ItemCount
-    '            ListCtrl.DeleteItem (i)
-    '        Next
-    '    End If
-        While ListCtrl.ItemCount > 0
-            ListCtrl.DeleteItem (0)
-        Wend
-        
-        ' adds func/proc/vars/const... to the autocomplete list
-        If IS_LangDefFunc Then
-            For i = 1 To UBound(functionList)
-                If Left(functionList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem functionList(i), 18 - 1, 1
-                End If
-            Next i
-        End If
-            
-        If IS_UserDefFunc Then
-            For i = 1 To UBound(userFunctionList)
-                If Left(userFunctionList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem userFunctionList(i), 9 - 1, 1
-                End If
-            Next i
-        End If
-            
-        If IS_LangDefConst Then
-            For i = 1 To UBound(constList)
-                If Left(constList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem constList(i), 11 - 1, 2
-                End If
-            Next i
-        End If
-            
-        If IS_LangDefVar Then
-            For i = 1 To UBound(globalList)
-                If Left(globalList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem globalList(i), 12 - 1, 2
-                End If
-            Next i
-            
-            For i = 1 To UBound(localList)
-                If Left(localList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem localList(i), 13 - 1, 2
-                End If
-            Next i
-                
-            For i = 1 To UBound(globalStructList)
-                If Left(globalStructList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem globalStructList(i), 16 - 1, 2
-                End If
-            Next i
-            
-        '    For i = 1 To UBound(localStructList)
-        '        ListCtrl.AddItem constList(i), 4, 2
-        '    Next i
-        End If
-            
-        If IS_UserDefVar Then
-            For i = 1 To UBound(varList)
-                If Left(varList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem varList(i), 2 - 1, 2
-                End If
-            Next i
-        End If
-        
-        If IS_UserDefConst Then
-            For i = 1 To UBound(userConstList)
-                If Left(userConstList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                    ListCtrl.AddItem userConstList(i), 1 - 1, 2
-                End If
-            Next i
-        End If
-        
-        For i = 1 To UBound(userTypeList)
-            If Left(userTypeList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                ListCtrl.AddItem userTypeList(i), 8 - 1, 2
-            End If
-        Next i
-        
-        For i = 1 To UBound(typeList)
-            If Left(typeList(i), Len(Control.CurrentWord)) = Control.CurrentWord Then
-                ListCtrl.AddItem typeList(i), 17 - 1, 2
-            End If
-        Next i
-        
-        Dim wordIndex As Long
+    curWord = LCase(Control.CurrentWord)
     
-        wordIndex = ListCtrl.FindString(cs.CurrentWord)
-        ' if doesn't match the word, destroyes it
-        If wordIndex = -1 Then
-            ListCtrl.Destroy
-            Cs_CodeList = False
-            Exit Function
-        End If
-        
-    Else        ' it's a function/process param
-        Dim num As Integer
+    If IS_Sensitive > Len(curWord) Then
+        ListCtrl.Destroy
+        Cs_CodeList = False
+        Exit Function
+    End If
+ 
+    ListCtrl.hImageList = frmProgramInspector.programImageList.hIml
+    
+    ' empty the list
+    While ListCtrl.ItemCount > 0
+        ListCtrl.DeleteItem (0)
+    Wend
+    
 
-        While ListCtrl.ItemCount > 0
-            ListCtrl.DeleteItem (0)
-        Wend
-           
-        With Ini
-            .Path = App.Path & "/Help/constants.lan"
-            .Section = argID
-            
-            .Key = "QOfConsts"
-            .Default = "0"
-            num = CInt(.Value)
-            
-            If num > 0 Then
-                                  
-                i = 1
-                While i <= num
-                    If i = 1 Then
-                        
-                        .Key = "Const"
-                    Else
-                        .Key = "Const" & i
-                    End If
-                    Debug.Print argID & "-" & i & " of " & num & ":" & .Value
-                    ListCtrl.AddItem .Value
-                    i = i + 1
-                Wend
-            End If
-        End With
     
+    If codeListType Then
+         ' adds func/proc/vars/const... to the autocomplete list
+         If Not inDeclarationZone(rangoActual.StartLineNo + 1) Then
+         ' in declaration zone, functions, vars are forbidden
+             If IS_LangDefFunc Then
+                 For i = 1 To UBound(functionList)
+                     If LCase(Left(functionList(i), Len(curWord))) = curWord Then
+                         ListCtrl.AddItem functionList(i), 18 - 1, 1
+                     End If
+                 Next i
+             End If
+                 
+             If IS_UserDefFunc Then
+                 For i = 1 To UBound(userFunctionList)
+                     If LCase(Left(userFunctionList(i), Len(curWord))) = curWord Then
+                         ListCtrl.AddItem userFunctionList(i), 9 - 1, 1
+                     End If
+                 Next i
+             End If
+                 
+             If IS_LangDefVar Then
+                 For i = 1 To UBound(globalList)
+                     If LCase(Left(globalList(i), Len(curWord))) = curWord Then
+                         ListCtrl.AddItem globalList(i), 12 - 1, 2
+                     End If
+                 Next i
+                 
+                 For i = 1 To UBound(localList)
+                     If LCase(Left(localList(i), Len(curWord))) = curWord Then
+                         ListCtrl.AddItem localList(i), 13 - 1, 2
+                     End If
+                 Next i
+                     
+                 For i = 1 To UBound(globalStructList)
+                     If LCase(Left(globalStructList(i), Len(curWord))) = curWord Then
+                         ListCtrl.AddItem globalStructList(i), 16 - 1, 2
+                     End If
+                 Next i
+                 
+             '    For i = 1 To UBound(localStructList)
+             '        ListCtrl.AddItem constList(i), 4, 2
+             '    Next i
+             End If
+             
+             If IS_UserDefVar Then
+                 For i = 1 To UBound(varList)
+                     If LCase(Left(varList(i), Len(curWord))) = curWord Then
+                         ListCtrl.AddItem varList(i), 2 - 1, 2
+                     End If
+                 Next i
+             End If
+         End If
+         
+         If IS_LangDefConst Then
+             For i = 1 To UBound(constList)
+                 If LCase(Left(constList(i), Len(curWord))) = curWord Then
+                     ListCtrl.AddItem constList(i), 11 - 1, 2
+                 End If
+             Next i
+         End If
+        
+         If IS_UserDefConst Then
+             For i = 1 To UBound(userConstList)
+                 If LCase(Left(userConstList(i), Len(curWord))) = curWord Then
+                     ListCtrl.AddItem userConstList(i), 1 - 1, 2
+                 End If
+             Next i
+         End If
+         
+         If Not inConstDeclarationZone(rangoActual.StartLineNo + 1) And inDeclarationZone(rangoActual.StartLineNo + 1) Then
+         ' In const declaration zone and out of declaration zone, types are forbidden
+             For i = 1 To UBound(userTypeList)   ' user defined types,
+                 If LCase(Left(userTypeList(i), Len(curWord))) = curWord Then
+                     ListCtrl.AddItem userTypeList(i), 8 - 1, 2
+                 End If
+             Next i
+             
+             For i = 1 To UBound(typeList)   ' int, word, dword, byte, string, ...
+                 If LCase(Left(typeList(i), Len(curWord))) = curWord Then
+                     ListCtrl.AddItem typeList(i), 17 - 1, 2
+                 End If
+             Next i
+         End If
+    Else
+        ' param const list
+            
+            Dim num As Integer
+               
+            With Ini
+                .Path = App.Path & "/Help/constants.lan"
+                .Section = argID
+                
+                .Key = "QOfConsts"
+                .Default = "0"
+                num = CInt(.Value)
+                
+                If num > 0 Then
+                                      
+                    i = 1
+                    While i <= num
+                        If i = 1 Then
+                            .Key = "Const"
+                        Else
+                            .Key = "Const" & i
+                        End If
+                        'Debug.Print argID & "-" & i & " of " & num & ":" & .Value
+                        ListCtrl.AddItem .Value
+                        i = i + 1
+                    Wend
+                End If
+            End With
     End If
     
-'    Dim wordIndex As Long
-'
-'    wordIndex = ListCtrl.FindString(cs.CurrentWord)
-'    ' if doesn't match the word, destroyes it
-'    If wordIndex = -1 Then
-'        ListCtrl.Destroy
-'        codeListType = True
-'        Cs_CodeList = False
-'        Exit Function
-'    End If
     
+    Dim wordIndex As Long
+
+    wordIndex = ListCtrl.FindString(cs.CurrentWord)
+    
+    ' if doesn't match the word, destroyes it
+    If wordIndex = -1 Then
+        ListCtrl.Destroy
+        Cs_CodeList = False
+        Exit Function
+    End If
+        
+   
     ' Just for kicks, we'll select the first item by default...
     ListCtrl.SelectedItem = wordIndex
     
@@ -374,7 +370,6 @@ Private Function Cs_CodeList(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Lis
 End Function
 
 Private Function Cs_CodeListCancel(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList) As Boolean
-    codeListType = True
     Set showingList = Nothing
 End Function
 
@@ -390,6 +385,7 @@ End Sub
 Private Function Cs_CodeListSelMade(ByVal Control As CodeSenseCtl.ICodeSense, ByVal ListCtrl As CodeSenseCtl.ICodeList) As Boolean
     Dim strItem As String
     Dim range As New CodeSenseCtl.range
+    Dim isFunc As Boolean
 
     ' Determine which item was selected in the list
     strItem = ListCtrl.GetItemText(ListCtrl.SelectedItem)
@@ -410,22 +406,22 @@ Private Function Cs_CodeListSelMade(ByVal Control As CodeSenseCtl.ICodeSense, By
     
     cs.SetSel range, False
     
-    ' Replace current selection
-    If codeListType Then
+    isFunc = isReservedFunction(strItem)
+        
+    If isFunc Then ' Replace current selection
+        cs.ReplaceSel (strItem & "(")
+    ElseIf isUserDefinedFunction(strItem) Then
         cs.ReplaceSel (strItem & "(")
     Else
         cs.ReplaceSel (strItem)
     End If
-    
+
     ' Get new selection
     Set range = cs.GetSel(True)
 
     ' Update range to end of newly inserted text
-    If codeListType Then
-        range.StartColNo = range.StartColNo + Len(strItem) + 1
-    Else
-        range.StartColNo = range.StartColNo + Len(strItem)
-    End If
+    range.StartColNo = range.StartColNo + Len(strItem) + IIf(isFunc Or isUserDefinedFunction(strItem), 1, 0)  ' if it's a function the add another position
+        
     range.EndColNo = range.StartColNo
     range.EndLineNo = range.StartLineNo
 
@@ -433,11 +429,14 @@ Private Function Cs_CodeListSelMade(ByVal Control As CodeSenseCtl.ICodeSense, By
     cs.SetSel range, True
     
     Set showingList = Nothing
-
+    
+    '#TODO: only call this if the strItm was function, or a process
     showToolTip strItem
     
     ' Don't prevent list view control from being hidden
     Cs_CodeListSelMade = False
+    
+    codeListType = True
     
 End Function
 
@@ -511,6 +510,7 @@ Private Sub Cs_CodeTipInitialize(ByVal Control As CodeSenseCtl.ICodeSense, ByVal
     
     tip.font.name = "Segoe UI"
     'tip.font.Size = 10
+    
     
 End Sub
 
@@ -590,9 +590,8 @@ Private Sub Cs_CodeTipUpdate(ByVal Control As CodeSenseCtl.ICodeSense, ByVal Too
                 
             argID = LCase(getParamName(iArg, tip.TipText))
             
-            codeListType = False
-            
             modMenuActions.mnuEditCodeCompletionHelp
+            'fillParamCmb
         End If
 
     End If
@@ -692,14 +691,14 @@ End Function
     ' -1 if it hasn't found
     ' if it returns 0, something  has gone wrong
 '************************************************************************
-Private Function indexOnVarList(word As String)
+Private Function indexOnVarList(Word As String)
     Dim wordIndex As Long
     Dim i As Long
             
         wordIndex = -1
         
         For i = 1 To UBound(varList)
-            If InStr(LCase(varList(i)), LCase(word)) > 0 Then
+            If InStr(LCase(varList(i)), LCase(Word)) > 0 Then
                 wordIndex = i
                 Exit For
             End If
@@ -714,14 +713,14 @@ End Function
     ' -1 if it hasn't found
     ' if it returns 0, something  has gone wrong
 '************************************************************************
-Private Function indexOnFunctionList(word As String)
+Private Function indexOnFunctionList(Word As String)
 Dim wordIndex As Long
 Dim i As Long
         
     wordIndex = -1
     
     For i = 1 To UBound(functionList)
-        If InStr(LCase(functionList(i)), LCase(word)) > 0 Then
+        If InStr(LCase(functionList(i)), LCase(Word)) > 0 Then
             wordIndex = i
             Exit For
         End If
@@ -795,6 +794,8 @@ Private Function cs_KeyDown(ByVal Control As CodeSenseCtl.ICodeSense, ByVal KeyC
 End Function
 
 Private Function Cs_KeyPress(ByVal Control As CodeSenseCtl.ICodeSense, ByVal KeyAscii As Long, ByVal Shift As Long) As Boolean
+Dim linea As String
+
 On Error Resume Next
     
     Dim i As Integer
@@ -833,11 +834,11 @@ On Error Resume Next
             
         End If
         
-        Dim funcion As String
+        Dim func As String
 
         ' code to show the list
         If (Asc("(") = KeyAscii) Then
-            Dim linea As String
+            'Dim linea As String
             ' get the line of the cursor
             linea = Trim(cs.getLine(rangoActual.EndLineNo))
             ' cut where is the cursor
@@ -857,32 +858,139 @@ On Error Resume Next
             linea = replace(linea, vbBack, " ")
             linea = replace(linea, vbFormFeed, " ")
             linea = replace(linea, vbVerticalTab, " ")
-            
+
             showToolTip getWordRev(linea)
         End If
         
+        If (Asc("=") = KeyAscii) Then
+'             'Dim linea As String
+'
+'            ' get the line of the cursor
+'            linea = Trim(cs.getLine(rangoActual.EndLineNo))
+'            ' cut where is the cursor
+'            linea = Mid(linea, 1, rangoActual.StartColNo)
+'
+'            '*******************************************
+'            '*********** Line clearing *****************
+'            '*******************************************
+'
+'            ' replaces the not visible chars with spaces
+'            linea = replace(linea, Chr(9), " ")
+'            linea = replace(linea, vbNewLine, " ")
+'            linea = replace(linea, vbCrLf, " ")
+'            linea = replace(linea, vbCr, " ")
+'            linea = replace(linea, vbLf, " ")
+'            linea = replace(linea, vbNullChar, " ")
+'            linea = replace(linea, vbBack, " ")
+'            linea = replace(linea, vbFormFeed, " ")
+'            linea = replace(linea, vbVerticalTab, " ")
+            
+            argID = getLine
+            
+            codeListType = False
+            
+            cs.ExecuteCmd cmCmdCodeList
+            
+        End If
         
-    Else
-        ' shows the tooltip when it's pressed "," and it was no tooltip
-        If (Asc(",") = KeyAscii) Then
-            funcion = getCurrentFunction
-            If funcion <> "" Then
-                showToolTip funcion
+        If Not (cmTokenTypeSingleLineComment = token) And Not (cmTokenTypeMultiLineComment = token) Then
+            ' shows the tooltip when it's pressed ","
+            If (Asc(",") = KeyAscii) Then
+                func = getCurrentFunction
+                If func <> "" Then
+                    showToolTip func
+                End If
+            End If
+        End If
+            
+    Else    ' It's necessary of both cases
+        If Not (cmTokenTypeSingleLineComment = token) And Not (cmTokenTypeMultiLineComment = token) Then
+            
+            ' shows the tooltip when it's pressed "," and it was no tooltip
+            If (Asc(",") = KeyAscii) Then
+                func = getCurrentFunction
+                If func <> "" Then
+                    showToolTip func
+                End If
+            End If
+            
+            '#TODO:
+            ' show global variable's const list
+            If (Asc("=") = KeyAscii) Then
+'                 'Dim linea As String
+'                ' get the line of the cursor
+'                linea = Trim(cs.getLine(rangoActual.EndLineNo))
+'                ' cut where is the cursor
+'                linea = Mid(linea, 1, rangoActual.StartColNo)
+'
+'                '*******************************************
+'                '*********** Line clearing *****************
+'                '*******************************************
+'
+'                ' replaces the not visible chars with spaces
+'                linea = replace(linea, Chr(9), " ")
+'                linea = replace(linea, vbNewLine, " ")
+'                linea = replace(linea, vbCrLf, " ")
+'                linea = replace(linea, vbCr, " ")
+'                linea = replace(linea, vbLf, " ")
+'                linea = replace(linea, vbNullChar, " ")
+'                linea = replace(linea, vbBack, " ")
+'                linea = replace(linea, vbFormFeed, " ")
+'                linea = replace(linea, vbVerticalTab, " ")
+                
+                argID = getLine
+                
+                codeListType = False
+                
+                cs.ExecuteCmd cmCmdCodeList
+
+            End If
+            
+            '#TODO:
+            ' maybe a little control if the sentence is well writen?
+            If (Asc(";") = KeyAscii) Then
+            
             End If
         End If
     End If
 End Function
+' returns the current line
+Private Function getLine() As String
+Dim linea As String
+            
+            'pos.StartLineNo
+            linea = cs.getLine(rangoActual.StartLineNo)
+            
+            linea = clearLine(linea)
+            
+            Debug.Print "getLine" & linea
+            
+            linea = Trim(linea)
+            
+            ' if it's a composited sentence
+            If InStrRev(linea, ";") <> 0 Then
+                linea = Right$(linea, Len(linea) - InStr(linea, ";"))
+            End If
+            
+            linea = Trim(linea)
+            
+            Debug.Print "getLine(;)" & linea
+            
+            getLine = linea
+End Function
+
+
 
 ' shows the parameter tooltip
-Private Sub showToolTip(word As String)
+Private Sub showToolTip(Word As String)
     Dim prototipo() As String
     Dim howMany As Long
     Dim i As Integer
     
-    If indexOnFunctionList(word) > 0 And indexOnFunctionList(word) <= iFunctionCount Then
+    If indexOnFunctionList(Word) > 0 And indexOnFunctionList(Word) <= iFunctionCount Then
         With Ini
             .Path = App.Path & "/Help/functions.lan"
-            .Section = word
+            .Section = Word
             
             .Key = "QOfPrototipes"
             .Default = "0"
@@ -918,9 +1026,9 @@ Private Sub showToolTip(word As String)
     End If
     
     ' is inside of the list but declared by the user
-    If indexOnFunctionList(word) > iFunctionCount Then
+    If indexOnFunctionList(Word) > iFunctionCount Then
         ReDim nextTipText(1) As String
-        nextTipText(1) = word & " (" & parameters(indexOnFunctionList(word) - iFunctionCount) & ")"
+        nextTipText(1) = Word & " (" & parameters(indexOnFunctionList(Word) - iFunctionCount) & ")"
         Me.cs.ExecuteCmd cmCmdCodeTip
     End If
 End Sub
@@ -1134,8 +1242,6 @@ Private Sub Form_Activate()
 '        mustRefresh = True
 '    End If
 
-    codeListType = True
-
     ' If this is very slow, try copy/pasting this part in IFileForm.Load
     mustRefresh = True
     MakeProgramIndex IFileForm_FilePath
@@ -1144,6 +1250,8 @@ Private Sub Form_Activate()
     cs.EnableColumnSel = False
     'ReDim Preserve bookmarkList(1)
     enableDisableBookmarks
+    
+    codeListType = True
    
 End Sub
 
@@ -1183,14 +1291,14 @@ Private Sub Form_Load()
     End With
     
     'Create the rebar
-    With rebar
+    With ReBar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd tbrSource.Hwnd, , True, False
     End With
-    rebar.RebarSize
+    ReBar.RebarSize
     
     ' configure the edition control
     cs.LineNumbering = True
@@ -1242,10 +1350,10 @@ End Sub
 
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
-        rebar.RebarSize
-        cs.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
+        ReBar.RebarSize
+        cs.Move 0, ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
         cs.Width = Me.ScaleWidth
-        cs.Height = Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
+        cs.Height = Me.ScaleHeight - ScaleY(ReBar.RebarHeight, vbPixels, vbTwips)
     End If
 End Sub
     
@@ -1299,7 +1407,7 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
     m_FilePath = sFile
     IsDirty = False
        
-       
+    ' prepare the bookmarks from file
     sFileBMK = Left(sFile, Len(sFile) - 3) & "bmk"
     ReDim bookmarkList(1)
     ReDim codePos(1)
@@ -1316,10 +1424,13 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
             bookmarkList(i + 1).name = str
             cs.SetBookmark bookmarkList(i + 1).line_number - 1, True
             i = i + 1
+            cmbBookmarkList.Enabled = True
         Wend
         A.Close
         
         refreshBookmarkList
+    Else
+        cmbBookmarkList.Enabled = False
     End If
     
     

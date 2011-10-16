@@ -43,6 +43,15 @@ Begin VB.Form frmPreferences
          Appearance      =   0  'Flat
          BackColor       =   &H00333333&
          BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Droid Sans Mono"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00BDBDBD&
          Height          =   3975
          Left            =   120
@@ -372,16 +381,10 @@ Begin VB.Form frmPreferences
       Top             =   12660
       Width           =   5595
       Begin VB.CheckBox chkPIOnlyLocalHeader 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Only locals header"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   315
          Left            =   3060
          TabIndex        =   88
@@ -389,16 +392,10 @@ Begin VB.Form frmPreferences
          Width           =   2295
       End
       Begin VB.CheckBox chkPIOnlyConsHeader 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Only constant header"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   315
          Left            =   3060
          TabIndex        =   86
@@ -406,16 +403,10 @@ Begin VB.Form frmPreferences
          Width           =   2175
       End
       Begin VB.CheckBox chkPIShowPrivates 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Show Privates"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   300
          TabIndex        =   85
@@ -423,16 +414,10 @@ Begin VB.Form frmPreferences
          Width           =   2235
       End
       Begin VB.CheckBox chkPILocals 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Show Locals"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   300
          TabIndex        =   84
@@ -440,16 +425,10 @@ Begin VB.Form frmPreferences
          Width           =   2235
       End
       Begin VB.CheckBox chkPIShowGlobals 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Show Globals"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   315
          Left            =   300
          TabIndex        =   83
@@ -457,16 +436,10 @@ Begin VB.Form frmPreferences
          Width           =   2235
       End
       Begin VB.CheckBox chkPIShowCons 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Show Constants"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   315
          Left            =   300
          TabIndex        =   82
@@ -474,16 +447,10 @@ Begin VB.Form frmPreferences
          Width           =   2115
       End
       Begin VB.CheckBox chkPIOnlyGlobalHeader 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Only global header"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   315
          Left            =   3060
          TabIndex        =   87
@@ -541,7 +508,7 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   4380
+         Left            =   4440
          MaxLength       =   1
          TabIndex        =   79
          Top             =   270
@@ -549,31 +516,16 @@ Begin VB.Form frmPreferences
       End
       Begin VB.Frame fraIntelliSenseFilter 
          Caption         =   "Filter"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   2355
          Left            =   120
          TabIndex        =   69
          Top             =   660
          Width           =   5055
          Begin VB.CheckBox chkISUserProcs 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Processes"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3540
             TabIndex        =   76
@@ -581,16 +533,10 @@ Begin VB.Form frmPreferences
             Width           =   1215
          End
          Begin VB.CheckBox chkISUserFuncs 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Functions"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   315
             Left            =   3540
             TabIndex        =   75
@@ -598,16 +544,10 @@ Begin VB.Form frmPreferences
             Width           =   1095
          End
          Begin VB.CheckBox chkISUserVars 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Variables"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   315
             Left            =   3540
             TabIndex        =   74
@@ -615,16 +555,10 @@ Begin VB.Form frmPreferences
             Width           =   1155
          End
          Begin VB.CheckBox chkISUserCons 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Contants"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3540
             TabIndex        =   73
@@ -632,16 +566,10 @@ Begin VB.Form frmPreferences
             Width           =   1035
          End
          Begin VB.CheckBox chkISFuncs 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Functions"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   255
             Left            =   240
             TabIndex        =   72
@@ -649,16 +577,10 @@ Begin VB.Form frmPreferences
             Width           =   1275
          End
          Begin VB.CheckBox chkISVars 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Variables"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   255
             Left            =   240
             TabIndex        =   71
@@ -666,16 +588,10 @@ Begin VB.Form frmPreferences
             Width           =   1155
          End
          Begin VB.CheckBox chkISLangCons 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Constants"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   255
             Left            =   240
             TabIndex        =   70
@@ -697,15 +613,6 @@ Begin VB.Form frmPreferences
          Begin VB.Label lblISUserDefined 
             Alignment       =   2  'Center
             Caption         =   "User defined"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
             Height          =   255
             Left            =   3240
             TabIndex        =   78
@@ -715,33 +622,18 @@ Begin VB.Form frmPreferences
          Begin VB.Label lblISLangDefined 
             Alignment       =   2  'Center
             Caption         =   "Language defined"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
             Height          =   255
-            Left            =   360
+            Left            =   120
             TabIndex        =   77
             Top             =   360
-            Width           =   1335
+            Width           =   1815
          End
       End
       Begin VB.CheckBox chkShowIntelliSense 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Show IntelliSense"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   315
          Left            =   240
          TabIndex        =   68
@@ -750,15 +642,6 @@ Begin VB.Form frmPreferences
       End
       Begin VB.Label lblIntelliSenseSensitive 
          Caption         =   "IntelliSense sensitive:"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   315
          Left            =   2760
          TabIndex        =   80
@@ -788,6 +671,15 @@ Begin VB.Form frmPreferences
          Appearance      =   0  'Flat
          Caption         =   ">"
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Segoe UI Semibold"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   600
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   2040
          TabIndex        =   144
@@ -798,6 +690,15 @@ Begin VB.Form frmPreferences
          Appearance      =   0  'Flat
          Caption         =   ">"
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Segoe UI Semibold"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   600
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   2640
          TabIndex        =   143
@@ -808,8 +709,17 @@ Begin VB.Form frmPreferences
          Appearance      =   0  'Flat
          Caption         =   ">"
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Segoe UI Semibold"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   600
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
-         Left            =   3000
+         Left            =   3360
          TabIndex        =   142
          Top             =   1440
          Width           =   255
@@ -871,33 +781,21 @@ Begin VB.Form frmPreferences
          Width           =   2415
       End
       Begin VB.CheckBox chkDirs 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Add directories to the PATH (-i):"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   240
          TabIndex        =   115
          Top             =   1440
-         Width           =   2655
+         Width           =   3135
       End
       Begin VB.CheckBox chkDebugDCB 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Store debugging information at the DCB (-g)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   240
          TabIndex        =   114
@@ -906,8 +804,8 @@ Begin VB.Form frmPreferences
       End
       Begin VB.TextBox txtParams 
          BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
+            Name            =   "Droid Sans Mono"
+            Size            =   9
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -922,16 +820,10 @@ Begin VB.Form frmPreferences
          Width           =   5055
       End
       Begin VB.CheckBox chkMSDOS 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "File uses the MS-DOS character set (-c)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   240
          TabIndex        =   57
@@ -939,33 +831,21 @@ Begin VB.Form frmPreferences
          Width           =   4695
       End
       Begin VB.CheckBox chkStub 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Generate a stubbed executable from the given stub (-s stub)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   240
          TabIndex        =   55
          Top             =   720
-         Width           =   4695
+         Width           =   5055
       End
       Begin VB.CheckBox chkAutoDeclare 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Enable automatic declare functions ( -Ca)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   240
          TabIndex        =   54
@@ -973,16 +853,10 @@ Begin VB.Form frmPreferences
          Width           =   3615
       End
       Begin VB.CheckBox chkDebug 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Compile in Debug mode (-d)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   240
          TabIndex        =   53
@@ -1045,15 +919,6 @@ Begin VB.Form frmPreferences
       Width           =   5535
       Begin VB.Frame Frame3 
          Caption         =   "Helping line"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   1215
          Left            =   2880
          TabIndex        =   103
@@ -1081,16 +946,10 @@ Begin VB.Form frmPreferences
             Top             =   240
             Width           =   2295
             Begin VB.OptionButton optHelpLine 
+               Appearance      =   0  'Flat
+               BackColor       =   &H80000005&
                Caption         =   "Don't show"
-               BeginProperty Font 
-                  Name            =   "Arial"
-                  Size            =   8.25
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
+               ForeColor       =   &H80000008&
                Height          =   255
                Index           =   2
                Left            =   0
@@ -1099,16 +958,10 @@ Begin VB.Form frmPreferences
                Width           =   1455
             End
             Begin VB.OptionButton optHelpLine 
+               Appearance      =   0  'Flat
+               BackColor       =   &H80000005&
                Caption         =   "Show line under"
-               BeginProperty Font 
-                  Name            =   "Arial"
-                  Size            =   8.25
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
+               ForeColor       =   &H80000008&
                Height          =   255
                Index           =   1
                Left            =   0
@@ -1117,16 +970,10 @@ Begin VB.Form frmPreferences
                Width           =   1815
             End
             Begin VB.OptionButton optHelpLine 
+               Appearance      =   0  'Flat
+               BackColor       =   &H80000005&
                Caption         =   "Show line upper"
-               BeginProperty Font 
-                  Name            =   "Arial"
-                  Size            =   8.25
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
+               ForeColor       =   &H80000008&
                Height          =   255
                Index           =   0
                Left            =   0
@@ -1137,50 +984,32 @@ Begin VB.Form frmPreferences
          End
       End
       Begin VB.CheckBox chkLineNumbering 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Display line number margin"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   195
          Left            =   120
          TabIndex        =   100
          Top             =   240
-         Width           =   2295
+         Width           =   2655
       End
       Begin VB.CheckBox chkBookmarkMargin 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Display bookmark margin"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   195
          Left            =   120
          TabIndex        =   99
          Top             =   750
-         Width           =   2175
+         Width           =   2535
       End
       Begin VB.CheckBox chkColorSintax 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Color syntax"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   195
          Left            =   120
          TabIndex        =   98
@@ -1188,16 +1017,10 @@ Begin VB.Form frmPreferences
          Width           =   1335
       End
       Begin VB.CheckBox chkNormalizeCase 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Normalize keyword case"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   195
          Left            =   120
          TabIndex        =   97
@@ -1206,15 +1029,6 @@ Begin VB.Form frmPreferences
       End
       Begin VB.Frame grbAutoIdent 
          Caption         =   "Auto indent mode"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   1635
          Left            =   2880
          TabIndex        =   92
@@ -1241,16 +1055,10 @@ Begin VB.Form frmPreferences
             Top             =   360
             Width           =   1575
             Begin VB.OptionButton opIndentScope 
+               Appearance      =   0  'Flat
+               BackColor       =   &H80000005&
                Caption         =   "Scope"
-               BeginProperty Font 
-                  Name            =   "Arial"
-                  Size            =   8.25
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
+               ForeColor       =   &H80000008&
                Height          =   255
                Left            =   0
                TabIndex        =   96
@@ -1258,16 +1066,10 @@ Begin VB.Form frmPreferences
                Width           =   975
             End
             Begin VB.OptionButton opIndentPrevLine 
+               Appearance      =   0  'Flat
+               BackColor       =   &H80000005&
                Caption         =   "Previous line"
-               BeginProperty Font 
-                  Name            =   "Arial"
-                  Size            =   8.25
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
+               ForeColor       =   &H80000008&
                Height          =   255
                Left            =   0
                TabIndex        =   95
@@ -1275,16 +1077,10 @@ Begin VB.Form frmPreferences
                Width           =   1335
             End
             Begin VB.OptionButton opIndentNone 
+               Appearance      =   0  'Flat
+               BackColor       =   &H80000005&
                Caption         =   "None"
-               BeginProperty Font 
-                  Name            =   "Arial"
-                  Size            =   8.25
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
+               ForeColor       =   &H80000008&
                Height          =   255
                Left            =   0
                TabIndex        =   94
@@ -1294,16 +1090,10 @@ Begin VB.Form frmPreferences
          End
       End
       Begin VB.CheckBox chkWhiteSpaces 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Display white spaces"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   195
          Left            =   120
          TabIndex        =   91
@@ -1311,21 +1101,15 @@ Begin VB.Form frmPreferences
          Width           =   1935
       End
       Begin VB.CheckBox chkSmoothScrolling 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Smooth scrolling"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   195
          Left            =   120
          TabIndex        =   90
          Top             =   2760
-         Width           =   1575
+         Width           =   2535
       End
       Begin VB.TextBox txtTabSize 
          Alignment       =   1  'Right Justify
@@ -1345,16 +1129,10 @@ Begin VB.Form frmPreferences
          Width           =   735
       End
       Begin VB.CheckBox chkConfine 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Confine caret to text"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
          TabIndex        =   49
@@ -1364,20 +1142,11 @@ Begin VB.Form frmPreferences
       Begin VB.Label Label2 
          AutoSize        =   -1  'True
          Caption         =   "Tab size:"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   210
+         Height          =   195
          Left            =   3840
          TabIndex        =   101
          Top             =   285
-         Width           =   660
+         Width           =   645
       End
    End
    Begin VB.PictureBox picFileAsoc 
@@ -1400,16 +1169,10 @@ Begin VB.Form frmPreferences
       Visible         =   0   'False
       Width           =   5295
       Begin VB.CheckBox chkAskReg 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Ask for File Association on init"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   375
          Left            =   120
          TabIndex        =   32
@@ -1432,16 +1195,10 @@ Begin VB.Form frmPreferences
          Top             =   0
          Width           =   5175
          Begin VB.CheckBox chkDcb 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Open DCB files with Fenix/Bennu Interpreter"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   375
             Left            =   600
             TabIndex        =   29
@@ -1990,21 +1747,15 @@ Begin VB.Form frmPreferences
          End
       End
       Begin VB.CheckBox chkSaveFiles 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Save modified files before compiling"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   210
          Left            =   120
          TabIndex        =   6
          Top             =   2520
-         Width           =   2895
+         Width           =   3615
       End
       Begin VB.Frame grbSaveBeforeCompiling 
          BorderStyle     =   0  'None
@@ -2119,7 +1870,7 @@ Begin VB.Form frmPreferences
       Begin VB.ComboBox cmbFlametrackerColor 
          Appearance      =   0  'Flat
          Height          =   315
-         Left            =   2520
+         Left            =   2880
          Style           =   2  'Dropdown List
          TabIndex        =   129
          Top             =   1080
@@ -2129,7 +1880,7 @@ Begin VB.Form frmPreferences
          Enabled         =   0   'False
          Height          =   315
          ItemData        =   "frmPreferences.frx":0008
-         Left            =   2520
+         Left            =   2880
          List            =   "frmPreferences.frx":000A
          Style           =   2  'Dropdown List
          TabIndex        =   51
@@ -2137,16 +1888,10 @@ Begin VB.Form frmPreferences
          Width           =   1695
       End
       Begin VB.CheckBox chkEnableXP 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Enable XP Look"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   375
          Left            =   120
          TabIndex        =   8
@@ -2156,16 +1901,10 @@ Begin VB.Form frmPreferences
          Width           =   2655
       End
       Begin VB.CheckBox chkBitmap 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
          Caption         =   "Show toolbar backgrounds"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         ForeColor       =   &H80000008&
          Height          =   375
          Left            =   120
          TabIndex        =   7
@@ -2276,22 +2015,16 @@ Begin VB.Form frmPreferences
          Width           =   5295
          Begin VB.CheckBox chkUnderline 
             Alignment       =   1  'Right Justify
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Underline"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   195
-            Left            =   4200
+            Left            =   4080
             TabIndex        =   44
-            Top             =   1200
+            Top             =   1080
             Visible         =   0   'False
-            Width           =   975
+            Width           =   1095
          End
          Begin VB.ListBox lstItems 
             BeginProperty Font 
@@ -2311,45 +2044,33 @@ Begin VB.Form frmPreferences
          End
          Begin VB.CheckBox chkItalic 
             Alignment       =   1  'Right Justify
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Italic"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   315
-            Left            =   4560
+            Left            =   4440
             TabIndex        =   37
-            Top             =   240
+            Top             =   360
             Visible         =   0   'False
-            Width           =   615
+            Width           =   735
          End
          Begin VB.CheckBox chkBold 
             Alignment       =   1  'Right Justify
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             Caption         =   "Bold"
-            BeginProperty Font 
-               Name            =   "Arial"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
+            ForeColor       =   &H80000008&
             Height          =   315
-            Left            =   4560
+            Left            =   4440
             TabIndex        =   36
             Top             =   720
             Visible         =   0   'False
-            Width           =   615
+            Width           =   735
          End
          Begin ImgColorPicker.ColorPicker cp1 
             Height          =   255
-            Left            =   2880
+            Left            =   2760
             TabIndex        =   38
             Top             =   480
             Width           =   1095
@@ -2359,7 +2080,7 @@ Begin VB.Form frmPreferences
          End
          Begin ImgColorPicker.ColorPicker cp2 
             Height          =   255
-            Left            =   2880
+            Left            =   2760
             TabIndex        =   40
             Top             =   1080
             Visible         =   0   'False
@@ -2652,7 +2373,7 @@ Private Sub PlaceControls()
     Me.Width = 7440     ' 5625
     Me.Height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
-    cmdOk.Move 3120, 5400        ' 3120
+    cmdOK.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
 End Sub
 
@@ -3426,7 +3147,7 @@ Private Sub cmdClearRecents_Click()
 End Sub
 
 Private Sub cmdClearToolList_Click()
-    FSO.CreateTextFile App.Path & "\Conf\tools.fbconf"
+    FSO.CreateTextFile App.Path & "/Conf/tools.fbconf"
 End Sub
 
 Private Sub cmdExplore_Click(Index As Integer)
@@ -3535,7 +3256,7 @@ End Sub
 Private Sub Form_Load()
     On Error GoTo ErrHandler
     
-    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+    Image1.Picture = LoadPicture(App.Path & "/Resources/frmHeader.jpg")
     
     cmbColor.AddItem "Rose"
     cmbColor.AddItem "Grey"
@@ -3781,7 +3502,7 @@ Private Sub picPredefSets_Click()
     mnuPreSets.CreateFromNothing Me.Hwnd
 
     'Look in the editorstyles folder for config files
-    Set folder = FSO.GetFolder(App.Path & "\conf\editorstyles\")
+    Set folder = FSO.GetFolder(App.Path & "/conf/editorstyles/")
     If Not folder Is Nothing Then
         For Each file In folder.Files
             If FSO.GetExtensionName(file.Path) = "ini" Then

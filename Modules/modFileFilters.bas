@@ -1,4 +1,21 @@
 Attribute VB_Name = "modFileFilters"
+'Flamebird MX
+'Copyright (C) 2003-2007 Flamebird Team
+'Contact:
+'   JaViS:      javisarias@ gmail.com            (JaViS)
+'   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
+'   Zubiaurre:  izubiaurre@users.sourceforge.net (Imanol Zubiaurre)
+'
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the GNU General Public License as published by
+'the Free Software Foundation; either version 2 of the License, or
+'(at your option) any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'GNU General Public License for more details.
+
 Option Explicit
 
 ' DEFINITIONS:
@@ -19,7 +36,7 @@ Public Function getFilter(ParamArray keys()) As String
     Dim Key As Variant
     Dim i As Integer
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     If UBound(keys) >= LBound(keys) Then
         For Each Key In keys 'Create the filter for each key
@@ -40,7 +57,7 @@ Public Function getFilter(ParamArray keys()) As String
     getFilter = res
     Exit Function
     
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("modFileFilters.getFilter")
 End Function
 
@@ -48,7 +65,7 @@ Private Function composeExtensions(ParamArray keys())
     Dim Key As Variant
     Dim res As String
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     If UBound(keys) >= LBound(keys) Then
         For Each Key In keys
@@ -62,7 +79,7 @@ Private Function composeExtensions(ParamArray keys())
     composeExtensions = res
     Exit Function
     
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("modFileFilters.comPoseFileFilters")
 End Function
 

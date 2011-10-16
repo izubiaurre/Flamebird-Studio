@@ -22,7 +22,7 @@ Begin VB.Form frmAbout
       BackStyle       =   0  'Transparent
       Caption         =   $"frmAbout.frx":000C
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   6.75
          Charset         =   0
          Weight          =   400
@@ -30,9 +30,10 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00F0F0F0&
       Height          =   375
       Left            =   2520
-      TabIndex        =   29
+      TabIndex        =   26
       Top             =   5880
       Width           =   4935
    End
@@ -41,7 +42,7 @@ Begin VB.Form frmAbout
       BackStyle       =   0  'Transparent
       Caption         =   "And all other people who has participated directly or indirectly"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -49,56 +50,59 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   28
+      TabIndex        =   25
       Top             =   4440
-      Width           =   4470
+      Width           =   4830
    End
    Begin VB.Label Label12 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Special thanks"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI Semibold"
          Size            =   9.75
          Charset         =   0
-         Weight          =   700
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   240
-      Left            =   960
-      TabIndex        =   27
+      ForeColor       =   &H00BDBDBD&
+      Height          =   255
+      Left            =   930
+      TabIndex        =   24
       Top             =   3720
-      Width           =   1395
+      Width           =   1290
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Dependencies"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI Semibold"
          Size            =   9.75
          Charset         =   0
-         Weight          =   700
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   240
+      ForeColor       =   &H00BDBDBD&
+      Height          =   255
       Left            =   960
-      TabIndex        =   26
+      TabIndex        =   23
       Top             =   4920
-      Width           =   1350
+      Width           =   1260
    End
    Begin VB.Label Label16 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "GINO"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -106,18 +110,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   25
+      TabIndex        =   22
       Top             =   4200
-      Width           =   375
+      Width           =   420
    End
    Begin VB.Label Label25 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Sebastian Quiest"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -125,18 +130,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   24
+      TabIndex        =   21
       Top             =   3960
-      Width           =   1230
+      Width           =   1305
    End
    Begin VB.Label Label23 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Coptroner"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -144,28 +150,30 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   23
+      TabIndex        =   20
       Top             =   3720
-      Width           =   720
+      Width           =   795
    End
    Begin VB.Label Label14 
       Alignment       =   1  'Right Justify
       BackStyle       =   0  'Transparent
       Caption         =   "Original FB2 Team"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI Semibold"
          Size            =   9.75
          Charset         =   0
-         Weight          =   700
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00BDBDBD&
       Height          =   240
-      Left            =   240
-      TabIndex        =   22
+      Left            =   135
+      TabIndex        =   19
       Top             =   3240
       Width           =   2085
    End
@@ -174,7 +182,7 @@ Begin VB.Form frmAbout
       BackStyle       =   0  'Transparent
       Caption         =   "JaViS, Danko, Viator, BlueSteel"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -182,18 +190,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   21
+      TabIndex        =   18
       Top             =   3240
-      Width           =   2250
+      Width           =   2355
    End
    Begin VB.Label Label21 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Imanol Zubiaurre"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -201,18 +210,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   20
+      TabIndex        =   17
       Top             =   2760
-      Width           =   1200
+      Width           =   1320
    End
    Begin VB.Label Label11 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "izubiaurre@users.sourceforge.net"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -220,32 +230,33 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00C00000&
-      Height          =   210
-      Left            =   4440
+      ForeColor       =   &H8000000D&
+      Height          =   195
+      Left            =   4350
       MouseIcon       =   "frmAbout.frx":00A4
       MousePointer    =   99  'Custom
-      TabIndex        =   19
+      TabIndex        =   16
       Top             =   2760
-      Width           =   2520
+      Width           =   2625
    End
    Begin VB.Label Label4 
       Alignment       =   1  'Right Justify
       BackStyle       =   0  'Transparent
       Caption         =   "Mantained by"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI Semibold"
          Size            =   9.75
          Charset         =   0
-         Weight          =   700
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00BDBDBD&
       Height          =   480
       Index           =   1
-      Left            =   720
-      TabIndex        =   18
+      Left            =   675
+      TabIndex        =   15
       Top             =   2520
       Width           =   1545
    End
@@ -254,7 +265,7 @@ Begin VB.Form frmAbout
       BackStyle       =   0  'Transparent
       Caption         =   "http://www.sourceforge.net/projects/fbtwo"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -262,21 +273,21 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00C00000&
-      Height          =   210
+      ForeColor       =   &H8000000D&
+      Height          =   195
       Left            =   3600
       MouseIcon       =   "frmAbout.frx":0210
       MousePointer    =   99  'Custom
-      TabIndex        =   17
+      TabIndex        =   14
       Top             =   1560
-      Width           =   3180
+      Width           =   3375
    End
    Begin VB.Label Label9 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Project page:"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -284,18 +295,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   16
+      TabIndex        =   13
       Top             =   1560
-      Width           =   945
+      Width           =   1005
    End
    Begin VB.Label Label8 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Web Page"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -303,18 +315,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   15
+      TabIndex        =   12
       Top             =   1320
-      Width           =   735
+      Width           =   780
    End
    Begin VB.Label Label7 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Darío Cutillas (Danko)"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -322,18 +335,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   14
+      TabIndex        =   11
       Top             =   2520
-      Width           =   1545
+      Width           =   1680
    End
    Begin VB.Label Label6 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Javier Arias (JaViS)"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -341,18 +355,19 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      ForeColor       =   &H00F0F0F0&
+      Height          =   195
       Left            =   2520
-      TabIndex        =   13
+      TabIndex        =   10
       Top             =   2040
-      Width           =   1455
+      Width           =   1365
    End
    Begin VB.Label Label5 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "javis@users.sourceforge.net"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -360,21 +375,21 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00C00000&
-      Height          =   210
-      Left            =   4440
+      ForeColor       =   &H8000000D&
+      Height          =   195
+      Left            =   4800
       MouseIcon       =   "frmAbout.frx":037C
       MousePointer    =   99  'Custom
-      TabIndex        =   12
+      TabIndex        =   9
       Top             =   2040
-      Width           =   2130
+      Width           =   2175
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "lord_danko@users.sourceforge.net"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -382,21 +397,21 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00C00000&
-      Height          =   210
-      Left            =   4440
+      ForeColor       =   &H8000000D&
+      Height          =   195
+      Left            =   4245
       MouseIcon       =   "frmAbout.frx":04E8
       MousePointer    =   99  'Custom
-      TabIndex        =   11
+      TabIndex        =   8
       Top             =   2520
-      Width           =   2595
+      Width           =   2730
    End
    Begin VB.Label lblWeb 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "http://fbtwo.sourceforge.net"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -404,135 +419,82 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00C00000&
-      Height          =   210
-      Left            =   3480
+      ForeColor       =   &H8000000D&
+      Height          =   195
+      Left            =   4740
       MouseIcon       =   "frmAbout.frx":0654
       MousePointer    =   99  'Custom
-      TabIndex        =   10
+      TabIndex        =   7
       Top             =   1320
-      Width           =   2055
+      Width           =   2235
    End
    Begin VB.Label lblDev 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "FB2 Original idea"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI Semibold"
          Size            =   9.75
          Charset         =   0
-         Weight          =   700
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   240
-      Left            =   600
-      TabIndex        =   9
-      Top             =   2040
-      Width           =   1665
-   End
-   Begin VB.Label Label24 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "MX"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   36
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   -1  'True
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   825
-      Left            =   4635
-      TabIndex        =   8
-      Top             =   105
-      Width           =   1065
-   End
-   Begin VB.Label Label22 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "lamebird"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   18
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   435
-      Left            =   2910
-      TabIndex        =   7
-      Top             =   390
-      Width           =   1500
-   End
-   Begin VB.Label Label20 
-      BackStyle       =   0  'Transparent
-      Caption         =   "F"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   36
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   1020
-      Left            =   2535
+      ForeColor       =   &H00BDBDBD&
+      Height          =   255
+      Left            =   690
       TabIndex        =   6
-      Top             =   105
-      Width           =   480
+      Top             =   2040
+      Width           =   1530
    End
    Begin VB.Label lblOk 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "[OK]"
       BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9.75
+         Name            =   "Segoe UI Semibold"
+         Size            =   12
          Charset         =   0
-         Weight          =   700
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   240
+      ForeColor       =   &H00F0F0F0&
+      Height          =   315
       Index           =   1
-      Left            =   7080
+      Left            =   6360
       TabIndex        =   5
       Top             =   7320
-      Width           =   405
+      Width           =   480
    End
    Begin VB.Label lblLin 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "[LICENSE]"
       BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9.75
+         Name            =   "Segoe UI Semibold"
+         Size            =   12
          Charset         =   0
-         Weight          =   700
+         Weight          =   600
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   240
+      ForeColor       =   &H00F0F0F0&
+      Height          =   315
       Index           =   2
-      Left            =   5760
+      Left            =   2880
       TabIndex        =   4
       Top             =   7320
-      Width           =   945
+      Width           =   1050
    End
    Begin VB.Label Label19 
       BackStyle       =   0  'Transparent
       Caption         =   "Code Sense is based on the popular CodeMax control © 2000 WinMain Software."
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   6.75
          Charset         =   0
          Weight          =   400
@@ -540,6 +502,7 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00F0F0F0&
       Height          =   495
       Left            =   2520
       TabIndex        =   3
@@ -550,7 +513,7 @@ Begin VB.Form frmAbout
       BackStyle       =   0  'Transparent
       Caption         =   "The TabDock control used in this application was created by Marclei V Silva. http://www.spnorte.com"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   6.75
          Charset         =   0
          Weight          =   400
@@ -558,6 +521,7 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00F0F0F0&
       Height          =   495
       Left            =   2520
       TabIndex        =   2
@@ -568,7 +532,7 @@ Begin VB.Form frmAbout
       BackStyle       =   0  'Transparent
       Caption         =   "This product includes software developed by vbAccelerator (http://vbaccelerator.com/)."""
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   6.75
          Charset         =   0
          Weight          =   400
@@ -576,6 +540,7 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00F0F0F0&
       Height          =   495
       Left            =   2520
       TabIndex        =   1
@@ -587,7 +552,7 @@ Begin VB.Form frmAbout
       BackStyle       =   0  'Transparent
       Caption         =   "0.1.00"
       BeginProperty Font 
-         Name            =   "Arial"
+         Name            =   "Segoe UI"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -595,11 +560,31 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   210
+      Height          =   195
       Left            =   5745
       TabIndex        =   0
       Top             =   585
       Width           =   450
+   End
+   Begin VB.Shape Shape1 
+      BackColor       =   &H00333333&
+      BackStyle       =   1  'Opaque
+      BorderColor     =   &H00333333&
+      FillColor       =   &H00333333&
+      Height          =   6495
+      Left            =   0
+      Top             =   1200
+      Width           =   2415
+   End
+   Begin VB.Shape Shape2 
+      BackColor       =   &H00666666&
+      BorderColor     =   &H00666666&
+      FillColor       =   &H00666666&
+      FillStyle       =   0  'Solid
+      Height          =   6495
+      Left            =   2400
+      Top             =   1200
+      Width           =   5415
    End
 End
 Attribute VB_Name = "frmAbout"
@@ -644,14 +629,6 @@ Private Sub Form_Load()
     Me.Caption = "About " & App.Title
     lblVersion.Caption = App.Major & "." & App.Minor & "." & App.Revision
     Picture = LoadPicture(App.Path & "/Resources/frmAbout.jpg")
-End Sub
-
-Private Sub Image1_Click()
-
-End Sub
-
-Private Sub Label27_Click()
-
 End Sub
 
 Private Sub lblLin_Click(Index As Integer)

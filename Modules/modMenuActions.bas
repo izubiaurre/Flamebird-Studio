@@ -47,6 +47,29 @@ Private Enum NewTypeConstants
     NT_LIST
 End Enum
 
+' For createImp
+Private Type modules
+    m(40) As String
+    dat(40) As Byte
+    n_Fun(1000) As Long
+End Type
+Private fileModules(100) As String
+Private batCreate As Long
+Private pa_scrb As Long
+Private num As Long
+'    string module[] = "mod_blendop", "mod_cd", "mod_dir", "mod_draw", "mod_effects", "mod_file", "mod_flic",
+'    "mod_grproc", "mod_joy", "mod_key", "mod_m7", "mod_map", "mod_math", "mod_mem", "mod_mouse", "mod_path",
+'    "mod_proc", "mod_rand", "mod_regex",
+'    "mod_say", "mod_screen", "mod_scroll", "mod_sort", "mod_sound", "mod_string", "mod_sys", "mod_text",
+'    "mod_time", "mod_timers", "mod_video", "mod_wm", "mod_ffi";
+'    _dat[] = 10, 10, 7, 17, 4, 16, 16, 6, 32, 1, 4, 107, 14, 22, 1, 3, 8, 2, 4, 2, 12, 5, 5, 25, 22, 2, 11, 3, 1, 7, 8, 2;
+'    n_fun[390];
+'    string fileModules[50];
+'    batCreate;
+'    pa_scrb;
+'    num;
+'    goIncludes;
+
 Private m_NewType As Integer
 Private m_NewAddToProject As Boolean
 
@@ -238,7 +261,7 @@ End Sub
 Public Sub mnuFileRecentOpen(sFile As String)
     If Not Dir(sFile) = "" Then
         OpenFileByExt sFile
-    Else 'No existe el fichero
+    Else ' Doesn't exists the file
         MsgBox "File not found!", vbCritical
     End If
 End Sub
@@ -1612,15 +1635,15 @@ End Sub
 Public Sub mnuViewToolBarStandard()
     Dim Id As Long
     
-    Id = frmMain.cReBar.BandIndexForData("MainBar")
-    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
+    Id = frmMain.cRebar.BandIndexForData("MainBar")
+    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewToolBarEdit()
     Dim Id As Long
     
-    Id = frmMain.cReBar.BandIndexForData("EditBar")
-    frmMain.cReBar.BandVisible(Id) = Not frmMain.cReBar.BandVisible(Id)
+    Id = frmMain.cRebar.BandIndexForData("EditBar")
+    frmMain.cRebar.BandVisible(Id) = Not frmMain.cRebar.BandVisible(Id)
 End Sub
 
 Public Sub mnuViewProjectBrowser()
@@ -1854,6 +1877,8 @@ Public Sub mnuProjectCreateImp()
     Dim charTemp    As String
     Dim startLine   As Long
     
+    
+    
     If Not ActiveFileForm Is Nothing Then
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
@@ -1867,7 +1892,7 @@ Public Sub mnuProjectCreateImp()
             startLine = 0
             
             If fDoc.rangoActual.EndLineNo - startLine > 1000 Then
-                MsgBox "The autoidentation process can take a long time to perform." & vbNewLine & _
+                MsgBox "The autoImp process can take a long time to perform." & vbNewLine & _
                         "If the program do not refresh or it seems to be fallen don't close, wait a bit more." & vbNewLine & _
                         "Please be patient and wait a while", vbExclamation
             End If
@@ -1979,7 +2004,7 @@ End Sub
 'START HELP MENU
 '-------------------------------------------------------------------------------
 Public Sub mnuHelpIndex()
-    NewWindowWeb App.Path & "\help\fenix\func.php-frame=top.htm"
+    NewWindowWeb App.Path & "/help/fenix/func.php-frame=top.htm"
 End Sub
 Public Sub mnuHelpWiki()
     NewWindowWeb "http://fenixdocs.com/index.php/", "WIKI: "

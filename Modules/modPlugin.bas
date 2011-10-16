@@ -30,7 +30,7 @@ Public Sub RegisterPlugins()
             SetSplashMessage "Registering Plug-in" & fileString
             DoEvents
             
-            result = Register(App.Path & "\Plugins\" & fileString)
+            result = Register(App.Path & "/Plugins/" & fileString)
             
             Select Case result
                 Case 1: MsgBox "File Could Not Be Loaded Into Memory Space"
@@ -63,7 +63,7 @@ Dim sPlugin As String
 ' Identifies the plugins for us.
 Dim s As String
 
-s = Dir(App.Path & "\plugins\")
+s = Dir(App.Path & "/plugins/")
 Do Until s = ""
   If Right(s, 4) = ".dll" Then
     sPlugin = Mid(s, 1, Len(s) - 4) & ".clsPluginInterface"

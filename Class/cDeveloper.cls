@@ -36,7 +36,7 @@ Private m_Mail As String
 Private m_ID As Long
 
 '-----------------------------------------------------------------------------
-'IMPLEMENTACIÓN PROPIEDADES Y MÉTODOS GENERALES
+' IMPLEMENTATION
 '-----------------------------------------------------------------------------
 Friend Property Let Id(newID As Long)
     m_ID = newID
@@ -49,7 +49,7 @@ Public Property Get Key() As String
     Key = CStr(hex(m_ID))
 End Property
 
-'Name es la propiedad por defecto
+'Name is default property
 Public Property Let name(newName As String)
     m_Name = newName
 End Property
@@ -73,8 +73,8 @@ Public Property Get Mail() As String
 End Property
 
 '-----------------------------------------------------------------------------
-' INICIALIZACIÓN Y SALIDA
+' INITIALIZE
 '-----------------------------------------------------------------------------
 Private Sub Class_Initialize()
-    Id = -1 'El developer no está en ninguna colección
+    Id = -1 ' The developer is not in any colection
 End Sub

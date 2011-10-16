@@ -428,7 +428,7 @@ Private Sub cmdRun_Click()
     Dim lShow As Long
     Dim sParams As String, sDir As String
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     lastCommandEnabled = True
     
@@ -481,7 +481,7 @@ Private Sub cmdRun_Click()
     
     Exit Sub
     
-errhandler:
+ErrHandler:
     Resume Next
     
 End Sub
@@ -489,7 +489,7 @@ End Sub
 Private Sub cmdBrowseFile_Click()
     Dim sExe As String
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
 
     sExe = OpenFile32.OpenDialog(Me, "All executable files (*.exe; *.cmd; *.bat; *.com)|*.exe;*.cmd;*.bat;*.com|", "Choose executable file", callList.paths(callList.lastPathIndex))
 
@@ -505,7 +505,7 @@ Private Sub cmdBrowseFile_Click()
     
     Exit Sub
     
-errhandler:
+ErrHandler:
     Resume Next
 End Sub
 
@@ -513,7 +513,7 @@ Private Sub cmdBrowseFolder_Click()
     Dim sExe As String
     Dim s As String
 
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     c.hwndOwner = Me.Hwnd
     c.InitialDir = App.Path
@@ -528,7 +528,7 @@ Private Sub cmdBrowseFolder_Click()
     
     Exit Sub
     
-errhandler:
+ErrHandler:
     Resume Next
 End Sub
 
@@ -549,7 +549,7 @@ Private Sub Form_Load()
     
     Height = 5235
     
-    pic1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+    pic1.Picture = LoadPicture(App.Path & "/Resources/frmHeader.jpg")
     ' populate comboBoxes from ini file
     populateHistory
 End Sub
@@ -625,10 +625,10 @@ Public Sub saveCommandHistory()
     Dim sCommands As String, sPaths As String
     Dim i As Integer
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
 
     With Ini
-        .Path = App.Path & "\Conf\command.ini"
+        .Path = App.Path & "/Conf/command.ini"
         .Section = "General"
         .Key = "lastCommand"
         .Default = "0"
@@ -665,51 +665,10 @@ Public Sub saveCommandHistory()
     End With
     
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("frmMSDOS.saveCommandHistory")
 End Sub
-'
-'' Loads commands history
-'Public Sub loadCommandHistory()
-'    Dim sCommands As String, sPaths As String
-'    Dim i As Integer
-'
-'    On Error GoTo errhandler:
-'
-'       With Ini
-'        .Path = App.Path & "\Conf\command.ini"
-'        .Section = "General"
-'        .Key = "lastCommand"
-'        callList.lastCommandIndex = .Value
-'        .Key = "lastPath"
-'
-'        callList.lastPathIndex = .Value
-'
-'        .Section = "Commands"
-'        For i = 0 To 100
-'            .Key = "cmd_" & i
-'            If i <= callList.lastCommandIndex Then
-'                callList.commands(i) = .Value
-'            Else
-'                callList.commands(i) = ""
-'            End If
-'        Next i
-'
-'        .Section = "Paths"
-'        For i = 0 To 100
-'            .Key = "path_" & i
-'            If i <= callList.lastPathIndex Then
-'                callList.paths(i) = .Value
-'            Else
-'                callList.paths(i) = ""
-'            End If
-'        Next i
-'    End With
-'
-'    Exit Sub
-'errhandler:
-'    If Err.Number > 0 Then ShowError ("frmMSDOSCommand.loadCommandHistory")
-'End Sub
+
 
 Public Sub populateHistory()
     Dim i As Integer

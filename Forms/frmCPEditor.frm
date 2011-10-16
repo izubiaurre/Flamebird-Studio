@@ -1,15 +1,26 @@
 VERSION 5.00
-Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalsgrid6.ocx"
+Object = "{DE8CE233-DD83-481D-844C-C07B96589D3A}#1.5#0"; "vbalSGrid6.ocx"
 Begin VB.Form frmCPEditor 
+   Appearance      =   0  'Flat
+   BackColor       =   &H80000005&
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Control points editor"
    ClientHeight    =   4260
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   5475
+   FillStyle       =   0  'Solid
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   8.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmCPEditor.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   4260
@@ -17,6 +28,15 @@ Begin VB.Form frmCPEditor
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdInsertAt 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3480
       MaskColor       =   &H00FFFFFF&
@@ -30,6 +50,15 @@ Begin VB.Form frmCPEditor
    Begin VB.CommandButton cmdDiscard 
       Cancel          =   -1  'True
       Caption         =   "&Discard"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   4560
       TabIndex        =   18
@@ -39,6 +68,15 @@ Begin VB.Form frmCPEditor
    Begin VB.CommandButton cmdAccept 
       Caption         =   "&Accept"
       Default         =   -1  'True
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3600
       TabIndex        =   17
@@ -47,6 +85,15 @@ Begin VB.Form frmCPEditor
    End
    Begin VB.CommandButton cmdExport 
       Caption         =   "&Export..."
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   4080
       TabIndex        =   7
@@ -55,6 +102,15 @@ Begin VB.Form frmCPEditor
    End
    Begin VB.CommandButton cmdImport 
       Caption         =   "&Import..."
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   4080
       TabIndex        =   6
@@ -62,6 +118,15 @@ Begin VB.Form frmCPEditor
       Width           =   1335
    End
    Begin VB.CommandButton cmdInsert 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3480
       MaskColor       =   &H00FFFFFF&
@@ -73,6 +138,15 @@ Begin VB.Form frmCPEditor
       Width           =   375
    End
    Begin VB.CommandButton cmdMoveUp 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3480
       MaskColor       =   &H00FFFFFF&
@@ -84,6 +158,15 @@ Begin VB.Form frmCPEditor
       Width           =   375
    End
    Begin VB.CommandButton cmdMoveDown 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3480
       MaskColor       =   &H00FFFFFF&
@@ -113,6 +196,15 @@ Begin VB.Form frmCPEditor
       Width           =   1815
    End
    Begin VB.CommandButton cmdRemove 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3480
       MaskColor       =   &H00FFFFFF&
@@ -126,12 +218,30 @@ Begin VB.Form frmCPEditor
    Begin VB.Frame Frame1 
       BorderStyle     =   0  'None
       Caption         =   "Predefined sets"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   1335
       Left            =   4080
       TabIndex        =   21
       Top             =   2280
       Width           =   1335
       Begin VB.CommandButton cmdBottomRight 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   960
          MaskColor       =   &H00FFFFFF&
@@ -143,6 +253,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdBottom 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   480
          MaskColor       =   &H00FFFFFF&
@@ -154,6 +273,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdBottomLeft 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   0
          MaskColor       =   &H00FFFFFF&
@@ -165,6 +293,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdRight 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   960
          MaskColor       =   &H00FFFFFF&
@@ -176,6 +313,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdCenter 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   480
          MaskColor       =   &H00FFFFFF&
@@ -187,6 +333,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdLeft 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   0
          MaskColor       =   &H00FFFFFF&
@@ -198,6 +353,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdTopRight 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   960
          MaskColor       =   &H00FFFFFF&
@@ -209,6 +373,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdTop 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   480
          MaskColor       =   &H00FFFFFF&
@@ -220,6 +393,15 @@ Begin VB.Form frmCPEditor
          Width           =   375
       End
       Begin VB.CommandButton cmdTopLeft 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   0
          MaskColor       =   &H00FFFFFF&
@@ -232,6 +414,15 @@ Begin VB.Form frmCPEditor
       End
    End
    Begin VB.CommandButton cmdAdd 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   3480
       MaskColor       =   &H00FFFFFF&
@@ -272,6 +463,15 @@ Begin VB.Form frmCPEditor
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
       Caption         =   "Predefined sets:"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   195
       Left            =   4080
       TabIndex        =   23
@@ -328,11 +528,11 @@ Begin VB.Form frmCPEditor
       Width           =   4965
    End
    Begin VB.Image Image1 
-      Height          =   765
-      Left            =   -2880
-      Picture         =   "frmCPEditor.frx":2AE7
+      Appearance      =   0  'Flat
+      Height          =   615
+      Left            =   0
       Top             =   0
-      Width           =   8835
+      Width           =   5415
    End
 End
 Attribute VB_Name = "frmCPEditor"
@@ -869,6 +1069,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 End Sub
 
 Private Sub Form_Load()
+    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
     dirty = False
     printCPs
     ConfigureGrid

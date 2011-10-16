@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
-Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "shdocvw.dll"
+Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Begin VB.Form frmWebBrowser 
    Caption         =   "Web Broser"
    ClientHeight    =   5700
@@ -105,6 +105,7 @@ Public Property Let URL(newURL As String)
     If newURL <> "" Then
         m_URL = newURL
         wb.Navigate newURL
+        cmbURL.AddItem newURL
     End If
 End Property
 
@@ -144,7 +145,7 @@ Private Sub Form_Load()
     'Create the rebar
     With rebar
         If A_Bitmaps Then
-            .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
+            .BackgroundBitmap = App.Path & "/resources/backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd tbrWeb.Hwnd, , True, False

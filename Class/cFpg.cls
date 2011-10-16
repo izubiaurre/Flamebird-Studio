@@ -274,7 +274,7 @@ Public Function Load(sFile As String) As Long
     Dim m As cMap
     Dim lSucceded As Long, lError As Long
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     lFile = gzopen(sFile, "rb")
     
@@ -283,7 +283,7 @@ Public Function Load(sFile As String) As Long
         'm_FilePath = sFile
         
         gzread lFile, ByVal magic, Len(magic)
-        'COMPROBACIÓN DE LA CABECERA
+        ' HEADER check
         If (StrComp(Left(magic, 3), F16_MAGIC) = 0) Then 'm16bits
             m_Depth = 16
         ElseIf StrComp(Left(magic, 3), FPG_MAGIC) = 0 Then 'm8bits
@@ -377,7 +377,7 @@ Public Function Load(sFile As String) As Long
     End If
     
     Load = IIf(lError = 0, -1, 0)
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError "cFpg.Load"
 End Function
 '-------------------------------------------------------------------------------------

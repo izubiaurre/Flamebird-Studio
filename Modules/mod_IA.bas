@@ -1,6 +1,6 @@
 Attribute VB_Name = "mod_IA"
 'Flamebird MX
-'Copyright (C) 2003-2007 Flamebird Team
+'CopyRight$ (C) 2003-2007 Flamebird Team
 'Contact:
 '   JaViS:      javisarias@ gmail.com            (JaViS)
 '   Danko:      lord_danko@users.sourceforge.net (Darío Cutillas)
@@ -18,27 +18,28 @@ Attribute VB_Name = "mod_IA"
 
 Option Explicit
 Dim procesando_info As Boolean
-' to keep declared constants by user in the code
+
+' for user declared constants
 Public userConstList() As String
-'para los tipos de datos declarados por el usuario
+' for user declared vars
 Public userTypeList() As String
-'mantiene el estado de las variables de includes del proyecto que se esta editando
+' maintains the state of variables includes the project being edited
 Public includesNodes As New Collection
-'usadas en la funcion getLine() para mantener el estado del codigo entre #includes
+' used in the getline function () to maintain the status code in # includes
 Dim inComment As Boolean
 Dim MainDir As String
-'lista de funciones que va a mostrar la lista de autocompletar
+' list of functions to display the AutoComplete list
 Public functionList() As String
 ' list of user defines functions/processes that we're go to show in intellISense autocomplete
 Public userFunctionList() As String
-'lista de variables para mostrar en la lista de autocompletar
+' list of variables to show the autocomplete list
 Public varList() As String
-'contiene los parametros de las funciones y procesos declarados por el usuario
+' contains the parameters of the functions and processes identified by the user
 Public parameters() As String
-'lista de macros y sus valores
+' list of macros and their values
 Public macros As New Collection
 Public macrosNames As New Collection
-'contador de funciones propias del lenguaje
+' counter of language functions
 Public iFunctionCount As Long
 ' control the analyzing status to not repeat analyzings at the same time
 Public analyzingSource As Boolean
@@ -55,8 +56,8 @@ End Function
 '*****************************************************************
 Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boolean)
 
-    Filename = LCase(Filename)
-    Filename = replace(Filename, "/", "\")
+    Filename = LCase$(Filename)
+    Filename = replace$(Filename, "/", "\")
     
     On Error GoTo Termina
     
@@ -94,7 +95,7 @@ Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boole
     
     For Each nodito In includesNodes
     
-        If LCase(nodito.Filename) = LCase(Filename) Then
+        If LCase$(nodito.Filename) = LCase$(Filename) Then
             
             If nodito.varType <> "INCLUDE" Then
                 fatherNode = nodito.father
@@ -135,7 +136,7 @@ Public Sub makeProgramTree(ByVal Filename As String, Optional isInclude As Boole
                     If isInclude And (nodito.varType = "type" Or nodito.varType = "struct") Then
                         ' add user-struct name for the code list
                         ReDim Preserve userTypeList(UBound(userTypeList) + 1) As String
-                        userTypeList(UBound(userTypeList)) = LCase(nodito.name)
+                        userTypeList(UBound(userTypeList)) = LCase$(nodito.name)
                     End If
                     
                     If nodito.varType = "function" Or nodito.varType = "process" Then
@@ -162,6 +163,160 @@ Termina:
 
 
 End Sub
+' **************************************************************
+' *** Returns true if the line is in const declaration zone ****
+' **************************************************************
+Public Function inConstDeclarationZone(lineaNum As Integer) As Boolean
+
+    On Error Resume Next
+    
+    Dim frmPRG As frmDoc
+    Set frmPRG = frmMain.ActiveForm
+    Dim num As Integer
+    Dim num2 As Integer
+    Dim lineNum As Integer
+    Dim palabra As String
+    Dim linea As String
+    Dim endsCount As Integer
+    Dim importantLine As Boolean
+    Dim nextLineCommented As Boolean
+    
+    lineNum = lineaNum
+    inConstDeclarationZone = False
+    
+    While lineNum >= 0
+        linea = frmPRG.cs.getLine(lineNum)
+           
+        importantLine = False
+        
+        '*******************************************
+        '*********** Line optimization *************
+        '*******************************************
+            
+        ' replace$ not visible chars with spaces
+        linea = replace$(linea, vbTab, " ")
+        linea = replace$(linea, vbNewLine, " ")
+        linea = replace$(linea, vbCrLf, " ")
+        linea = replace$(linea, vbCr, " ")
+        linea = replace$(linea, vbLf, " ")
+        linea = replace$(linea, vbNullChar, " ")
+        linea = replace$(linea, vbBack, " ")
+        linea = replace$(linea, vbFormFeed, " ")
+        linea = replace$(linea, vbVerticalTab, " ")
+        
+        ' delete spaces
+        linea = Trim$(linea)
+        
+        num = 0
+        
+        If inComment = False Then
+            num = InStr(linea, "//")
+            
+            If num > 0 Then
+                linea = Mid$(linea, 1, num - 1)
+            End If
+        End If
+        
+        If inComment = True Then
+            num = InStr(linea, "/*")
+            num2 = InStr(linea, "*/")
+            
+            If ((num > 0 And num2 < num) Or num = 0) And num2 > 0 Then
+                linea = Mid$(linea, num2 + 2)
+                inComment = False
+            End If
+        End If
+        
+        If inComment = False Then
+            num = InStr(linea, "/*")
+            While (num > 0)
+                num2 = InStr(linea, "*/")
+                If num2 > num Then
+                    inComment = False
+                    linea = Mid$(linea, 1, num - 1) & Mid$(linea, num2 + 2)
+                Else
+                    If inComment = False Then
+                        linea = Mid$(linea, 1, num - 1)
+                        inComment = True
+                        nextLineCommented = True
+                    End If
+                End If
+                If inComment = False Then
+                    num = InStr(linea, "/*")
+                Else
+                    num = 0
+                End If
+            Wend
+        End If
+        
+        
+        If nextLineCommented = False Then
+            If inComment = True Then
+                linea = ""
+            End If
+        Else
+            nextLineCommented = False
+        End If
+        '*******************************************
+        '*********** code analization **************
+        '*******************************************
+        
+        While Len(linea) > 0
+            palabra = getWordRev(linea)
+                    
+            Select Case LCase$(palabra)
+                ' FALSE cases
+                Case "end":
+                    inConstDeclarationZone = False
+                    Exit Function
+                Case "begin":
+                    inConstDeclarationZone = False
+                    Exit Function
+                Case "process":
+                    If lineNum = lineaNum Then
+                        inConstDeclarationZone = True
+                    Else
+                        inConstDeclarationZone = False
+                    End If
+                    Exit Function
+                Case "function":
+                    If lineNum = lineaNum Then
+                        inConstDeclarationZone = True
+                    Else
+                        inConstDeclarationZone = False
+                    End If
+                    Exit Function
+                Case "program":
+                    inConstDeclarationZone = False
+                    Exit Function
+                Case "local":
+                    inConstDeclarationZone = False
+                    Exit Function
+                Case "private":
+                    inConstDeclarationZone = False
+                    Exit Function
+                Case "global":
+                    inConstDeclarationZone = False
+                    Exit Function
+                Case "struct":
+                    inConstDeclarationZone = False
+                    Exit Function
+                Case "type":
+                    inConstDeclarationZone = False
+                    Exit Function
+                '  TRUE cases
+                Case "const":
+                    inConstDeclarationZone = True
+                    Exit Function
+            End Select
+            
+        Wend
+        
+        
+        lineNum = lineNum - 1
+        
+    Wend
+End Function
 ' **************************************************************
 ' *** Returns true if the line is in a declaration zone ********
 ' **************************************************************
@@ -192,19 +347,19 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
         '*********** Line optimization *************
         '*******************************************
             
-        ' replace not visible chars with spaces
-        linea = replace(linea, Chr(9), " ")
-        linea = replace(linea, vbNewLine, " ")
-        linea = replace(linea, vbCrLf, " ")
-        linea = replace(linea, vbCr, " ")
-        linea = replace(linea, vbLf, " ")
-        linea = replace(linea, vbNullChar, " ")
-        linea = replace(linea, vbBack, " ")
-        linea = replace(linea, vbFormFeed, " ")
-        linea = replace(linea, vbVerticalTab, " ")
+        ' replace$ not visible chars with spaces
+        linea = replace$(linea, vbTab, " ")
+        linea = replace$(linea, vbNewLine, " ")
+        linea = replace$(linea, vbCrLf, " ")
+        linea = replace$(linea, vbCr, " ")
+        linea = replace$(linea, vbLf, " ")
+        linea = replace$(linea, vbNullChar, " ")
+        linea = replace$(linea, vbBack, " ")
+        linea = replace$(linea, vbFormFeed, " ")
+        linea = replace$(linea, vbVerticalTab, " ")
         
         ' delete spaces
-        linea = Trim(linea)
+        linea = Trim$(linea)
         
         num = 0
         
@@ -212,7 +367,7 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
             num = InStr(linea, "//")
             
             If num > 0 Then
-                linea = Mid(linea, 1, num - 1)
+                linea = Mid$(linea, 1, num - 1)
             End If
         End If
         
@@ -221,7 +376,7 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
             num2 = InStr(linea, "*/")
             
             If ((num > 0 And num2 < num) Or num = 0) And num2 > 0 Then
-                linea = Mid(linea, num2 + 2)
+                linea = Mid$(linea, num2 + 2)
                 inComment = False
             End If
         End If
@@ -232,10 +387,10 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
                 num2 = InStr(linea, "*/")
                 If num2 > num Then
                     inComment = False
-                    linea = Mid(linea, 1, num - 1) & Mid(linea, num2 + 2)
+                    linea = Mid$(linea, 1, num - 1) & Mid$(linea, num2 + 2)
                 Else
                     If inComment = False Then
-                        linea = Mid(linea, 1, num - 1)
+                        linea = Mid$(linea, 1, num - 1)
                         inComment = True
                         nextLineCommented = True
                     End If
@@ -263,7 +418,7 @@ Public Function inDeclarationZone(lineaNum As Integer) As Boolean
         While Len(linea) > 0
             palabra = getWordRev(linea)
                     
-            Select Case LCase(palabra)
+            Select Case LCase$(palabra)
                 ' FALSE cases
                 Case "end":
                     inDeclarationZone = False
@@ -333,7 +488,7 @@ Private Function getParameters(linea As String)
     If pStart > 0 Then
         pEnd = InStr(pStart, linea, ")")
         If pEnd > 0 Then
-           strResult = Mid(linea, pStart + 1, pEnd - 1 - pStart)
+           strResult = Mid$(linea, pStart + 1, pEnd - 1 - pStart)
         End If
     End If
     
@@ -341,12 +496,12 @@ Private Function getParameters(linea As String)
 End Function
 
 Public Function existTreeForFile(ByVal Filename) As Boolean
-    Filename = LCase(Filename)
-    Filename = replace(Filename, "/", "\")
+    Filename = LCase$(Filename)
+    Filename = replace$(Filename, "/", "\")
     Dim nodito As staticNode
     
     For Each nodito In includesNodes
-        If LCase(replace(nodito.Filename, "/", "\")) = LCase(Filename) Then
+        If LCase$(replace$(nodito.Filename, "/", "\")) = LCase$(Filename) Then
             existTreeForFile = True
             Exit Function
         End If
@@ -365,8 +520,9 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
     
     If analyzingSource Or Not PI_Active Then Exit Sub
     
-    ' si hay un proyecto abierto con mainsource definido
-    ' directamente mandamos a hacer ese achivo, es lo logico, no?
+    'If there is an open project with defined mainsource
+    'Directly sent to make that file is only logical, Right$?
+
     If Not openedProject Is Nothing And isInclude = False Then
         If openedProject.FileExist(Filename) Then
             If openedProject.mainSource <> "" Then
@@ -376,18 +532,18 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
     End If
     
     
-    Filename = LCase(Filename)
-    Filename = replace(Filename, "/", "\")
+    Filename = LCase$(Filename)
+    Filename = replace$(Filename, "/", "\")
     
     Dim nodito As staticNode
     Dim formulario As frmDoc
      
      
-    ' si esto es un include y ya existen nodos de este archivo mandamos a armar desde el buffer
+    ' if this is an include and already exist nodes of this file, send to build from the buffer
     If isInclude Then
         If existTreeForFile(Filename) Then
-                ' vamos a ver si existe el formulario de este include
-                ' y si hace falta refrescarlo para no mandarlo al lomo
+                ' look if exists the form of this include
+                ' and if it is needed, refresh to not send to back
                 Set formulario = FindFileForm(Filename)
                 
                 Dim refrescar As Boolean
@@ -405,9 +561,9 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
         End If
     Else
         
-        ' en cambio, si no es include
-        ' quiere decir que lo mandaron a refrescarse o a armar el arbol
-        ' pero... vamos a ver si ya existe en buffer para no tardar al pedo
+        ' Insteadif it is not include
+        ' Means that they sent him to refresh or build the tree
+        ' But ... let's see if it already exists in the buffer, to no wait a lot
         
         Set formulario = FindFileForm(Filename)
         
@@ -416,14 +572,14 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
             Dim imMainPrg As Boolean
             imMainPrg = False
             
-            ' vamos a ver si se mando a refrescar el PRG principal
-            ' para analizar si es necesario refrescar alguno de los includes
+            ' Let's see if was send to refresh the main PRG
+            ' To consider whether you need to refresh some of the includes
             If Not openedProject Is Nothing Then
                 If openedProject.mainSource <> "" Then
                     Dim mainPath As String
                     mainPath = makePathForProject(openedProject.mainSource)
-                    mainPath = LCase(mainPath)
-                    mainPath = replace(mainPath, "/", "\")
+                    mainPath = LCase$(mainPath)
+                    mainPath = replace$(mainPath, "/", "\")
                     If Filename = mainPath Then
                         imMainPrg = True
                     End If
@@ -446,7 +602,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
                 Next
             End If
     
-            ' esto es injusto porque podria haber un include q necesita must refresh
+            ' this is unjust, cause can be a include that needs to be refreshed
             If formulario.mustRefresh = False Then
                 If existTreeForFile(Filename) Then
                     makeProgramTree Filename
@@ -458,7 +614,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
         frmMain.StatusBar.PanelText("MAIN") = "Collecting info about the project"
     End If
     
-    Dim srcFile As New cReadFile 'clase que lee el archivo
+    Dim srcFile As New cReadFile ' class that reads the file
     Dim linea As String
     Dim palabra As String
     Dim fatherNode As String
@@ -483,19 +639,19 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
     
     Dim newKey As String
     
-    ' si se trata del archivo principal setea a cero
+    ' if it is the main file, set to zero
     If Not isInclude Then
         inComment = False
         MainDir = FSO.GetParentFolderName(Filename) & "\"
-        ' vuelve los tipos de datos del usuario a cero
+        ' empty the user Type List
         ReDim userTypeList(0) As String
-        ' limpia los macros
+        ' clear the macros
         Set macros = New Collection
         Set macrosNames = New Collection
     End If
     
     For Each nodito In includesNodes
-        If LCase(nodito.Filename) = LCase(Filename) Then
+        If LCase$(nodito.Filename) = LCase$(Filename) Then
             includesNodes.Remove nodito.Key
         End If
     Next nodito
@@ -504,7 +660,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
     'Screen.MousePointer = vbHourglass
     analyzingSource = True
     
-    'Recorre todas las lineas del prg
+    ' for each line in the PRG
     While srcFile.canRead
         
         If lineNum Mod 5 = 0 Then
@@ -512,34 +668,34 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
             frmMain.StatusBar.PanelText("MAIN") = "analyzing file structure: " & CLng(lineNum * 100 / formulario.cs.LineCount) & "% done... Please wait"
         End If
         
-        'toma uma linea
+        ' get a line
         linea = srcFile.getLine
         
         lineNum = lineNum + 1
         
         '*******************************************
-        '*********** OPTIMIZACION DE LA LINEA ******
+        '*********** Line clearing            ******
         '*******************************************
             
-        'reemplaza los caracteres no visibles por espacios
-        linea = replace(linea, Chr(9), " ")
-        linea = replace(linea, vbNewLine, " ")
-        linea = replace(linea, vbCrLf, " ")
-        linea = replace(linea, vbCr, " ")
-        linea = replace(linea, vbLf, " ")
-        linea = replace(linea, vbNullChar, " ")
-        linea = replace(linea, vbBack, " ")
-        linea = replace(linea, vbFormFeed, " ")
-        linea = replace(linea, vbVerticalTab, " ")
+        ' replace$ non visible chars with spaces
+        linea = replace$(linea, vbTab, " ")
+        linea = replace$(linea, vbNewLine, " ")
+        linea = replace$(linea, vbCrLf, " ")
+        linea = replace$(linea, vbCr, " ")
+        linea = replace$(linea, vbLf, " ")
+        linea = replace$(linea, vbNullChar, " ")
+        linea = replace$(linea, vbBack, " ")
+        linea = replace$(linea, vbFormFeed, " ")
+        linea = replace$(linea, vbVerticalTab, " ")
         
-        'le saca los espacios
-        linea = Trim(linea)
+        ' clear the spaces
+        linea = Trim$(linea)
         
-        ' TODO analizamos la linea y reemplazamos todos los macros que encontremos
+        ' TODO analyze the line and replace$ all macros
     '    Dim macro_value As String
     '    For Each macro_value In macros
     '    Do
-    '    while instr(linea,
+    '    while InStr$$(linea,
     '    Next
         
         num = 0
@@ -550,7 +706,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
             num = InStr(linea, "//")
             
             If num > 0 Then
-                linea = Mid(linea, 1, num - 1)
+                linea = Mid$(linea, 1, num - 1)
             End If
         End If
         
@@ -559,7 +715,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
             num2 = InStr(linea, "*/")
             
             If ((num > 0 And num2 < num) Or num = 0) And num2 > 0 Then
-                linea = Mid(linea, num2 + 2)
+                linea = Mid$(linea, num2 + 2)
                 inComment = False
             End If
         End If
@@ -570,10 +726,10 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
                 num2 = InStr(linea, "*/")
                 If num2 > num Then
                     inComment = False
-                    linea = Mid(linea, 1, num - 1) & Mid(linea, num2 + 2)
+                    linea = Mid$(linea, 1, num - 1) & Mid$(linea, num2 + 2)
                 Else
                     If inComment = False Then
-                        linea = Mid(linea, 1, num - 1)
+                        linea = Mid$(linea, 1, num - 1)
                         inComment = True
                         nextLineCommented = True
                     End If
@@ -595,14 +751,14 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
             nextLineCommented = False
         End If
         '*******************************************
-        '*********** ANALISIS DE CODIGO ************
+        '*********** CODE ANALYSIS      ************
         '*******************************************
         
         While Len(linea) > 0
             On Error GoTo proximaVuelta
             palabra = getWord(linea)
             
-            ' vemos si la palabra no es un macro
+            ' is the word a macro?
             Dim macro_value As Variant
             Dim macindex As Integer
             Dim macroname As Variant
@@ -610,7 +766,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
             While macindex < macros.count
                 macro_value = macros.item(macindex + 1)
                 macroname = macrosNames.item(macindex + 1)
-                If LCase(palabra) = Trim(LCase(macroname)) Then
+                If LCase$(palabra) = Trim$(LCase$(macroname)) Then
                     palabra = ""
                     linea = macro_value & " " & linea
                 End If
@@ -619,7 +775,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
             
             If palabra <> "" Then
                 If endsCount > 0 Then
-                    Select Case LCase(palabra)
+                    Select Case LCase$(palabra)
                         'Case "#if": endsCount = endsCount + 1
                         'Case "#ifdef": endsCount = endsCount + 1
                         'Case "#ifndef": endsCount = endsCount + 1
@@ -639,16 +795,16 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
                     If isUserDefinedType(palabra) Or isDefinedType(palabra) Then
                         
                         If declarationType = "" Or declarationType = "variables" Then
-                            ' copia de linea para tomar la siguiente palabra
+                            ' copy of line to take the next word
                             lineaTemp = linea
-                            ' ese debe ser el nombre
+                            ' this must be the name
                             nextWord = getWord(lineaTemp)
-                            ' la siguiente palabra nos interesa, tiene que ser (
+                            ' the next word must be (
                             nextWord = getWord(lineaTemp)
                             
                             If nextWord = "(" Then
-                                ' si se estan por definir parametros entonces
-                                ' es mas que obvio que no es una variable (es una funcion)
+                                ' if there are parameters to be defined, then
+                                ' it's not a variable, it's a function
                                 declarationType = "functionName"
                             End If
                         End If
@@ -658,7 +814,7 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
                     Dim Largo As String
                     
                             
-                    Select Case LCase(palabra)
+                    Select Case LCase$(palabra)
                         Case "#define":
                             
                             Dim macroValue As String
@@ -666,12 +822,12 @@ Public Sub MakeProgramIndex(ByVal Filename As String, Optional isInclude As Bool
                             
                             Largo = InStr(linea, " ")
                             If Largo > 0 Then
-                                ' puede tener valor despues del espacio
-                                Macro = Trim(Left(linea, Largo))
-                                macroValue = Trim(Mid(linea, Largo))
+                                ' can have value after the space
+                                Macro = Trim$(Left$(linea, Largo))
+                                macroValue = Trim$(Mid$(linea, Largo))
                             Else
-                                ' no hay valor, solo nombre
-                                Macro = Trim(linea)
+                                ' there's no value, only a name
+                                Macro = Trim$(linea)
                             End If
                             
                             If macroValue <> "" Then
@@ -684,7 +840,7 @@ macroerror:                     macrosNames.Add Macro, Macro
                             'On Error GoTo Esquiva1
     
                             'ReDim Preserve userTypeList(UBound(userTypeList) + 1) As String
-                            'userTypeList(UBound(userTypeList)) = LCase(Macro)
+                            'userTypeList(UBound(userTypeList)) = LCase$(Macro)
     
                             linea = ""
                             declarationType = ""
@@ -694,22 +850,22 @@ macroerror:                     macrosNames.Add Macro, Macro
                             Dim incluir As String
                             Inicio = InStr(linea, Chr(34)) + 1
                             Largo = InStrRev(linea, Chr(34)) - Inicio
-                            incluir = Mid(linea, Inicio, Largo)
+                            incluir = Mid$(linea, Inicio, Largo)
                             
                             If InStr(linea, ";") <> 0 Then
-                                linea = Mid(linea, InStr(linea, ";") + 1)
+                                linea = Mid$(linea, InStr(linea, ";") + 1)
                             End If
                             
-                            'aca sabemos si es un dir relativo
+                            ' here we see if this is relative dir
                             If FSO.GetDriveName(incluir) = "" Then
-                               'entonces lo adicionamos al dir del proyecto principal
+                                ' so, add to the main project dir
                                incluir = MainDir & incluir
                             End If
                             
-                            'bueno, a ver si existe
+                            ' if exist
                             If FSO.FileExists(incluir) Then
                             
-                               incluir = LCase(incluir)
+                               incluir = LCase$(incluir)
                                
                                
                                'On Error GoTo Esquiva1
@@ -767,7 +923,7 @@ Esquiva1:
                         Case "end":
                             If varType = "struct" Then
                                 declarationType = "variables"
-                                varType = Left(fatherNode, InStr(fatherNode, "|") - 1)
+                                varType = Left$(fatherNode, InStr(fatherNode, "|") - 1)
                                 fatherType = structFatherType
                                 fatherNode = structFather
                             Else
@@ -792,30 +948,30 @@ Esquiva1:
                             endsCount = 1
                         Case Chr(34):
                             If declarationType = "variables" And waitFor = "" Then
-                                waitFor = Chr(34) ' lo manda a no declarar hasta que se encuentre esa palabra
+                                waitFor = Chr(34) ' wait until this word
                             End If
                         Case "=":
                             If declarationType = "variables" And waitFor = "" Then
-                                waitFor = ";" ' lo manda a no declarar hasta que se encuentre esa palabra
+                                waitFor = ";" ' wait until this word
                             End If
                         Case "[":
                             If declarationType = "variables" And waitFor = "" Then
-                                waitFor = "]" ' lo manda a no declarar hasta que se encuentre esa palabra
+                                waitFor = "]" ' wait until this word
                             End If
                         
                         Case Else:
-                            If waitFor <> "" Then ' si se espera una palabra
-                                If palabra = waitFor Then ' si encuentra lo que se esperaba
-                                   waitFor = "" ' deja continuar con la declaración normal
+                            If waitFor <> "" Then ' if we were waiting a word
+                                If palabra = waitFor Then ' if we find what we wait for
+                                   waitFor = "" ' continue with normal declaration
                                 End If
                             Else
                                 Select Case declarationType
                                ' Case "macroDefinition":
-                                    ' arreglado en la revision del 2006
-                                    ' un macro NO es un tipo de dato
+                                    ' fixed in 2006 revision
+                                    ' a macro is NOT a data type
                                     
                                    ' ReDim Preserve userTypeList(UBound(userTypeList) + 1) As String
-                                   ' userTypeList(UBound(userTypeList)) = LCase(palabra)
+                                   ' userTypeList(UBound(userTypeList)) = LCase$(palabra)
                                     
                                    ' declarationType = ""
                                     
@@ -826,7 +982,7 @@ Esquiva1:
                                     'On Error GoTo Esquiva2
                                     
                                     
-                                    ' agrega la declaracion al buffer general
+                                    ' add declaration to the main buffer
                                     
                                     Set tempNode = New staticNode
                                     includesNodes.Add tempNode, newKey
@@ -838,9 +994,9 @@ Esquiva1:
                                     tempNode.name = palabra
                                     tempNode.varType = "type"
                                     
-                                    ' agrega el tipo de datos a la lista general
+                                    ' add data type to main list
                                     ReDim Preserve userTypeList(UBound(userTypeList) + 1) As String
-                                    userTypeList(UBound(userTypeList)) = LCase(palabra)
+                                    userTypeList(UBound(userTypeList)) = LCase$(palabra)
                                     
         
                                     declarationType = "variables"
@@ -882,21 +1038,22 @@ Esquiva3:
             
                                 Case "functionName":
                                     
-                                    ' si es una funcion q retorna un tipo (declarada con int nombre(), por ejemplo)
+                                    
+                                    ' if it's a type returning function ( int getValue(); )
                                     If isUserDefinedType(palabra) Or isDefinedType(palabra) Then
-                                        ' copia de linea para tomar la siguiente palabra
+                                        ' copy of line to capture the next word
                                         lineaTemp = linea
-                                        ' ese debe ser el nombre
+                                        ' this must be the name
                                         nextWord = getWord(lineaTemp)
                                         newKey = "function" & "|" & nextWord & "|" & Filename
                                     Else
-                                        'si es una declaracion comun de funcion (Function juana())
+                                        ' if it's a common function declare ( Function gameMain(); )
                                         newKey = "function" & "|" & palabra & "|" & Filename
                                     End If
                                     
                                    ' On Error GoTo Esquiva4
                                     'TEMPORAL BUGFIX:
-                                    'Cuando se usan declares la función aparece repetida
+                                    ' If are used declares for functions, they appear twice
                                     fixExistsNode = False
                                     For Each fixNode In includesNodes
                                         If fixNode.name = palabra Then
@@ -957,7 +1114,7 @@ Esquiva5:
                                     
                                     'On Error GoTo Esquiva6
                                     'TEMPORAL BUGFIX:
-                                    'Cuando se usan declares el proceso aparece repetido
+                                    ' If are used declares for processes, they appear twice
                                     fixExistsNode = False
                                     For Each fixNode In includesNodes
                                         If fixNode.name = palabra Then
@@ -990,7 +1147,7 @@ Esquiva6:
     'On Error GoTo Termina
                                     
                                 Case "variables":
-                                    ' bueno, si la palabra no es nada de parte del lenguaje...
+                                    ' if the word isn't part of the language
                                     If isUserDefinedType(palabra) = False And isDefinedType(palabra) = False And isOperator(palabra) = False Then
                                         
                                         Select Case varType
@@ -1078,7 +1235,6 @@ Public Function getWord(ByRef line As String) As String
     
     getWord = ""
     
-    
     For i = LBound(operatorsList) To UBound(operatorsList)
         num(i) = InStr(line, operatorsList(i))
     Next i
@@ -1097,36 +1253,37 @@ Public Function getWord(ByRef line As String) As String
     If num3 > 0 Then
         ' if long is 1, it's an operator
         If num3 = 1 Then
-            returnValue = Trim(Mid(line, 1, num3))
-            line = Trim(Mid(line, num3 + 1))
+            returnValue = Trim$(Mid$(line, 1, num3))
+            line = Trim$(Mid$(line, num3 + 1))
         Else
         ' if it's not a word, we delete the operator
-            returnValue = Trim(Mid(line, 1, num3 - 1))
-            line = Trim(Mid(line, num3))
+            returnValue = Trim$(Mid$(line, 1, num3 - 1))
+            line = Trim$(Mid$(line, num3))
         End If
     Else
     ' if there are no more word endings, the line is finished, so we return the word as line
-        returnValue = Trim(line)
+        returnValue = Trim$(line)
         line = ""
     End If
-    
-    If InStr(returnValue, Chr(9)) = 1 Then
-        returnValue = Mid(returnValue, 2)
+            
+    If InStr(returnValue, vbTab) = 1 Then
+        returnValue = Mid$(returnValue, 2)
     Else
-        If InStr(returnValue, Chr(9)) = Len(returnValue) Then
+        If InStr(returnValue, vbTab) = Len(returnValue) Then
             If Len(returnValue) = 0 Then
                 returnValue = ""
             Else
-                returnValue = Mid(returnValue, 1, Len(returnValue) - 1)
+                returnValue = Mid$(returnValue, 1, Len(returnValue) - 1)
             End If
         End If
     End If
+            
     getWord = returnValue
 End Function
 
 ' **************************************************************
 '       Gets only one word from de line
-'       From right to left (reverse)
+'       From Right$ to Left$ (reverse)
 ' **************************************************************
 
 
@@ -1139,8 +1296,8 @@ Public Function getWordRev(ByRef linea As String) As String
     Dim i As Integer
     
     ' delete not useful chars
-    linea = Trim(replace(linea, Chr(9), " "))
-    
+    linea = Trim$(replace$(linea, vbTab, " "))
+            
     ' list of operators used in declaration
     ReDim operatorsList(LBound(operatorList) To (UBound(operatorList) + 1))
     
@@ -1173,19 +1330,20 @@ Public Function getWordRev(ByRef linea As String) As String
     If num3 > 0 Then
         ' if the case is as long as the line, then it's an operator
         If num3 = Len(linea) Then
-            returnValue = Right(linea, 1)
-            linea = Trim(Mid(linea, 1, num3 - 1))
+            returnValue = Right$(linea, 1)
+            linea = Trim$(Mid$(linea, 1, num3 - 1))
         Else
-            returnValue = Trim(Mid(linea, num3 + 1))
-            linea = Trim(Mid(linea, 1, num3))
+            returnValue = Trim$(Mid$(linea, num3 + 1))
+            linea = Trim$(Mid$(linea, 1, num3))
         End If
     Else
     ' if there are no more word endings, the line is finished, so we return the word as line
-        returnValue = Trim(linea)
+        returnValue = Trim$(linea)
         linea = ""
     End If
-        
+              
     getWordRev = returnValue
+    
 End Function
 
 Public Function isUserDefinedType(ByVal palabra As String) As Boolean
@@ -1194,7 +1352,7 @@ Public Function isUserDefinedType(ByVal palabra As String) As Boolean
     If Not IsEmpty(LBound(userTypeList)) Then
         Dim i As Long
         For i = LBound(userTypeList) To UBound(userTypeList)
-            If LCase(palabra) = LCase(userTypeList(i)) Then
+            If LCase$(palabra) = LCase$(userTypeList(i)) Then
                 isUserDefinedType = True
                 Exit Function
             End If
@@ -1208,7 +1366,7 @@ Public Function isDefinedType(ByVal palabra As String) As Boolean
     isDefinedType = False
     
     For num = LBound(typeList) To UBound(typeList)
-        If LCase(palabra) = LCase(typeList(num)) Then
+        If LCase$(palabra) = LCase$(typeList(num)) Then
             isDefinedType = True
             Exit Function
         End If
@@ -1222,22 +1380,22 @@ Dim num As Double
 isOperator = False
 
 For num = LBound(operatorList) To UBound(operatorList)
-    If LCase(sword) = LCase(operatorList(num)) Then
+    If LCase$(sword) = LCase$(operatorList(num)) Then
         isOperator = True
         Exit Function
     End If
 Next num
 End Function
 
-' returns true if the word passed as parameter is lenguage reserved word
-Public Function isReservedWord(ByVal palabra As String) As Boolean
+' returns true if the word passed as parameter is language reserved word
+Public Function isReservedWord(ByVal sword As String) As Boolean
     Dim line As String
     Dim num As Double
     
     num = FreeFile()
     
     isReservedWord = False
-    If isUserDefinedType(palabra) Then
+    If isUserDefinedType(sword) Then
         isReservedWord = True
         Exit Function
     End If
@@ -1247,7 +1405,7 @@ Public Function isReservedWord(ByVal palabra As String) As Boolean
             Line Input #num, line
             ' jumps comments
             If InStr(line, "//#") <> 1 And line <> "" Then
-                If LCase(palabra) = LCase(Trim(line)) Then
+                If LCase$(sword) = LCase$(Trim$(line)) Then
                     isReservedWord = True
                     Close #num
                     Exit Function
@@ -1256,4 +1414,48 @@ Public Function isReservedWord(ByVal palabra As String) As Boolean
         Loop
     Close #num
 
+End Function
+' returns true if the giving word is language reserved function
+Public Function isReservedFunction(ByVal sword As String) As Boolean
+Dim num As Double
+
+isReservedFunction = False
+
+For num = LBound(functionList) To UBound(functionList)
+    If LCase$(sword) = LCase$(functionList(num)) Then
+        isReservedFunction = True
+        Exit Function
+    End If
+Next num
+End Function
+
+' returns true if the giving word is user defined function
+Public Function isUserDefinedFunction(ByVal sword As String) As Boolean
+Dim num As Double
+
+isUserDefinedFunction = False
+
+For num = LBound(userFunctionList) To UBound(userFunctionList)
+    If LCase$(sword) = LCase$(userFunctionList(num)) Then
+        isUserDefinedFunction = True
+        Exit Function
+    End If
+Next num
+End Function
+
+Public Function clearLine(ByVal sLine As String) As String
+
+    ' replace$$s all not visible chars with spaces
+    sLine = replace$(sLine, vbTab, " ")
+    sLine = replace$(sLine, vbNewLine, " ")
+    sLine = replace$(sLine, vbCrLf, " ")
+    sLine = replace$(sLine, vbCr, " ")
+    sLine = replace$(sLine, vbLf, " ")
+    sLine = replace$(sLine, vbNullChar, " ")
+    sLine = replace$(sLine, vbBack, " ")
+    sLine = replace$(sLine, vbFormFeed, " ")
+    sLine = replace$(sLine, vbVerticalTab, " ")
+            
+    clearLine = sLine
+            
 End Function

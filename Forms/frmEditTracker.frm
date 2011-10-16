@@ -794,7 +794,7 @@ Private Sub GetIconsFromIlst(pBox As PictureBox)
     pBox.Picture = pBox.Image
     pBox.AutoRedraw = False
     
-    'Restaura el objecto del HDC y borra el HDC
+    ' restore object from HDC and delete the HDC
     SelectObject hdc, oldObject
     DeleteDC hdc
     Set picIcons = Nothing
@@ -911,7 +911,7 @@ End Sub
 
 Private Sub Form_Load()
 
-    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+    Image1.Picture = LoadPicture(App.Path & "/Resources/frmHeader.jpg")
 
     Set f = frmTodoList
     'Set colTrackers = f.colTrackers.Copy
@@ -930,7 +930,7 @@ Private Sub Form_Load()
     tabConfig.Tabs.Add Caption:="Behavior"
     tabConfig.Tabs.Add Caption:="Columns"
     
-    If FillCombo Then 'Si hay trackers
+    If FillCombo Then ' if exists trackers
         cboTrackers.ListIndex = 0
         NoTrackers = False
         'Select the appropiate tracker

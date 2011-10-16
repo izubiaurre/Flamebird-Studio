@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbaliml6.ocx"
-Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbaltbar6.ocx"
+Object = "{396F7AC0-A0DD-11D3-93EC-00C0DFE7442A}#1.0#0"; "vbalIml6.ocx"
+Object = "{E142732F-A852-11D4-B06C-00500427A693}#1.14#0"; "vbalTbar6.ocx"
 Begin VB.Form frmMap 
    Caption         =   "Map"
    ClientHeight    =   3555
@@ -96,7 +96,7 @@ Private Const MSG_SAVE_SUCCESS = "Map saved succesfully!"
 Private Const MSG_PAINTMAP_ERRORPAINTING = "An error occurred when trying to paint the map: "
 Private Const MSG_LOAD_ERRORLOADING = "An error occurred loading the map: "
 
-Private Const FAST_SCROLL_STEPS As Integer = 12 'desplazamiento con Shift
+Private Const FAST_SCROLL_STEPS As Integer = 12 'movement with Shift
 
 Private m_ShowTransparent As Boolean
 Private m_SizeIndex As Single
@@ -132,7 +132,7 @@ Private Sub ToggleTransparency()
     PaintMap
 End Sub
 
-'Pinta un mapa en el picMap
+' draw over the picMap
 Private Sub PaintMap()
     Screen.MousePointer = vbHourglass
     Dim lW As Long, lH As Long
@@ -228,7 +228,7 @@ Public Function EditDepth(ByVal newIndex As Integer) As Long
             , vbYesNo + vbQuestion)
             If (res = vbYes) Then
                 MousePointer = vbHourglass
-                succeded = map.ConvertTo8bpp 'Convertir a 8bpp
+                succeded = map.ConvertTo8bpp 'Convert to 8bpp
                 If (succeded) Then
                     MsgBox "The image was correctly converted to 8bpp"
                 End If
@@ -243,7 +243,7 @@ Public Function EditDepth(ByVal newIndex As Integer) As Long
             , vbYesNo + vbQuestion)
             If (res = vbYes) Then
                 MousePointer = vbHourglass
-                succeded = map.ConvertTo16bpp 'Convertir a 16bpp
+                succeded = map.ConvertTo16bpp 'Convert to 16bpp
                 If (succeded) Then
                     MsgBox "Image succefusly converted to 16bpp"
                 End If
@@ -424,10 +424,10 @@ End Sub
 
 Private Sub m_cScroll_MouseWheel(eBar As EFSScrollBarConstants, lAmount As Long, VKPressed As EFSVirtualKeyConstants)
     If (efsVKControl And VKPressed) Then  'Flag Control
-        eBar = efsHorizontal 'Desplaz horizontal
+        eBar = efsHorizontal ' Move on horizontal
     End If
     If (efsVKShift And VKPressed) Then 'Flag shift
-        'Desplazamiento rápido inteligente
+        ' Fast scrolling
         If eBar = efsHorizontal Then
             lAmount = map.Height * m_SizeIndex \ FAST_SCROLL_STEPS * Sgn(lAmount)
         Else
@@ -495,7 +495,7 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
     
     Ext = FSO.GetExtensionName(sFile)
     
-    lResult = map.Load(sFile) 'Cargar el mapa
+    lResult = map.Load(sFile) ' Load map
     
     If (lResult) Then
         PaintMap

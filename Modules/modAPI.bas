@@ -61,9 +61,14 @@ Public Type BITMAPINFO16Bits
         bmiHeader As BITMAPINFOHEADER
         bmiColors(2) As Long
 End Type
+
+Public Type BITMAPINFO32Bits
+        bmiHeader As BITMAPINFOHEADER
+        bmiColors(4) As Long
+End Type
 'Public Const BI_RGB = 0&
 'Public Const DIB_RGB_COLORS = 0 '  color table in RGBs
-'Public Const DIB_PAL_COLORS = 1   '  tabla de color en los índices de la paleta
+'Public Const DIB_PAL_COLORS = 1   '  color table in the palette index
 
 Public Const IMAGE_BITMAP As Long = 0
 Public Const LR_DEFAULTCOLOR As Long = &H0
@@ -84,16 +89,16 @@ Const ARCHIVE = &H20
 Const NORMAL = &H80
 Public Declare Function SetFileAttributes Lib "kernel32.dll" Alias "SetFileAttributesA" (ByVal lpFileName As String, ByVal dwFileAttributes As Long) As Long
 
-'Operaciones de Blit
+' Blit operations
 Public Const STRETCH_DELETESCANS = 3
 Public Const STRETCH_HALFTONE = 4
-Public Const SRCCOPY = &HCC0020         ' (DWORD) dest = origen
+Public Const SRCCOPY = &HCC0020         ' (DWORD) dest = origin
 Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 Public Declare Function StretchBlt Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal dwRop As Long) As Long
 Public Declare Function SetStretchBltMode Lib "gdi32" (ByVal hdc As Long, ByVal nStretchMode As Long) As Long
 Declare Function TransparentBlt Lib "msimg32.dll" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal crTransparent As Long) As Boolean
 
-'Secciones DIB y gráficos dependientes del dispositivo
+' DIB section and dispositive dependant graphics
 Public Declare Function SetDIBitsToDevice Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal dx As Long, ByVal dy As Long, ByVal srcx As Long, ByVal srcy As Long, ByVal Scan As Long, ByVal NumScans As Long, Bits As Any, BitsInfo As BITMAPINFO, ByVal wUsage As Long) As Long
 Public Declare Function SetBitmapBits Lib "gdi32.dll" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
 Public Declare Function GetBitmapBits Lib "gdi32.dll" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
@@ -104,7 +109,7 @@ Public Declare Function SetDIBColorTable Lib "gdi32" (ByVal hdc As Long, ByVal u
 'Public Declare Function CreateBitmap Lib "gdi32" (ByVal nWidth As Long, ByVal nHeight As Long, ByVal nPlanes As Long, ByVal nBitCount As Long, lpBits As Any) As Long
 Public Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hdc As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 
-'Functiones de dibujo
+' Drawing functions
 Public Declare Function SetBrushOrgEx Lib "gdi32" (ByVal hdc As Long, ByVal nXOrg As Long, ByVal nYOrg As Long, lppt As POINTAPI) As Long
 Public Declare Function Rectangle Lib "gdi32" (ByVal hdc As Long, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Long
 Public Declare Function CreateSolidBrush Lib "gdi32" (ByVal crColor As Long) As Long
@@ -113,17 +118,17 @@ Public Declare Function FrameRect Lib "user32" (ByVal hdc As Long, lpRect As REC
 Public Declare Function DrawTextA Lib "user32" (ByVal hdc As Long, ByVal lpStr As String, ByVal nCount As Long, lpRect As RECT, ByVal wFormat As Long) As Long
 Public Declare Function DrawFocusRect Lib "user32" (ByVal hdc As Long, lpRect As RECT) As Long
 Public Declare Function SetTextColor Lib "gdi32" (ByVal hdc As Long, ByVal crColor As Long) As Long
-'Iconos
+'Icons
 Public Declare Function DrawIcon Lib "user32.dll" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal hIcon As Long) As Long
 Public Declare Function ExtractAssociatedIcon Lib "shell32.dll" Alias "ExtractAssociatedIconA" (ByVal hInst As Long, ByVal lpIconPath As String, lpiIcon As Long) As Long
 
-'Otras funciones gráficas
+' Other graphic functions
 Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
 'Public Declare Function LoadBitmap Lib "user32.dll" Alias "LoadBitmapA" (ByVal hInstance As Long, ByVal lpBitmapName As String) As Long
 Declare Function LoadImage Lib "user32" Alias "LoadImageA" (ByVal hInst As Long, ByVal lpsz As String, ByVal un1 As Long, ByVal n1 As Long, ByVal n2 As Long, ByVal un2 As Long) As Long
 
 
-'Contexto de Dispositivo y Objetos
+' Object and dispositive context
 Public Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
 Public Declare Function GetDC Lib "user32" (ByVal Hwnd As Long) As Long
 Public Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
@@ -133,7 +138,7 @@ Public Declare Function SetRect Lib "user32" (lpRect As RECT, ByVal x1 As Long, 
 Public Declare Function InflateRect Lib "user32" (lpRect As RECT, ByVal X As Long, ByVal Y As Long) As Long
 Public Declare Function ReleaseDC Lib "user32" (ByVal Hwnd As Long, ByVal hdc As Long) As Long
 
-'Gestión de ventanas (de momento no se usan)
+' Window management
 Public Const GWL_EXSTYLE As Long = -20
 'Public Const GWL_STYLE As Long = -16
 Public Const WS_EX_STATICEDGE As Long = &H20000
@@ -167,7 +172,7 @@ End Type
 'Public Declare Function FlashWindow Lib "user32" (ByVal hwnd As Long, ByVal bInvert As Long) As Long
 'Public Declare Function GetWindow Lib "user32" (ByVal hwnd As Long, ByVal wCmd As Long) As Long
 
-'Otras
+' Others
 Private Declare Function GetKeyboardState Lib "user32" (ByVal kbArray As Long) As Long
 Private Declare Function SetKeyboardState Lib "user32" (ByVal kbArray As Long) As Long
 'Public Declare Function timeGetTime Lib "winmm.dll" () As Long

@@ -6,8 +6,8 @@ Begin VB.Form frmProgramInspector
    BackColor       =   &H80000005&
    Caption         =   "Program inspector"
    ClientHeight    =   4815
-   ClientLeft      =   60
-   ClientTop       =   345
+   ClientLeft      =   45
+   ClientTop       =   330
    ClientWidth     =   5190
    Icon            =   "frmProgramInspector.frx":0000
    LinkTopic       =   "Form1"
@@ -20,11 +20,11 @@ Begin VB.Form frmProgramInspector
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   8
-      Size            =   57400
+      Size            =   39032
       Images          =   "frmProgramInspector.frx":058A
       Version         =   131072
-      KeyCount        =   50
-      Keys            =   "ÿÿÿÿÿÿÿold funcÿÿÿÿÿÿÿÿÿÿÿincludeÿÿÿÿÿÿold procÿÿÿÿÿÿold privateÿold structÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ"
+      KeyCount        =   34
+      Keys            =   "ÿÿÿÿÿÿÿold funcÿÿÿÿÿÿÿÿÿÿÿincludeÿÿÿÿÿÿold procÿÿÿÿÿÿold privateÿold structÿÿ"
    End
    Begin vbalTreeViewLib6.vbalTreeView tv_program 
       Height          =   3255
@@ -102,7 +102,7 @@ Public Sub tv_program_NodeDblClick(node As vbalTreeViewLib6.cTreeViewNode)
     Dim nodito As staticNode
     Set nodito = includesNodes.item(node.Key)
         Debug.Print node.Key
-    ' Setea la clase que lee el archivo
+
     Dim srcFile As New cReadFile
     Dim Filename As String
     srcFile.Filename = nodito.Filename
@@ -112,9 +112,9 @@ Public Sub tv_program_NodeDblClick(node As vbalTreeViewLib6.cTreeViewNode)
     End If
     
     ' varType & "|" & palabra & "|" & fatherNode
-    ' la primera es la parte que indica que tipo de declaracion es
-    ' la segunda es el nombre
-    ' la tercera dentro de que nodo se tiene que crear, q puede ser vacio si el el main
+    ' 1st part: type of object (var, function...)
+    ' 2nd part: object name
+    ' 3rd part: father node name (if empty, main node)
     
     Dim arrayBusca() As Variant
     Dim i As Integer
@@ -153,16 +153,16 @@ Public Sub tv_program_NodeDblClick(node As vbalTreeViewLib6.cTreeViewNode)
         Dim linea As String
         Dim palabra As String
                
-        'Recorre todas las lineas del prg
+        ' read all the lines
         While srcFile.canRead
-            'toma uma linea
+            ' get a line
             linea = srcFile.getLine
             
             '*******************************************
-            '*********** OPTIMIZACION DE LA LINEA ******
+            '*********** Line clearing *****************
             '*******************************************
                 
-            'reemplaza los caracteres no visibles por espacios
+            ' replace non visible chars with spaces
             linea = replace(linea, Chr(9), " ")
             linea = replace(linea, vbNewLine, " ")
             linea = replace(linea, vbCrLf, " ")
@@ -173,13 +173,13 @@ Public Sub tv_program_NodeDblClick(node As vbalTreeViewLib6.cTreeViewNode)
             linea = replace(linea, vbFormFeed, " ")
             linea = replace(linea, vbVerticalTab, " ")
             
-            'le saca los espacios
+            ' clear spaces
             linea = Trim(linea)
             
             While Len(linea) > 0
                 palabra = getWord(linea)
                 If LCase(palabra) = LCase(arrayBusca(i)) Then
-                    ' se encuentra la palabra buscada
+                    ' searched word found!
                     If i = UBound(arrayBusca) Then
                         'Dim frmIr As Form
                         'Set frmIr = NewFileForm(FF_SOURCE, nodito.filename)

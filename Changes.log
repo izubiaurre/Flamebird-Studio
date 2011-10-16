@@ -6,6 +6,9 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 08/10/2011   Izubiaurre                  \Forms\frmDoc.frm                                 
+    Un montón de cosas corregidas en los codeList, las cosas ya no se muestran donde no se deben.
+
 · 29/09/2011   Izubiaurre                  \Forms\frmDoc.frm                                 
     Ahora, después de insertar una función a través del codelist, muestra su codetip pertinente. 
 

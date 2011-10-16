@@ -21,6 +21,7 @@ Option Explicit
 Public Const CONF_FILE As String = "/conf/config.ini"
 Public Const EDITOR_CONF_FILE As String = "/conf/editor.ini"
 Public Const RES_FOLDER As String = "/Resources"
+Public Const GUP_PATH As String = "\Tools\Gup\"
 
 Public Ini As New cInifile
 
@@ -798,6 +799,10 @@ Public Sub Main()
     'Register dlls and ocx of the related dir
     'RegisterAppComponents
     
+    ' Look if there's a new version of fbmx
+    SetSplashMessage "Looking for Fbmx new versions"
+    FBMX_newVersion
+    
     'Language definition
     SetSplashMessage "Loading languaje definition"
     LoadLan
@@ -872,3 +877,7 @@ Public Function InitCommonControlsVB() As Boolean
    InitCommonControlsVB = (Err.Number = 0)
    On Error GoTo 0
 End Function
+
+Public Sub FBMX_newVersion()
+    frmMSDOSCommand.ExecuteCommand "GUP.exe", 0, App.Path & GUP_PATH
+End Sub

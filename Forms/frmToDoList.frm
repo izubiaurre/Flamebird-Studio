@@ -236,13 +236,13 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-'Constantes de color
+' color constants
 Private Const CLR_GRIDTEXT = &H9C3000
 Private Const CLR_OLDDATE = &H1B11CC
 Private Const CLR_GRIDLINES = &HC0C0C0 '&HBDBDBD
 Private Const CLR_BACKGRID = &HF0F0EC '&HD6C3BC
 
-'Constantes de posición de columnas
+' column positions constants
 Private Const COL_CHECKBOX = 1
 Private Const COL_ICONS = 2
 Private Const COL_PRIORITY = 3
@@ -257,21 +257,21 @@ Private Const COL_ASSIGNEDTO = 11
 Private Const COL_DATECLOSING = 12
 Private Const COL_DETAILEDDESC = 13
 
-'Constantes de iconos
-'Iconos del grid
+' icons constants
+' grid icons
 'Headers
 Private Const ICD_CHECKHEADER = 0
 Private Const ICD_SORTASCENDING = 3
 Private Const ICD_SORTDESCENDING = 4
 Private Const ICD_PRIORITY = 5
 Private Const ICD_STATUS = 6
-'Celdas
+'Cells
 Private Const ICD_UNCHECK = 1
 Private Const ICD_CHECK = ICD_UNCHECK + 1
 Private Const ICD_LOCKED = 7
 Private Const ICD_HIDDEN = ICD_LOCKED + 1
 
-'Iconos de los tabs
+' Tabs icons
 Private Const ICD_BUGS = 0
 Private Const ICD_RFE = 1
 Private Const ICD_QUESTIONS = 2
@@ -289,8 +289,8 @@ Private clr_lowest As Long
 Private bNoTrackers As Boolean 'Store if there isn't any tracker
 Private devcol As cDeveloperCollection
 
-Private m_ShowTabs As Boolean 'Ver la barra de lengüetas
-Private m_ShowHiddenItems As Boolean 'Ver elementos ocultos
+Private m_ShowTabs As Boolean
+Private m_ShowHiddenItems As Boolean
 
 Implements IGridCellOwnerDraw
 'Implements ITDockMoveEvents
@@ -368,7 +368,7 @@ Private Sub DeleteItem()
     With grdTracker
         If MsgBox("Sure to delete the item '" & AT(hex(.RowItemData(.SelectedRow))).Summary _
                 & "' ? (This action cannot be undone)", vbQuestion + vbYesNo) = vbYes Then
-            'Delete the itme
+            'Delete the item
             AT.Remove (hex(AT(hex(.RowItemData(.SelectedRow))).Id))
             
             SelectTracker AT 'Refresh
@@ -376,7 +376,7 @@ Private Sub DeleteItem()
     End With
 End Sub
 
-'Cuenta el número de elementos ocultos del tracker activo
+' Count then number of hidden elements in the active travker
 Private Function CountHiddenItems() As Integer
     Dim counter As Integer
     Dim ti As cTrackerItem
@@ -388,8 +388,7 @@ Private Function CountHiddenItems() As Integer
 End Function
 
 
-
-'Dibuja las filas agrupadas de modo personalizado
+' Draw the grouped rows in personalized mode
 Private Sub drawGroupRow(cell As cGridCell, ByVal lHdc As Long, ByVal lLeft As Long, _
       ByVal lTop As Long, ByVal lRight As Long, ByVal lBottom As Long)
 
@@ -426,7 +425,7 @@ Private Sub drawGroupRow(cell As cGridCell, ByVal lHdc As Long, ByVal lLeft As L
 
 End Sub
 
-'Dibuja la barra de progreso
+' Draw the progress bar
 Private Sub drawProgressCell(cell As cGridCell, ByVal lHdc As Long, _
       ByVal lLeft As Long, ByVal lTop As Long, ByVal lRight As Long, _
       ByVal lBottom As Long)
@@ -438,16 +437,16 @@ Dim tProgR As RECT
    tr.Top = lTop + 2
    tr.Right = lRight - 2
    tr.Bottom = lTop + grdTracker.DefaultRowHeight - 2
-
-   'Dibujamos la barra de progreso
+    
+    ' draw
    LSet tProgR = tr
    tProgR.Right = tProgR.Left + (tProgR.Right - tProgR.Left) * cell.text * 1 / 100
    GradientFillRect lHdc, tProgR, RGB(234, 94, 45), RGB(238, 164, 36), GRADIENT_FILL_RECT_H
    
-   'Escribimos el texto encima de la barra
+   ' write text over it
    DrawTextA lHdc, Format(CInt(cell.text) / 100, "0%"), -1, tr, cell.TextAlign
 
-   'Creamos el contorno
+   ' draw the contornous
    hBr = CreateSolidBrush(&H0&)
    FrameRect lHdc, tr, hBr
    DeleteObject hBr
@@ -512,7 +511,7 @@ End Sub
 
 Private Sub grdTracker_RequestEdit(ByVal lRow As Long, ByVal lCol As Long, ByVal iKeyAscii As Integer, bCancel As Boolean)
     bCancel = True
-    'Hemos pinchado "marcar como cerrado"
+    ' we've checked "mark as closed"
     If lCol = COL_CHECKBOX Then
        AT(hex(grdTracker.RowItemData(lRow))).Closed = Not AT(hex(grdTracker.RowItemData(lRow))).Closed
        SelectTracker AT
@@ -541,7 +540,7 @@ Private Sub IGridCellOwnerDraw_Draw( _
    End If
 End Sub
 
-'Devuelve la altura necesaria para poder contener el texto de una celda completa
+' Needed cell height to contain the cell text
 Private Function EvaluateTextHeight(lRow As Long, lCol As Long) As Long
     Dim i As Long, lWidth As Long, lHeight As Long
     Dim r As RECT
@@ -550,16 +549,16 @@ Private Function EvaluateTextHeight(lRow As Long, lCol As Long) As Long
     
     lWidth = 0
     With grdTracker
-        'Tomamos la suma de los anchos de las columnas VISIBLES y NO AGRUPADAS
+        ' calculate de width of the VISIBLE and HIDDEN columns
         For i = .RowTextStartColumn To .Columns - 1
             If (AT.ColumnVisible(.ColumnTag(i))) And Not .ColumnIsGrouped(i) Then
                 lWidth = lWidth + .ColumnWidth(i)
             End If
         Next
         
-        SetRect r, 0, 0, lWidth, 0 'Ancho del rectángulo, el alto se calcula
-        InflateRect r, -2, 0 'Necesario para que coincida con la región de la celda
-        'Calculamos la altura necesaria para escribir el texto simulando una escritura sobre el rectángulo
+        SetRect r, 0, 0, lWidth, 0 ' Width of rectangle, Height is calculated
+        InflateRect r, -2, 0 ' Needed to meet the cell-region
+        ' Calculate the necessary height to write the text simulating a writing on the rect
         lHeight = DrawTextA(GetDC(.Hwnd), .CellText(lRow, lCol) & vbNullChar, -1, r, DT_WORDBREAK Or DT_CALCRECT)
         
     End With
@@ -567,8 +566,8 @@ Private Function EvaluateTextHeight(lRow As Long, lCol As Long) As Long
     EvaluateTextHeight = lHeight + grdTracker.DefaultRowHeight + 4
 End Function
 
-'Busca la fila que se corresponde con el id especificado (en el itemData)
-'Si no la encuentra, devuelve -1
+' Search the row ofr the specified Id (in itemData)
+' on not found return -1
 Private Function RowIndexByID(Id As Long) As Long
     Dim i As Integer
     With grdTracker
@@ -579,13 +578,13 @@ Private Function RowIndexByID(Id As Long) As Long
     RowIndexByID = -1
 End Function
 
-'Ordena los elementos del tracker activo en el grid según la columna que se le indique
+' Sort the elements by the clicked column
 Private Sub Sort(ByVal lCol As Long, Optional order As ECGSortOrderConstants = CCLOrderAscending)
     Dim i As Integer, colIcon As Long
     
     With grdTracker.SortObject
         
-        'Borramos el icono de la antigua sortcolumn
+        ' Delete the icon over the old sortcolumn
         If .count > 0 Then
             colIcon = grdTracker.ColumnImage(.SortColumn(1))
             If colIcon = ICD_SORTASCENDING Or colIcon = ICD_SORTDESCENDING Then grdTracker.ColumnImage(.SortColumn(1)) = -1
@@ -596,7 +595,7 @@ Private Sub Sort(ByVal lCol As Long, Optional order As ECGSortOrderConstants = C
         .SortType(1) = grdTracker.ColumnSortType(lCol)
         .SortOrder(1) = order
 
-        'Ponemos el Icono en lCol
+        ' Put the icon in lCol
         If grdTracker.ColumnImage(lCol) = -1 Then 'La columna no tiene icono propio
             grdTracker.ColumnImage(lCol) = ICD_SORTASCENDING + (order - 1)
             grdTracker.ColumnImageOnRight(lCol) = True
@@ -606,12 +605,12 @@ Private Sub Sort(ByVal lCol As Long, Optional order As ECGSortOrderConstants = C
     grdTracker.Sort
 End Sub
 
-'Establece las columnas del grid
+' Set the columns of the grid
 Private Sub CreateGrid()
     With grdTracker
-        .ImageList = ilstGrid 'Lista de iconos
+        .ImageList = ilstGrid ' Icon list
         
-        .Redraw = False 'Para mayor velocidad
+        .Redraw = False ' For more speed
         .GridLineColor = CLR_GRIDLINES
         .BackColor = CLR_BACKGRID
         .GridFillLineColor = CLR_BACKGRID
@@ -619,8 +618,8 @@ Private Sub CreateGrid()
         .Editable = True
         .HighlightBackColor = &H575283
 
-        'Ponemos todas las columnas y definimos sus características
-        'En el ColumnTag guardamos el número que se corresponde con la enumeración Tracker Columns
+        ' All the columns with its properties
+        ' in columnTag we save the number of Tracker Columns enumeration
         .AddColumn "CheckBox", , , ICD_CHECKHEADER, 25, , True, , True, , , CCLSortIcon
         .ColumnTag(COL_CHECKBOX) = tcCheckBox
         
@@ -668,18 +667,17 @@ Private Sub CreateGrid()
     End With
 End Sub
 
-'Establece el tracker activo y determina las columnas del grid que serán visibles
-'Private Sub SelectTracker(tracker As cTracker)
+' Set the active tracker and show wich columns are visible
 Public Sub SelectTracker(tracker As cTracker)
     Dim i As Long
     Dim ScrollPosX As Long, ScrollPosY As Long 'Pos Scrollbars
-    Dim SelItemID As Long 'Elemento seleccionado
+    Dim SelItemID As Long ' Selected element
     Dim selRow As Long
     
     With grdTracker
         .Redraw = False
            
-        If AT.name = tracker.name Then 'Si es el mismo tracker guardamos datos
+        If AT.name = tracker.name Then ' Save data if same tracker
             ScrollPosX = .ScrollOffsetX
             ScrollPosY = .ScrollOffsetY
             If .SelectedRow > 0 Then
@@ -691,8 +689,7 @@ Public Sub SelectTracker(tracker As cTracker)
             ScrollPosX = 0: ScrollPosY = 0: SelItemID = -1
         End If
     
-        'Determinamos las columnas que se verán. La propiedad tag de la columna guarda
-        'el valor que corresponde a la columna según la enumeración TrackerColumns
+        ' if columnTag show or not the column
         For i = 1 To .Columns
             .ColumnVisible(i) = (tracker.ColumnVisible(CInt(.ColumnTag(i))))
         Next
@@ -700,9 +697,9 @@ Public Sub SelectTracker(tracker As cTracker)
         Set AT = tracker
         FillGrid AT
         
-        Sort AT.SortColumn, AT.SortOrder 'Ordena
+        Sort AT.SortColumn, AT.SortOrder ' Sort
         
-        'Restauramos la posición del scrollbar y del elemento seleccionado
+        ' Reload scrollbar position and the selected element
         .ScrollOffsetX = ScrollPosX
         .ScrollOffsetY = ScrollPosY
         selRow = RowIndexByID(SelItemID)
@@ -712,29 +709,29 @@ Public Sub SelectTracker(tracker As cTracker)
     End With
 End Sub
 
-'Rellena el grid con los elementos de un tracker (el activo por defecto)
+' Fill the grid with the tracker's elements (the active one by default)
 Private Sub FillGrid(tracker As cTracker)
     Dim i As Long
     Dim it As cTrackerItem
       
     grdTracker.Clear
     
-    Dim boldfnt As New StdFont 'Fuente en negrita
+    Dim boldfnt As New StdFont ' Font in bold
     boldfnt.Bold = True
     Dim fnt As New StdFont
     
-    'Para cada elemento añadimos una fila y escribimos en las celdas
+    ' For each item a new line
     For Each it In tracker
     With grdTracker
-        'Si el elemento está cerradola fuente se pone tachada
+        ' If item is closed, put underlined
         fnt.Strikethrough = it.Closed
         boldfnt.Strikethrough = it.Closed
     
-        .AddRow , it.Id 'El id del elemento se guarda en el ItemData
+        .AddRow , it.Id ' The Id of the item is saved in itemData
         
         .CellDetails .Rows, COL_CHECKBOX, lIconIndex:=IIf(it.Closed, ICD_CHECK, ICD_UNCHECK), lIndent:=3 'Checkbox
-        .CellIcon(.Rows, COL_ICONS) = IIf(it.Locked, ICD_LOCKED, -1) 'Bloqueado
-        .CellExtraIcon(.Rows, COL_ICONS) = IIf(it.Hidden, ICD_HIDDEN, -1) 'Oculto
+        .CellIcon(.Rows, COL_ICONS) = IIf(it.Locked, ICD_LOCKED, -1) ' Blocked
+        .CellExtraIcon(.Rows, COL_ICONS) = IIf(it.Hidden, ICD_HIDDEN, -1) ' Hidded
         .CellDetails .Rows, COL_SUMMARY, it.Summary, oFont:=boldfnt 'Sumary
         .CellDetails .Rows, COL_CATEGORY, it.Category, oFont:=fnt 'Category
         .CellDetails .Rows, COL_MODULE, it.module, oFont:=fnt 'Module
@@ -748,16 +745,14 @@ Private Sub FillGrid(tracker As cTracker)
         .CellDetails .Rows, COL_SUBMITTEDBY, it.SubmittedBy, oFont:=fnt 'Submitted by
         .CellDetails .Rows, COL_DETAILEDDESC, it.DetailedDesc, DT_WORDBREAK, , , RGB(0, 0, 0), oFont:=fnt    'Detailded Desc
         
-        'Determinamos si se debe o no mostrar la descripción
+        ' Determine if we have to write description or not
         If (tracker.ShowDescription) And Not tracker.AutoExpandSelItems Then
             .RowHeight(.Rows) = EvaluateTextHeight(.Rows, COL_DETAILEDDESC)
         End If
         
         If tracker.ColorItemsByPriority Then 'COLOR BY PRIORITY
-            'Establece el color de fondo de la fila en funcion de la prioridad
+            ' Set the background color by priority
             For i = 1 To .Columns - 1
-                ' old style soft reds
-                '.CellBackColor(.Rows, i) = RGB(222, 227 - it.Priority * 8, 230 - it.Priority * 8)
                 setTrackerColors
                 Select Case it.Priority
                     Case 1:
@@ -776,7 +771,7 @@ Private Sub FillGrid(tracker As cTracker)
         End If
         
         If tracker.ColorOldItems Then 'COLOR OLD ITEMS
-            'Si han pasado más de 30 días la fecha aparece en rojo
+            ' If the item is older than a month, date in red
             If DateDiff("d", it.DateCreated, Date) > tracker.OldItemsDays Then .CellForeColor(.Rows, COL_DATECREATED) = CLR_OLDDATE
         End If
         
@@ -897,7 +892,7 @@ Private Sub Form_Load()
         
     End With
     'Create the rebar
-    With cRebar
+    With cReBar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
@@ -905,9 +900,9 @@ Private Sub Form_Load()
         .AddBandByHwnd tbrToDo.Hwnd, , True, False
     End With
     
-    tabTracker.ImageList = ilstTabs 'Image list del tab
-    CreateGrid 'Columnas y disposición del grid
-    grdTracker.OwnerDrawImpl = Me 'La interfaz IOwnerdraw está implementada aquí
+    tabTracker.ImageList = ilstTabs 'Image list of the tab
+    CreateGrid 'Columnas and disposition of the grid
+    grdTracker.OwnerDrawImpl = Me ' IOwnerImpl interface is implemented here
     
     Update
     
@@ -917,17 +912,17 @@ End Sub
 
  Public Sub Update()
     If Not openedProject Is Nothing Then
-        'Establece la lista de desarrolladores
+        ' Set the developer list
         Set devcol = openedProject.devcol
-        'Establece la colección de trackers
+        ' Set tracker colection
         Set colTrackers = openedProject.colTrackers
               
-        If openedProject.colTrackers.count = 0 Then 'No hay trackers
+        If openedProject.colTrackers.count = 0 Then ' There is no tracker
             NoTrackers = True
         Else
-            Set AT = colTrackers(1) 'Tracker activo el primero
+            Set AT = colTrackers(1) ' ACtive tracker first
             RefreshTabs
-            SelectTracker AT 'Selecciona el tracker Bugs
+            SelectTracker AT ' Select bug tracker
         End If
         grdTracker.Visible = True
     Else
@@ -962,15 +957,15 @@ Private Sub grdTracker_SelectionChange(ByVal lRow As Long, ByVal lCol As Long)
     Dim i As Integer
     
     If lRow <= 0 Or lCol <= 0 Then Exit Sub
-    'Muestra la descripción detallada de un elemento al seleccionarlo
+    ' Show detailed description of the selected item
     If AT.AutoExpandSelItems Then
         With grdTracker
             .Redraw = False
-            'Establece la altura por defecto para todos
+            ' Default height for all
             For i = 1 To .Rows
                 .RowHeight(i) = .DefaultRowHeight
             Next
-            'Calcula la altura para la fila seleccionada
+            ' Calculate height for the selected row
             If Not .RowIsGroup(lRow) Then
                 .RowHeight(lRow) = EvaluateTextHeight(lRow, COL_DETAILEDDESC)
             End If
@@ -981,7 +976,7 @@ Private Sub grdTracker_SelectionChange(ByVal lRow As Long, ByVal lCol As Long)
 End Sub
 
 Private Sub grdTracker_ColumnClick(ByVal lCol As Long)
-    'Ordenamos el grid
+    ' Sort grid
     AT.SortOrder = IIf(grdTracker.SortObject.SortOrder(1) = CCLOrderAscending, CCLOrderDescending, CCLOrderAscending)
     AT.SortColumn = lCol
     SelectTracker AT
@@ -1010,7 +1005,7 @@ Private Sub tabTracker_TabClick(theTab As vbalDTab6.cTab, ByVal iButton As Mouse
     SelectTracker colTrackers(hex(theTab.ItemData))
     
     If iButton = vbRightButton Then
-        CreatePopupMenu "mnu" 'Menu contextual
+        CreatePopupMenu "mnu" ' Contextual menu
     End If
 End Sub
 
@@ -1027,7 +1022,7 @@ Private Sub CreatePopupMenu(sKey As String)
         rID = .AddItem(0, Key:=sKey)
 
         .AddItem rID, "Add Item...", Key:="AddItem"
-        If grdTracker.SelectedRow > 0 Then 'Si hay elementos seleccionados mostramos Edit
+        If grdTracker.SelectedRow > 0 Then ' If there are selected items, show Edit
             .AddItem rID, "Edit Item...", Key:="EditItem"
             .AddItem rID, "Delete item", Key:="DelItem"
         End If
@@ -1045,7 +1040,7 @@ Private Sub CreatePopupMenu(sKey As String)
         rID2 = .AddItem(rID, "Show tracker" & Space(5), , , "SelTracker")
         Dim tr As cTracker
         For Each tr In colTrackers
-            'Añadimos los trackers
+            ' Add the trackers
             .AddItem rID2, tr.name, , , "~TR" & tr.name
         Next
             
@@ -1060,20 +1055,20 @@ Private Sub CreatePopupMenu(sKey As String)
         If lMnu <> 0 Then
             lIndex = .IndexForID(lMnu)
             Select Case .ItemKey(lIndex)
-            Case "TrackerMan" 'Tracker Manager
+            Case "TrackerMan" ' Tracker Manager
                 frmTrackerManager.Show 1
 
-            Case "AddItem" 'Añadir
+            Case "AddItem" ' Add
                 newItem
-            Case "EditItem" 'Editar
+            Case "EditItem" ' Edit
                 EditItem
-            Case "DelItem" 'Eliminar
+            Case "DelItem" ' Delete
                 DeleteItem
 
-            Case "DevList" 'Lista de desarrolladores
+            Case "DevList" ' Developer list
                 frmDevelopersList.Show 1
                 
-            Case "ShowTabs" 'Mostar/Ocultar barra de lengüetas
+            Case "ShowTabs" ' Show/Hide tab bar
                 ShowTabs = Not .ItemChecked(lIndex)
                 
             Case "ShowHidden"
@@ -1081,12 +1076,12 @@ Private Sub CreatePopupMenu(sKey As String)
                 SelectTracker AT
             End Select
             
-            If .ItemKey(lIndex) Like "~TR*" Then 'Mostrar tracker *
+            If .ItemKey(lIndex) Like "~TR*" Then ' Show tracker *
                 SelectTracker colTrackers(colTrackers.IndexForName(.ItemCaption(lIndex)))
                 tabTracker.Tabs.item(.ItemCaption(lIndex)).Selected = True
             End If
             
-            If .ItemKey(lIndex) Like "~COL*" Then 'Visible columns
+            If .ItemKey(lIndex) Like "~COL*" Then ' Visible columns
                 AT.ColumnVisible(CLng(.ItemTag(lIndex))) = Not .ItemChecked(lIndex)
                 SelectTracker AT
             End If

@@ -34,10 +34,10 @@ Option Explicit
 Option Compare Binary
 Option Base 0
 
-'NOTA: Las funciones como MapBlt, MakeBitmap, etc devuelven -1 si tienen éxito o 0 en caso contrario
+' NOTE: MapBlt, MakeBitmap, and other functions returns 0 on error, -1 otherwise
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (pDst As Any, pSrc As Any, ByVal ByteLen As Long)
 
-'Constantes de error
+' Error constants
 Private Const ERR_MAP_ALREADY16BPP = "This map is already 16bpp depth"
 Private Const ERR_MAP_COULDNOTMAKEBMP = "Bitmap could not be created"
 Private Const ERR_MAP_NOTLOADED = "Map not loaded"

@@ -534,7 +534,7 @@ Private Sub cmdExeFile_Click()
 End Sub
 
 Private Sub cmdIconFile_Click()
-    On Error GoTo errhandler:
+    On Error GoTo ErrHandler:
     Dim sFiles() As String
     
     If ShowOpenDialog(sFiles(), getFilter("ICON"), True, False) > 0 Then
@@ -542,7 +542,7 @@ Private Sub cmdIconFile_Click()
         imgIcon.Picture = LoadPicture(txtIconFile)
     End If
     Exit Sub
-errhandler:
+ErrHandler:
     MsgBox "Could not display icon properly", vbCritical
 End Sub
 
@@ -561,7 +561,7 @@ End Sub
 Private Sub cmdOk_Click()
     If txtName.text = "" Then
         MsgBox "The field 'Project Name' cannot be empty", vbCritical
-        If TabControl.Tabs.item(1).Selected = False Then 'Seleccionamos el tab 1
+        If TabControl.Tabs.item(1).Selected = False Then ' go to errors tab
             TabControl.Tabs.item(1).Selected = True
         End If
         txtName.SetFocus
@@ -585,7 +585,7 @@ Private Sub Form_Load()
     Set browseDir = New cBrowseForFolder
     Set cdialog = New cCommonDialog
     
-    Image1.Picture = LoadPicture(App.Path & "\Resources\frmHeader.jpg")
+    Image1.Picture = LoadPicture(App.Path & "/Resources/frmHeader.jpg")
     
     Dim nTab As cTab
     With TabControl

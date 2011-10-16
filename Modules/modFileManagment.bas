@@ -121,10 +121,10 @@ Public Function GetLongFilename(ByVal sShortFilename As String) As String
     End If
 End Function
 
-' si el path es relativo, le agrega el dir del project
+' if the path is relative, add to the project dir
 Public Function makePathForProject(ByVal sFile As String) As String
     If sFile = "" Then Exit Function
-    ' si no contiene el nombre de la unidad es que el path es relativo
+    ' if doesn't contain the drive, the path is definitely relative
     If FSO.GetDriveName(sFile) = "" Then
         Dim directorioBase As String
         directorioBase = FSO.GetParentFolderName(openedProject.Filename)
@@ -134,10 +134,10 @@ Public Function makePathForProject(ByVal sFile As String) As String
     makePathForProject = sFile
 End Function
 
-' si el path es relativo, le agrega el dir del project, sin el filename
+' if the path is relative, adds the dir of the project to the path, without the filename
 Public Function getPath(ByVal sFile As String) As String
     If sFile = "" Then Exit Function
-    ' si no contiene el nombre de la unidad es que el path es relativo
+    ' if doesn't contain the drive, the path is definitely relative
     If FSO.GetDriveName(sFile) = "" Then
         Dim directorioBase As String
         directorioBase = FSO.GetParentFolderName(openedProject.Filename)
@@ -170,7 +170,7 @@ End Sub
 Public Sub OpenProject(ByVal sFile As String, Optional bNew As Boolean)
     Dim oldProject As cProject
     
-    'Si hay un proyecto abierto, mantenemos un obj cProject de seguridad y lo cerramos
+    ' If there's no opened project, we keep a cProjectof object fro security and then close it
     If Not openedProject Is Nothing Then
         Set oldProject = openedProject
         CloseProject
@@ -179,9 +179,9 @@ Public Sub OpenProject(ByVal sFile As String, Optional bNew As Boolean)
     Set openedProject = New cProject
     openedProject.Filename = sFile
     
-    If bNew Then 'Si no existe creamos un proyecto con configuración por defecto
+    If bNew Then ' If it is no project, we create one with default configuration
         openedProject.projectName = "My project"
-        'Categorías por defecto
+        ' Default categories
         openedProject.AddCategory "Source files", "*.prg|*.inc|*.h"
         openedProject.AddCategory "Image files", "*.map|*.fbm|*.png"
         openedProject.AddCategory "Graphics Libraries", "*.fpg|*.fgc"
@@ -192,18 +192,18 @@ Public Sub OpenProject(ByVal sFile As String, Optional bNew As Boolean)
         openedProject.AddCategory "Font files", "*.fnt|*.ttf"
         openedProject.AddCategory "Import file", "*.imp|*.import"
 
-        'Trackers por defecto
+        ' Default trackers
         openedProject.colTrackers.Add "Bugs"
         openedProject.colTrackers(openedProject.colTrackers.KeyForName("Bugs")).AddCategory "Interface(Example)"
         
-        openedProject.Save 'Crea los archivos del proyecto
+        openedProject.Save ' Create project files
     End If
     
-    If openedProject.LoadProject Then 'carga satisfactoria
+    If openedProject.LoadProject Then ' sucessfull load
         setProjectMenu (True)
-        openedProject.loadCache ' cargamos el cache
-        openedProject.LoadIdeStatus 'Carga el estado del proyecto
-        openedProject.LoadProjectConf 'Configuración local
+        openedProject.loadCache ' load cache
+        openedProject.LoadIdeStatus ' load project state
+        openedProject.LoadProjectConf ' load local configuration
         If openedProject.mainSource <> "" Then
              Dim nombre As String
              nombre = openedProject.mainSource
@@ -214,12 +214,12 @@ Public Sub OpenProject(ByVal sFile As String, Optional bNew As Boolean)
         AddRecent openedProject.Filename, rtProject
         frmProjectBrowser.RefreshTree
     Else
-        'Reestablece el antiguo proyecto
+        ' old project
         If Not oldProject Is Nothing Then
             Set openedProject = oldProject
             setProjectMenu (True)
             frmProjectBrowser.RefreshTree
-            MsgBox "Error In OpenProject. ModFileManagement", vbCritical
+            MsgBox "Error In OpenProject.ModFileManagement", vbCritical
         End If
     End If
 End Sub
@@ -227,13 +227,13 @@ End Sub
 'Closes a project
 Public Sub CloseProject()
     If Not openedProject Is Nothing Then
-        openedProject.Save 'Guarda el projecto
+        openedProject.Save ' save the project
         openedProject.dumpCache
         Set openedProject = Nothing
         setProjectMenu (False)
         frmProjectBrowser.tvProject.Nodes.Clear
         
-        Unload frmTodoList 'cerrar el tracker
+        Unload frmTodoList 'close the tracker
     End If
 End Sub
 
@@ -317,7 +317,7 @@ End Function
 'Creates a new File Form optionaly loading a file into it. The return value is a TEMPORAL solution
 Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile As String) As Form
 
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     'This is a temporal solution to handle the Untitled documents count
     Static UntitledCount(0 To 10) As Integer
@@ -326,7 +326,7 @@ Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile
     Dim fForm As Form 'To acess standard form methods (i.e. show) NOT FOR ANY OTHER PURPOSE
     
     LockWindowUpdate frmMain.Hwnd
-    'Determina el formulario que debe crear en función del tipo de archivo
+    ' By the given filetype, determines wifh form to create
     Select Case ff
     Case FF_SOURCE
         Set fFileForm = New frmDoc
@@ -346,7 +346,7 @@ Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile
     If sFile = "" Then 'New file
         If fFileForm.NewW(UntitledCount(ff)) Then  'New FileForm succesful
             fForm.Show
-            Set NewFileForm = fFileForm 'TEMPORAL: No NewFileForm no debería tener un valor de retorno
+            Set NewFileForm = fFileForm 'TEMPORAL: NewFileForm hadn't have any return value
             UntitledCount(ff) = UntitledCount(ff) + 1
             If ff = FF_SOURCE Then
                 ' insert here necromancer code
@@ -381,7 +381,7 @@ Public Function NewFileForm(ByVal ff As EFileFormConstants, Optional ByVal sFile
     
     Exit Function
     
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then MsgBox "NewFileForm":    Resume Next
 End Function
 
@@ -431,7 +431,7 @@ Public Sub SaveFileOfFileForm(fFileForm As IFileForm, Optional ByVal bSaveAs As 
     Dim lResult As Long
     Dim msgResult As VbMsgBoxResult
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     If Not fFileForm Is Nothing Then
         bSaveAs = (Not (fFileForm.AlreadySaved)) Or bSaveAs
@@ -466,7 +466,7 @@ Public Sub SaveFileOfFileForm(fFileForm As IFileForm, Optional ByVal bSaveAs As 
     End If
     
     Exit Sub
-errhandler:
+ErrHandler:
     If Err.Number = &H4E21 Then  'Cancel error
         Set cdlg = Nothing
         Exit Sub
@@ -607,36 +607,36 @@ Public Sub LoadRecents()
     frmMain.CreateMenuFromStrMatrix frmMain.cMenu, "mnuFileRecentProjects", "mnuRecProj", Recents.RecentProjects
 End Sub
 
-'Limpia los recents
+' Clean the recents
 Private Sub TrimRecents()
     TrimRecentArray Recents.RecentFiles
     TrimRecentArray Recents.RecentProjects
 End Sub
 
-'Limpia los archivos inexistentes de un array de strings y los pone al final del mismo
+' Cleans the inexistent files from an array of strings and puts them at the end of it
 Private Sub TrimRecentArray(RecentArray() As String)
     Dim i As Integer
     Dim sFiles As String, sArray() As String
-    Dim bError As Boolean 'Controla si se produce un error en el acceso al dispositivo
+    Dim bError As Boolean ' controls if is happen any error at the acces at the dispositive
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     For i = LBound(RecentArray) To UBound(RecentArray)
         bError = False
-        RecentArray(i) = IIf(Dir(RecentArray(i)) = "", "", RecentArray(i)) 'Si no existe el archivo asigna ""
+        RecentArray(i) = IIf(Dir(RecentArray(i)) = "", "", RecentArray(i)) ' If the file doesn't exists, asigns ""
         sFiles = sFiles & IIf((RecentArray(i) = "") Or (bError = True), "", RecentArray(i) & "|")
     Next
-    If Not sFiles = "" Then sFiles = Left(sFiles, Len(sFiles) - 1) 'Quita el último |
+    If Not sFiles = "" Then sFiles = Left(sFiles, Len(sFiles) - 1) ' Deelete the last |
     
-    sArray = Split(sFiles, "|")  'Separa en un array los ficheros
-    Erase RecentArray 'Pone todos los elementos de los recents a ""
-    'Copia el array a los recents
+    sArray = Split(sFiles, "|")  ' Separate the files in the array
+    Erase RecentArray ' Put every item of the recent list ""
+    ' Copy the array
     For i = 0 To UBound(sArray)
         RecentArray(i + LBound(RecentArray)) = sArray(i)
     Next
     
-errhandler:
-    If Err.Number = 52 Then 'No se puede tener acceso al dispositivo
+ErrHandler:
+    If Err.Number = 52 Then ' Can't acces to the dispositive
         bError = True
         Resume Next
     End If
