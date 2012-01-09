@@ -17,8 +17,8 @@ Attribute VB_Name = "modFileManagment"
 'GNU General Public License for more details.
 
 ' **************************************************************
-' Funciones de acciones desencadenadas por el menu file
-' y aquellas relacionadas con el manejo de archivos
+' Action function called by file menu
+' and those about file management
 ' **************************************************************
 Option Explicit
 
@@ -28,8 +28,8 @@ Public Enum ERecentConstants
     rtFile
 End Enum
 Public Type T_RECENT
-  RecentFiles(1 To 5) As String
-  RecentProjects(1 To 5) As String
+  RecentFiles(1 To MAX_RECENTS_FILES) As String
+  RecentProjects(1 To MAX_RECENTS_PROJS) As String
 End Type
 Public Recents As T_RECENT
 
@@ -531,6 +531,7 @@ Public Sub NewWindowWeb(sURL As String, Optional Title As String, Optional Defau
     
     NewBrowser.URL = sURL
     NewBrowser.Show
+    NewBrowser.cmbURL.text = sURL
     frmMain.RefreshTabs
 End Sub
 

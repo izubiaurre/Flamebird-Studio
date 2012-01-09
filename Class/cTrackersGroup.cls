@@ -31,13 +31,13 @@ Attribute VB_Exposed = False
 Option Explicit
 Private m_Col As Collection
 
-Private counter As Long 'Contador para asignar IDs a los trackers de la coleccón
+Private counter As Long ' Counter to asign IDs to the colection of trackers
 
 '-----------------------------------------------------------------------------
-' IMPLEMENTACIÓN DE LA COLECCIÓN
+' IMPLEMENTATION OF THE COLLECTION
 '-----------------------------------------------------------------------------
 
-'Añade un tracker a la colección a partir de los parámetros que se especifican
+' Add a tracker to the collection with the gicen paramateres
 Public Sub Add(name As String, Optional description As String = "", _
                     Optional IconIndex As Long = -1, Optional VisibleColumns _
                     As TrackerColumns = tcGeneral, Optional SortColumn = 5, _
@@ -47,7 +47,7 @@ Public Sub Add(name As String, Optional description As String = "", _
                     
     
     Dim tr As New cTracker
-    'Propiedades del tracker
+    ' Properties of teh tracker
     tr.name = name
     tr.IconIndex = IconIndex
     tr.VisibleColumns = VisibleColumns
@@ -59,29 +59,28 @@ Public Sub Add(name As String, Optional description As String = "", _
     tr.ColorOldItems = ColorOldItems
     tr.OldItemsDays = OldItemsDays
     
-    counter = counter + 1 'incrementamos el contador
+    counter = counter + 1
     tr.Id = counter
-    m_Col.Add tr, hex(counter) 'Añade el tracker a la colección
+    m_Col.Add tr, hex(counter) ' Add tracker to the collection
     
     Set tr = Nothing
 End Sub
 
-'Añade un tracker a la colección a partir de un objeto cTracker
+' Add indirectly from a cTracker object
 Public Sub AddIndirect(tracker As cTracker)
-    'Añadimos el tracker
+    ' Add the tracker
     With tracker
         Add .name, .description, .IconIndex, .VisibleColumns, .SortColumn, .SortOrder, _
             .AutoExpandSelItems, .ColorItemsByPriority, .ColorOldItems, .OldItemsDays
     End With
     
-    'Copiamos las categorías
+    ' Copy the categories
     Dim s As Variant
     For Each s In tracker.CategoryCol
         item(m_Col.count).AddCategory CStr(s)
     Next
     
-    'Copiamos los items del tracker pasado al tracker que hemos añadido a
-    'la colección
+    ' Copy all the items from the cTracker
     Dim ti As cTrackerItem
     For Each ti In tracker
         item(m_Col.count).AddIndirect ti
@@ -90,7 +89,7 @@ End Sub
 
 Public Property Get item(ByVal ItemIndex As Variant) As cTracker
 Attribute item.VB_UserMemId = 0
-    If ItemIndex = "" Then 'Si es nulo seleccionamos el primer elemento
+    If ItemIndex = "" Then          ' If null, select first element
         Set item = m_Col.item(1)
     Else
         Set item = m_Col.item(ItemIndex)
@@ -113,11 +112,10 @@ Public Sub Clear()
     counter = 0
 End Sub
 
-'Permite usar For...Each...Next. Id proc=-4, Atribut=Oculto
+' To use For...Each...Next. Id proc=-4, Atribute=Hidden
 Public Function NewEnum() As IUnknown
 Attribute NewEnum.VB_UserMemId = -4
 Attribute NewEnum.VB_MemberFlags = "40"
-    'permite ser utilizado con For ...Each
     Set NewEnum = m_Col.[_NewEnum]
 End Function
 
@@ -144,7 +142,7 @@ Public Function KeyForName(ByVal sName As String) As String
 End Function
 
 '-----------------------------------------------------------------------------
-' INICIALIZACIÓN Y SALIDA
+' INITIALIZE AND TERMINATE
 '-----------------------------------------------------------------------------
 Private Sub Class_Initialize()
     Set m_Col = New Collection
@@ -155,12 +153,12 @@ Private Sub Class_Terminate()
     Set m_Col = Nothing
 End Sub
 
-'Devuelve un objeto copia
+' Returns a copy-object
 Public Function Copy() As cTrackerCollection
     Dim ret As cTrackerCollection
     Set ret = New cTrackerCollection
     
-    'Copiamos todos los trackers
+    ' Copy all the objects
     Dim tr As cTracker
     For Each tr In Me
         ret.AddIndirect tr.Copy
@@ -170,10 +168,10 @@ Public Function Copy() As cTrackerCollection
     Set ret = Nothing
 End Function
 
-'Copia el contenido del objeto en otro en otro
+' Copy the content of the object in other
 Public Sub CopyIn(colTrackers As cTrackerCollection)
     colTrackers.Clear
-    'Copiamos todos los trackers
+    ' Copy all the trackers
     Dim tr As cTracker
     For Each tr In Me
         colTrackers.AddIndirect tr.Copy

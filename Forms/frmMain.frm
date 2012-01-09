@@ -9,10 +9,10 @@ Begin VB.MDIForm frmMain
    AutoShowChildren=   0   'False
    BackColor       =   &H00404040&
    Caption         =   "Flamebird"
-   ClientHeight    =   6135
-   ClientLeft      =   210
+   ClientHeight    =   6510
+   ClientLeft      =   180
    ClientTop       =   810
-   ClientWidth     =   9075
+   ClientWidth     =   12660
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "MDIForm1"
    OLEDropMode     =   1  'Manual
@@ -33,10 +33,10 @@ Begin VB.MDIForm frmMain
       Height          =   495
       Left            =   0
       ScaleHeight     =   495
-      ScaleWidth      =   9075
+      ScaleWidth      =   12660
       TabIndex        =   1
       Top             =   0
-      Width           =   9075
+      Width           =   12660
       Begin vbalTBar6.cToolbar tbrMain 
          Height          =   375
          Left            =   4440
@@ -72,9 +72,9 @@ Begin VB.MDIForm frmMain
       Height          =   255
       Left            =   0
       TabIndex        =   0
-      Top             =   5880
-      Width           =   9075
-      _ExtentX        =   16007
+      Top             =   6255
+      Width           =   12660
+      _ExtentX        =   22331
       _ExtentY        =   450
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Semibold"
@@ -225,6 +225,27 @@ Public Sub RefreshTabs()
     End If
 End Sub
 
+Public Sub sortTabs()
+    Dim f As Form, ff As IFileForm
+    Dim iNumForms As Integer
+    Dim i As Integer
+    
+    iNumForms = 0
+    
+    For Each f In Forms
+        iNumForms = iNumForms + 1
+    Next
+    
+    ' 1st pass: fpgs << and fnts >>
+    For Each f In Forms
+        If ff.Identify = FF_FPG Then
+            MDITabs.ScrollLeft
+        End If
+    Next
+    
+    frmMain.RefreshTabs
+End Sub
+
 Private Function FormForHwnd(ByVal Hwnd As Long) As Form
    Dim frmChild As Form
    For Each frmChild In Forms
@@ -292,7 +313,7 @@ End Sub
 
 Private Sub MDIForm_Resize()
     If Me.WindowState <> vbMinimized Then
-        cReBar.RebarSize
+        cRebar.RebarSize
     End If
 End Sub
 
@@ -338,7 +359,7 @@ Private Sub MDIForm_OLEDragDrop(Data As DataObject, Effect As Long, Button As In
 End Sub
 
 Private Sub MDIForm_Unload(Cancel As Integer)
-    cReBar.RemoveAllRebarBands 'Just for safety
+    cRebar.RemoveAllRebarBands 'Just for safety
     
     Unload frmProjectBrowser
     Unload frmProperties
@@ -366,7 +387,9 @@ End Sub
 
 Private Sub MDITabs_TabBarClick(ByVal iButton As MouseButtonConstants, ByVal screenX As Long, ByVal screenY As Long)
     Dim lParentIndex As Long
+    Dim l2 As Long
     Dim rID As Long
+    
     If iButton = vbLeftButton Then
         mnuFileNewFile
     ElseIf iButton = vbMiddleButton Then
@@ -379,13 +402,34 @@ Private Sub MDITabs_TabBarClick(ByVal iButton As MouseButtonConstants, ByVal scr
                 Set .ImageList = ImgList1.Object
                 Call .CreateFromNothing(Me.Hwnd)
                 lParentIndex = .AddItem(0, Key:="FileMenu")
-                .AddItem lParentIndex, "File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
+'                .AddItem lParentIndex, "File...", "Ctrl+O", , "mnuFileOpenFile", , , , 1
+'                .AddItem lParentIndex, "-"
+'                .AddItem lParentIndex, "Source...", , , "mnuFileOpenSource", , , , 19
+'                .AddItem lParentIndex, "Map...", , , "mnuFileOpenMap", , , , 21
+'                .AddItem lParentIndex, "Fpg...", , , "mnuFileOpenFpg", , , , 22
+'                .AddItem lParentIndex, "Fnt...", , , "mnuFileOpenFnt", , , , 91
+'                .AddItem lParentIndex, "Import...", , , "mnuFileOpenImp"
+                .AddItem lParentIndex, "New", , , "mnuFileNew"
                 .AddItem lParentIndex, "-"
-                .AddItem lParentIndex, "Source...", , , "mnuFileOpenSource", , , , 19
-                .AddItem lParentIndex, "Map...", , , "mnuFileOpenMap", , , , 21
-                .AddItem lParentIndex, "Fpg...", , , "mnuFileOpenFpg", , , , 22
-                .AddItem lParentIndex, "Fnt...", , , "mnuFileOpenFnt", , , , 91
-                .AddItem lParentIndex, "Import...", , , "mnuFileOpenImp"
+                .AddItem lParentIndex, "Close All", , , "mnuFileCloseAll", , , , 34
+                l2 = .AddItem(lParentIndex, "Close type", , , "mnuFileClose", , , , 33)
+                    .AddItem l2, "Source", , , "mnuFileCloseSources", , , , 19
+                    .AddItem l2, "Map", , , "mnuFileCloseMaps", , , , 21
+                    .AddItem l2, "Fpg", , , "mnuFileCloseFpgs", , , , 22
+                    .AddItem l2, "Fnt", , , "mnuFileCloseFnts"
+                    .AddItem l2, "Import", , , "mnuFileCloseImps"
+                .AddItem lParentIndex, "-"
+                l2 = .AddItem(lParentIndex, "Keep only", , , "mnuFileClose", , , , 33)
+                    .AddItem l2, "Current project", , , "mnuFileKeepCurrentProject", , , , 20
+                    .AddItem l2, "-"
+                    .AddItem l2, "Sources", , , "mnuFileKeepSources", , , , 19
+                    .AddItem l2, "Maps", , , "mnuFileKeepMaps", , , , 21
+                    .AddItem l2, "Fpgs", , , "mnuFileKeepFpgs", , , , 22
+                    .AddItem l2, "Fnts", , , "mnuFileKeepFnts"
+                    .AddItem l2, "Imports", , , "mnuFileKeepImps"
+                .AddItem lParentIndex, "-"
+                .AddItem lParentIndex, "Sort by name", , , "mnuFileSortByName"
+                .AddItem lParentIndex, "Sort by type", , , "mnuFileSortByType"
                 rID = .PopupMenu("FileMenu")
             End With
         
@@ -405,6 +449,22 @@ Private Sub MDITabs_TabBarClick(ByVal iButton As MouseButtonConstants, ByVal scr
                     mnuFIleOpenFnt
                 Case "mnuFileOpenImp"
                     mnuFileOpenImp
+                Case "mnuFileCloseAll"
+                    mnuFileCloseAll
+                Case "mnuFileCloseSources"
+                    mnuFileCloseSources
+                Case "mnuFileCloseMaps"
+                    mnuFileCloseMaps
+                Case "mnuFileCloseFpgs"
+                    mnuFileCloseFpgs
+                Case "mnuFileCloseFnts"
+                    mnuFileCloseFnts
+                Case "mnuFileCloseImps"
+                    mnuFileCloseImps
+                Case "mnuFileSortByName"
+                    mnuFileSortByName
+                Case "mnuFileSortByType"
+                    mnuFileSortByType
             End Select
         End If
         Set fileMenu = Nothing
@@ -414,15 +474,43 @@ End Sub
 Private Sub MDITabs_TabClick(ByVal iButton As MouseButtonConstants, ByVal Hwnd As Long, ByVal screenX As Long, ByVal screenY As Long)
     Dim lParentIndex As Long
     Dim rID As Long
+    Dim ff As IFileForm
+    Dim f As Form
+    
     If iButton = vbRightButton Then
         Set fileMenu = New cMenus
             With fileMenu
                 .DrawStyle = M_Style
                 Call .CreateFromNothing(Me.Hwnd)
                 lParentIndex = .AddItem(0, Key:="FileMenu")
-                '.AddItem lParentIndex, "Always run this project", , , "markasmain"
-                .AddItem lParentIndex, "Save", , , "save"
-                .AddItem lParentIndex, "Close", , , "close"
+
+                If Not ActiveFileForm Is Nothing Then
+                    Set f = ActiveFileForm
+                    If TypeOf f Is IFileForm Then
+                        Set ff = f
+                        Select Case ff.Identify
+                            Case FF_SOURCE
+                                .AddItem lParentIndex, "Save", , , "save"
+                                .AddItem lParentIndex, "Close", , , "close"
+                                'fileMenu.AddItem lParentIndex, "Always run this project", , , "markasmain"
+                            Case FF_MAP
+                                .AddItem lParentIndex, "Close", , , "close"
+                            Case FF_IMP
+                                .AddItem lParentIndex, "Save", , , "save"
+                                .AddItem lParentIndex, "Close", , , "close"
+                            Case FF_FPG
+                                .AddItem lParentIndex, "Save", , , "save"
+                                .AddItem lParentIndex, "Close", , , "close"
+                            Case FF_FNT
+                                .AddItem lParentIndex, "Close", , , "close"
+                            Case FF_LIST
+                                .AddItem lParentIndex, "Save", , , "save"
+                                .AddItem lParentIndex, "Close", , , "close"
+                            'Case FF_TRACKER
+                        End Select
+                    End If
+                End If
+
                 rID = .PopupMenu("FileMenu")
             End With
         
@@ -562,7 +650,7 @@ Private Sub CreateInterface()
     With Ini
         .Path = App.Path & CONF_FILE
         .Section = Me.name
-        .LoadFormPosition Me, Me.Width, Me.Height
+        .LoadFormPosition Me, Me.width, Me.height
     End With
     
     CreateMenu
@@ -884,7 +972,7 @@ Private Function CreateToolBars()
         .AddButton "Preferences", 10, , , , CTBNormal, "Preferences"
     End With
 
-    With cReBar
+    With cRebar
         ' Background bitmap
         If A_Bitmaps Then .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         
@@ -1285,17 +1373,17 @@ Private Sub TbrMain_DropDownPress(ByVal lButton As Long)
     
     Select Case tbrMain.ButtonKey(lButton)
         Case "New":
-            Call cMenu.PopupMenu("mnuFileNew", (Me.Left + X + 50) / Screen.TwipsPerPixelX, (Me.Top + Y + tbrMain.Height + 310) / Screen.TwipsPerPixelY, TPM_VERNEGANIMATION)
+            Call cMenu.PopupMenu("mnuFileNew", (Me.Left + X + 50) / Screen.TwipsPerPixelX, (Me.Top + Y + tbrMain.height + 310) / Screen.TwipsPerPixelY, TPM_VERNEGANIMATION)
             
         Case "Open":
-            Call cMenu.PopupMenu("mnuFileOpen", (Me.Left + X + 50) / Screen.TwipsPerPixelX, (Me.Top + Y + tbrMain.Height + 310) / Screen.TwipsPerPixelY, TPM_VERNEGANIMATION)
+            Call cMenu.PopupMenu("mnuFileOpen", (Me.Left + X + 50) / Screen.TwipsPerPixelX, (Me.Top + Y + tbrMain.height + 310) / Screen.TwipsPerPixelY, TPM_VERNEGANIMATION)
     End Select
 End Sub
 
 Private Sub cReBar_ChevronPushed(ByVal wID As Long, ByVal lLeft As Long, _
                         ByVal lTop As Long, ByVal lRight As Long, ByVal lBottom As Long)
     Dim v As Variant
-   v = cReBar.BandData(wID)
+   v = cRebar.BandData(wID)
    If Not IsMissing(v) Then
       Select Case v
         Case "MainBar"
@@ -1305,20 +1393,20 @@ Private Sub cReBar_ChevronPushed(ByVal wID As Long, ByVal lLeft As Long, _
 End Sub
 
 Private Sub cReBar_HeightChanged(lNewHeight As Long)
-    cReBar.RebarSize
+    cRebar.RebarSize
    If picHolder.align = 1 Or picHolder.align = 2 Then
-      picHolder.Height = lNewHeight * Screen.TwipsPerPixelY
+      picHolder.height = lNewHeight * Screen.TwipsPerPixelY
    Else
-      picHolder.Width = lNewHeight * Screen.TwipsPerPixelY
+      picHolder.width = lNewHeight * Screen.TwipsPerPixelY
    End If
 End Sub
 
 Private Sub picHolder_Resize()
-    cReBar.RebarSize
+    cRebar.RebarSize
     If picHolder.align = 1 Or picHolder.align = 2 Then
-        picHolder.Height = cReBar.RebarHeight * Screen.TwipsPerPixelY
+        picHolder.height = cRebar.RebarHeight * Screen.TwipsPerPixelY
     Else
-        picHolder.Width = cReBar.RebarHeight * Screen.TwipsPerPixelY
+        picHolder.width = cRebar.RebarHeight * Screen.TwipsPerPixelY
     End If
 End Sub
 

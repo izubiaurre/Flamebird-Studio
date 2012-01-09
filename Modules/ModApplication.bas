@@ -23,11 +23,16 @@ Public Const EDITOR_CONF_FILE As String = "/conf/editor.ini"
 Public Const RES_FOLDER As String = "/Resources"
 Public Const GUP_PATH As String = "\Tools\Gup\"
 
+Public Const MAX_RECENTS_FILES = 10
+Public Const MAX_RECENTS_PROJS = 10
+
 Public Ini As New cInifile
 
 Public FSO As New FileSystemObject
 
 Public G_ProcHelpLine As Integer  ' -1: don't show, 0: upper, 1: under
+
+Public compilerIsDefined As Boolean
 
 Public fenixDir As String
 Public R_Compiler As Integer
@@ -621,9 +626,16 @@ Private Sub LoadConf()
             .Key = "BennuPath"
         End If
         
-        .Default = " "
+        .Default = ""
         fenixDir = .Value
-        Debug.Print fenixDir
+        
+        'if it's empty the compiler's path, show a message
+        If fenixDir = "" Then
+            compilerIsDefined = False
+        Else
+            compilerIsDefined = True
+        End If
+            
         
 '        .Key = "Compiler"
 '        .Default = "1"
@@ -850,6 +862,12 @@ Public Sub Main()
     
     'FBMX Starts :D. GO Go go!
     frmMain.Show
+    
+    If Not compilerIsDefined Then
+        MsgBox "Compiler directory has not been configured or does not exist" & vbCrLf & vbCrLf & "Please select the compiler and its path", vbExclamation
+        frmPreferences.Show
+        frmPreferences.tabCategories.Tabs.item("COMPILATION").Selected = True
+    End If
     
     Exit Sub
     

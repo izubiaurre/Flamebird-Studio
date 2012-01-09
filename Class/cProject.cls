@@ -35,22 +35,22 @@ Private Const CONFFILEEXT  As String = "#conf"
 Private Const FBP_MAGIC As String = "fb2project"
 Private Const FBP_VERSION As Integer = 2
 
-Public devcol As cDeveloperCollection 'Colección de desarrolladores
+Public devcol As cDeveloperCollection   'Collection of developers
 Public colTrackers As cTrackerCollection
 
-Private m_FileName As String 'Ruta completa del archivo de proyecto
-Private m_projectName As String 'Nombre del proyecto
+Private m_FileName As String            'Full path of the file of the project
+Private m_projectName As String         'Project name
 
-'Variables de configuración del proyecto no locales (para compatir)
-Private m_compilationDir As String 'Ruta del directorio de compilación (output)
-Private m_mainSource As String 'Archivo principal del proyecto
-Private m_colFiles As Collection 'Colección de los ficheros que contiene el proyecto
-Private m_colCategories As Collection 'Colección de las categorías para el catview
+'Configuration variables of the project (non local, to share)
+Private m_compilationDir As String      'Compilation directory path (output)
+Private m_mainSource As String          'Main file of the project
+Private m_colFiles As Collection        'File collection that contains the project
+Private m_colCategories As Collection   'Category collection for the catview
 
-'Variables de configuración local
-Private m_useOtherFenix As Boolean 'Determina si se debe usar un fxc distinto al configurado
-Private m_fenixDir As String 'Directorio de fenix alternativo
-Private m_compilerArguments As String 'Argumentos de compilación
+'Local configuration variables
+Private m_useOtherFenix As Boolean      'Determines if must be used another compiler
+Private m_fenixDir As String            'Dir of the alternative compiler
+Private m_compilerArguments As String   'Parameters of the compiler
 
 Private iniManager As cInifile
 
@@ -111,7 +111,7 @@ Public Sub loadCache()
     
 
     
-    ' Lee el contenido del archivo.
+    'Reads the content of the file
     While ts.AtEndOfStream = False
         Set nodito = New staticNode
         nodito.father = ts.ReadLine
@@ -149,7 +149,8 @@ End Sub
 '        m_colFiles.Add temp, tempKey, makePathForProject(sFile)
 '    End If
 'End Function
-'Importante: En la colección m_colFiles, Key guarda la ruta del archivo COMPLETA
+
+' Important: In th m_colFiles collection, Key has the FULL file path
 Public Function AddFile(ByVal file As String, Optional AskForNonLocalFiles As Boolean = True) As Boolean
     Dim msgResult As VbMsgBoxResult
     Dim sRootFolder As String, sFile As String
@@ -158,8 +159,8 @@ Public Function AddFile(ByVal file As String, Optional AskForNonLocalFiles As Bo
     
     sFile = makePathRelative(file)
     sRootFolder = FSO.GetParentFolderName(m_FileName) & "\"
-    If Not FileExist(sFile) Then  'No pertenece el archivo al proyecto
-        'Miramos si el archivo no es local (contiene la letra de la unidad)
+    If Not FileExist(sFile) Then  'File isn't in the project
+        'Look if the file isn¡t local (contains drive letter)
         If FSO.GetDriveName(sFile) <> "" And AskForNonLocalFiles Then
             msgResult = MsgBox("The file is out of the project root folder and it could be " _
                                 & "inaccessible when moving the project to a different location." _
@@ -167,14 +168,14 @@ Public Function AddFile(ByVal file As String, Optional AskForNonLocalFiles As Bo
                                 & sRootFolder & vbCrLf & vbCrLf _
                                 & "Would you like to copy the file there?", vbQuestion + vbYesNoCancel)
             If msgResult = vbYes Then
-                FSO.CopyFile sFile, sRootFolder, False  'Copia el archivo
+                FSO.CopyFile sFile, sRootFolder, False  'Copy the file
                 sFile = makePathRelative(sRootFolder & FSO.GetFileName(sFile))
-            ElseIf msgResult = vbCancel Then 'Cancela
+            ElseIf msgResult = vbCancel Then 'Cancel
                 AddFile = False
                 Exit Function
             End If
         End If
-        'Agregamos el fichero a la colección
+        'Add file to the collection
         m_colFiles.Add sFile, makePathForProject(sFile)
         AddFile = True
     Else
@@ -184,7 +185,7 @@ Public Function AddFile(ByVal file As String, Optional AskForNonLocalFiles As Bo
     
     Exit Function
 ErrHandle:
-    If Err.Number = 58 Then 'El archivo ya existe
+    If Err.Number = 58 Then 'File exists
         MsgBox "There is another file called '" & FSO.GetFileName(sFile) & "' in " _
                 & "the project root folder. Please, delete this file before adding the new one" _
                 , vbCritical
@@ -221,7 +222,7 @@ Public Function FileExist(ByVal sFile As String) As Boolean
     
     If sFile = "" Then Exit Function
     
-    'Si el path no es relativo (contiene la unidad), lo hace relativo
+    'If the path isn¡t relative (contains drive letter), makes relative
     If FSO.GetDriveName(sFile) <> "" Then sFile = makePathRelative(sFile)
     
     FileExist = False
@@ -229,7 +230,7 @@ Public Function FileExist(ByVal sFile As String) As Boolean
         If varType(s) = vbString Then
             If s = sFile Then
                 FileExist = True
-                Exit For 'Existe el archivo
+                Exit For 'File exists
             End If
         End If
     Next
@@ -252,7 +253,7 @@ Public Property Get Files() As Collection
     Set Files = m_colFiles
 End Property
 
-'Borra todos los ficheros
+'Deletes all the files
 Public Sub ClearFiles()
     Dim p As Variant
     For Each p In m_colFiles
@@ -282,7 +283,7 @@ If confFileName <> "" Then
 End If
 End Sub
 
-'Recupera el estado en el que se encontraba el IDE (archivos abiertos...)
+'Restores the status that was the IDE (opened files, ...)
 Public Sub LoadIdeStatus()
     Dim i As Integer
     Dim cant As Integer, lista As String, activo As String
@@ -307,14 +308,14 @@ Public Sub LoadIdeStatus()
             'frmMain.cMenu.ItemChecked(frmMain.cMenu.IndexForKey("mnuProjectTracker")) = IIf(.Value = "1", True, False)
         End With
     
-        If cant > 0 Then 'Había formularios abiertos
-            FileArray = Split(lista, "|", , vbTextCompare) 'Obtenemos un array con los elementos separados
+        If cant > 0 Then 'Were opened files
+            FileArray = Split(lista, "|", , vbTextCompare) 'We get an array of splitted elements
     
             For i = LBound(FileArray) To UBound(FileArray)
                 OpenFileByExt (FileArray(i))
             Next i
     
-            If activo <> "" Then 'Había algún formulario activo
+            If activo <> "" Then 'Was at least one form opened
                 If FSO.FileExists(activo) Then
                     Set frmActivo = FindFileForm(activo)
                     If Not frmActivo Is Nothing Then
@@ -349,14 +350,13 @@ Public Property Get mainSource() As String
 End Property
 
 Public Function makePathRelative(ByVal sFilename As String) As String
-    ' busca el direcorio donde se encuentra el proyecto en
-    ' el path del archivo que se quiere agregar
+    'Searches the dir where it's the project in the file that is going to add
     Dim directorioBase As String
     directorioBase = LCase(FSO.GetParentFolderName(m_FileName))
     Dim num As Long
     num = InStr(LCase(sFilename), directorioBase)
     
-    ' si es encontrado se elimina del path
+    'If found, deletes from path
     If num = 1 Then
         sFilename = Mid(sFilename, Len(directorioBase) + 2)
     End If
@@ -379,7 +379,7 @@ Public Property Get compilationDir() As String
 End Property
 
 Public Property Let Filename(ByVal vData As String)
-    ' asigna valor nuevo
+    'Gives a new value
     m_FileName = vData
 End Property
 Public Property Get Filename() As String
@@ -391,7 +391,7 @@ Public Property Get confFileName() As String
     confFileName = Left(m_FileName, Len(m_FileName) - 3) & CONFFILEEXT
 End Property
 
-'Añade una categoría
+'Adds a category
 Public Sub AddCategory(ByVal sCatName, ByVal sExtensions)
     Dim cat As New cCatViewFolder
     cat.name = sCatName
@@ -410,33 +410,33 @@ Public Property Get Categories() As Collection
     Set Categories = m_colCategories
 End Property
 
-'Guarda el proyecto
+'saves the project
 Public Sub Save()
     SaveProjectConf
     SaveProject
     SaveIdeStatus
 End Sub
 
-'Guarda la configuración local del proyecto
+'Saves local conf of the project
 Private Sub SaveProjectConf()
     If Not confFileName = "" Then
         With iniManager
             .Path = confFileName
-            ' OPCIONES DE COMPILACION
+            'COMPILATION OPTIONS
             .Section = "COMPILATION"
-            'Usar fenix alternativo
+            'Use alternative compiler
             .Key = "usespecificfenix"
             .Default = "NO"
             .Value = IIf(m_useOtherFenix, "YES", "NO")
-            'Ruta del fenix alternativo
+            'Alternative compiler dir
             .Key = "fenixpath"
             .Default = ""
             .Value = m_fenixDir
-            'Argumentos de compilacion
+            'Compilation parameters
             .Key = "parameters"
             .Default = ""
             .Value = m_compilerArguments
-            'OTRAS
+            'OTHERS
             .Section = "OTHER"
             'Default Developer
             .Key = "defaultdev"
@@ -446,23 +446,23 @@ Private Sub SaveProjectConf()
     End If
 End Sub
 
-'Carga la configuración del proyecto desde el archivo local
+'Loads the configuration of the project from local file
 Public Sub LoadProjectConf()
     If Not confFileName = "" Then
         With iniManager
             .Path = confFileName
         
-            ' OPCIONES DE COMPILACION
+            'COMPILATION OPTIONS
             .Section = "COMPILATION"
-            'Usar fenix alternativo
+            'Use alternative compiler
             .Key = "usespecificfenix"
             .Default = "NO"
             m_useOtherFenix = IIf(.Value = "YES", True, False)
-            'Ruta del fenix alternativo
+            'Alternative compiler dir
             .Key = "fenixpath"
             .Default = ""
             m_fenixDir = .Value
-            'Argumentos de compilacion
+            'Compilation parameters
             .Key = "parameters"
             .Default = ""
             m_compilerArguments = .Value
@@ -470,7 +470,7 @@ Public Sub LoadProjectConf()
     End If
 End Sub
 
-'Guarda la configuración no local (archivo fbp)
+'Saves non local configuration (fbp file)
 Private Sub SaveProject()
     Dim fnum As Integer
     Dim dev As cDeveloper, tr As cTracker, ti As cTrackerItem
@@ -481,85 +481,85 @@ Private Sub SaveProject()
     fnum = FreeFile()
     Open m_FileName For Binary Access Write As #fnum
     
-    'CABECERA DEL ARCHIVO
-    WriteStrInFile fnum, FBP_MAGIC 'Magic ("fb2project")
-    Put fnum, , FBP_VERSION 'Versión de archivo
+    'FILE HEADER
+    WriteStrInFile fnum, FBP_MAGIC      'Magic ("fb2project")
+    Put fnum, , FBP_VERSION             'File version
     
     'GENERAL
-    WriteStrInFile fnum, m_projectName 'Nombre del proyecto
-    WriteStrInFile fnum, m_compilationDir 'Directorio output
-    WriteStrInFile fnum, makePathRelative(m_mainSource) 'Archivo principal
+    WriteStrInFile fnum, m_projectName                      'Project name
+    WriteStrInFile fnum, m_compilationDir                   'Output dir
+    WriteStrInFile fnum, makePathRelative(m_mainSource)     'Main file
     
-    'CATEGORÍAS DEL CATVIEW
-    Put fnum, , m_colCategories.count
+    'CATVIEW CATEGORIES
+    Put fnum, , m_colCategories.count           'Number of categorías
     For Each cat In m_colCategories
-        WriteStrInFile fnum, cat.name
-        WriteStrInFile fnum, cat.Extensions
+        WriteStrInFile fnum, cat.name                       'Category name
+        WriteStrInFile fnum, cat.Extensions                 'Extensions
     Next
     
-    'FICHEROS
-    Put fnum, , m_colFiles.count 'Número de ficheros
+    'FILES
+    Put fnum, , m_colFiles.count                'Number of files
     For Each varStr In m_colFiles
         If varType(varStr) = vbString Then
-            WriteStrInFile fnum, CStr(varStr) 'Nombre del fichero
+            WriteStrInFile fnum, CStr(varStr)   'File name
         End If
     Next
     
     'DEVELOPERS
-    Put fnum, , devcol.count 'Número de developers
-    'WriteStrInFile fnum, devcol.defaultDev 'Defaultr dev
+    Put fnum, , devcol.count            'Number of developers
+    'WriteStrInFile fnum, devcol.defaultDev     'Default dev
     For Each dev In devcol
-        WriteStrInFile fnum, dev.name 'Dev name
-        WriteStrInFile fnum, dev.RealName 'Real name
-        WriteStrInFile fnum, dev.Mail 'Mail
+        WriteStrInFile fnum, dev.name           'Dev name
+        WriteStrInFile fnum, dev.RealName       'Real name
+        WriteStrInFile fnum, dev.Mail           'Mail
     Next
     
     'TRACKER
-    Put fnum, , colTrackers.count 'Número de trackers
+    Put fnum, , colTrackers.count       'Number of trackers
     For Each tr In colTrackers
         'GENERAL
-        WriteStrInFile fnum, tr.name 'Nombre
-        WriteStrInFile fnum, tr.description 'Descripción
-        Put fnum, , tr.IconIndex 'Icono
+        WriteStrInFile fnum, tr.name            'Name
+        WriteStrInFile fnum, tr.description     'Descripction
+        Put fnum, , tr.IconIndex                'Icon
         
-        'COLUMNAS
-        Put fnum, , tr.VisibleColumns 'Columnas visibles
-        Put fnum, , tr.SortColumn 'Columna por la cual se ordena
-        Put fnum, , tr.SortOrder 'Ascendente o descendente
+        'COLUMNS
+        Put fnum, , tr.VisibleColumns           'Visible columns
+        Put fnum, , tr.SortColumn               'Column sorted by
+        Put fnum, , tr.SortOrder                'Asc or desc
         'cols arrangement
         
-        'COMPORTAMIENTO
-        Put fnum, , CInt(tr.AutoExpandSelItems) 'Expandir sel items
-        Put fnum, , CInt(tr.ColorItemsByPriority) 'Colorear prioridad
-        Put fnum, , CInt(tr.ColorOldItems) 'Colorear old items
-        Put fnum, , tr.OldItemsDays 'Old Items days
+        'BEHAVIOR
+        Put fnum, , CInt(tr.AutoExpandSelItems)     'Expand sel items
+        Put fnum, , CInt(tr.ColorItemsByPriority)   'Paint priority
+        Put fnum, , CInt(tr.ColorOldItems)          'paint old items
+        Put fnum, , tr.OldItemsDays                 'Old Items days
         
-        'CATEGORÍAS
-        Put fnum, , tr.CategoryCount 'Número de categorías
+        'CATEGORIES
+        Put fnum, , tr.CategoryCount    'Number of categorías
         For Each varStr In tr.CategoryCol
             If varType(varStr) = vbString Then
                 WriteStrInFile fnum, CStr(varStr)
             End If
         Next
         
-        'ELEMENTOS DEL TRACKER
-        Put fnum, , tr.count 'Número de items
+        'ELEMENTS OF THE TRACKER
+        Put fnum, , tr.count            'Number of items
         For Each ti In tr
             'GENERAL
-            WriteStrInFile fnum, ti.Summary 'Summary
-            WriteStrInFile fnum, ti.DetailedDesc 'Descripción detallada
-            WriteStrInFile fnum, ti.module 'Módulo
-            WriteStrInFile fnum, ti.Category 'Categoría
-            WriteStrInFile fnum, ti.AssignedTo 'Assignado a
-            WriteStrInFile fnum, ti.SubmittedBy 'Enviado por
-            Put fnum, , ti.Priority 'Prioridad
-            Put fnum, , ti.Completed '% completado
-            Put fnum, , CInt(ti.Closed) 'Cerrado?
-            Put fnum, , CInt(ti.Hidden)  'Oculto?
-            Put fnum, , CInt(ti.Locked) 'Bloqueado
-            Put fnum, , CDbl(ti.DateCreated) 'Fecha de creación
-            Put fnum, , CDbl(ti.DateClosing) 'Fecha de cierre
-            Put fnum, , CDbl(ti.DateModified) 'Fecha de última modificación
+            WriteStrInFile fnum, ti.Summary         'Summary
+            WriteStrInFile fnum, ti.DetailedDesc    'Detailed desc
+            WriteStrInFile fnum, ti.module          'Module
+            WriteStrInFile fnum, ti.Category        'Category
+            WriteStrInFile fnum, ti.AssignedTo      'Assigned to
+            WriteStrInFile fnum, ti.SubmittedBy     'Send by
+            Put fnum, , ti.Priority                 'Priority
+            Put fnum, , ti.Completed                '% completed
+            Put fnum, , CInt(ti.Closed)             'Closed?
+            Put fnum, , CInt(ti.Hidden)             'Hidden?
+            Put fnum, , CInt(ti.Locked)             'Locked
+            Put fnum, , CDbl(ti.DateCreated)        'Creation date
+            Put fnum, , CDbl(ti.DateClosing)        'Close date
+            Put fnum, , CDbl(ti.DateModified)       'Last modification date
         Next
     Next
     
@@ -578,10 +578,10 @@ Public Function LoadProject() As Boolean
     Open m_FileName For Binary Access Read As #fnum
     bError = False
 
-    'CABECERA DEL ARCHIVO
-    strvar = ReadStrFromFile(fnum)  'Magic
+    ' FILE HEADER
+    strvar = ReadStrFromFile(fnum)     'Magic ("fb2project")
     If strvar = FBP_MAGIC Then
-        Get fnum, , intvar 'Versión
+        Get fnum, , intvar             'File version
         If intvar <> FBP_VERSION Then
             MsgBox m_FileName & vbCrLf & vbCrLf & "Incompatible FBP version!", vbCritical
             bError = True
@@ -593,30 +593,30 @@ Public Function LoadProject() As Boolean
 
     If bError = False Then
         'GENERAL
-        m_projectName = ReadStrFromFile(fnum) 'Nombre del proyecto
-        m_compilationDir = ReadStrFromFile(fnum)  'Directorio output
-        m_mainSource = makePathForProject(ReadStrFromFile(fnum)) 'Archivo principal
+        m_projectName = ReadStrFromFile(fnum)                       'Project name
+        m_compilationDir = ReadStrFromFile(fnum)                    'Output dir
+        m_mainSource = makePathForProject(ReadStrFromFile(fnum))    'Main file
         If (FSO.FileExists(m_mainSource) = False) Then m_mainSource = ""
 
-        'CATEGORÍAS DEL CATVIEW
+        'CATVIEW CATEGORIES
         ClearCategories
-        Get fnum, , lngvar 'Número de categorías
+        Get fnum, , lngvar              'Number of categorías
         For i = 1 To lngvar
-            strvar = ReadStrFromFile(fnum) 'Nombre de la categoría
+            strvar = ReadStrFromFile(fnum)          'Category name
             cat.name = strvar
-            strvar = ReadStrFromFile(fnum) 'Extensiones
+            strvar = ReadStrFromFile(fnum)          'Extensions
             cat.Extensions = strvar
-            AddCategory cat.name, cat.Extensions 'Añadimos la categoría
+            AddCategory cat.name, cat.Extensions    'Add the category
         Next
         
-        'FICHEROS
+        'FILES
         ClearFiles
-        Get fnum, , lngvar 'Número de ficheros
+        Get fnum, , lngvar              'Number of files
         For i = 1 To lngvar
-            strvar = ReadStrFromFile(fnum) 'Nombre del fichero
+            strvar = ReadStrFromFile(fnum)          'File name
             If Not Dir(makePathForProject(strvar)) = "" Then
                 AddFile makePathForProject(strvar), False
-            Else 'El fichero no existe
+            Else 'File doesn't exists
                 MsgBox "Impossible to find " & strvar & ". The file will be removed from the " _
                         & "project.", vbCritical
             End If
@@ -624,16 +624,16 @@ Public Function LoadProject() As Boolean
 
         'DEVELOPERS
         devcol.Clear
-        Get fnum, , lngvar 'Número de developers
-        'strvar = ReadStrFromFile(fnum) 'Default dev
+        Get fnum, , lngvar              'Number of developers
+        'strvar = ReadStrFromFile(fnum)             'Default dev
         For i = 1 To lngvar
-            dev.name = ReadStrFromFile(fnum) 'Dev name
-            dev.RealName = ReadStrFromFile(fnum) 'Real name
-            dev.Mail = ReadStrFromFile(fnum) 'Mail
+            dev.name = ReadStrFromFile(fnum)        'Dev name
+            dev.RealName = ReadStrFromFile(fnum)    'Real name
+            dev.Mail = ReadStrFromFile(fnum)        'Mail
             devcol.Add dev.name, dev.RealName, dev.Mail
         Next
         'devcol.defaultDev = strvar
-        'Establecemos el desarrollador por defecto
+        'Set default developer
         With iniManager
             .Path = confFileName
             .Section = "OTHER"
@@ -643,17 +643,17 @@ Public Function LoadProject() As Boolean
     
         'TRACKER
         colTrackers.Clear
-        Get fnum, , lngvar 'Número de trackers
+        Get fnum, , lngvar              'Number of trackers
         For i = 1 To lngvar
             'GENERAL
-            tr.name = ReadStrFromFile(fnum) 'Nombre
-            tr.description = ReadStrFromFile(fnum)  'Descripción
-            tr.IconIndex = ReadLngFromFile(fnum) 'Icono
+            tr.name = ReadStrFromFile(fnum)         'Name
+            tr.description = ReadStrFromFile(fnum)  'Description
+            tr.IconIndex = ReadLngFromFile(fnum)    'Icon
 
             'COLUMNAS
-            tr.VisibleColumns = ReadLngFromFile(fnum) 'Columnas visibles
-            tr.SortColumn = ReadLngFromFile(fnum) 'Columna por la cual se ordena
-            tr.SortOrder = ReadLngFromFile(fnum) 'Ascendente o descendente
+            tr.VisibleColumns = ReadLngFromFile(fnum)   'Visible columns
+            tr.SortColumn = ReadLngFromFile(fnum)       'Column sorted by
+            tr.SortOrder = ReadLngFromFile(fnum)        'Asc or desc
             'cols arrangement
 
             'COMPORTAMIENTO
@@ -662,42 +662,42 @@ Public Function LoadProject() As Boolean
             tr.ColorOldItems = CBool(ReadIntFromFile(fnum)) 'Colorear old items
             tr.OldItemsDays = ReadIntFromFile(fnum) 'Old Items days
 
-            'CATEGORÍAS
+            'BEHAVIOR
             tr.CategoryClear
-            Get fnum, , lngvar2 'Número de categorías
+            Get fnum, , lngvar2         'Number of categorías
             For j = 1 To lngvar2
                 strvar = ReadStrFromFile(fnum)
                 tr.AddCategory strvar
             Next
 
-            'ELEMENTOS DEL TRACKER
+            'ELEMENTS OF THE TRACKER
             tr.Clear
-            Get fnum, , lngvar2 'Número de items
+            Get fnum, , lngvar2     'Number of items
             For j = 1 To lngvar2
                 'GENERAL
-                ti.Summary = ReadStrFromFile(fnum) 'Summary
-                ti.DetailedDesc = ReadStrFromFile(fnum) 'Descripción detallada
-                ti.module = ReadStrFromFile(fnum) 'Módulo
-                ti.Category = ReadStrFromFile(fnum) 'Categoría
-                ti.AssignedTo = ReadStrFromFile(fnum) 'Assignado a
-                ti.SubmittedBy = ReadStrFromFile(fnum) 'Enviado por
-                ti.Priority = ReadLngFromFile(fnum) 'Prioridad
-                ti.Completed = ReadIntFromFile(fnum) '% completado
-                ti.Closed = CBool(ReadIntFromFile(fnum)) 'Cerrado?
-                ti.Hidden = CBool(ReadIntFromFile(fnum)) 'Eliminado?
-                ti.Locked = CBool(ReadIntFromFile(fnum)) 'Bloqueado
-                ti.DateCreated = CDate(ReadDblFromFile(fnum)) 'Fecha de creación
-                ti.DateClosing = CDate(ReadDblFromFile(fnum)) 'Fecha de cierre
-                ti.DateModified = CDate(ReadDblFromFile(fnum)) 'Fecha de última modificación
+                ti.Summary = ReadStrFromFile(fnum)          'Summary
+                ti.DetailedDesc = ReadStrFromFile(fnum)     'Detailed desc
+                ti.module = ReadStrFromFile(fnum)           'Module
+                ti.Category = ReadStrFromFile(fnum)         'Category
+                ti.AssignedTo = ReadStrFromFile(fnum)       'Assigned to
+                ti.SubmittedBy = ReadStrFromFile(fnum)      'Send by
+                ti.Priority = ReadLngFromFile(fnum)         'Priority
+                ti.Completed = ReadIntFromFile(fnum)        '% completed
+                ti.Closed = CBool(ReadIntFromFile(fnum))    'Closed?
+                ti.Hidden = CBool(ReadIntFromFile(fnum))    'Hidden?
+                ti.Locked = CBool(ReadIntFromFile(fnum))    'Locked
+                ti.DateCreated = CDate(ReadDblFromFile(fnum))   'Creation date
+                ti.DateClosing = CDate(ReadDblFromFile(fnum))   'Close date
+                ti.DateModified = CDate(ReadDblFromFile(fnum))  'Last modification date
                 tr.AddIndirect ti
             Next
 
             colTrackers.AddIndirect tr
         Next
 
-        LoadProject = True 'Carga satisfactoria
+        LoadProject = True 'Sucessfull load
     Else
-        LoadProject = False 'Carga no satisfactoria
+        LoadProject = False 'Not sucessfull load
     End If
 
     Close fnum
@@ -714,16 +714,11 @@ Private Sub Class_Initialize()
     Set m_colFiles = New Collection
     Set m_colCategories = New Collection
 
-'    'Categorías por defecto
+'    'Categories by default
 '    AddCategory "Source files", "*.prg|*.inc|*.h"
 '    AddCategory "Image files", "*.map|*.fbm|*.png"
 '    AddCategory "Graphics Libraries", "*.fpg|*.fgc"
     
-''Unos desarrolladores de ejemplo (a borrar)
-'    devcol.Add "Danko", "Darío Cutillas", "el_danko@hotmail.com"
-'    devcol.Add "JaViS", "Javier Arias", "javisarias@gmail.com"
-'    devcol.Add "Viator", "Darío Cutillas", "Viator@yahoo.es"
-'    devcol.Add "Pepito Grillo", "Pepe Grill Osnado", "elpepe@yosoyyo.net"
 End Sub
 
 Private Sub Class_Terminate()
@@ -734,9 +729,9 @@ Private Sub Class_Terminate()
     Set m_colCategories = Nothing
 End Sub
 
-'Estas funciones escriben y leen una cadena de caracteres en un archivo
-'abierto mediante Open usando un varspace de 4 bytes para la longitud
-'de la cadena. La cadena solo es escrita si no está vacía
+'These functions write and read a character string in a file
+'Open opened by using a 4-byte varspace for length
+'chain. The chain is only written if it is empty
 Private Sub WriteStrInFile(ByVal fileNum As Integer, ByVal str As String)
     Dim lenStr As Long
     lenStr = Len(str)
@@ -753,10 +748,10 @@ Private Function ReadStrFromFile(ByVal fileNum As Integer) As String
     End If
     ReadStrFromFile = CStr(str)
 End Function
-'Las siguientes funciones lee una variable de un archivo
-'Se ha creado porque VB no permite leer directamente en una propiedad de una clase
-'Se podría haber hecho una función general mediante VarType, pero restaría efeiciencia
-'el tener que comprobar el tipo de variable
+'The following function reads a file variable
+'It has been created because VB can not read directly into a property of a class
+'They could have made a general by VarType function, but subtract efficiency
+'having to check the type of variable
 Private Function ReadIntFromFile(ByVal fileNum As Integer) As Integer
     Dim var As Integer
     Get fileNum, , var

@@ -24,22 +24,26 @@ Begin VB.Form frmImport
    ScaleHeight     =   3555
    ScaleWidth      =   4275
    WindowState     =   2  'Maximized
-   Begin vbalIml6.vbalImageList ilFnt 
+   Begin VB.ComboBox cmbModList 
+      Appearance      =   0  'Flat
+      Height          =   345
+      Left            =   1440
+      Style           =   2  'Dropdown List
+      TabIndex        =   1
+      Top             =   840
+      Width           =   2655
+   End
+   Begin vbalIml6.vbalImageList ilImp 
       Left            =   2640
       Top             =   1440
       _ExtentX        =   953
       _ExtentY        =   953
       ColourDepth     =   24
-      Size            =   10332
-      Images          =   "frmImport.frx":08CA
-      Version         =   131072
-      KeyCount        =   9
-      Keys            =   "ÿÿÿÿÿÿÿÿ"
    End
    Begin CodeSenseCtl.CodeSense cs 
       Height          =   3135
       Left            =   0
-      OleObjectBlob   =   "frmImport.frx":3146
+      OleObjectBlob   =   "frmImport.frx":08CA
       TabIndex        =   0
       Top             =   360
       Width           =   4215
@@ -53,7 +57,7 @@ Begin VB.Form frmImport
       _ExtentY        =   661
    End
    Begin vbalTBar6.cReBar rebar 
-      Left            =   2280
+      Left            =   1440
       Top             =   0
       _ExtentX        =   2143
       _ExtentY        =   661
@@ -87,8 +91,7 @@ Option Explicit
 Private Const MSG_SAVE_FILEREADONLY = "This File is read-only. You must save to a different location."
 Private Const MSG_SAVE_ERRORSAVING = "An error occurred when trying to save the file: "
 Private Const MSG_SAVE_SUCCESS = "File saved succesfully!"
-'Private Const MSG_PAINTMAP_ERRORPAINTING = "An error occurred when trying to paint the fnt: "
-'Private Const MSG_LOAD_ERRORLOADING = "An error occurred loading the fnt: "
+
 
 Private Const FAST_SCROLL_STEPS As Integer = 12 ' movement with Shift
 
@@ -106,8 +109,47 @@ Attribute m_ImportMenu.VB_VarHelpID = -1
 Private m_FilePath As String
 Private m_addToProject As Boolean
 
+Private modList() As String
+
 Implements IFileForm
 Implements IPropertiesForm
+
+Private Sub cmbModList_Click()
+    Dim i As Integer
+    Dim j As Integer
+    Dim found As Boolean
+    
+    found = False
+    
+    If Not cmbModList.text = "All modules" Then
+        For i = 0 To cs.LineCount
+            If cs.getLine(i) = cmbModList.text Then
+                found = True
+                MsgBox "Module already in the list", vbInformation
+                Exit Sub
+            End If
+
+        Next i
+        If Not found Then
+            cs.InsertLine cs.LineCount, cmbModList.text
+        End If
+    Else
+        cs.ExecuteCmd cmCmdBeginUndo
+        For i = 1 To UBound(modList)
+            For j = 0 To cs.LineCount
+                If cs.getLine(j) = modList(i) Then
+                    found = True
+                    j = cs.LineCount
+                End If
+            Next j
+            If Not found Then
+                cs.InsertLine cs.LineCount, modList(i)
+            End If
+            found = False
+        Next i
+        cs.ExecuteCmd cmCmdEndUndo
+    End If
+End Sub
 
 Private Sub Cs_Change(ByVal Control As CodeSenseCtl.ICodeSense)
     IsDirty = True
@@ -120,37 +162,23 @@ End Sub
 Private Sub Form_Load()
     
 '    'Configure toolbar
-'    With tbrFnt
-'        .ImageSource = CTBExternalImageList
-'        .DrawStyle = T_Style
-'        .SetImageList ilFnt.hIml, CTBImageListNormal
-'        .CreateToolbar 16, True, True, True, 16
-'        .AddButton "Zoom In", 0, , , , CTBAutoSize, "ZoomIn"
-'        .AddButton "Restore Zoom", 1, , , , CTBAutoSize, "ZoomRestore"
-'        .AddButton "Zoom Out", 2, , , , CTBAutoSize, "ZoomOut"
-'        .AddButton eButtonStyle:=CTBSeparator
-'        .AddButton "Toogle transparency", 3, , , "", CTBAutoSize, "ToogleTrans"
-'        .AddButton eButtonStyle:=CTBSeparator
-'        .AddButton "Edit palette", 5, , , , CTBAutoSize, "EditPalette"
-'        .AddButton eButtonStyle:=CTBSeparator
-'        .AddButton "Write text to map", 6, , , , CTBAutoSize, "WriteTexToMap"
-'        .AddButton "Import font", 7, , , , CTBAutoSize, "ImportFont"
-'        .AddButton "Export font", 8, , , , CTBAutoSize, "ExportFont"
-'        '.AddButton "...", 4, , , "...", CTBDropDownArrow + CTBAutoSize, "AddToFpg"
-'    End With
-'    'Create the rebar
-'    With rebar
-'        If A_Bitmaps Then
-'            .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
-'        End If
-'        .CreateRebar Me.Hwnd
-'        .AddBandByHwnd Me.tbrFnt.Hwnd, , True, False
-'    End With
-'    rebar.RebarSize
-
-'    'Set up scroll bars:
-'    Set m_cScroll = New cScrollBars
-'    m_cScroll.create picScrollBox.Hwnd
+    With tbrImport
+        .ImageSource = CTBExternalImageList
+        .DrawStyle = T_Style
+        .SetImageList ilImp.hIml, CTBImageListNormal
+        .CreateToolbar 16, True, True, True, 16
+        .AddControl cmbModList.Hwnd, , "cmbModList"
+    End With
+    
+    'Create the rebar
+    With rebar
+        If A_Bitmaps Then
+            .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
+        End If
+        .CreateRebar Me.Hwnd
+        .AddBandByHwnd Me.tbrImport.Hwnd, , True, False
+    End With
+    rebar.RebarSize
 
     ' configure the edition control
     cs.LineNumbering = True
@@ -166,7 +194,7 @@ Private Sub Form_Load()
     cs.DisplayLeftMargin = True
     cs.AutoIndentMode = cmIndentPrevLine
     LoadCSConf cs
-        
+         
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -187,8 +215,8 @@ Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
         rebar.RebarSize
         cs.Move 0, ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
-        cs.Width = Me.ScaleWidth
-        cs.Height = Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
+        cs.width = Me.ScaleWidth
+        cs.height = Me.ScaleHeight - ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
     End If
 End Sub
 
@@ -238,6 +266,7 @@ End Property
 Private Function IFileForm_Load(ByVal sFile As String) As Long
     Dim lResult As Long
     Dim Ext As String
+    Dim i As Integer
     
     Ext = FSO.GetExtensionName(sFile)
     
@@ -251,32 +280,49 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
        
     frmMain.setStatusMessage
     
+    'get the names of all modules to a list (modList)
+    getModuleList
+    
+    'Populate the list of modules
+    For i = 1 To UBound(modList)
+        cmbModList.AddItem modList(i)
+    Next i
+    cmbModList.AddItem "All modules"
+    
     IFileForm_Load = lResult
 End Function
-
+'Gets the modules from compiler's path
+Private Sub getModuleList()
+    Dim fileString As String
+    ReDim modList(0) As String
+    
+    fileString = Dir(fenixDir & "\")
+    fileString = LCase(fileString)
+        
+    Do Until fileString = ""
+        If Right(fileString, 4) = ".dll" And Left(fileString, 3) = "mod" Then
+            ReDim Preserve modList(UBound(modList) + 1) As String
+            modList(UBound(modList)) = Left(fileString, Len(fileString) - 4)
+        End If
+        fileString = Dir
+        fileString = LCase(fileString)
+    Loop
+    
+End Sub
 Private Function IFileForm_NewW(ByVal iUntitledCount As Integer) As Long
     Dim sFiles() As String
     Dim fileCount As Integer
     Dim lResult As Long
     
-    m_Title = "Untitled fnt " & CStr(iUntitledCount)
+    m_Title = "Untitled imp " & CStr(iUntitledCount)
             
-    frmMain.setStatusMessage ("Converting file to fnt format...")
-    Screen.MousePointer = vbHourglass
-    
-    fileCount = ShowOpenDialog(sFiles, getFilter("IMPORTABLE_GRAPHICS"), False, False)
+    fileCount = ShowOpenDialog(sFiles, getFilter("IMP"), False, False)
     
     If fileCount > 0 Then
-        'lResult = fnt.Import(sFiles(0))
-        'If lResult <> -1 Then
-        '    MsgBox "An error ocurred trying to import the file: " & fnt.GetLastError, vbCritical
-        'Else
-            m_addToProject = modMenuActions.NewAddToProject
-            IsDirty = True
-        'End If
+        m_addToProject = modMenuActions.NewAddToProject
+        IsDirty = True
     End If
     
-    Screen.MousePointer = 0
     frmMain.setStatusMessage
     
     IFileForm_NewW = lResult
@@ -284,7 +330,6 @@ End Function
 
 Private Function IFileForm_Save(ByVal sFile As String) As Long
  Dim lResult As Long
-    Dim sFileBMK As String
     'Dim fs As FileSystemObject
     Dim A As textStream
     Dim i As Long
@@ -446,7 +491,6 @@ Private Sub m_ContextMenu_Click(ByVal Index As Long)
         Case "mnuEditDeleteLine":               Call mnuEditDeleteLine
         Case "mnuEditUpLine":                   Call mnuEditUpLine
         Case "mnuEditDownLine":                 Call mnuEditDownLine
-            
         Case "mnuNavigationSearch":             Call mnuNavigationSearch
         Case "mnuNavigationSearchNext":         Call mnuNavigationSearchNext
         Case "mnuNavigationSearchPrev":         Call mnuNavigationSearchPrev

@@ -40,7 +40,7 @@ Public Function Add(ByVal Caption As String, Key As String, ByVal TypeOfProp As 
     
     On Error GoTo ErrHandle
     
-    'Creamos la propiedad y establecemos sus propiedades
+    ' We create the property and we set its properties
     Dim Prop As New cProperty
     Prop.name = Caption
     Prop.Key = Key
@@ -52,7 +52,7 @@ Public Function Add(ByVal Caption As String, Key As String, ByVal TypeOfProp As 
     If Not IsMissing(max) And Not IsMissing(min) Then Prop.SetLimits max, min
     Prop.CanBeEmpty = CanBeEmpty
     
-    m_Col.Add Prop, Prop.Key 'Agrega la propiedad a la colección
+    m_Col.Add Prop, Prop.Key ' Adds the property to the collection
     
     Set Prop = Nothing
     Exit Function
@@ -82,10 +82,10 @@ Public Sub Clear()
     Next
 End Sub
 
+' To use For...Each...Next.
 Public Function NewEnum() As IUnknown
 Attribute NewEnum.VB_UserMemId = -4
 Attribute NewEnum.VB_MemberFlags = "40"
-    'permite ser utilizado con For ...Each
     Set NewEnum = m_Col.[_NewEnum]
 End Function
 

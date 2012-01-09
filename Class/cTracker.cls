@@ -43,34 +43,34 @@ Public Enum TrackerColumns
     tcDetailedDesc = &H400
     tcSubmittedBy = &H800
     tcDateclosing = &H1000
-    tcGeneral = &H1FFF '&H3BF Or tcCompleted Or tcDATECLOSING Or tcSubmittedBy Xor tcPriority   'Todas menos Completed y detailed desc
+    tcGeneral = &H1FFF '&H3BF Or tcCompleted Or tcDATECLOSING Or tcSubmittedBy Xor tcPriority   ' All except Completed and detailed desc
 End Enum
 
-Private m_Col As Collection 'Colección de elementos del tracker (principal)
-Private m_colCategory As Collection 'Categorias del tracker
+Private m_Col As Collection             ' Item collection of the tracker (main)
+Private m_colCategory As Collection     ' Tracker categories
 
 Private m_ID As Long
-Private m_Name As String 'Nombre del tracker
+Private m_Name As String                ' Name of the tracker
 Private m_Description As String
-Private m_IconIndex As Long 'Icono en la lista de iconos
-Private m_VisibleColumns As TrackerColumns  'Uno o mas elementos que especifican las columnas visibles
-Private m_SortColumn As Long 'Columna por la cual se ordena
+Private m_IconIndex As Long             ' Icon in the icon-list
+Private m_VisibleColumns As TrackerColumns      ' One or more elements that specifies the visible columns
+Private m_SortColumn As Long            ' Column to sort by
 Private m_SortOrder As ECGSortOrderConstants
-Private m_ColsArrangement(1 To 10) 'Disposición de las columnas en el grid
-Private m_AutoExpandSelItems As Boolean 'Si es true, los elementos muestran su descripción al seleccionarse
+Private m_ColsArrangement(1 To 10)      ' Columns disposed in the grid
+Private m_AutoExpandSelItems As Boolean ' If it's true, the items show its desc when selected
 
-'Propiedades a ser añadidas
+' Properties to be added
 Public ColorItemsByPriority As Boolean
 Public ColorOldItems As Boolean
 Private m_OldItemsDays As Integer
 'Private m_HiddenItemsDays As Integer
 
-Private counter As Long 'Contador para asignar IDs a los elementos del tracker
-                        'Es siempre creciente y sirve como key para una colección
-                        'cTracker. Empieza en 1
+Private counter As Long ' Counter to asign IDs to the elementes of teh tracker
+                        ' Always growing and it's the colecction key of the
+                        ' cTracker. Starts in 1
                         
 '-----------------------------------------------------------------------------
-'IMPLEMENTACIÓN PROPIEDADES Y MÉTODOS GENERALES
+' PROPERTIES AND GENERAL METHOD IMPLEMENTATION
 '-----------------------------------------------------------------------------
 Friend Property Let Id(newID As Long)
     m_ID = newID
@@ -125,7 +125,7 @@ Public Property Get SortOrder() As ECGSortOrderConstants
     SortOrder = m_SortOrder
 End Property
 
-'Cuidado con esta función, pues no comprueba el tipo de argumentos pasados
+' Keep atention with this function, cause doesn't check the given parameters
 Public Sub SetColsArrangement(ParamArray iCols() As Variant)
     Dim i As Integer
     
@@ -165,7 +165,7 @@ Public Property Let AutoExpandSelItems(newExpand As Boolean)
     If newExpand = True Then ShowDescription = True
 End Property
 Public Property Get AutoExpandSelItems() As Boolean
-    'Si la columna detailed description es visible, devolvemos false
+    ' If colum detailed desc is visible, return false
     'AutoExpandSelItems = IIf((m_VisibleColumns And tcDetailedDesc), False, m_AutoExpandSelItems)
     AutoExpandSelItems = m_AutoExpandSelItems
 End Property
@@ -178,7 +178,7 @@ Public Property Get OldItemsDays() As Integer
     OldItemsDays = m_OldItemsDays
 End Property
 
-'CATEGORIAS
+'CATEGORIES
 Public Sub AddCategory(catName As String)
     m_colCategory.Add catName, catName
 End Sub
@@ -204,22 +204,20 @@ End Sub
 
 
 '-----------------------------------------------------------------------------
-' IMPLEMENTACIÓN DE LA COLECCIÓN
+' IMPLEMENTATION OF THE COLECTION
 '-----------------------------------------------------------------------------
-'Añade un elemento al tracker desde un objeto cTrackerItem, asignado el id
-'Establece como clave para la colección un valor hexadecimal guardado como
-'cadena
+' Add a element to the tracker from cTrackerItem,
+' asigns the Id as key for the collection (Hex type)
 Public Sub AddIndirect(ByVal TrackerItem As cTrackerItem)
     Dim it As cTrackerItem
     
-    counter = counter + 1 'incrementamos el contador
+    counter = counter + 1
     
-    'Necesitamos una copia del objeto porque ByVal no nos previene de modificar el
-    'objeto pasado como argumento
+    ' We need a copy of the obj cause ByVal doesn't prevent to change the given obj as argument
     Set it = TrackerItem.Copy
     it.Id = counter
     
-    m_Col.Add it, hex(counter) 'Agregamos el elemento a la colección
+    m_Col.Add it, hex(counter) ' Add the elemnt to the collection
     
     Set it = Nothing
 End Sub
@@ -245,28 +243,27 @@ Public Sub Clear()
     counter = 0
 End Sub
 
-'Permite usar For... Each...Next. Id de procedimiento=-4, Necesario oculto
+' To use For... Each...Next. Id de proc=-4, Needed hidden
 Public Function NewEnum() As IUnknown
 Attribute NewEnum.VB_UserMemId = -4
 Attribute NewEnum.VB_MemberFlags = "40"
-    'permite ser utilizado con For ...Each
     Set NewEnum = m_Col.[_NewEnum]
 End Function
 
 '-----------------------------------------------------------------------------
-' INICIALIZACIÓN Y SALIDA
+' INITIALIZE AND TERMINATE
 '-----------------------------------------------------------------------------
 Private Sub Class_Initialize()
     Set m_Col = New Collection
     Set m_colCategory = New Collection
-    m_IconIndex = -1 'Sin icono por defecto
+    m_IconIndex = -1            ' Without icon by default
     m_VisibleColumns = tcGeneral
-    ColorItemsByPriority = True 'Por defecto se usan colores para la prioridad
+    ColorItemsByPriority = True ' Priorities with colors by default
     m_AutoExpandSelItems = True
     ColorOldItems = True
     m_OldItemsDays = 30
-    counter = 0 'Contador a 0
-    Id = -1 'El tracker no está en ninguna colección
+    counter = 0                 ' Counter at 0
+    Id = -1                     ' Tracker is not in any colection
 End Sub
 
 Private Sub Class_Terminate()
@@ -274,7 +271,7 @@ Private Sub Class_Terminate()
     Set m_colCategory = Nothing
 End Sub
 
-'Devuelve un objeto copia
+' returns a copy-object
 Public Function Copy() As cTracker
     Dim ret As cTracker
     Set ret = New cTracker
@@ -290,13 +287,13 @@ Public Function Copy() As cTracker
     ret.ColorOldItems = Me.ColorOldItems
     ret.OldItemsDays = Me.OldItemsDays
     
-    'Copiamos las categorías
+    ' Copy the categories
     Dim s As Variant
     For Each s In m_colCategory
         ret.AddCategory CStr(s)
     Next
     
-    'Copiamos los elementos del tracker
+    ' Copy the elements of the tracjer
     Dim it As cTrackerItem
     For Each it In Me
         ret.AddIndirect it

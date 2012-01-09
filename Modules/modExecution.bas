@@ -22,9 +22,9 @@ Option Explicit
 Private Const MSG_COMPILE_NOFENIXDIR = "Compiler directory has not been configured or does not exist"
 Private Const MSG_COMPILE_FILENOTFOUND = "The file you are trying to compile does not exist"
 Private Const MSG_COMPILE_NOTALREADYSAVED = "The file has not been saved yet. Save the file before compile"
-Private Const MSG_COMPILE_NOSTDOUT = "Flamebird is waintg for the compiler to finish compiling for getting its output but " _
+Private Const MSG_COMPILE_NOSTDOUT = "Flamebird is waiting for the compiler to finish compiling for getting its output but " _
         & "nothing seems to happen. Do you want to wait a bit more?"
-Private Const MSG_COMPILE_NODCB = "Flamebird is waintg for the compiler to create the dcb file but " _
+Private Const MSG_COMPILE_NODCB = "Flamebird is waiting for the compiler to create the dcb file but " _
         & "nothing seems to happen. Do you want to wait a bit more?"
 Private Const MSG_RUN_DBCNOTFOUND = "DCB file not found. You must compile first"
 
@@ -457,7 +457,7 @@ Public Function Compile(ByVal sFile As String) As Boolean
     Compile = bResult
     
     Exit Function
-errhandler:
+ErrHandler:
     If Err.Number > 0 Then ShowError ("modExecution.Compile()")
 End Function
 

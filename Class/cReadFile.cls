@@ -31,9 +31,9 @@ Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 'GNU General Public License for more details.
 
-'variables locales para almacenar los valores de las propiedades
-Private mvarfilename As String 'copia local
-Private mvarcanRead As Boolean 'copia local
+' Local variables to save properties values
+Private mvarfilename As String ' local copy
+Private mvarcanRead As Boolean ' local copy
 Private initialized As Boolean
 Private frmPRG As Form
 Private fileNum As Integer
@@ -42,11 +42,11 @@ Private lineNum As Long
 Public Function getLine() As String
 Dim linea As String
     If initialized = False Then
-        'se fija si el archivo esta abierto
+        ' Test if the file is open
         Set frmPRG = FindFileForm(mvarfilename)
-        'si no esta abierto
+        ' If is not open
         If frmPRG Is Nothing Then
-            'abre el archivo de disco para leerlo
+            ' open to read from the disk
             fileNum = FreeFile()
             Open mvarfilename For Input As #fileNum
         End If

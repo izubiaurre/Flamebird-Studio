@@ -27,6 +27,695 @@ Begin VB.Form frmPreferences
    ScaleWidth      =   24030
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox Picture12 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00404040&
+      BorderStyle     =   0  'None
+      FillStyle       =   0  'Solid
+      ForeColor       =   &H80000008&
+      Height          =   375
+      Left            =   22680
+      ScaleHeight     =   375
+      ScaleWidth      =   2295
+      TabIndex        =   154
+      Top             =   8040
+      Width           =   2295
+      Begin VB.Label Label4 
+         Alignment       =   2  'Center
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
+         BackStyle       =   0  'Transparent
+         Caption         =   "MORE..."
+         BeginProperty Font 
+            Name            =   "Segoe UI Semibold"
+            Size            =   11.25
+            Charset         =   0
+            Weight          =   600
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   360
+         TabIndex        =   155
+         Top             =   0
+         Width           =   2295
+      End
+   End
+   Begin VB.PictureBox Picture8 
+      BackColor       =   &H00FFFFFF&
+      Height          =   255
+      Left            =   18960
+      Picture         =   "frmPreferences.frx":0000
+      ScaleHeight     =   195
+      ScaleWidth      =   2115
+      TabIndex        =   150
+      Top             =   6600
+      Width           =   2175
+      Begin VB.Label Label6 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000005&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Transparent"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   169
+         Top             =   0
+         Width           =   1575
+      End
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H0044BB00&
+      Height          =   255
+      Index           =   8
+      Left            =   20880
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   205
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00BF0040&
+      Height          =   255
+      Index           =   8
+      Left            =   20880
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   204
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H000044BB&
+      Height          =   255
+      Index           =   8
+      Left            =   20880
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   203
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H004400BB&
+      Height          =   255
+      Index           =   8
+      Left            =   20880
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   202
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H0000BB44&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   17
+      Left            =   20880
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   201
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00BB4400&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   16
+      Left            =   20880
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   200
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00400040&
+      Height          =   255
+      Index           =   7
+      Left            =   20640
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   199
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00800080&
+      Height          =   255
+      Index           =   7
+      Left            =   20640
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   198
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H00C000C0&
+      Height          =   255
+      Index           =   7
+      Left            =   20640
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   197
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H00FF00FF&
+      Height          =   255
+      Index           =   7
+      Left            =   20640
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   196
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00FFC0FF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   15
+      Left            =   20640
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   195
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00FF80FF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   14
+      Left            =   20640
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   194
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00400000&
+      Height          =   255
+      Index           =   6
+      Left            =   20400
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   193
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00800000&
+      Height          =   255
+      Index           =   6
+      Left            =   20400
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   192
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H00C00000&
+      Height          =   255
+      Index           =   6
+      Left            =   20400
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   191
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H8000000D&
+      Height          =   255
+      Index           =   6
+      Left            =   20400
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   190
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00FFC0C0&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   13
+      Left            =   20400
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   189
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00FF8080&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   12
+      Left            =   20400
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   188
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00404000&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   5
+      Left            =   20160
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   187
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00808000&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   5
+      Left            =   20160
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   186
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H00C0C000&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   5
+      Left            =   20160
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   185
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H00FFFF00&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   5
+      Left            =   20160
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   184
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00FFFFC0&
+      FillColor       =   &H0080FFFF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   11
+      Left            =   20160
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   183
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00FFFF80&
+      FillColor       =   &H0080FFFF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   10
+      Left            =   20160
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   182
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00004000&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   4
+      Left            =   19920
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   181
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00008000&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   4
+      Left            =   19920
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   180
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H0000C000&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   4
+      Left            =   19920
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   179
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H0000FF00&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   4
+      Left            =   19920
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   178
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00C0FFC0&
+      FillColor       =   &H0080FFFF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   9
+      Left            =   19920
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   177
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H0080FF80&
+      FillColor       =   &H0080FFFF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   8
+      Left            =   19920
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   176
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00004040&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   3
+      Left            =   19680
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   175
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00008080&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   3
+      Left            =   19680
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   174
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H0000C0C0&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   3
+      Left            =   19680
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   173
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H0000FFFF&
+      FillColor       =   &H0080FFFF&
+      Height          =   255
+      Index           =   3
+      Left            =   19680
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   172
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00C0FFFF&
+      FillColor       =   &H0080FFFF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   7
+      Left            =   19680
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   171
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H0080FFFF&
+      FillColor       =   &H0080FFFF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   6
+      Left            =   19680
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   170
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00002040&
+      Height          =   255
+      Index           =   2
+      Left            =   19440
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   168
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00004080&
+      Height          =   255
+      Index           =   2
+      Left            =   19440
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   167
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H000040C0&
+      Height          =   255
+      Index           =   2
+      Left            =   19440
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   166
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H000080FF&
+      Height          =   255
+      Index           =   2
+      Left            =   19440
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   165
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00C0E0FF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   5
+      Left            =   19440
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   164
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H0080C0FF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   4
+      Left            =   19440
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   163
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00000040&
+      Height          =   255
+      Index           =   1
+      Left            =   19200
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   162
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00000080&
+      Height          =   255
+      Index           =   1
+      Left            =   19200
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   161
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H000000C0&
+      Height          =   255
+      Index           =   1
+      Left            =   19200
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   160
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H000000FF&
+      Height          =   255
+      Index           =   1
+      Left            =   19200
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   159
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00C0C0FF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   3
+      Left            =   19200
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   158
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H008080FF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   2
+      Left            =   19200
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   157
+      Top             =   7080
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture11 
+      BackColor       =   &H00000000&
+      Height          =   255
+      Index           =   0
+      Left            =   18960
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   153
+      Top             =   8040
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture10 
+      BackColor       =   &H00404040&
+      Height          =   255
+      Index           =   0
+      Left            =   18960
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   152
+      Top             =   7800
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture9 
+      BackColor       =   &H00808080&
+      Height          =   255
+      Index           =   0
+      Left            =   18960
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   151
+      Top             =   7560
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture7 
+      BackColor       =   &H00C0C0C0&
+      Height          =   255
+      Index           =   0
+      Left            =   18960
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   149
+      Top             =   7320
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00FFFFFF&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   1
+      Left            =   18960
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   148
+      Top             =   6840
+      Width           =   255
+   End
+   Begin VB.PictureBox Picture6 
+      BackColor       =   &H00E0E0E0&
+      FillStyle       =   0  'Solid
+      Height          =   255
+      Index           =   0
+      Left            =   18960
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   147
+      Top             =   7080
+      Width           =   255
+   End
    Begin VB.PictureBox picMacros 
       Appearance      =   0  'Flat
       BackColor       =   &H00666666&
@@ -100,7 +789,6 @@ Begin VB.Form frmPreferences
          End
          Begin VB.PictureBox Picture5 
             Appearance      =   0  'Flat
-            BackColor       =   &H80000004&
             BorderStyle     =   0  'None
             ForeColor       =   &H80000008&
             Height          =   1815
@@ -167,9 +855,9 @@ Begin VB.Form frmPreferences
                Strikethrough   =   0   'False
             EndProperty
             Height          =   1500
-            ItemData        =   "frmPreferences.frx":0000
+            ItemData        =   "frmPreferences.frx":0244
             Left            =   120
-            List            =   "frmPreferences.frx":0002
+            List            =   "frmPreferences.frx":0246
             Style           =   1  'Checkbox
             TabIndex        =   122
             Top             =   240
@@ -307,57 +995,30 @@ Begin VB.Form frmPreferences
       Width           =   5295
       Begin VB.CommandButton cmdClearToolList 
          Caption         =   "Clear Tool List"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   375
-         Left            =   3420
+         Left            =   3180
          TabIndex        =   125
          ToolTipText     =   "Clears the Tool list"
          Top             =   1200
-         Width           =   1695
+         Width           =   1935
       End
       Begin VB.CommandButton cmdClearRecents 
          Caption         =   "Clear Recent List"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   375
-         Left            =   3420
+         Left            =   3180
          TabIndex        =   124
          ToolTipText     =   "Clears the recently opened files list"
          Top             =   240
-         Width           =   1695
+         Width           =   1935
       End
       Begin VB.CommandButton cmdClearCommandHistory 
          Caption         =   "Clear Comand History"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   375
-         Left            =   3420
+         Left            =   3180
          TabIndex        =   123
          ToolTipText     =   "Clears the MS-DOS command history."
          Top             =   720
-         Width           =   1695
+         Width           =   1935
       End
    End
    Begin VB.PictureBox picProgramInspector 
@@ -854,7 +1515,7 @@ Begin VB.Form frmPreferences
       End
       Begin VB.CheckBox chkDebug 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FFFFFF&
          Caption         =   "Compile in Debug mode (-d)"
          ForeColor       =   &H80000008&
          Height          =   255
@@ -1480,9 +2141,9 @@ Begin VB.Form frmPreferences
                Strikethrough   =   0   'False
             EndProperty
             Height          =   1230
-            ItemData        =   "frmPreferences.frx":0004
+            ItemData        =   "frmPreferences.frx":0248
             Left            =   120
-            List            =   "frmPreferences.frx":0006
+            List            =   "frmPreferences.frx":024A
             TabIndex        =   16
             Top             =   240
             Width           =   3615
@@ -1589,7 +2250,7 @@ Begin VB.Form frmPreferences
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   2175
+         Height          =   2655
          Left            =   0
          TabIndex        =   50
          Top             =   120
@@ -1607,9 +2268,9 @@ Begin VB.Form frmPreferences
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H80000008&
-            Height          =   1815
+            Height          =   2295
             Left            =   120
-            ScaleHeight     =   1815
+            ScaleHeight     =   2295
             ScaleWidth      =   5055
             TabIndex        =   64
             Top             =   240
@@ -1721,6 +2382,37 @@ Begin VB.Form frmPreferences
                Top             =   0
                Width           =   975
             End
+            Begin VB.Label lblGetCompiler 
+               Appearance      =   0  'Flat
+               BackColor       =   &H80000005&
+               BackStyle       =   0  'Transparent
+               Caption         =   "http://www.bennugd.org"
+               BeginProperty Font 
+                  Name            =   "Segoe UI"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   700
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               ForeColor       =   &H80000008&
+               Height          =   255
+               Left            =   1560
+               TabIndex        =   146
+               Top             =   1920
+               Width           =   2295
+            End
+            Begin VB.Label Label3 
+               BackStyle       =   0  'Transparent
+               Caption         =   "Note: If it's not any compiler installed yet, latest version can be downloaded here:"
+               ForeColor       =   &H00000080&
+               Height          =   615
+               Left            =   0
+               TabIndex        =   145
+               Top             =   1680
+               Width           =   4935
+            End
             Begin VB.Line Line1 
                X1              =   2400
                X2              =   4320
@@ -1754,7 +2446,7 @@ Begin VB.Form frmPreferences
          Height          =   210
          Left            =   120
          TabIndex        =   6
-         Top             =   2520
+         Top             =   2760
          Width           =   3615
       End
       Begin VB.Frame grbSaveBeforeCompiling 
@@ -1874,23 +2566,23 @@ Begin VB.Form frmPreferences
          Style           =   2  'Dropdown List
          TabIndex        =   129
          Top             =   1080
-         Width           =   1695
+         Width           =   2295
       End
       Begin VB.ComboBox cmbColor 
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "frmPreferences.frx":0008
+         ItemData        =   "frmPreferences.frx":024C
          Left            =   2880
-         List            =   "frmPreferences.frx":000A
+         List            =   "frmPreferences.frx":024E
          Style           =   2  'Dropdown List
          TabIndex        =   51
          Top             =   720
-         Width           =   1695
+         Width           =   2295
       End
       Begin VB.CheckBox chkEnableXP 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
-         Caption         =   "Enable XP Look"
+         Caption         =   "Enable visual styles"
          ForeColor       =   &H80000008&
          Height          =   375
          Left            =   120
@@ -1921,7 +2613,7 @@ Begin VB.Form frmPreferences
          Width           =   2175
       End
       Begin VB.Label lblWarning 
-         Caption         =   "Note: Using the XP Style in Windows 9x / Me IS NOT recommended."
+         Caption         =   "Note: Using styles in Windows 9x / Me IS NOT recommended."
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   8.25
@@ -1970,7 +2662,7 @@ Begin VB.Form frmPreferences
          EndProperty
          Height          =   310
          Left            =   120
-         Picture         =   "frmPreferences.frx":000C
+         Picture         =   "frmPreferences.frx":0250
          ScaleHeight     =   370.588
          ScaleMode       =   0  'User
          ScaleWidth      =   315
@@ -1990,9 +2682,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   330
-         ItemData        =   "frmPreferences.frx":0155
+         ItemData        =   "frmPreferences.frx":0399
          Left            =   4680
-         List            =   "frmPreferences.frx":0177
+         List            =   "frmPreferences.frx":03BB
          TabIndex        =   43
          Top             =   120
          Width           =   750
@@ -2013,6 +2705,26 @@ Begin VB.Form frmPreferences
          TabIndex        =   35
          Top             =   480
          Width           =   5295
+         Begin VB.CommandButton cmdCP1 
+            Height          =   255
+            Left            =   3360
+            MaskColor       =   &H00FFFFFF&
+            Picture         =   "frmPreferences.frx":03E3
+            Style           =   1  'Graphical
+            TabIndex        =   207
+            Top             =   480
+            UseMaskColor    =   -1  'True
+            Width           =   255
+         End
+         Begin VB.PictureBox picCP1 
+            Height          =   255
+            Left            =   2760
+            ScaleHeight     =   195
+            ScaleWidth      =   555
+            TabIndex        =   206
+            Top             =   480
+            Width           =   615
+         End
          Begin VB.CheckBox chkUnderline 
             Alignment       =   1  'Right Justify
             Appearance      =   0  'Flat
@@ -2070,9 +2782,9 @@ Begin VB.Form frmPreferences
          End
          Begin ImgColorPicker.ColorPicker cp1 
             Height          =   255
-            Left            =   2760
+            Left            =   3960
             TabIndex        =   38
-            Top             =   480
+            Top             =   120
             Width           =   1095
             _ExtentX        =   1931
             _ExtentY        =   450
@@ -2080,9 +2792,9 @@ Begin VB.Form frmPreferences
          End
          Begin ImgColorPicker.ColorPicker cp2 
             Height          =   255
-            Left            =   2760
+            Left            =   4080
             TabIndex        =   40
-            Top             =   1080
+            Top             =   1320
             Visible         =   0   'False
             Width           =   1095
             _ExtentX        =   1931
@@ -2137,9 +2849,9 @@ Begin VB.Form frmPreferences
             Strikethrough   =   0   'False
          EndProperty
          Height          =   330
-         ItemData        =   "frmPreferences.frx":019F
+         ItemData        =   "frmPreferences.frx":0725
          Left            =   2160
-         List            =   "frmPreferences.frx":01A1
+         List            =   "frmPreferences.frx":0727
          Style           =   2  'Dropdown List
          TabIndex        =   34
          Top             =   120
@@ -2148,7 +2860,7 @@ Begin VB.Form frmPreferences
       Begin CodeSenseCtl.CodeSense csPreview 
          Height          =   1815
          Left            =   120
-         OleObjectBlob   =   "frmPreferences.frx":01A3
+         OleObjectBlob   =   "frmPreferences.frx":0729
          TabIndex        =   11
          Top             =   2160
          Width           =   5295
@@ -2199,6 +2911,44 @@ Begin VB.Form frmPreferences
          Strikethrough   =   0   'False
       EndProperty
       ShowCloseButton =   0   'False
+   End
+   Begin VB.Label Label5 
+      Alignment       =   2  'Center
+      BackStyle       =   0  'Transparent
+      Caption         =   "More..."
+      BeginProperty Font 
+         Name            =   "Segoe UI Semibold"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   600
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   375
+      Left            =   19080
+      TabIndex        =   156
+      Top             =   8640
+      Width           =   1935
+   End
+   Begin VB.Shape Shape3 
+      BorderColor     =   &H00000000&
+      BorderStyle     =   6  'Inside Solid
+      FillColor       =   &H00404040&
+      FillStyle       =   0  'Solid
+      Height          =   375
+      Left            =   18960
+      Top             =   8640
+      Width           =   2175
+   End
+   Begin VB.Shape shapeCP 
+      FillColor       =   &H00808080&
+      FillStyle       =   0  'Solid
+      Height          =   2655
+      Left            =   18840
+      Top             =   6480
+      Width           =   2415
    End
    Begin VB.Label lblSubtitle 
       Appearance      =   0  'Flat
@@ -2370,8 +3120,8 @@ End Sub
 Private Sub PlaceControls()
     tabCategories.Move 1820, 800, 5535, 4545  ' 0, 800, 5535, 4425
     tabCategories.ShowTabs = False
-    Me.Width = 7440     ' 5625
-    Me.Height = 6295    ' 6395
+    Me.width = 7440     ' 5625
+    Me.height = 6295    ' 6395
     cmdCancel.Move 4320, 5400   ' 5380
     cmdOK.Move 3120, 5400        ' 3120
     tv_preferences.Move 0, 800, 1815, 6295
@@ -2691,11 +3441,17 @@ Private Sub SaveConf()
     
     If trFiles.Nodes(8).Checked Then
         If Not FileAssociated(".imp", "Bennu.ImportFile") Then
-            Call RegisterType(".imp", "Bennu.ImportFile", "Text", "Bennu module list files", App.Path + "\Icons\Metro black\import.ico")
+            Call RegisterType(".imp", "Bennu.ImportFile", "Text", "Bennu module list files", App.Path + "\Icons\Metro black\imp.ico")
+        End If
+        If Not FileAssociated(".import", "Bennu.ImportFile") Then
+            Call RegisterType(".import", "Bennu.ImportFile", "Text", "Bennu module list files", App.Path + "\Icons\Metro black\imp.ico")
         End If
     Else
         If FileAssociated(".imp", "Bennu.ImportFile") Then
             Call DeleteType(".imp", "Bennu.ImportFile")
+        End If
+        If FileAssociated(".import", "Bennu.ImportFile") Then
+            Call DeleteType(".import", "Bennu.ImportFile")
         End If
     End If
     
@@ -3138,16 +3894,22 @@ Private Sub cmdClearRecents_Click()
     Set A = FSO.CreateTextFile(App.Path & "\Conf\recent.ini", True)
     A.Close
     
-    For i = 1 To 10
+    For i = 1 To MAX_RECENTS_FILES
         frmMain.cMenu.RemoveItem frmMain.cMenu.IndexForKey("mnuRecFile" & i)
+    Next i
+    For i = 1 To MAX_RECENTS_PROJS
         frmMain.cMenu.RemoveItem frmMain.cMenu.IndexForKey("mnuRecProj" & i)
     Next i
-
     'LoadRecents
 End Sub
 
 Private Sub cmdClearToolList_Click()
     FSO.CreateTextFile App.Path & "/Conf/tools.fbconf"
+End Sub
+
+Private Sub cmdCP1_Click()
+    shapeCP.Top = cmdCP1.Top + 240
+    shapeCP.Left = cmdCP1.Left
 End Sub
 
 Private Sub cmdExplore_Click(Index As Integer)
@@ -3384,6 +4146,11 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     Set mnuPreSets = Nothing
+End Sub
+
+Private Sub lblGetCompiler_Click()
+    Unload Me
+    NewWindowWeb "http://www.bennugd.org/es/node/30", "BennuGD Official Page"
 End Sub
 
 Private Sub lstItems_Click()

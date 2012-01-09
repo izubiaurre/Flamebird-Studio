@@ -37,24 +37,24 @@ Public Enum PriorityLevel
     plLowest = 1
 End Enum
 
-Private m_ID As Long 'Id único establecido automáticamente al agregarse al tracker.
-                     '-1 significa que no ha sido agregado a ninguno
-Private m_Summary As String 'Breve descripción
+Private m_ID As Long                ' Unique ID automaticaly given when adding to the tracker
+                                    ' -1 means that it has been not added to any tracker
+Private m_Summary As String         ' Short description
 Private m_DetailedDesc As String
-Private m_Module As String 'Archivo al que hace referencia el elemento
+Private m_Module As String          ' File that references the item
 Private m_Category As String
 Private m_Priority As PriorityLevel
-Private m_Completed As Integer 'Porcentaje que se ha completado
+Private m_Completed As Integer      ' Completed percent
 Private m_AssignedTo As String
 Private m_SubmittedBy As String
 Private m_DateCreated As Date
 Private m_DateModified As Date
 Private m_DateClosing As Date
-Private m_Closed  As Boolean 'Indica si el item está cerrado o no
-Private m_Hidden As Boolean 'Indica si el item ha sido borrado
-Private m_Locked As Boolean 'Indica si el item ha sido bloqueado
+Private m_Closed  As Boolean        ' Shows if the item is closed or not
+Private m_Hidden As Boolean         ' Shows if the item is deleted or not
+Private m_Locked As Boolean         ' Shows if the item is blocked or not
 '-----------------------------------------------------------------------------
-'IMPLEMENTACIÓN PROPIEDADES
+' PROPERTIES IMPLEMENTATION
 '-----------------------------------------------------------------------------
 Friend Property Let Id(newID As Long)
     m_ID = newID
@@ -167,10 +167,10 @@ Public Property Get Locked() As Boolean
 End Property
 
 '-----------------------------------------------------------------------------
-' INICIALIZACIÓN Y SALIDA
+' INITIALIZE AND TERMINATE
 '-----------------------------------------------------------------------------
 Private Sub Class_Initialize()
-    m_ID = -1 'No está en ningún tracker
+    m_ID = -1       ' It's not in any tracker
     m_Completed = 0
     m_Closed = False
     m_Priority = plLowest
@@ -183,7 +183,7 @@ Private Sub Class_Terminate()
    ' Set m_SubmittedBy = Nothing
 End Sub
 
-'El siguiente método devuelve una copia del objeto
+' Returns the copy of the object
 Public Function Copy() As cTrackerItem
     Dim ret As cTrackerItem
     Set ret = New cTrackerItem

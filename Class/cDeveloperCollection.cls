@@ -31,7 +31,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private m_Col As Collection
-Private counter As Long 'Contador para asignar IDs a los developers de la coleccón
+Private counter As Long ' Counter to asign IDs to the developers in the collection
 Private m_DefaultDev As String
 
 Public Property Let defaultDev(DevName As String)
@@ -53,14 +53,14 @@ Public Sub Add(name As String, RealName As String, Mail As String)
     dev.RealName = RealName
     dev.Mail = Mail
     
-    counter = counter + 1 'incrementamos el contador
+    counter = counter + 1
     dev.Id = counter
     m_Col.Add dev, hex(counter)
 End Sub
 
 Public Property Get item(ByVal ItemIndex As Variant) As cDeveloper
 Attribute item.VB_UserMemId = 0
-    If ItemIndex = "" Then 'Si es nulo seleccionamos el primer elemento
+    If ItemIndex = "" Then ' If null, select first one
         Set item = m_Col.item(1)
     Else
         Set item = m_Col.item(ItemIndex)
@@ -94,16 +94,15 @@ Public Function IDForName(ByVal sName As String) As Long
     IDForName = 0
 End Function
 
-'Permite usar For...Each...Next. Id proc=-4, Atribut=Oculto
+' To use in For...Each...Next. Id proc=-4, Atribute=Hidden
 Public Function NewEnum() As IUnknown
 Attribute NewEnum.VB_UserMemId = -4
 Attribute NewEnum.VB_MemberFlags = "40"
-    'permite ser utilizado con For ...Each
     Set NewEnum = m_Col.[_NewEnum]
 End Function
 
 '-----------------------------------------------------------------------------
-' INICIALIZACIÓN Y SALIDA
+' INITIALIZATION and END
 '-----------------------------------------------------------------------------
 Private Sub Class_Initialize()
     Set m_Col = New Collection

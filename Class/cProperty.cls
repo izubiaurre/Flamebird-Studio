@@ -42,14 +42,14 @@ End Enum
 Private m_Name As String
 Private m_Key As String
 Private m_Type As PropertyType
-Private m_CallBackFunction As String 'Función a la que se llama cuando se modifica una propiedad
-Private m_CallingObject As Object 'Objeto donde se ejecuta la función callback
+Private m_CallBackFunction As String    ' Function that is called when property is changed
+Private m_CallingObject As Object       ' Object where is executed the callback function
 Private m_Value As Variant
 Private m_Editable As Boolean
 Private m_Description As String
-'Las propiedades max y min son polivalentes,
-'para ptText significa máximo y mínimo de caracteres
-'mientras que para números significa valores límites
+' Max and min properties are multipurpose
+' for ptText mean maximum and minimum characters
+' whereas for numbers mean limit values
 Private m_CanBeEmpty As Boolean
 Private m_IsLimited As Boolean
 Private m_Max As Integer
@@ -106,15 +106,15 @@ Public Property Get CallBackFunction() As String
 End Property
 
 Public Property Let Value(newValue As Variant)
-    'Comprobamos el tipo de propiedad
+    ' Check property type
     Select Case m_Type
-    Case ptInteger 'Entero
+    Case ptInteger ' Integer
         m_Value = newValue
     
-    Case ptNumeric 'Número cualquiera (admite decimales)
-        m_Value = newValue 'cambiamos la propiedad
+    Case ptNumeric ' Numeric (can be decimal)
+        m_Value = newValue ' change the property
     
-    Case ptCombo 'ComboBox
+    Case ptCombo ' ComboBox
         m_Value = CInt(newValue)
     
     Case Else
@@ -186,38 +186,38 @@ Public Property Get min() As Integer
 End Property
 
 Public Function AddOption(OpName As String)
-    'Error si no es un combo
+    ' Error if not a combo
     If m_Type <> ptCombo Then Err.Raise vbObjectError + 513, , "The property's type is not PTCOMBO": Exit Function
     
     m_colOptions.Add OpName, OpName
-    'm_Max = m_colOptions.Count - 1 'Establece el máximo elemento
+    'm_Max = m_colOptions.Count - 1 ' Sets max element
 End Function
 
 Public Property Get OptionItem(ByVal ItemIndex As Variant) As String
-    'Error si no es un combo
+    ' Error if not a combo
     If m_Type <> ptCombo Then Err.Raise vbObjectError + 513, , "The property's type is not PTCOMBO": Exit Property
     OptionItem = m_colOptions.item(ItemIndex + 1)
 End Property
 
 Public Property Get OptionCount() As Integer
-    'Error si no es un combo
+    ' Error if not a combo
     If m_Type <> ptCombo Then Err.Raise vbObjectError + 513, , "The property's type is not PTCOMBO": Exit Property
     
     OptionCount = m_colOptions.count
 End Property
 
 Public Sub OptionRemove(ByVal ItemIndex As Variant)
-    'Error si no es un combo
+    ' Error if not a combo
     If m_Type <> ptCombo Then Err.Raise vbObjectError + 513, , "The property's type is not PTCOMBO": Exit Sub
     
     m_colOptions.Remove ItemIndex
-    'm_Max = m_colOptions.Count - 1 'Establece el máximo elemento
+    'm_Max = m_colOptions.Count - 1 ' Sets max element
 End Sub
 
+' To use For...Each...Next.
 Public Function NewEnum() As IUnknown
 Attribute NewEnum.VB_UserMemId = -4
 Attribute NewEnum.VB_MemberFlags = "40"
-    'permite ser utilizado con For ...Each
     Set NewEnum = m_colOptions.[_NewEnum]
 End Function
 

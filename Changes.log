@@ -6,6 +6,27 @@ imprecise
 ----------------------------------------------------------------------------------------
   Date         By        Bug ID       File/Module
 ----------------------------------------------------------------------------------------
+· 09/01/2012   Izubiaurre                  \Forms\frmImport.frm                              
+    Faster import files editing. Now it is possible to add modules to import files from a list.
+
+· 04/01/2012   Izubiaurre                  \Modules\modApplication.bas                       
+    If the compiler is not configured, the appliaction asks to select it before anything else
+
+· 04/01/2012   Izubiaurre                  \Forms\frmWebBrowser.frm                          
+    Now shows the URLs in the Web Browser
+
+· 03/01/2012   Izubiaurre                  \Forms\frmMain.frm                                
+    Fixed some problems with the tabs.
+
+· 25/10/2011   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Shows 32 bit fnt files
+
+· 25/10/2011   Izubiaurre                  \Forms\frmFnt.frm                                 
+    Shows 16 bit fnts but with incorrect palette
+
+· 23/10/2011   Izubiaurre                  \FBMX.vbp                                         
+    All the comentaries are translated to english
+
 · 08/10/2011   Izubiaurre                  \Forms\frmDoc.frm                                 
     Un montón de cosas corregidas en los codeList, las cosas ya no se muestran donde no se deben.
 

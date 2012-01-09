@@ -62,59 +62,68 @@ Private Const F_ANIMATION = &H1000
 
 Private Const BI_RGB = 0&
 
-'variables miembro de la clase (con implementación de propiedad)
+'class member variables (with property implementation)
 Private m_Width As Long
 'm_Height and m_Width are long here but uint16 in map file format!
 Private m_Height As Long
 Private m_Code As Long
-Private m_Description As String * 32 'AsciiZ format
+Private m_Description As String * 32    'AsciiZ format
 'Private m_FilePath As String 'Read-only
 Private m_Depth As Integer
-Private m_AnimationLength As Integer 'Read-only
-Private m_AnimationSpeed As Integer 'Read-only
-'variables miebro (sin implementación de propiedad)
+Private m_AnimationLength As Integer    'Read-only
+Private m_AnimationSpeed As Integer     'Read-only
+
+'member variables (without property implementation)
 Private m_Palette() As Byte
-Private m_Data16() As Integer 'Data del map en formato 565
-Private m_Data8() As Byte 'Data del map en formato indexado
+Private m_Data16() As Integer           'Map data in 565 format
+Private m_Data8() As Byte               'Map data in indexed format
 Private m_CPoints() As Integer
 Private m_Animation() As Integer
 Private m_NFlags As Integer
 Private m_Frames As Integer
 
-'Otras
-'El objeto cMap almacenará bien la información del MAP preparada para ser escrita,
-'bien la información del objeto gráfico (llamamos objeto bitmap), o bien ambas
-'Para poder efectuar operaciones de escritura y lectura de MAPs la variable m_MapAvailable
-'debe ser cierta. Para poder efectuar operaciones de pintado de gráficos y abrir/guardar
-'en formatos distintos del map, m_BitmapAvailable debe ser cierta
-Private m_MapAvailable As Boolean 'Informa de si se ha construido la información en formato MAP
+'Other
+'The cMap object store, MAP information ready to be written,
+'the information graphic object (called object bitmap), or both.
+'In order to perform read and write operations of MAPs, the variable m_MapAvailable
+'must be true. In order to perform painting operations graphics and open/save
+'the map in different formats, m_BitmapAvailable must be true
+Private m_MapAvailable As Boolean       'Informs if is builded the info in MAP format
 Private m_BitmapAvailable As Boolean
 
 Private m_Bitmap As cBitmap
-Private BitmapData() As Byte 'Para uso con mapas de 1, 4 y 8 bits
-Private BitmapData555() As Integer  'Para uso con mapas de 16 bits
-Private sLastError As String 'Último mensaje de error
+Private BitmapData() As Byte            'For use of 1, 4 and 8 bit maps
+Private BitmapData555() As Integer      'For use of 16 bit maps
+Private sLastError As String            'Last error-message
 
 Private WithEvents gdip As cGDIP
 Attribute gdip.VB_VarHelpID = -1
 
 '--------------------------------------------------------------------------------------
-'Implementación Propiedades
+'Properties implementation
+'--------------------------------------------------------------------------------------
+
+
+
+'Returns width of the map
 Property Get Width() As Long
-    Width = m_Width 'retorna el ancho
+    Width = m_Width
 End Property
 
+'Returns height of the map
 Property Get Height() As Long
-    Height = m_Height 'retorna el alto
+    Height = m_Height
 End Property
 
+'Returns code of the map
 Property Get Code() As Long
-    Code = m_Code 'retorna el código
+    Code = m_Code
 End Property
 Property Let Code(ByVal newVal As Long)
     m_Code = newVal
 End Property
 
+'Returns description of the map
 Property Get description() As String
     description = AsciiZToString(m_Description)
 End Property
@@ -126,6 +135,7 @@ End Property
 '    FilePath = m_FilePath
 'End Property
 
+'Returns depth (bpp) of the map
 Property Get Depth() As Integer
     Depth = m_Depth
 End Property
@@ -190,7 +200,7 @@ Public Function RemoveCPoint(Index As Integer) As Long
     If m_MapAvailable Then
         If CPointsCount > 1 Then
             If Index < ((UBound(m_CPoints) + 1) / 2) And Not (Index < 0) Then
-                'Reordena los restantes elementos en un array auxiliar
+                'Sorts the rest elements in an auxiliar array
                 ReDim aux(UBound(m_CPoints) - 2) As Integer
                 For cnt = 0 To Index * 2 - 1
                     aux(cnt) = m_CPoints(cnt)
@@ -228,7 +238,7 @@ End Property
 '--------------------------------------------------------------------------------------
 
 '--------------------------------------------------------------------------------------
-'Métodos
+'Methods
 Public Sub Dispose()
     Erase m_Data8
     Erase m_Data16
@@ -243,34 +253,34 @@ Public Sub Dispose()
 End Sub
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: Draw()
-'DESCRIPTION: Draws the map into a DC
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      Draw()
+'DESCRIPTION:   Draws the map into a DC
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function Draw(hdc As Long, lX As Long, lY As Long, Optional lWidth As Long = 0, _
                         Optional lHeight As Long = 0, Optional bTrans As Boolean = False) As Long
     Dim graphics As cGraphics
     Dim lSucceded As Long, lError As Long
-    Dim bmp As cBitmap 'Stores a copy of the bitmap to paint
+    Dim bmp As cBitmap      'Stores a copy of the bitmap to paint
     
-    If m_MapAvailable = True And m_BitmapAvailable = False Then 'Mapa existe pero no se ha construido el bitmap
+    If m_MapAvailable = True And m_BitmapAvailable = False Then 'Map exists but the bitmap has not been builded
         m_BitmapAvailable = MakeBitmap
     End If
     
     If m_BitmapAvailable Then
         lError = 1
         
-        Set graphics = New cGraphics 'Objeto gráfico
+        Set graphics = New cGraphics    'Graphic object
         Set graphics.gdip = gdip
         Set bmp = New cBitmap
         
         lError = bmp.CreateFromClone(m_Width, m_Height, m_Bitmap.Handle, m_Bitmap.PixelFormat)
         If Not lError Then
-            If bTrans = True Then 'Establece la transparencia
+            If bTrans = True Then 'Sets trans
                 If m_Depth = 8 Then
-                    bmp.SetTransColor (0) 'Primer color de la paleta
+                    bmp.SetTransColor (0) 'First palette color
                 ElseIf m_Depth = 16 Then
-                    bmp.MakeTransparent (0) 'Color negro transparente
+                    bmp.MakeTransparent (0) 'Black transparent color
                 End If
                 drawTransBack hdc, lWidth, lHeight
             End If
@@ -310,22 +320,22 @@ Public Function Draw(hdc As Long, lX As Long, lY As Long, Optional lWidth As Lon
 End Function
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: MakeBitmap()
-'DESCRIPTION: Create a bitmap (windows format) from map info
-'RETURNS: -1 if no error, otherwise 0. Check GetLastError
+'FUNCTION:      MakeBitmap()
+'DESCRIPTION:   Create a bitmap (windows format) from map info
+'RETURNS:       -1 if no error, otherwise 0. Check GetLastError
 '-------------------------------------------------------------------------------------
 Private Function MakeBitmap() As Long
     Dim bInfo256 As BITMAPINFO256, bInfo As BITMAPINFO, bInfo16 As BITMAPINFO16, bInfo2 As BITMAPINFO2
     Dim cnt As Long, cnt2 As Long
-    Dim scanline As Long 'Tamaño de una scanline
+    Dim scanline As Long            'Size of a scanline
     Dim lSucceded As Long, lError As Long
     
     If Not (m_Bitmap Is Nothing) Then Set m_Bitmap = Nothing
     
     lError = -1 'Supose error
     If m_MapAvailable = True Then
-        Set m_Bitmap = New cBitmap ' Creamos un nuevo bitmap
-        Set m_Bitmap.gdip = gdip   ' Referencia para los errores
+        Set m_Bitmap = New cBitmap 'Create new bitmap
+        Set m_Bitmap.gdip = gdip   'Reference for errors
         
         Select Case m_Depth
         Case 8
@@ -335,25 +345,25 @@ Private Function MakeBitmap() As Long
                 .biWidth = m_Width: .biHeight = -m_Height
             End With
             
-            'Prepara la paleta
+            'Prepare the palette
             For cnt = 0 To 255
                 bInfo256.bmiColors(cnt).rgbRed = m_Palette(cnt * 3) * 4
                 bInfo256.bmiColors(cnt).rgbGreen = m_Palette(cnt * 3 + 1) * 4
                 bInfo256.bmiColors(cnt).rgbBlue = m_Palette(cnt * 3 + 2) * 4
             Next
             
-            'Calcular la scanline alineada a 4 bytes
-            scanline = (m_Width + 4 * Abs(CLng((m_Width Mod 4) > 0))) - (m_Width And 3) 'El tamaño de la scanline debe estar alineado a 4 bytes
+            'Calculate the scanline in aligned in 4 bytes
+            scanline = (m_Width + 4 * Abs(CLng((m_Width Mod 4) > 0))) - (m_Width And 3) 'The size of the scanline must be aligned in 4 bytes
             ReDim BitmapData(CLng(scanline) * CLng(m_Height) - 1) As Byte
             If m_Width = scanline Then 'La información del mapa está alineada a 4 bytes
                 BitmapData = m_Data8
-            Else 'La información del mapa no está alineada a 4 bytes
+            Else 'The map info is not aligned to 4 bytes
                 'Prepara el mapa
                 For cnt = 0 To m_Height - 1
                     CopyMemory BitmapData(cnt * scanline), m_Data8(cnt * m_Width), m_Width
                 Next
             End If
-            lError = m_Bitmap.CreateFromGdiDib8bpp(bInfo256, VarPtr(BitmapData(0)))    'Crea el bitmap
+            lError = m_Bitmap.CreateFromGdiDib8bpp(bInfo256, VarPtr(BitmapData(0)))    'Create bitmap
             
         Case 16
             With bInfo.bmiHeader
@@ -362,10 +372,10 @@ Private Function MakeBitmap() As Long
                 .biWidth = m_Width: .biHeight = -m_Height
             End With
             
-            'Debemos alinear los datos a 4 bytes. Como cada pixel
-            'son dos bytes, sólo estará desalineado si el ancho del mapa no es par
+            'We must align the data to 4 bytes.
+            ' As each pixel are 2 bytes,only in case of odd map width
             scanline = (m_Width Mod 2) + m_Width
-            'Convierte de 16bits:565 a 16bits:555
+            'Convert from 16 bits 565 format to 555
             ReDim BitmapData555(CLng(scanline) * CLng(m_Height) - 1) As Integer
             For cnt = 0 To m_Height - 1
                 For cnt2 = 0 To m_Width - 1
@@ -373,7 +383,7 @@ Private Function MakeBitmap() As Long
                 Next
             Next
             
-            lError = m_Bitmap.CreateFromGdiDib16bpp(bInfo, VarPtr(BitmapData555(0))) 'Crea el bitmap
+            lError = m_Bitmap.CreateFromGdiDib16bpp(bInfo, VarPtr(BitmapData555(0))) 'Create the bitmap
         End Select
     End If
     
@@ -395,7 +405,7 @@ Public Function ConvertTo16bpp() As Long
     
     If m_MapAvailable Then
         If m_Depth = 8 Then
-            'Calcula el data del mapa de 16 bits
+            'Calculates data of the 16 bits map
             ReDim m_Data16(CLng(m_Width) * CLng(m_Height) - 1)
             For cnt = 0 To m_Height - 1
                 For cnt2 = 0 To m_Width - 1
@@ -429,7 +439,7 @@ Public Function ConvertTo8bpp() As Long
     Dim ordenado As Byte
     Dim aux As Long
     Dim dicClr As New Dictionary
-    Dim dicNearestClr As Dictionary ' Hash table para encontrar más rápidamente los colores cercanos en una paleta
+    Dim dicNearestClr As Dictionary 'Hash table to find fast the near colors of a palette
     Dim lSucceded As Long
     Dim lMaplen As Long
     
@@ -439,7 +449,7 @@ Public Function ConvertTo8bpp() As Long
         
             Set dicNearestClr = New Dictionary
             
-            'Calcula la frecuencia de los colores de la imagen
+            'Calculates the frequency fo the colors in a image
             For i = 0 To m_Height - 1
                 For j = 0 To m_Width - 1
                     If dicClr.Exists(m_Data16(i * m_Width + j)) Then
@@ -450,7 +460,7 @@ Public Function ConvertTo8bpp() As Long
                 Next
             Next
             
-            'Crea los arrays de colores y frecuencias con tantos elementos como usados haya
+            'Creates the color arrays and frequencies with so much elements as they are
             clrCnt = dicClr.count
             ReDim clrs(clrCnt - 1) As Long
             ReDim clrsfreq(clrCnt - 1) As Long
@@ -458,17 +468,17 @@ Public Function ConvertTo8bpp() As Long
             Dim var As Variant
             j = 0
             For Each var In dicClr.keys
-                clrs(j) = SInt16ToUint32(CInt(var)) 'Convierte el color a entero sin signo
+                clrs(j) = SInt16ToUint32(CInt(var)) 'Conversion: color to unsigned integer
                 clrsfreq(j) = CLng(dicClr(var))
                 j = j + 1
             Next
               
             Set dicClr = Nothing
         
-            'Ordena los elementos por frecuencias (MÉTODO BURBUJA, MUY LENTO)
+            'Sorts the elements by freq (BUBLE SORT! very slow)
             ordenado = 0: i = 1
             While (ordenado = 0)
-                ordenado = 1 'Suponer que está ordenado
+                ordenado = 1 'Supose it's sorted
                 For j = 0 To clrCnt - i - 1
                     If clrsfreq(j) < clrsfreq(j + 1) Then
                         aux = clrs(j)
@@ -485,7 +495,7 @@ Public Function ConvertTo8bpp() As Long
             
             Erase clrsfreq
             
-            'Crea la paleta a partir de los colores más frecuentes
+            'Create palette from more freq. colors
             clrUsed = IIf(clrCnt > 256, 256, clrCnt) 'Colores usados
             
             ReDim m_Palette(PALETTE_SIZE - 1) As Byte
@@ -495,17 +505,16 @@ Public Function ConvertTo8bpp() As Long
                 m_Palette(i * 3 + 2) = (clrs(i) And &H1F) * 2
             Next
             
-            'Crea la hash table con los colores ya conocidos
+            'Create hash table with the already known colors
             For i = 0 To clrUsed - 1
                 dicNearestClr.Add UInt32ToSInt16(clrs(i)), i
             Next
             Erase clrs
             
-            'Crea la información del map buscando los colores más cercanos a cada pixel en la paleta
-            'Si hay menos de 256 colores usamos  la  hashtable sin comprobación de si el elemento está
-            'en dicha tabla.
+            'Creates the info. of the map looking the closest colors for each pixel in the palette
+            'If there are less than 256 colors, we use the hashtable without check if the element is in this table
             ReDim m_Data8(lMaplen - 1) As Byte
-            If clrUsed <> clrCnt Then 'Hay más de colores que los usados
+            If clrUsed <> clrCnt Then 'There are more colors than the used ones
                 For i = 0 To lMaplen - 1
                     If Not dicNearestClr.Exists(m_Data16(i)) Then
                         dicNearestClr.Add m_Data16(i), NearestColor(m_Palette, clrUsed, m_Data16(i))
@@ -551,7 +560,7 @@ Private Function NearestColor(pal() As Byte, ByVal nColors As Integer, ByVal clr
     g = (lClr565U And &H7E0) \ 2 ^ 5
     b = (lClr565U And &H1F) * 2
     
-    mindistance = &H3000 + 1 'máxima distancia, 64^2*3
+    mindistance = &H3000 + 1 'MAximun distance, 64^2*3
     For i = 0 To nColors - 1
         distance = (CLng(pal(i * 3)) - r) ^ 2 + (CLng(pal(i * 3 + 1)) - g) ^ 2 + (CLng(pal(i * 3 + 2)) - b) ^ 2
         If distance < mindistance Then
@@ -586,26 +595,26 @@ Private Sub drawTransBack(hdc As Long, lWidth As Long, lHeight As Long)
 End Sub
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: MakeMap()
-'DESCRIPTION: Creates a 16bpp map data from the pixels of a bitmap
-'RETURNS: -1 if no error, otherwise 0. Check GetLastError
+'FUNCTION:      MakeMap()
+'DESCRIPTION:   Creates a 16bpp map data from the pixels of a bitmap
+'RETURNS:       -1 if no error, otherwise 0. Check GetLastError
 '-------------------------------------------------------------------------------------
 Private Function MakeMap() As Long
     Dim lSucceded As Long
     Dim i As Long, j As Long, clr As ARGB
     
     If Not m_Bitmap Is Nothing Then
-        'Propiedades iniciales del map
+        'Initial properties of the map
         m_Height = m_Bitmap.Height
         m_Width = m_Bitmap.Width
         m_Code = 0
         m_Description = StringToAsciiZ("Unnamed", Len(m_Description))
-        ReDim m_CPoints(1) As Integer 'Punto de control incial
+        ReDim m_CPoints(1) As Integer 'Initial Control Point
         m_CPoints(0) = m_Width / 2
         m_CPoints(1) = m_Height / 2
-        'Por ahora cargamos la imagen a 16 bits y convertimos a 8 si fuese necesario
+        'For now, load the image at 16 bits and convert to 8 if necessary
         m_Depth = 16
-        'Convierte la información a 16 bits
+        'Convert info to 16 bits
         ReDim m_Data16(CLng(m_Height) * CLng(m_Width) - 1) As Integer
         For i = 0 To m_Height - 1
             For j = 0 To m_Width - 1
@@ -630,14 +639,14 @@ Private Function MakeMap() As Long
 End Function
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: LoadBitmap()
-'DESCRIPTION: Loads a standar GDI+ file and store it as bitmap data
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      LoadBitmap()
+'DESCRIPTION:   Loads a standar GDI+ file and store it as bitmap data
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function Import(sFile As String) As Long
     Dim lError As Long
     
-    Dispose 'Resetea
+    Dispose 'Resets
     
     Set m_Bitmap = New cBitmap
     lError = m_Bitmap.LoadFromFile(sFile)
@@ -655,9 +664,9 @@ End Function
 
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: LoadMap()
-'DESCRIPTION: Loads a map file
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      LoadMap()
+'DESCRIPTION:   Loads a map file
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function Load(sFile As String) As Long
     Dim lFile As Long
@@ -672,8 +681,8 @@ Public Function Load(sFile As String) As Long
     lFile = gzopen(sFile, "rb")
     
     If Not (lFile = 0) Then
-        Dispose 'Resetea
-        'CABECERA
+        Dispose 'Resets
+        'HEADER
         gzread lFile, ByVal magic, Len(magic)
         gzread lFile, iAux, Len(iAux)
         m_Width = SInt16ToUint32(iAux)
@@ -682,11 +691,11 @@ Public Function Load(sFile As String) As Long
         gzread lFile, m_Code, Len(m_Code)
         gzread lFile, ByVal m_Description, Len(m_Description)
         
-        'COMPROBACIÓN DE LA CABECERA
-        If (StrComp(Left(magic, 3), M16_MAGIC) = 0) Then 'm16bits
+        'HEADER CHECK
+        If (StrComp(Left(magic, 3), M16_MAGIC) = 0) Then    'm16bits
             mapLen = m_Width * m_Height * 2
             m_Depth = 16
-        ElseIf StrComp(Left(magic, 3), MAP_MAGIC) = 0 Then 'm8bits
+        ElseIf StrComp(Left(magic, 3), MAP_MAGIC) = 0 Then  'm8bits
             mapLen = m_Width * m_Height
             m_Depth = 8
             ReDim m_Palette(PALETTE_SIZE - 1) As Byte
@@ -697,24 +706,24 @@ Public Function Load(sFile As String) As Long
         End If
         
         If lError = 0 Then
-            'EXPLICACIÓN DE NFLAGS
-            'El entero de 16 bits m_NFlags comparte información a cerca los puntos de control
-            'y de la animación. Así, los primeros 12 bits informan de el número de puntos de control
-            'y el bit 13 de si hay (1) o no hay (0) animación.
+            'NFLAGS explained
+            'The integer of 16 bits m_NFlags, shares info about the Control Points and the animation
+            'So, the first 12 bits are for the number od Control Points
+            'and the 13th bit if exists animation (1) or not (0).
             
-            'PUNTOS DE CONTROL
+            'CONTROL POINTS
             gzread lFile, m_NFlags, 2
-            mapclen = (m_NFlags And F_NCPOINTS) * 4 'Cada punto de control son 4 bytes (dos enteros cortos)
-            cparraylen = IIf(mapclen > 0, mapclen / 2 - 1, 1) 'Cuando el número de CP es 0 sólo está el centro del mapa
+            mapclen = (m_NFlags And F_NCPOINTS) * 4     'Each Control Point is 4 bytes(2 short integers)
+            cparraylen = IIf(mapclen > 0, mapclen / 2 - 1, 1) 'When number of CPs is 0, it's the center of the image
             ReDim m_CPoints(cparraylen)
-            m_CPoints(0) = m_Width \ 2  'Coord. X del cpoint por defecto
-            m_CPoints(1) = m_Height \ 2  'Coord. Y del cpoint por defecto
+            m_CPoints(0) = m_Width \ 2          'Coord. X of the cpoint by default
+            m_CPoints(1) = m_Height \ 2         'Coord. Y of the cpoint by default
             If (m_NFlags And F_NCPOINTS) Then
                 If (gzread(lFile, m_CPoints(0), mapclen) < mapclen) Then lError = -1
             End If
             
-            'ANIMACIÓN
-            'En principio no se debería llegar aquí nunca ya que la animación está deshabilitada
+            'ANIMATION
+            'By default this is disabled
             m_AnimationLength = 0
             m_AnimationSpeed = 50
             m_Frames = 1
@@ -728,8 +737,8 @@ Public Function Load(sFile As String) As Long
                 mapLen = mapLen * m_Frames
             End If
             
-            'MAPA
-            If m_Depth = 8 Then 'Mapas de 8 bits
+            'MAP
+            If m_Depth = 8 Then '8 bits maps
                 ReDim m_Data8(mapLen - 1) As Byte
                 If (gzread(lFile, m_Data8(0), mapLen) < mapLen) Then lError = -1
             ElseIf m_Depth = 16 Then 'Read the data if depth=16
@@ -737,7 +746,7 @@ Public Function Load(sFile As String) As Long
                 If (gzread(lFile, m_Data16(0), mapLen) < mapLen) Then lError = -1
             End If
                 
-            If Not lError = 0 Then 'Problemas en la apertura
+            If Not lError = 0 Then 'Opening errors
                 Erase m_Palette: Erase m_Animation: Erase m_Data8: Erase m_Data16
                 lSucceded = 0
                 SetLastError ERR_MAP_FILETRUNCATED
@@ -752,7 +761,7 @@ Public Function Load(sFile As String) As Long
         End If
         
         Call gzclose(lFile)
-    Else 'Fichero no encontrado
+    Else 'File not found
         lSucceded = 0
         SetLastError ERR_MAP_FILENOTFOUND
     End If
@@ -767,9 +776,9 @@ Public Function Load(sFile As String) As Long
 End Function
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: CreateFromStream16()
-'DESCRIPTION: Creates a 16bpp map from an stream
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      CreateFromStream16()
+'DESCRIPTION:   Creates a 16bpp map from an stream
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function CreateFromStream16(ByVal sDescription As String, ByVal lCode As Long _
                 , ByVal lWidth As Long, ByVal lHeight As Long, mapData() As Integer) As Long
@@ -796,8 +805,8 @@ Public Function CreateFromStream16(ByVal sDescription As String, ByVal lCode As 
         'FLAGS
         m_NFlags = 0
         ReDim m_CPoints(1) As Integer
-        m_CPoints(0) = m_Width \ 2  'Coord. X del cpoint por defecto
-        m_CPoints(1) = m_Height \ 2  'Coord. Y del cpoint por defecto
+        m_CPoints(0) = m_Width \ 2      'Coord. X of the cpoint by default
+        m_CPoints(1) = m_Height \ 2     'Coord. Y of the cpoint by default
         'ANIMATION
         
         m_MapAvailable = True
@@ -807,9 +816,9 @@ Public Function CreateFromStream16(ByVal sDescription As String, ByVal lCode As 
 End Function
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: CreateFromStream8()
-'DESCRIPTION: Creates a map from an stream
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      CreateFromStream8()
+'DESCRIPTION:   Creates a map from an stream
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function CreateFromStream8(ByVal sDescription As String, ByVal lCode As Long _
                 , ByVal lWidth As Long, ByVal lHeight As Long, mapData() As Byte, mapPalette() As Byte) As Long
@@ -844,8 +853,8 @@ Public Function CreateFromStream8(ByVal sDescription As String, ByVal lCode As L
         'FLAGS
         m_NFlags = 0
         ReDim m_CPoints(1) As Integer
-        m_CPoints(0) = m_Width \ 2  'Coord. X del cpoint por defecto
-        m_CPoints(1) = m_Height \ 2  'Coord. Y del cpoint por defecto
+        m_CPoints(0) = m_Width \ 2      'Coord. X of the cpoint by default
+        m_CPoints(1) = m_Height \ 2     'Coord. Y of the cpoint by default
         'ANIMATION
         
         m_MapAvailable = True
@@ -857,9 +866,9 @@ End Function
 
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: Save()
-'DESCRIPTION: Saves a Map file
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      Save()
+'DESCRIPTION:   Saves a Map file
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function Save(sFile As String) As Long
     Dim lFile As Long
@@ -868,7 +877,7 @@ Public Function Save(sFile As String) As Long
     Dim paluseless(PALETTE_USELESS - 1) As Byte, b As Byte, iAux As Integer
     Dim lSucceded As Long
 
-    If m_MapAvailable = False And m_BitmapAvailable Then 'Si existe información del bitmap pero no del map, creamos el map
+    If m_MapAvailable = False And m_BitmapAvailable Then 'If exists info of the bitmap but not from the map,create the map
         MakeMap
     End If
     
@@ -878,7 +887,7 @@ Public Function Save(sFile As String) As Long
         If Not (lFile = 0) Then
             'm_FilePath = sFile
             
-            'Escribe la cabecera del map
+            'Write map header
             If m_Depth = 16 Then
                 magic = "m16" '& &H1A & &HD & &HA
             ElseIf m_Depth = 8 Then
@@ -891,7 +900,7 @@ Public Function Save(sFile As String) As Long
             b = &HA: Call gzwrite(lFile, b, 1)
             b = &H0: Call gzwrite(lFile, b, 1)
             b = &H0: Call gzwrite(lFile, b, 1)
-            'Ancho alto código y descripción
+            'Width, height and description
             iAux = UInt32ToSInt16(m_Width)
             Call gzwrite(lFile, iAux, 2)
             iAux = UInt32ToSInt16(m_Height)
@@ -899,17 +908,17 @@ Public Function Save(sFile As String) As Long
             Call gzwrite(lFile, m_Code, 4)
             Call gzwrite(lFile, ByVal m_Description, 32)
         
-            If m_Depth = 8 Then '8bits-->Write palette
+            If m_Depth = 8 Then         '8bits-->Write palette
                 gzwrite lFile, m_Palette(0), PALETTE_SIZE
                 gzwrite lFile, paluseless(0), PALETTE_USELESS
                 mapLen = m_Width * m_Height
-            ElseIf m_Depth = 16 Then '16bits
+            ElseIf m_Depth = 16 Then    '16bits
                 mapLen = m_Width * m_Height * 2
             End If
         
-            'puntos de control
+            'Control points
             newNFlags = CPointsCount
-            If CPointsCount = 1 Then 'Si solo hay un CPoint ver si es el centro (en cuyo caso no lo escribimos)
+            If CPointsCount = 1 Then 'If exists only one CPoint, look if it is the center (in this case don't write)
                 If (m_CPoints(0) = m_Width / 2) And (m_CPoints(1) = m_Height / 2) Then newNFlags = 0
             End If
             gzwrite lFile, newNFlags, 2
@@ -918,11 +927,11 @@ Public Function Save(sFile As String) As Long
                 gzwrite lFile, m_CPoints(0), mapclen
             End If
         
-            'NO ESCRIBIMOS NADA DE LA ANIMACIÓN (está deshabilitada)
+            'ANIMATION is disabled
 
             If m_Depth = 8 Then 'write the data if depth=8
                 gzwrite lFile, m_Data8(0), mapLen
-            Else 'Escribe la información si el mapa es de 16 bits
+            Else                'write the data if depth=16
                 gzwrite lFile, m_Data16(0), mapLen
             End If
  
@@ -931,11 +940,11 @@ Public Function Save(sFile As String) As Long
             m_NFlags = newNFlags
             'm_FilePath = sFile
             lSucceded = -1
-        Else 'Fichero no encontrado
+        Else 'File not found
             lSucceded = 0
             SetLastError ERR_MAP_FILENOTFOUND
         End If
-    Else 'Mapa no cargado
+    Else 'Map not laoded
         lSucceded = 0
         SetLastError ERR_MAP_NOTLOADED
     End If
@@ -944,9 +953,9 @@ Public Function Save(sFile As String) As Long
 End Function
 
 '-------------------------------------------------------------------------------------
-'FUNCTION: GetData8() & GetData16
-'DESCRIPTION Retrieves the map data (copying it into an array arg)
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      GetData8() & GetData16
+'DESCRIPTION:   Retrieves the map data (copying it into an array arg)
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function GetData16(ByRef Data() As Integer) As Long
     Dim lSucceded As Long
@@ -971,9 +980,9 @@ Public Function GetData8(ByRef Data() As Byte) As Long
     GetData8 = lSucceded
 End Function
 '-------------------------------------------------------------------------------------
-'FUNCTION: GetCPData
-'DESCRIPTION Retrieves the array of the CP
-'RETURNS: -1 if no error, otherwise 0.
+'FUNCTION:      GetCPData
+'DESCRIPTION:   Retrieves the array of the CP
+'RETURNS:       -1 if no error, otherwise 0.
 '-------------------------------------------------------------------------------------
 Public Function GetCPData(ByRef cpData() As Integer) As Long
     Dim lSucceded As Long
@@ -1016,7 +1025,7 @@ Private Sub gdip_Error(ByVal lGdiError As Long, ByVal sErrorDesc As String, ByVa
 End Sub
 
 Private Sub Class_Initialize()
-    Set gdip = New cGDIP 'Inicializa GDI+
+    Set gdip = New cGDIP 'Initialize GDI+
 End Sub
 
 Private Sub Class_Terminate()

@@ -33,7 +33,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   375
       Left            =   2520
-      TabIndex        =   26
+      TabIndex        =   24
       Top             =   5880
       Width           =   4935
    End
@@ -53,7 +53,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   25
+      TabIndex        =   23
       Top             =   4440
       Width           =   4830
    End
@@ -73,7 +73,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00BDBDBD&
       Height          =   255
       Left            =   930
-      TabIndex        =   24
+      TabIndex        =   22
       Top             =   3720
       Width           =   1290
    End
@@ -93,7 +93,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00BDBDBD&
       Height          =   255
       Left            =   960
-      TabIndex        =   23
+      TabIndex        =   21
       Top             =   4920
       Width           =   1260
    End
@@ -113,7 +113,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   22
+      TabIndex        =   20
       Top             =   4200
       Width           =   420
    End
@@ -133,7 +133,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   21
+      TabIndex        =   19
       Top             =   3960
       Width           =   1305
    End
@@ -153,7 +153,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   20
+      TabIndex        =   18
       Top             =   3720
       Width           =   795
    End
@@ -173,7 +173,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00BDBDBD&
       Height          =   240
       Left            =   135
-      TabIndex        =   19
+      TabIndex        =   17
       Top             =   3240
       Width           =   2085
    End
@@ -193,7 +193,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   18
+      TabIndex        =   16
       Top             =   3240
       Width           =   2355
    End
@@ -213,7 +213,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   17
+      TabIndex        =   15
       Top             =   2760
       Width           =   1320
    End
@@ -230,12 +230,12 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000D&
+      ForeColor       =   &H80000002&
       Height          =   195
-      Left            =   4350
+      Left            =   4710
       MouseIcon       =   "frmAbout.frx":00A4
       MousePointer    =   99  'Custom
-      TabIndex        =   16
+      TabIndex        =   14
       Top             =   2760
       Width           =   2625
    End
@@ -256,7 +256,7 @@ Begin VB.Form frmAbout
       Height          =   480
       Index           =   1
       Left            =   675
-      TabIndex        =   15
+      TabIndex        =   13
       Top             =   2520
       Width           =   1545
    End
@@ -273,12 +273,12 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000D&
+      ForeColor       =   &H80000002&
       Height          =   195
-      Left            =   3600
+      Left            =   3960
       MouseIcon       =   "frmAbout.frx":0210
       MousePointer    =   99  'Custom
-      TabIndex        =   14
+      TabIndex        =   12
       Top             =   1560
       Width           =   3375
    End
@@ -298,29 +298,9 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   13
+      TabIndex        =   11
       Top             =   1560
       Width           =   1005
-   End
-   Begin VB.Label Label8 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Web Page"
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00F0F0F0&
-      Height          =   195
-      Left            =   2520
-      TabIndex        =   12
-      Top             =   1320
-      Width           =   780
    End
    Begin VB.Label Label7 
       AutoSize        =   -1  'True
@@ -338,7 +318,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   2520
       Width           =   1680
    End
@@ -358,7 +338,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H00F0F0F0&
       Height          =   195
       Left            =   2520
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   2040
       Width           =   1365
    End
@@ -375,12 +355,12 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000D&
+      ForeColor       =   &H80000002&
       Height          =   195
-      Left            =   4800
+      Left            =   5160
       MouseIcon       =   "frmAbout.frx":037C
       MousePointer    =   99  'Custom
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   2040
       Width           =   2175
    End
@@ -397,36 +377,14 @@ Begin VB.Form frmAbout
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000D&
+      ForeColor       =   &H80000002&
       Height          =   195
-      Left            =   4245
+      Left            =   4605
       MouseIcon       =   "frmAbout.frx":04E8
       MousePointer    =   99  'Custom
-      TabIndex        =   8
+      TabIndex        =   7
       Top             =   2520
       Width           =   2730
-   End
-   Begin VB.Label lblWeb 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "http://fbtwo.sourceforge.net"
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   -1  'True
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H8000000D&
-      Height          =   195
-      Left            =   4740
-      MouseIcon       =   "frmAbout.frx":0654
-      MousePointer    =   99  'Custom
-      TabIndex        =   7
-      Top             =   1320
-      Width           =   2235
    End
    Begin VB.Label lblDev 
       AutoSize        =   -1  'True
@@ -631,6 +589,23 @@ Private Sub Form_Load()
     Picture = LoadPicture(App.Path & "/Resources/frmAbout.jpg")
 End Sub
 
+Private Sub Label10_Click()
+    Unload Me
+    NewWindowWeb "http://www.sourceforge.net/projects/fbtwo", "Flamebird mx project page"
+End Sub
+
+Private Sub Label11_Click()
+    Clipboard.SetText "izubiaurre@users.sourceforge.net"
+End Sub
+
+Private Sub Label3_Click()
+    Clipboard.SetText "lord_danko@users.sourceforge.net"
+End Sub
+
+Private Sub Label5_Click()
+    Clipboard.SetText "javis@users.sourceforge.net"
+End Sub
+
 Private Sub lblLin_Click(Index As Integer)
     frmLicense.Show 1
 End Sub
@@ -638,3 +613,4 @@ End Sub
 Private Sub lblOk_Click(Index As Integer)
     Unload Me
 End Sub
+

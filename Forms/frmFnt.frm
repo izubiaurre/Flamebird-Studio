@@ -23,17 +23,26 @@ Begin VB.Form frmFnt
    ScaleHeight     =   3555
    ScaleWidth      =   4275
    WindowState     =   2  'Maximized
+   Begin VB.ComboBox cmbStringList 
+      Appearance      =   0  'Flat
+      Height          =   345
+      Left            =   1800
+      Style           =   2  'Dropdown List
+      TabIndex        =   2
+      Top             =   0
+      Width           =   2415
+   End
    Begin vbalTBar6.cToolbar tbrFnt 
       Height          =   375
-      Left            =   120
+      Left            =   0
       Top             =   0
       Width           =   1095
       _ExtentX        =   1931
       _ExtentY        =   661
    End
    Begin vbalTBar6.cReBar rebar 
-      Left            =   2280
-      Top             =   0
+      Left            =   2880
+      Top             =   2280
       _ExtentX        =   2143
       _ExtentY        =   661
    End
@@ -219,6 +228,16 @@ Public Function EditPalette() As Long
     
 End Function
 
+Private Sub cmbStringList_Change()
+    drawEntireImage m_ShowTransparent
+    setStatusMessage
+End Sub
+
+Private Sub cmbStringList_Click()
+    drawEntireImage m_ShowTransparent
+    setStatusMessage
+End Sub
+
 Private Sub Form_Activate()
     'drawEntireImage False
     m_ShowTransparent = False
@@ -229,7 +248,7 @@ End Sub
 
 Private Sub Form_Load()
 
-    textShow = "0123AaBbCc!?&" 'ñç"
+    'textShow = "0123AaBbCc!?&" 'ñç"
     current_Char = 65
     
     'Configure toolbar
@@ -246,23 +265,39 @@ Private Sub Form_Load()
         .AddButton eButtonStyle:=CTBSeparator
         .AddButton "Edit palette", 5, , , , CTBAutoSize, "EditPalette"
         .AddButton eButtonStyle:=CTBSeparator
+        .AddControl cmbStringList.Hwnd, , "cmbStringList"
+        .AddButton eButtonStyle:=CTBSeparator
         .AddButton "Write text to map", 6, , , , CTBAutoSize, "WriteTexToMap"
         .AddButton "Import font", 7, , , , CTBAutoSize, "ImportFont"
         .AddButton "Export font", 8, , , , CTBAutoSize, "ExportFont"
         '.AddButton "...", 4, , , "...", CTBDropDownArrow + CTBAutoSize, "AddToFpg"
     End With
     'Create the rebar
-    With Rebar
+    With rebar
         If A_Bitmaps Then
             .BackgroundBitmap = App.Path & "\resources\backrebar" & A_Color & ".bmp"
         End If
         .CreateRebar Me.Hwnd
         .AddBandByHwnd Me.tbrFnt.Hwnd, , True, False
     End With
-    Rebar.RebarSize
+    rebar.RebarSize
     
     m_SizeIndex = 1
     m_ShowTransparent = False
+    
+    'Fill the strings in the combo
+    cmbStringList.AddItem "AaBbCc012?!ñÇ"
+    cmbStringList.AddItem "0123456789"
+    cmbStringList.AddItem "abcdefghijklmnopqrstuvwxyz"
+    cmbStringList.AddItem "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    cmbStringList.AddItem " !" & Chr(34) & "$%&'()*+-./:;<=>?@[\]^_`{|}~"
+    Dim extended As String
+    Dim i As Integer
+    For i = 128 To 255
+        extended = extended + Chr(i)
+    Next i
+    cmbStringList.AddItem extended
+    cmbStringList.ListIndex = 0     'Select the first item from the combo
 
     'Set up scroll bars:
     Set m_cScroll = New cScrollBars
@@ -287,16 +322,16 @@ End Sub
 Private Sub Form_Resize()
     If frmMain.WindowState <> vbMinimized Then
         picScrollBox.Move 0, _
-                        ScaleY(Rebar.RebarHeight, vbPixels, vbTwips)
-        picScrollBox.Width = Me.ScaleWidth
-        picScrollBox.Height = Me.ScaleHeight - picScrollBox.Top
-        Rebar.RebarSize
+                        ScaleY(rebar.RebarHeight, vbPixels, vbTwips)
+        picScrollBox.width = Me.ScaleWidth
+        picScrollBox.height = Me.ScaleHeight - picScrollBox.Top
+        rebar.RebarSize
         drawEntireImage m_ShowTransparent
     End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    Rebar.RemoveAllRebarBands 'Just for safety
+    rebar.RemoveAllRebarBands 'Just for safety
 End Sub
 
 Private Sub picFnt_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -314,7 +349,7 @@ Private Sub picScrollBox_Resize()
    ' Pixels are the minimum change size for a screen object.
    ' Therefore we set the scroll bars in pixels.
 
-   lHeight = (picFnt.Height - picScrollBox.ScaleHeight) '\ Screen.TwipsPerPixelY
+   lHeight = (picFnt.height - picScrollBox.ScaleHeight) '\ Screen.TwipsPerPixelY
    If (lHeight > 0) Then
       'lProportion = lHeight \ ((picScrollBox.ScaleHeight \ Screen.TwipsPerPixelY) + 1)
       lProportion = lHeight \ (picScrollBox.ScaleHeight + 1)
@@ -327,7 +362,7 @@ Private Sub picScrollBox_Resize()
       m_cScroll.Visible(efsVertical) = False
    End If
 
-   lWidth = (picFnt.Width - picScrollBox.ScaleWidth) '\ Screen.TwipsPerPixelX
+   lWidth = (picFnt.width - picScrollBox.ScaleWidth) '\ Screen.TwipsPerPixelX
    If (lWidth > 0) Then
       'lProportion = lWidth \ (picScrollBox.ScaleWidth \ Screen.TwipsPerPixelX) + 1
       lProportion = lWidth \ (picScrollBox.ScaleWidth + 1)
@@ -353,9 +388,9 @@ Private Sub m_cScroll_MouseWheel(eBar As EFSScrollBarConstants, lAmount As Long,
     If (efsVKShift And VKPressed) Then 'Flag shift
         ' Fast smart move
         If eBar = efsHorizontal Then
-            lAmount = chars(current_Char).Header.Height * m_SizeIndex \ FAST_SCROLL_STEPS * Sgn(lAmount)
+            lAmount = chars(current_Char).Header.height * m_SizeIndex \ FAST_SCROLL_STEPS * Sgn(lAmount)
         Else
-            lAmount = chars(current_Char).Header.Width * m_SizeIndex \ FAST_SCROLL_STEPS * Sgn(lAmount)
+            lAmount = chars(current_Char).Header.width * m_SizeIndex \ FAST_SCROLL_STEPS * Sgn(lAmount)
         End If
     End If
     If (efsVKAlt And VKPressed) Then 'Alt
@@ -403,7 +438,7 @@ Private Property Get IFileForm_FilePath() As String
 End Property
 
 Private Function IFileForm_Identify() As EFileFormConstants
-    IFileForm_Identify = FF_MAP
+    IFileForm_Identify = FF_FNT
 End Function
 
 Private Property Get IFileForm_IsDirty() As Boolean
@@ -419,7 +454,6 @@ Private Function IFileForm_Load(ByVal sFile As String) As Long
     
     Ext = FSO.GetExtensionName(sFile)
     
-    '#TODO: fnt.load
     lResult = Load(sFile) 'Load Font
     'lResult = True
     
@@ -510,17 +544,8 @@ Private Function IPropertiesForm_GetProperties() As cProperties
  
     Dim props As cProperties
     Set props = New cProperties
-    '#TODO:
+
     With props
-'        .Add "Bold", "Bold", ptText, Me, "EditBold", fnt.Bold, False
-'        .Add "Height", "Height", ptNumeric, Me, "EditHeight", fnt.Height, False
-'        .Add "Italic", "Italic", ptText, Me, "EditItalic", fnt.Italic, False
-'        .Add "Name", "Name", ptText, Me, "EditName", fnt.name, False
-'        .Add "Size", "Size", ptNumeric, Me, "EditSize", fnt.Size, False
-'        .Add "Style", "Style", ptText, Me, "EditStyle", fnt.Style, False
-'        .Add "Underline", "Underline", ptText, Me, "EditUnderline", fnt.Underline, False
-'        .Add "Unit", "Unit", ptText, Me, "EditUnit", fnt.unit, False
-'        .Add "Strikeout", "Strikeout", ptText, Me, "EditStrikeout", fnt.StrikeOut, False
         .Add "Number", "Number", ptText, Me, "EditNumber", GetNumberInfo, False
         .Add "Upper Case", "Uppercase", ptText, Me, "EditUpperCase", GetUpperCaseInfo, False
         .Add "Lower Case", "LowerCase", ptText, Me, "EditLowerCase", GetLowerCaseInfo, False
@@ -530,16 +555,7 @@ Private Function IPropertiesForm_GetProperties() As cProperties
         .Add "Heigth", "Heigth", ptNumeric, Me, "EditHeigth", GetMedHeigth, False
         
     End With
-
-'    props("Bold").Description = "Specifies the Bold"
-'    props("Height").Description = "Specifies the Height"
-'    props("Italic").Description = "Specifies the Italic"
-'    props("Name").Description = "Specifies the Name"
-'    props("Size").Description = "Specifies the Size"
-'    props("Style").Description = "Specifies the Style"
-'    props("Underline").Description = "Specifies the Underline"
-'    props("Unit").Description = "Specifies the Unit"
-'    props("Strikeout").Description = "Specifies the Strikeout"
+    
     props("Number").description = "Shows if the fonts contains number characters in it"
     props("UpperCase").description = "Shows if the fonts contains Upper Case characters in it"
     props("LowerCase").description = "Shows if the fonts contains Loqer Case characters in it"
@@ -549,7 +565,7 @@ Private Function IPropertiesForm_GetProperties() As cProperties
     props("Heigth").description = "Medium Heigth of characters in the font"
     
     Set IPropertiesForm_GetProperties = props
-    '#TODO: end
+
     
 End Function
 '·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-'
@@ -598,37 +614,38 @@ End Sub
 Public Sub drawEntireImage(draw_transparent As Boolean)
     
     Dim bChar() As Byte
-    ReDim bChar(chars(current_Char).Header.Width * chars(current_Char).Header.Height)
+    ReDim bChar(chars(current_Char).Header.width * chars(current_Char).Header.height)
     bChar = chars(current_Char).Data
     'ReDim Preserve bChar(chars(current_Char).Header.w_Width * chars(current_Char).Header.Height + chars(current_Char + 1).Header.w_Width * chars(current_Char + 1).Header.Height)
     
     Dim fullHeight, fullWidth As Long
     Dim i As Integer
     Dim curH, curW As Long
-    textShow = "0123AaBbCc!?&" 'ñç"
-        
+    'textShow = "0123AaBbCc!?&" 'ñç"
+    textShow = cmbStringList.text
+    current_Char = Asc(textShow)
     
     If t_magic.version = c_FNT_version_0 Then
-        fullHeight = chars(Asc(Mid(textShow, 1, 1))).Header.Height
+        fullHeight = chars(Asc(Mid(textShow, 1, 1))).Header.height
         fullWidth = chars(Asc(Mid(textShow, 1, 1))).Header.w_Width
         
         For i = 2 To Len(textShow)
-            If fullHeight < chars(Asc(Mid(textShow, i, 1))).Header.Height Then
-                fullHeight = chars(Asc(Mid(textShow, i, 1))).Header.Height
+            If fullHeight < chars(Asc(Mid(textShow, i, 1))).Header.height Then
+                fullHeight = chars(Asc(Mid(textShow, i, 1))).Header.height
             End If
             fullWidth = fullWidth + chars(Asc(Mid(textShow, i, 1))).Header.w_Width
         Next i
     Else
-        fullHeight = bennu_chars(Asc(Mid(textShow, 1, 1))).Header.Height
-        fullWidth = bennu_chars(Asc(Mid(textShow, 1, 1))).Header.Width
-        Debug.Print "Height: " & bennu_chars(Asc(Mid(textShow, 1, 1))).Header.Height & " - Width: " & fullWidth
+        fullHeight = bennu_chars(Asc(Mid(textShow, 1, 1))).Header.height
+        fullWidth = bennu_chars(Asc(Mid(textShow, 1, 1))).Header.width
+        Debug.Print "Height: " & bennu_chars(Asc(Mid(textShow, 1, 1))).Header.height & " - Width: " & fullWidth
         
         For i = 2 To Len(textShow)
-            If fullHeight < bennu_chars(Asc(Mid(textShow, i, 1))).Header.Height Then
-                fullHeight = bennu_chars(Asc(Mid(textShow, i, 1))).Header.Height
+            If fullHeight < bennu_chars(Asc(Mid(textShow, i, 1))).Header.height Then
+                fullHeight = bennu_chars(Asc(Mid(textShow, i, 1))).Header.height
             End If
-            fullWidth = fullWidth + bennu_chars(Asc(Mid(textShow, i, 1))).Header.Width
-            Debug.Print "Height: " & bennu_chars(Asc(Mid(textShow, 1, 1))).Header.Height & " - Width: " & fullWidth
+            fullWidth = fullWidth + bennu_chars(Asc(Mid(textShow, i, 1))).Header.width
+            Debug.Print "Height: " & bennu_chars(Asc(Mid(textShow, 1, 1))).Header.height & " - Width: " & fullWidth
         Next i
     End If
 
@@ -645,21 +662,21 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
     
     'picFnt.Width = chars(current_Char).Header.Width * m_SizeIndex '* Screen.TwipsPerPixelX
     'picFnt.Height = chars(current_Char).Header.Height * m_SizeIndex '* Screen.TwipsPerPixelY
-    picFnt.Width = fullWidth * m_SizeIndex
-    picFnt.Height = fullHeight * m_SizeIndex
+    picFnt.width = fullWidth * m_SizeIndex
+    picFnt.height = fullHeight * m_SizeIndex
   
     Me.picFnt.Cls
 
     If t_magic.version = c_FNT_version_0 Or t_magic.version = c_FNT_version_8 Then
         BI8.bmiHeader.biBitCount = 8
-        BI8.bmiHeader.biClrImportant = 65536
-        BI8.bmiHeader.biClrUsed = 65536
+        BI8.bmiHeader.biClrImportant = 256
+        BI8.bmiHeader.biClrUsed = 256
         If t_magic.version = c_FNT_version_0 Then
             BI8.bmiHeader.biWidth = chars(current_Char).Header.w_Width ' + chars(current_Char + 1).Header.Width
-            BI8.bmiHeader.biHeight = -chars(current_Char).Header.Height
+            BI8.bmiHeader.biHeight = -chars(current_Char).Header.height
         Else
-            BI8.bmiHeader.biWidth = bennu_chars(current_Char).Header.Width ' + chars(current_Char + 1).Header.Width
-            BI8.bmiHeader.biHeight = -bennu_chars(current_Char).Header.Height
+            BI8.bmiHeader.biWidth = bennu_chars(current_Char).Header.width ' + chars(current_Char + 1).Header.Width
+            BI8.bmiHeader.biHeight = -bennu_chars(current_Char).Header.height
         End If
     '    BI8.bmiHeader.biWidth = fullWidth
     '    BI8.bmiHeader.biHeight = -fullHeight
@@ -675,24 +692,27 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
         BI16.bmiHeader.biBitCount = 16
         BI16.bmiHeader.biClrImportant = 65536
         BI16.bmiHeader.biClrUsed = 65536
-        BI16.bmiHeader.biWidth = bennu_chars(current_Char).Header.Width ' + chars(current_Char + 1).Header.Width
-        BI16.bmiHeader.biHeight = -bennu_chars(current_Char).Header.Height
+        BI16.bmiHeader.biWidth = bennu_chars(current_Char).Header.width ' + chars(current_Char + 1).Header.Width
+        BI16.bmiHeader.biHeight = -bennu_chars(current_Char).Header.height
         BI16.bmiHeader.biPlanes = 1
         BI16.bmiHeader.biSize = Len(BI16.bmiHeader)
-    ElseIf t_magic.version = c_FNT_version_16 Then
+    ElseIf t_magic.version = c_FNT_version_32 Then
         BI32.bmiHeader.biBitCount = 32
         BI32.bmiHeader.biClrImportant = 16777216
         BI32.bmiHeader.biClrUsed = 16777216
-        BI32.bmiHeader.biWidth = bennu_chars(current_Char).Header.Width ' + chars(current_Char + 1).Header.Width
-        BI32.bmiHeader.biHeight = -bennu_chars(current_Char).Header.Height
+        BI32.bmiHeader.biWidth = bennu_chars(current_Char).Header.width ' + chars(current_Char + 1).Header.Width
+        BI32.bmiHeader.biHeight = -bennu_chars(current_Char).Header.height
         BI32.bmiHeader.biPlanes = 1
         BI32.bmiHeader.biSize = Len(BI32.bmiHeader)
     End If
     
+    'TransparentBlt
+    'TransparentBlt
+    
     
     ' draw background: checked for 16, 32 bpp; white or black for 8 bpp
     If m_ShowTransparent Then
-        If t_magic.version = c_FNT_version_0 Or t_magic.version = c_FNT_version_8 Then
+        'If t_magic.version = c_FNT_version_0 Or t_magic.version = c_FNT_version_8 Then
             picFnt.BackColor = RGB(255, 255, 255)
     
             'drawTransBack picFnt.hdc, BI8, picFnt.Width, picFnt.Height
@@ -719,15 +739,27 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
             BI8.bmiColors(0).rgbGreen = 0
             BI8.bmiColors(0).rgbBlue = 0
             
+            
+            BI32.bmiColors(0) = 0
             If t_magic.version = c_FNT_version_0 Then
                         StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
-                    chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, _
-                    0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char).Data(0), _
+                    chars(current_Char).Header.width * m_SizeIndex, chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, chars(current_Char).Header.width, chars(current_Char).Header.height, chars(current_Char).Data(0), _
                     BI8, 0, vbSrcPaint
+            ElseIf t_magic.version = c_FNT_version_16 Then
+                        StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
+                    bennu_chars(current_Char).Header.width * m_SizeIndex, bennu_chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, bennu_chars(current_Char).Header.width, bennu_chars(current_Char).Header.height, bennu_chars(current_Char).Data(0), _
+                    BI16, 0, vbSrcPaint
+            ElseIf t_magic.version = c_FNT_version_32 Then
+                        StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
+                    bennu_chars(current_Char).Header.width * m_SizeIndex, bennu_chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, bennu_chars(current_Char).Header.width, bennu_chars(current_Char).Header.height, bennu_chars(current_Char).Data(0), _
+                    BI32, 0, vbSrcPaint
             Else
                         StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
-                    bennu_chars(current_Char).Header.Width * m_SizeIndex, bennu_chars(current_Char).Header.Height * m_SizeIndex, _
-                    0, 0, bennu_chars(current_Char).Header.Width, bennu_chars(current_Char).Header.Height, bennu_chars(current_Char).Data(0), _
+                    bennu_chars(current_Char).Header.width * m_SizeIndex, bennu_chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, bennu_chars(current_Char).Header.width, bennu_chars(current_Char).Header.height, bennu_chars(current_Char).Data(0), _
                     BI8, 0, vbSrcPaint
             End If
             
@@ -739,28 +771,38 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
     
             If t_magic.version = c_FNT_version_0 Then
                         StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
-                    chars(current_Char).Header.Width * m_SizeIndex, chars(current_Char).Header.Height * m_SizeIndex, _
-                    0, 0, chars(current_Char).Header.Width, chars(current_Char).Header.Height, chars(current_Char).Data(0), _
+                    chars(current_Char).Header.width * m_SizeIndex, chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, chars(current_Char).Header.width, chars(current_Char).Header.height, chars(current_Char).Data(0), _
                     BI8, 0, vbSrcAnd
+            ElseIf t_magic.version = c_FNT_version_16 Then
+                        StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
+                    bennu_chars(current_Char).Header.width * m_SizeIndex, bennu_chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, bennu_chars(current_Char).Header.width, bennu_chars(current_Char).Header.height, bennu_chars(current_Char).Data(0), _
+                    BI16, 0, vbSrcAnd
+            ElseIf t_magic.version = c_FNT_version_32 Then
+                        StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
+                    bennu_chars(current_Char).Header.width * m_SizeIndex, bennu_chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, bennu_chars(current_Char).Header.width, bennu_chars(current_Char).Header.height, bennu_chars(current_Char).Data(0), _
+                    BI32, 0, vbSrcAnd
             Else
                         StretchDIBits Me.picFnt.hdc, draw_rect.Left, draw_rect.Top, _
-                    bennu_chars(current_Char).Header.Width * m_SizeIndex, bennu_chars(current_Char).Header.Height * m_SizeIndex, _
-                    0, 0, bennu_chars(current_Char).Header.Width, bennu_chars(current_Char).Header.Height, bennu_chars(current_Char).Data(0), _
+                    bennu_chars(current_Char).Header.width * m_SizeIndex, bennu_chars(current_Char).Header.height * m_SizeIndex, _
+                    0, 0, bennu_chars(current_Char).Header.width, bennu_chars(current_Char).Header.height, bennu_chars(current_Char).Data(0), _
                     BI8, 0, vbSrcAnd
             End If
-        Else
-        ' checked
-            Dim j As Long
-    
-            cx = picFnt.Width \ 16
-            cy = picFnt.Height \ 16
-    
-            For i = 0 To cx
-                For j = 0 To cy
-                    picFnt.PaintPicture LoadPicture(App.Path & "\Resources\backmaps.bmp"), i * 16, j * 16, 16, 16, 0, 0, 16, 16, vbSrcCopy
-                Next
-            Next
-        End If
+'        Else
+'        ' checked
+'            Dim j As Long
+'
+'            cx = picFnt.Width \ 16
+'            cy = picFnt.Height \ 16
+'
+'            For i = 0 To cx
+'                For j = 0 To cy
+'                    picFnt.PaintPicture LoadPicture(App.Path & "\Resources\backmaps.bmp"), i * 16, j * 16, 16, 16, 0, 0, 16, 16, vbSrcCopy
+'                Next
+'            Next
+'        End If
     Else
         picFnt.BackColor = RGB(0, 0, 0)
     End If
@@ -773,16 +815,16 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
         ' version 0: OLD DIV 8 bit
         For i = 1 To Len(textShow)
             curChr = Asc(Mid(textShow, i, 1))
-            curH = chars(curChr).Header.Height
+            curH = chars(curChr).Header.height
                     
             BI8.bmiHeader.biWidth = chars(curChr).Header.w_Width
-            BI8.bmiHeader.biHeight = -chars(curChr).Header.Height
+            BI8.bmiHeader.biHeight = -chars(curChr).Header.height
             BI8.bmiHeader.biSize = Len(BI8.bmiHeader)
             
-            If chars(curChr).Header.Height <> 0 And chars(curChr).Header.w_Width <> 0 Then
+            If chars(curChr).Header.height <> 0 And chars(curChr).Header.w_Width <> 0 Then
                     StretchDIBits Me.picFnt.hdc, draw_rect.Left + curW * m_SizeIndex, draw_rect.Top + fullHeight - curH, _
-                chars(curChr).Header.w_Width * m_SizeIndex, chars(curChr).Header.Height * m_SizeIndex, _
-                0, 0, chars(curChr).Header.w_Width, chars(curChr).Header.Height, chars(curChr).Data(0), _
+                chars(curChr).Header.w_Width * m_SizeIndex, chars(curChr).Header.height * m_SizeIndex, _
+                0, 0, chars(curChr).Header.w_Width, chars(curChr).Header.height, chars(curChr).Data(0), _
                 BI8, 0, vbSrcCopy
                     curW = curW + chars(curChr).Header.w_Width
             End If
@@ -791,54 +833,54 @@ Public Sub drawEntireImage(draw_transparent As Boolean)
         ' version 8: BennuGD 8 bit
         For i = 1 To Len(textShow)
             curChr = Asc(Mid(textShow, i, 1))
-            curH = bennu_chars(curChr).Header.Height
+            curH = bennu_chars(curChr).Header.height
                     
 '            BI8.bmiHeader.biWidth = bennu_chars(curChr).Header.Width
 '            BI8.bmiHeader.biHeight = -bennu_chars(curChr).Header.Height
 '            BI8.bmiHeader.biSize = Len(BI8.bmiHeader)
             
-            If bennu_chars(curChr).Header.Height <> 0 And bennu_chars(curChr).Header.Width <> 0 Then
+            If bennu_chars(curChr).Header.height <> 0 And bennu_chars(curChr).Header.width <> 0 Then
                     StretchDIBits Me.picFnt.hdc, draw_rect.Left + curW * m_SizeIndex, draw_rect.Top + fullHeight - curH, _
-                bennu_chars(curChr).Header.Width * m_SizeIndex, bennu_chars(curChr).Header.Height * m_SizeIndex, _
-                0, 0, bennu_chars(curChr).Header.Width, bennu_chars(curChr).Header.Height, bennu_chars(curChr).Data(0), _
+                bennu_chars(curChr).Header.width * m_SizeIndex, bennu_chars(curChr).Header.height * m_SizeIndex, _
+                0, 0, bennu_chars(curChr).Header.width, bennu_chars(curChr).Header.height, bennu_chars(curChr).Data(0), _
                 BI8, 0, vbSrcCopy
-                    curW = curW + bennu_chars(curChr).Header.Width
+                    curW = curW + bennu_chars(curChr).Header.width
             End If
         Next i
     ElseIf t_magic.version = c_FNT_version_16 Then
         ' version 16: BennuGD 16 bit
         For i = 1 To Len(textShow)
             curChr = Asc(Mid(textShow, i, 1))
-            curH = bennu_chars(curChr).Header.Height
+            curH = bennu_chars(curChr).Header.height
                     
-            BI16.bmiHeader.biWidth = bennu_chars(curChr).Header.Width
-            BI16.bmiHeader.biHeight = -bennu_chars(curChr).Header.Height
+            BI16.bmiHeader.biWidth = bennu_chars(curChr).Header.width
+            BI16.bmiHeader.biHeight = -bennu_chars(curChr).Header.height
             BI16.bmiHeader.biSize = Len(BI16.bmiHeader)
             
-            If bennu_chars(curChr).Header.Height <> 0 And bennu_chars(curChr).Header.Width <> 0 Then
+            If bennu_chars(curChr).Header.height <> 0 And bennu_chars(curChr).Header.width <> 0 Then
                     StretchDIBits Me.picFnt.hdc, draw_rect.Left + curW * m_SizeIndex, draw_rect.Top + fullHeight - curH, _
-                bennu_chars(curChr).Header.Width * m_SizeIndex, bennu_chars(curChr).Header.Height * m_SizeIndex, _
-                0, 0, bennu_chars(curChr).Header.Width, bennu_chars(curChr).Header.Height, bennu_chars(curChr).Data(0), _
+                bennu_chars(curChr).Header.width * m_SizeIndex, bennu_chars(curChr).Header.height * m_SizeIndex, _
+                0, 0, bennu_chars(curChr).Header.width, bennu_chars(curChr).Header.height, bennu_chars(curChr).Data(0), _
                 BI16, 0, vbSrcCopy
-                    curW = curW + bennu_chars(curChr).Header.Width
+                    curW = curW + bennu_chars(curChr).Header.width
             End If
         Next i
     ElseIf t_magic.version = c_FNT_version_32 Then
         ' version 16: BennuGD 32 bit
         For i = 1 To Len(textShow)
             curChr = Asc(Mid(textShow, i, 1))
-            curH = bennu_chars(curChr).Header.Height
+            curH = bennu_chars(curChr).Header.height
                     
-            BI32.bmiHeader.biWidth = bennu_chars(curChr).Header.Width
-            BI32.bmiHeader.biHeight = -bennu_chars(curChr).Header.Height
+            BI32.bmiHeader.biWidth = bennu_chars(curChr).Header.width
+            BI32.bmiHeader.biHeight = -bennu_chars(curChr).Header.height
             BI32.bmiHeader.biSize = Len(BI32.bmiHeader)
             
-            If bennu_chars(curChr).Header.Height <> 0 And bennu_chars(curChr).Header.Width <> 0 Then
+            If bennu_chars(curChr).Header.height <> 0 And bennu_chars(curChr).Header.width <> 0 Then
                     StretchDIBits Me.picFnt.hdc, draw_rect.Left + curW * m_SizeIndex, draw_rect.Top + fullHeight - curH, _
-                bennu_chars(curChr).Header.Width * m_SizeIndex, bennu_chars(curChr).Header.Height * m_SizeIndex, _
-                0, 0, bennu_chars(curChr).Header.Width, bennu_chars(curChr).Header.Height, bennu_chars(curChr).Data(0), _
+                bennu_chars(curChr).Header.width * m_SizeIndex, bennu_chars(curChr).Header.height * m_SizeIndex, _
+                0, 0, bennu_chars(curChr).Header.width, bennu_chars(curChr).Header.height, bennu_chars(curChr).Data(0), _
                 BI32, 0, vbSrcCopy
-                    curW = curW + bennu_chars(curChr).Header.Width
+                    curW = curW + bennu_chars(curChr).Header.width
             End If
         Next i
     End If
@@ -930,7 +972,7 @@ Public Function GetMedHeigth() As Long
     Dim i As Long
 
     For i = 0 To 255
-        lResult = lResult + chars(i).Header.Height
+        lResult = lResult + chars(i).Header.height
     Next i
     lResult = lResult / 256
 
@@ -952,14 +994,14 @@ On Error GoTo ErrHandler
     'graphics.CreateFromHdc hdc
     'graphics.Clear
     
-    bI.bmiHeader.biHeight = bmp.Height
-    bI.bmiHeader.biWidth = bmp.Width
+    bI.bmiHeader.biHeight = bmp.height
+    bI.bmiHeader.biWidth = bmp.width
     bI.bmiHeader.biSize = Len(bI.bmiHeader)
     
     Debug.Print "a"
     
-    StretchDIBits hdc, 0, 0, bmp.Width, bmp.Height, _
-                0, 0, bmp.Width, bmp.Height, 160, bI, 0, vbSrcCopy
+    StretchDIBits hdc, 0, 0, bmp.width, bmp.height, _
+                0, 0, bmp.width, bmp.height, 160, bI, 0, vbSrcCopy
     
 '    cx = lWidth \ bmp.Width + 1
 '    cy = lHeight \ bmp.Height + 1
@@ -1056,23 +1098,23 @@ Public Function Load(Filename As String) As Boolean
             Returned_Value = gzread(FileNumber, chars(c).Header, 4 * 4)
             If Returned_Value = 0 Then GoTo FAILED
     
-            If chars(c).Header.Width <> 0 And chars(c).Header.Height <> 0 Then
-                If chars(c).Header.Width Mod 4 = 0 Then
-                    chars(c).Header.w_Width = chars(c).Header.Width
+            If chars(c).Header.width <> 0 And chars(c).Header.height <> 0 Then
+                If chars(c).Header.width Mod 4 = 0 Then
+                    chars(c).Header.w_Width = chars(c).Header.width
                 Else
-                    chars(c).Header.w_Width = Fix(chars(c).Header.Width \ 4) * 4 + 4
+                    chars(c).Header.w_Width = Fix(chars(c).Header.width \ 4) * 4 + 4
                 End If
-                ReDim chars(c).Data(chars(c).Header.w_Width * chars(c).Header.Height)
+                ReDim chars(c).Data(chars(c).Header.w_Width * chars(c).Header.height)
             End If
     
         Next
     
         For c = 0 To 255
         'loads the data for each char
-            If chars(c).Header.Width <> 0 And chars(c).Header.Height <> 0 Then
+            If chars(c).Header.width <> 0 And chars(c).Header.height <> 0 Then
                 gzseek FileNumber, chars(c).Header.File_Offset, 0
-                For C2 = 0 To chars(c).Header.Height - 1
-                    Returned_Value = gzread(FileNumber, chars(c).Data(C2 * chars(c).Header.w_Width), chars(c).Header.Width)
+                For C2 = 0 To chars(c).Header.height - 1
+                    Returned_Value = gzread(FileNumber, chars(c).Data(C2 * chars(c).Header.w_Width), chars(c).Header.width)
                     If Returned_Value = 0 Then GoTo FAILED
                 Next
             End If
@@ -1084,18 +1126,18 @@ Public Function Load(Filename As String) As Boolean
             Returned_Value = gzread(FileNumber, bennu_chars(c).Header, 7 * 4)
             If Returned_Value = 0 Then GoTo FAILED
     
-            If bennu_chars(c).Header.Width <> 0 And bennu_chars(c).Header.Height <> 0 Then
-                ReDim bennu_chars(c).Data(bennu_chars(c).Header.Width * bennu_chars(c).Header.Height)
+            If bennu_chars(c).Header.width <> 0 And bennu_chars(c).Header.height <> 0 Then
+                ReDim bennu_chars(c).Data(bennu_chars(c).Header.width * bennu_chars(c).Header.height)
             End If
             Debug.Print c
         Next
     
         For c = 0 To 255
         'loads the data for each char
-            If bennu_chars(c).Header.Width <> 0 And bennu_chars(c).Header.Height <> 0 Then
+            If bennu_chars(c).Header.width <> 0 And bennu_chars(c).Header.height <> 0 Then
                 gzseek FileNumber, bennu_chars(c).Header.data_offset, 0
-                For C2 = 0 To bennu_chars(c).Header.Height - 1
-                    Returned_Value = gzread(FileNumber, bennu_chars(c).Data(C2 * bennu_chars(c).Header.Width), bennu_chars(c).Header.Width)
+                For C2 = 0 To bennu_chars(c).Header.height - 1
+                    Returned_Value = gzread(FileNumber, bennu_chars(c).Data(C2 * bennu_chars(c).Header.width), bennu_chars(c).Header.width)
                     If Returned_Value = 0 Then GoTo FAILED
                 Next
             End If
@@ -1105,18 +1147,18 @@ Public Function Load(Filename As String) As Boolean
             Returned_Value = gzread(FileNumber, bennu_chars(c).Header, 7 * 4)
             If Returned_Value = 0 Then GoTo FAILED
     
-            If bennu_chars(c).Header.Width <> 0 And bennu_chars(c).Header.Height <> 0 Then
-                ReDim bennu_chars(c).Data(2 * bennu_chars(c).Header.Width * bennu_chars(c).Header.Height)   ' 2 bytes per pixel
+            If bennu_chars(c).Header.width <> 0 And bennu_chars(c).Header.height <> 0 Then
+                ReDim bennu_chars(c).Data(2 * bennu_chars(c).Header.width * bennu_chars(c).Header.height)   ' 2 bytes per pixel
             End If
     
         Next
     
         For c = 0 To 255
         'loads the data for each char
-            If bennu_chars(c).Header.Width <> 0 And bennu_chars(c).Header.Height <> 0 Then
+            If bennu_chars(c).Header.width <> 0 And bennu_chars(c).Header.height <> 0 Then
                 gzseek FileNumber, bennu_chars(c).Header.data_offset, 0
-                For C2 = 0 To bennu_chars(c).Header.Height - 1
-                    Returned_Value = gzread(FileNumber, bennu_chars(c).Data(C2 * bennu_chars(c).Header.Width), bennu_chars(c).Header.Width)
+                For C2 = 0 To bennu_chars(c).Header.height - 1
+                    Returned_Value = gzread(FileNumber, bennu_chars(c).Data(C2 * bennu_chars(c).Header.width * 2), bennu_chars(c).Header.width * 2)
                     If Returned_Value = 0 Then GoTo FAILED
                 Next
             End If
@@ -1126,18 +1168,18 @@ Public Function Load(Filename As String) As Boolean
             Returned_Value = gzread(FileNumber, bennu_chars(c).Header, 7 * 4)
             If Returned_Value = 0 Then GoTo FAILED
     
-            If bennu_chars(c).Header.Width <> 0 And bennu_chars(c).Header.Height <> 0 Then
-                ReDim bennu_chars(c).Data(3 * bennu_chars(c).Header.Width * bennu_chars(c).Header.Height)   ' 3 bytes per pixel
+            If bennu_chars(c).Header.width <> 0 And bennu_chars(c).Header.height <> 0 Then
+                ReDim bennu_chars(c).Data(4 * bennu_chars(c).Header.width * bennu_chars(c).Header.height)   ' 4 bytes per pixel
             End If
     
         Next
     
         For c = 0 To 255
         'loads the data for each char
-            If bennu_chars(c).Header.Width <> 0 And bennu_chars(c).Header.Height <> 0 Then
+            If bennu_chars(c).Header.width <> 0 And bennu_chars(c).Header.height <> 0 Then
                 gzseek FileNumber, bennu_chars(c).Header.data_offset, 0
-                For C2 = 0 To bennu_chars(c).Header.Height - 1
-                    Returned_Value = gzread(FileNumber, bennu_chars(c).Data(C2 * bennu_chars(c).Header.Width), bennu_chars(c).Header.Width)
+                For C2 = 0 To bennu_chars(c).Header.height - 1
+                    Returned_Value = gzread(FileNumber, bennu_chars(c).Data(C2 * bennu_chars(c).Header.width * 4), bennu_chars(c).Header.width * 4)
                     If Returned_Value = 0 Then GoTo FAILED
                 Next
             End If
@@ -1172,8 +1214,8 @@ Private Function Destroy() As Boolean
         t_palette.Entries(c).Green = 0
         t_palette.Entries(c).Blue = 0
 
-        chars(c).Header.Width = 0
-        chars(c).Header.Height = 0
+        chars(c).Header.width = 0
+        chars(c).Header.height = 0
         chars(c).Header.Vertical_Offset = 0
         chars(c).Header.File_Offset = 0
         Erase chars(c).Data

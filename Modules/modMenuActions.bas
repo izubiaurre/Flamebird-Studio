@@ -228,6 +228,75 @@ Public Sub mnuFileSaveAll()
     Next
 End Sub
 
+Public Sub mnuFileCloseSources()
+    Dim f As Form, ff As IFileForm
+    
+    For Each f In Forms
+        If TypeOf f Is IFileForm Then
+            Set ff = f
+            If ff.Identify = FF_SOURCE Then
+                Unload f
+            End If
+        End If
+    Next
+    frmMain.RefreshTabs
+End Sub
+
+Public Sub mnuFileCloseFnts()
+    Dim f As Form, ff As IFileForm
+    
+    For Each f In Forms
+        If TypeOf f Is IFileForm Then
+            Set ff = f
+            If ff.Identify = FF_FNT Then
+                Unload f
+            End If
+        End If
+    Next
+    frmMain.RefreshTabs
+End Sub
+
+Public Sub mnuFileCloseImps()
+    Dim f As Form, ff As IFileForm
+    
+    For Each f In Forms
+        If TypeOf f Is IFileForm Then
+            Set ff = f
+            If ff.Identify = FF_IMP Then
+                Unload f
+            End If
+        End If
+    Next
+    frmMain.RefreshTabs
+End Sub
+
+Public Sub mnuFileCloseMaps()
+    Dim f As Form, ff As IFileForm
+    
+    For Each f In Forms
+        If TypeOf f Is IFileForm Then
+            Set ff = f
+            If ff.Identify = FF_MAP Then
+                Unload f
+            End If
+        End If
+    Next
+    frmMain.RefreshTabs
+End Sub
+Public Sub mnuFileCloseFpgs()
+    Dim f As Form, ff As IFileForm
+    
+    For Each f In Forms
+        If TypeOf f Is IFileForm Then
+            Set ff = f
+            If ff.Identify = FF_FPG Then
+                Unload f
+            End If
+        End If
+    Next
+    frmMain.RefreshTabs
+End Sub
+
 Public Sub mnuFileClose()
     Dim f As Form
     Dim tr As RECT
@@ -250,6 +319,15 @@ Public Sub mnuFileCloseAll()
         lastHwnd = ActiveForm.Hwnd
         mnuFileClose
     Loop
+End Sub
+
+Public Sub mnuFileSortByName()
+
+
+End Sub
+
+Public Sub mnuFileSortByType()
+    frmMain.sortTabs
 End Sub
 
 Public Sub mnuFileSaveAs()
@@ -608,6 +686,12 @@ Public Sub mnuNavigationSearch()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdFind
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdFind
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdFind
         End If
     End If
 End Sub
@@ -617,6 +701,12 @@ Public Sub mnuNavigationSearchNext()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdFindNext
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdFindNext
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdFindNext
         End If
     End If
 End Sub
@@ -626,6 +716,12 @@ Public Sub mnuNavigationSearchPrev()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdFindPrev
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdFindPrev
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdFindPrev
         End If
     End If
 End Sub
@@ -635,6 +731,12 @@ Public Sub mnuNavigationSearchNextWord()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdFindNextWord
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdFindNextWord
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdFindNextWord
         End If
     End If
 End Sub
@@ -644,6 +746,12 @@ Public Sub mnuNavigationSearchPrevWord()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdFindPrevWord
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdFindPrevWord
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
+'            fDoc.cs.ExecuteCmd cmCmdFindPrevWord
         End If
     End If
 End Sub
@@ -653,6 +761,11 @@ Public Sub mnuNavigationReplace()
         If ActiveFileForm.Identify = FF_SOURCE Then
             Set fDoc = ActiveForm
             fDoc.cs.ExecuteCmd cmCmdFindReplace
+        ElseIf ActiveFileForm.Identify = FF_IMP Then
+            Set fImp = ActiveForm
+            fImp.cs.ExecuteCmd cmCmdFindReplace
+        ElseIf ActiveFileForm.Identify = FF_LIST Then
+'            Set fDoc = ActiveForm
         End If
     End If
 End Sub
